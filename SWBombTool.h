@@ -25,9 +25,9 @@
 
 @interface SWBombTool : SWTool {
 	NSRect rect;
-	int max;
-	int i;
-	int bombSpeed;
+	NSInteger max;
+	NSInteger i;
+	NSInteger bombSpeed;
 	BOOL isExploding;
 	NSPoint p;
 	NSImage *image;

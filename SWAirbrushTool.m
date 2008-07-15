@@ -35,7 +35,7 @@
 	[path setLineCapStyle:NSRoundLineCapStyle];
 	NSBezierPath *circle = [NSBezierPath bezierPathWithOvalInRect:redrawRect];
 	
-	int i, x, y;
+	NSInteger i, x, y;
 	for (i = 0; i < (lineWidth*lineWidth)/2; i++) {
 		do {
 			x = (random() % (4*(int)lineWidth))+end.x - 2*lineWidth;

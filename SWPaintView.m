@@ -65,7 +65,7 @@
 		
 		// Set levels of undos based on user defaults
 		NSNumber *undo = [[NSUserDefaults standardUserDefaults] objectForKey:@"UndoLevels"];
-		[[self undoManager] setLevelsOfUndo:[undo intValue]];
+		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
 		
 		// Grid related
 		showsGrid = NO;
@@ -446,7 +446,7 @@
 // Generates the NSBezeierPath used as the grid
 - (NSBezierPath *)gridInRect:(NSRect)rect
 {
-    int curLine, endLine;
+    NSUInteger curLine, endLine;
     NSBezierPath *gridPath = [NSBezierPath bezierPath];
 	
     // Columns

@@ -27,8 +27,8 @@
 	NSBitmapImageRep *aRep, *imageRep;
 	SWSelectionBuilder* builder;
 	NSImage *image;
-	int h;
-	int w;
+	NSInteger h;
+	NSInteger w;
 	NSColor *fillColor;
 }
 

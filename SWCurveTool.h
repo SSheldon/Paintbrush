@@ -23,12 +23,12 @@
 #import "SWTool.h"
 
 @interface SWCurveTool : SWTool {
-	int numberOfClicks;
+	NSInteger numberOfClicks;
 	
 	NSPoint cp1, cp2, beginPoint, endPoint;
 }
 
-- (void)setNumberOfClicks:(int)clicks;
-- (int)numberOfClicks;
+- (void)setNumberOfClicks:(NSInteger)clicks;
+- (NSInteger)numberOfClicks;
 
 @end

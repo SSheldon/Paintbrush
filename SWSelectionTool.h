@@ -30,7 +30,7 @@
 	NSPoint oldOrigin;
 	BOOL isSelected;
 	BOOL isAlreadyShifting;
-	int deltax, deltay;
+	NSInteger deltax, deltay;
 	char direction;					// Either X or Y
 }
 

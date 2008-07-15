@@ -52,8 +52,8 @@
 - (void)windowDidLoad
 {
 	// Load current defaults into the various fields
-	[undoStepper setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:@"UndoLevels"] intValue]];
-	[undoTextField setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:@"UndoLevels"] intValue]];
+	[undoStepper setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:@"UndoLevels"] integerValue]];
+	[undoTextField setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:@"UndoLevels"] integerValue]];
 	[fileTypeButton selectItemWithTitle:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
 }
 
@@ -65,21 +65,21 @@
 
 
 - (IBAction)changeUndoLimit:(id)sender {
-	if ([sender intValue] == 0) {
+	if ([sender integerValue] == 0) {
 		[undoStepper setIntValue:0];
 		[undoTextField setIntValue:0];
-	} else if ([sender intValue] < 0) {
+	} else if ([sender integerValue] < 0) {
 		NSBeep();
 		[undoStepper setIntValue:0];
 		[undoTextField setIntValue:0];
 	} else {
-		[undoStepper setIntValue:[sender intValue]];
-		[undoTextField setIntValue:[sender intValue]];
+		[undoStepper setIntValue:[sender integerValue]];
+		[undoTextField setIntValue:[sender integerValue]];
 	}
 	
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:[sender intValue]]
+	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:[sender integerValue]]
 											  forKey:@"UndoLevels"];
-	//NSLog(@"Spin the spinner! %d", [sender intValue]);
+	//NSLog(@"Spin the spinner! %d", [sender integerValue]);
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
@@ -125,7 +125,7 @@
 
 - (IBAction)selectPrefPane:(id)sender
 {
-	int tag = [sender tag];
+	NSInteger tag = [sender tag];
 	NSView *view;
 	NSString *title;
 	[self viewForTag:tag view:&view title:&title];

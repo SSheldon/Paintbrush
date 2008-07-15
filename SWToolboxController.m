@@ -101,7 +101,7 @@
 	return backgroundColor;
 }
 
-- (int)lineWidth
+- (NSInteger)lineWidth
 {
 	return lineWidth;
 }
@@ -144,7 +144,7 @@
 	
 	[currentTool setFrontColor:foregroundColor
 					 backColor:backgroundColor
-					 lineWidth:2 * [lineSlider intValue] - 1
+					 lineWidth:2 * [lineSlider integerValue] - 1
 					shouldFill:shouldFill
 				  shouldStroke:shouldStroke];
 	
@@ -198,9 +198,9 @@
 - (IBAction)changeLineWidth:(id)sender
 {
 	// Allows for more line widths with less tick marks
-	lineWidth = 2 * [sender intValue] - 1;
+	lineWidth = 2 * [sender integerValue] - 1;
 	// Let's try exponential growth:
-	//lineWidth = ceil(pow([sender intValue], 2) / 2);
+	//lineWidth = ceil(pow([sender integerValue], 2) / 2);
 	[currentTool setLineWidth:lineWidth];
 }
 

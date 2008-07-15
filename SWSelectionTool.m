@@ -44,7 +44,7 @@
 	[path setLineCapStyle:NSSquareLineCapStyle];	
 
 	//if (flags & NSShiftKeyMask) {
-		// double size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
+		// CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		// We need something here! It's trickier than it looks.
 	//} else {
 		clippingRect = NSMakeRect(fmin(begin.x, end.x)+.5, fmin(begin.y, end.y)+.5, abs(end.x - begin.x), abs(end.y - begin.y));
@@ -82,8 +82,8 @@
 					}
 				} else {
 					isAlreadyShifting = YES;
-					int dx = abs(point.x - previousPoint.x);
-					int dy = abs(point.y - previousPoint.y);
+					NSUInteger dx = abs(point.x - previousPoint.x);
+					NSUInteger dy = abs(point.y - previousPoint.y);
 					
 					if (dx > dy) {
 						direction = 'X';
@@ -180,7 +180,7 @@
 			if ([[SWToolboxController sharedToolboxPanelController] shouldOmitBackground]) {
 				// EXPERIMENTAL: Transparency
 				// TODO: Faster, and possibly somewhere else?
-				int x, y;
+				NSInteger x, y;
 				NSBitmapImageRep *secondRep = [NSBitmapImageRep imageRepWithData:[secondImage TIFFRepresentation]];
 				for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
 					for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 

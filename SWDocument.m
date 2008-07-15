@@ -98,7 +98,7 @@
 // After the sheet ends, this takes over. If the user clicked "OK", a new
 // PaintView is initialized. Otherwise, the window closes.
 - (void)sizeSheetDidEnd:(NSWindow *)sheet
-		 returnCode:(int)returnCode
+		 returnCode:(NSInteger)returnCode
 		contextInfo:(void *)contextInfo
 {
 	if (returnCode == NSOKButton) {
@@ -205,7 +205,7 @@
 }
 
 // By overwriting this, we can ask files saved by Paintbrush to open with Paintbrush
-// in the future when double-clicked
+// in the future when CGFloat-clicked
 - (NSDictionary *)fileAttributesToWriteToURL:(NSURL *)absoluteURL
 									  ofType:(NSString *)typeName
 							forSaveOperation:(NSSaveOperationType)saveOperation

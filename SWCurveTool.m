@@ -45,22 +45,17 @@
 	}
 	
 	// Shift should only affect the line on the first click
-	if (numberOfClicks == 1 && (flags & NSShiftKeyMask)) {
-
-		// Here comes the crazy math. First, we find the length of the hypotenuse of the
-		// imaginary triangle formed by the line
-		double hypotenuse = sqrt(pow((endPoint.x-beginPoint.x),2)+pow((endPoint.y-beginPoint.y),2));
-		
-		// Size is the base/height of the 45º triangle
-		double size = hypotenuse/sqrt(2);
-		
+	if (numberOfClicks == 1 && (flags & NSShiftKeyMask)) {		
 		// x and y are either positive or negative 1
-		int x = (endPoint.x-beginPoint.x) / abs(endPoint.x-beginPoint.x);
-		int y = (endPoint.y-beginPoint.y) / abs(endPoint.y-beginPoint.y);
+		NSInteger x = (end.x-begin.x) / abs(end.x-begin.x);
+		NSInteger y = (end.y-begin.y) / abs(end.y-begin.y);
 		
 		// Theta is the angle formed by the mouse, in degrees (rad * 180/π)
 		// atan()'s result is in radians
-		double theta = 180*atan((endPoint.y-beginPoint.y)/(endPoint.x-beginPoint.x)) / 3.1415926535;
+		CGFloat theta = 180*atan((end.y-begin.y)/(end.x-begin.x)) / pi;
+		
+		// Deciding whether it should be horizontal, vertical, or at 45º
+		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		
 		// Deciding whether it should be horizontal, vertical, or at 45º
 		if (abs(theta) <= 67.5 && abs(theta) >= 22.5) {
@@ -133,12 +128,12 @@
 																		[p bounds].size.height + [p bounds].origin.y)];
 }
 
-- (void)setNumberOfClicks:(int)clicks
+- (void)setNumberOfClicks:(NSInteger)clicks
 {
 	numberOfClicks = clicks;
 }
 
-- (int)numberOfClicks
+- (NSInteger)numberOfClicks
 {
 	return numberOfClicks;
 }

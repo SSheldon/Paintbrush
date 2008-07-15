@@ -41,8 +41,8 @@
 	
 	NSNumber *width = [defaults objectForKey:@"HorizontalSize"];
 	NSNumber *height = [defaults objectForKey:@"VerticalSize"];
-	[widthField setIntValue:[width intValue]];
-	[heightField setIntValue:[height intValue]];
+	[widthField setIntValue:[width integerValue]];
+	[heightField setIntValue:[height integerValue]];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:NSControlTextDidChangeNotification 
 														object:nil];
@@ -73,13 +73,13 @@
 // one of the preset values in the popup button
 - (void)textDidChange:(NSNotification *)aNotification
 {
-	if ([widthField intValue] == 640 && [heightField intValue] == 480) {
+	if ([widthField integerValue] == 640 && [heightField integerValue] == 480) {
 		[sizeButton selectItemWithTitle:@"640 x 480"];
-	} else if ([widthField intValue] == 800 && [heightField intValue] == 600) {
+	} else if ([widthField integerValue] == 800 && [heightField integerValue] == 600) {
 		[sizeButton selectItemWithTitle:@"800 x 600"];
-	} else if ([widthField intValue] == 1024 && [heightField intValue] == 768) {
+	} else if ([widthField integerValue] == 1024 && [heightField integerValue] == 768) {
 		[sizeButton selectItemWithTitle:@"1024 x 768"];
-	} else if ([widthField intValue] == 1280 && [heightField intValue] == 1024) {
+	} else if ([widthField integerValue] == 1280 && [heightField integerValue] == 1024) {
 		[sizeButton selectItemWithTitle:@"1280 x 1024"];
 	} else {
 		[sizeButton selectItemWithTitle:@"Custom"];
@@ -90,12 +90,12 @@
 - (IBAction)endSheet:(id)sender
 {
 	if ([[sender title] isEqualTo:@"OK"]){
-		if ([widthField intValue] > 0 && [heightField intValue] > 0) {
+		if ([widthField integerValue] > 0 && [heightField integerValue] > 0) {
 			
 			// Save entered values as defaults
 			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			NSNumber *width = [NSNumber numberWithInt:[widthField intValue]];
-			NSNumber *height = [NSNumber numberWithInt:[heightField intValue]];
+			NSNumber *width = [NSNumber numberWithInt:[widthField integerValue]];
+			NSNumber *height = [NSNumber numberWithInt:[heightField integerValue]];
 			[defaults setObject:width forKey:@"HorizontalSize"];
 			[defaults setObject:height forKey:@"VerticalSize"];
 			
@@ -111,14 +111,14 @@
 	}	
 }
 
-- (int)width
+- (NSInteger)width
 {
-	return [widthField intValue];
+	return [widthField integerValue];
 }
 
-- (int)height
+- (NSInteger)height
 {
-	return [heightField intValue];
+	return [heightField integerValue];
 }
 
 - (BOOL)scales

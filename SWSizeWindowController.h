@@ -37,8 +37,8 @@
 - (IBAction)endSheet:(id)sender;
 
 // A few accessors and mutators
-- (int)width;
-- (int)height;
+- (NSInteger)width;
+- (NSInteger)height;
 - (BOOL)scales;
 - (void)setScales:(BOOL)s;
 

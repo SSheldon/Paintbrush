@@ -64,7 +64,7 @@
 
 // Sheets for size!
 - (void)sizeSheetDidEnd:(NSWindow *)sheet
-			 returnCode:(int)returnCode
+			 returnCode:(NSInteger)returnCode
 			contextInfo:(void *)contextInfo;
 - (IBAction)raiseSizeSheet:(id)sender;
 

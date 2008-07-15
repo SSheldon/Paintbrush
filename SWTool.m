@@ -49,7 +49,7 @@
 }
 
 
-- (double)lineWidth
+- (CGFloat)lineWidth
 {
 	return lineWidth;
 }
@@ -64,7 +64,7 @@
 	backColor = back;
 }
 
-- (void)setLineWidth:(double)width
+- (void)setLineWidth:(CGFloat)width
 {
 	lineWidth = width;
 }
@@ -77,7 +77,7 @@
 
 - (void)setFrontColor:(NSColor *)front 
 			backColor:(NSColor *)back 
-			lineWidth:(double)width 
+			lineWidth:(CGFloat)width 
 		   shouldFill:(BOOL)fill 
 		 shouldStroke:(BOOL)stroke
 {
@@ -182,7 +182,7 @@
 
 BOOL colorsAreEqual(NSColor *clicked, NSColor *painting)
 {
-	int r1, r2, g1, g2, b1, b2;
+	NSInteger r1, r2, g1, g2, b1, b2;
 	
 	r1 = roundf(255*[clicked redComponent]);
 	r2 = roundf(255*[painting redComponent]);

@@ -41,10 +41,10 @@
 	if (event == MOUSE_DOWN) {
 
 		// Get the width and height of the image
-		w = (int)[anImage size].width;
-		h = (int)[anImage size].height;
+		w = [anImage size].width;
+		h = [anImage size].height;
 		
-		int rowBytes = ((int)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
+		NSUInteger rowBytes = ((NSInteger)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
 		
 		// Create a new NSBitmapImageRep for filling
 		// Note: this instantiation is only valid for Leopard - Tiger needs something different

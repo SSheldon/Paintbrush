@@ -38,9 +38,9 @@
 	
 //	// Normally this would work, but there are problems with the NSBezierPath rounded rect
 //	if (flags & NSShiftKeyMask) {
-//		double size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
-//		int x = (end.x-begin.x) / abs(end.x-begin.x);
-//		int y = (end.y-begin.y) / abs(end.y-begin.y);
+//		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
+//		NSInteger x = (end.x-begin.x) / abs(end.x-begin.x);
+//		NSInteger y = (end.y-begin.y) / abs(end.y-begin.y);
 //		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, x*size, y*size) xRadius:30 yRadius:30];
 //	} else {
 //		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, (end.x - begin.x), (end.y - begin.y)) xRadius:30 yRadius:30];
@@ -61,7 +61,8 @@
 	}
 	
 	if (flags & NSShiftKeyMask) {
-		double size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
+		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
+		
 		NSLog(@"Size is %lf, (end.x - begin.x) is %lf, (end.y - begin.y) is %lf", size, (end.x - begin.x), (end.y - begin.y));
 		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, size, size) 
 									  xRadius:30

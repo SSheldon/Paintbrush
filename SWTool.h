@@ -34,7 +34,7 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 	NSImage *_anImage;
 	NSImage *_secondImage;
 	NSBezierPath *path;
-	double lineWidth;
+	CGFloat lineWidth;
 	BOOL shouldFill;
 	BOOL shouldStroke;
 	NSUInteger flags;
@@ -45,14 +45,14 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 // Some setters
 - (void)setFrontColor:(NSColor *)front;
 - (void)setBackColor:(NSColor *)back;
-- (void)setLineWidth:(double)width;
+- (void)setLineWidth:(CGFloat)width;
 - (void)shouldFill:(BOOL)fill stroke:(BOOL)stroke;
 
 
 - (NSPoint)savedPoint;
 - (NSString *)type;
 - (NSColor *)drawingColor;
-- (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(double)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
+- (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(CGFloat)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
 - (void)setModifierFlags:(NSUInteger)modifierFlags;
 - (void)setSavedPoint:(NSPoint)aPoint;
 - (void)tieUpLooseEnds;

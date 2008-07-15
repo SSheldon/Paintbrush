@@ -34,7 +34,7 @@
 	NSColor *foregroundColor;
 	NSColor *backgroundColor;
 	SWTool *currentTool;
-	int lineWidth;
+	NSInteger lineWidth;
 	BOOL shouldFill;
 	BOOL shouldStroke;
 	NSMutableDictionary *toolList;
@@ -46,7 +46,7 @@
 - (SWTool *)currentTool;
 - (NSColor *)foregroundColor;
 - (NSColor *)backgroundColor;
-- (int)lineWidth;
+- (NSInteger)lineWidth;
 - (SWColorWell *)foregroundColorWell;
 - (SWColorWell *)backgroundColorWell;
 
