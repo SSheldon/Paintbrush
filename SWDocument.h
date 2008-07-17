@@ -58,6 +58,7 @@
 - (IBAction)zoomOut:(id)sender;
 - (IBAction)actualSize:(id)sender;
 //- (IBAction)fullScreen:(id)sender;
+- (IBAction)crop:(id)sender;
 
 // Access the document's view (and provide access to the image)
 - (SWPaintView *)paintView;

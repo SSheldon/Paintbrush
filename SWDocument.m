@@ -342,7 +342,8 @@
 {
 	currentTool = [toolboxController currentTool];
 	if (([menuItem action] == @selector(copy:)) || 
-		([menuItem action] == @selector(cut:))) {
+		([menuItem action] == @selector(cut:)) || 
+		([menuItem action] == @selector(crop:))) {
 		return ([[currentTool name] isEqualToString:@"Selection"] && 
 				[(SWSelectionTool *)currentTool isSelected]);
 	} else if ([menuItem action] == @selector(paste:)) {
@@ -420,6 +421,11 @@
 		[paintView prepUndo:nil];
 		[paintView setImage:tempImage scale:NO];
 	}
+}
+
+- (IBAction)crop:(id)sender
+{
+	NSLog(@"Cropping");
 }
 
 - (void)dealloc
