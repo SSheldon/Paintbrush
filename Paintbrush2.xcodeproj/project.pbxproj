@@ -77,6 +77,8 @@
 		27A60E2E0B879A6A0091A1B0 /* SWPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E220B879A6A0091A1B0 /* SWPaintView.m */; };
 		27A60E2F0B879A6A0091A1B0 /* SWToolboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E240B879A6A0091A1B0 /* SWToolboxController.m */; };
 		27A60E300B879A6A0091A1B0 /* SWDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E260B879A6A0091A1B0 /* SWDocument.m */; };
+		27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
+		27A9D0900E32B05000D5FCAA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
 		27B686C50BA1395B0028A526 /* SWFillTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B686C40BA1395B0028A526 /* SWFillTool.m */; };
 		27D62F7E0BF6CF6E008DA207 /* SWScalingScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */; };
@@ -123,6 +125,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				27A9D0900E32B05000D5FCAA /* Sparkle.framework in CopyFiles */,
 				275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */,
 				271EEB0D0BBC34A800319865 /* SWSelectionTool.h in CopyFiles */,
 				271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */,
@@ -230,6 +233,7 @@
 		27A60E240B879A6A0091A1B0 /* SWToolboxController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWToolboxController.m; sourceTree = "<group>"; };
 		27A60E250B879A6A0091A1B0 /* SWDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWDocument.h; sourceTree = "<group>"; };
 		27A60E260B879A6A0091A1B0 /* SWDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWDocument.m; sourceTree = "<group>"; };
+		27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		27AFFDF10D68C06800368E2B /* SWAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAppController.m; sourceTree = "<group>"; };
 		27B686C30BA1395B0028A526 /* SWFillTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFillTool.h; sourceTree = "<group>"; };
 		27B686C40BA1395B0028A526 /* SWFillTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFillTool.m; sourceTree = "<group>"; };
@@ -281,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
+				27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +563,7 @@
 		594D30730DFF93770095E075 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
