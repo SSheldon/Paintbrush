@@ -47,7 +47,7 @@
 		// CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		// We need something here! It's trickier than it looks.
 	//} else {
-		clippingRect = NSMakeRect(fmin(begin.x, end.x)+.5, fmin(begin.y, end.y)+.5, abs(end.x - begin.x), abs(end.y - begin.y));
+		clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
 	//}
 	
 	[path appendBezierPathWithRect:

@@ -47,14 +47,17 @@
 //	}
 	
 	// Some weird stuff, since roundedRects are picky and require positive widths and heights
-	NSPoint temp = NSZeroPoint;
+	NSPoint temp = begin;
+	BOOL negX = NO, negY = NO;
 	if ((end.x - begin.x) < 0) {
+		negX = YES;
 		temp.x = begin.x;
 		begin.x = end.x;
 		end.x = temp.x;
 	}
 	
 	if ((end.y - begin.y) < 0) {
+		negY = YES;
 		temp.y = begin.y;
 		begin.y = end.y;
 		end.y = temp.y;
@@ -63,7 +66,17 @@
 	if (flags & NSShiftKeyMask) {
 		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		
+		if (negX) {
+			begin.x -= size - abs(end.x - begin.x);
+		}
+		if (negY) {
+			begin.y -= size - abs(end.y - begin.y);
+		}
+		
 		NSLog(@"Size is %lf, (end.x - begin.x) is %lf, (end.y - begin.y) is %lf", size, (end.x - begin.x), (end.y - begin.y));
+		
+		
+		
 		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, size, size) 
 									  xRadius:30
 									  yRadius:30];

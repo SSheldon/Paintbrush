@@ -111,8 +111,6 @@
 		27FEFC2B0C0759C700AB63F0 /* TIFF.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27FEFC260C0759C700AB63F0 /* TIFF.icns */; };
 		27FEFC2C0C0759C700AB63F0 /* GIF.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27FEFC270C0759C700AB63F0 /* GIF.icns */; };
 		594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D309E0DFF939E0095E075 /* Cocoa.framework */; };
-		594D31230DFF95580095E075 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D31220DFF95580095E075 /* Sparkle.framework */; };
-		594D314C0DFF95590095E075 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 594D31220DFF95580095E075 /* Sparkle.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -136,16 +134,6 @@
 				27A4872A0C57AEE00047DF3C /* SWSizeWindowController.h in CopyFiles */,
 				2734B1540C990297003A32BF /* SWGridView.h in CopyFiles */,
 				2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		27F7B9000DE36DF30038ED41 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				594D314C0DFF95590095E075 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +271,6 @@
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* Paintbrush_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paintbrush_Prefix.pch; sourceTree = "<group>"; };
 		594D309E0DFF939E0095E075 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		594D31220DFF95580095E075 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Paintbrush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paintbrush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -294,7 +281,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
-				594D31230DFF95580095E075 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,7 +559,6 @@
 			isa = PBXGroup;
 			children = (
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
-				594D31220DFF95580095E075 /* Sparkle.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -589,7 +574,6 @@
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				274A6B140BAB4ABD00033B75 /* CopyFiles */,
-				27F7B9000DE36DF30038ED41 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -772,6 +756,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../Downloads/Sparkle 1.5b4/With Garbage Collection\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -801,6 +786,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../../Downloads/Sparkle 1.5b4/With Garbage Collection\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;

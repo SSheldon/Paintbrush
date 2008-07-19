@@ -38,11 +38,6 @@
 	redrawRect = savedRect = NSMakeRect(CGFLOAT_MAX, CGFLOAT_MAX, 0.0, 0.0);
 }
 
-- (NSString *)type
-{
-	return @"Tool";
-}
-
 - (NSColor *)drawingColor
 {
 	return frontColor;

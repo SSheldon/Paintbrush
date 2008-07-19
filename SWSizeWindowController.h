@@ -39,6 +39,8 @@
 // A few accessors and mutators
 - (NSInteger)width;
 - (NSInteger)height;
+- (void)setWidth:(NSInteger)newWidth;
+- (void)setHeight:(NSInteger)newHeight;
 - (BOOL)scales;
 - (void)setScales:(BOOL)s;
 

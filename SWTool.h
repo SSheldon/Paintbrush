@@ -50,7 +50,7 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 
 
 - (NSPoint)savedPoint;
-- (NSString *)type;
+//- (NSString *)type;
 - (NSColor *)drawingColor;
 - (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(CGFloat)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
 - (void)setModifierFlags:(NSUInteger)modifierFlags;
@@ -76,7 +76,7 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end;
 - (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event;
-- (NSString *)name;
+//- (NSString *)name;
 - (NSCursor *)cursor;
 - (BOOL)shouldShowFillOptions;
 

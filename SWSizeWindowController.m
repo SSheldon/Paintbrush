@@ -121,6 +121,16 @@
 	return [heightField integerValue];
 }
 
+- (void)setWidth:(NSInteger)newWidth
+{
+	[widthField setIntegerValue:newWidth];
+}
+
+- (void)setHeight:(NSInteger)newHeight
+{
+	[heightField setIntegerValue:newHeight];
+}
+
 - (BOOL)scales
 {
 	return scales;

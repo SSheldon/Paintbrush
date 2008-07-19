@@ -108,10 +108,10 @@
 		if ([paintView hasRun]) {
 			NSLog(@"Resizing");
 			// Trying to resize the image!
-			NSImage *backupImage = [paintView mainImage];
+			NSImage *backupImage = contextInfo ? (NSImage *)contextInfo : [paintView mainImage];
 
 			// Nothing to do if the size isn't changing!
-			if ([backupImage size].width != openingRect.size.width || [backupImage size].height != openingRect.size.height) {
+			if ([[paintView mainImage] size].width != openingRect.size.width || [[paintView mainImage] size].height != openingRect.size.height) {
 				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
 								   [NSNumber numberWithDouble:[backupImage size].width], @"Width", 
 								   [NSNumber numberWithDouble:[backupImage size].height], @"Height", nil];
@@ -305,7 +305,7 @@
 	[toolboxController switchToScissors:nil];
 	currentTool = [toolboxController currentTool];
 	
-	[currentTool setSavedPoint:NSMakePoint(-0.5, -0.5)];
+	[currentTool setSavedPoint:NSZeroPoint];
 	[currentTool performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
 					  withMainImage:[paintView mainImage] 
 						secondImage:[paintView secondImage] 
@@ -344,7 +344,7 @@
 	if (([menuItem action] == @selector(copy:)) || 
 		([menuItem action] == @selector(cut:)) || 
 		([menuItem action] == @selector(crop:))) {
-		return ([[currentTool name] isEqualToString:@"Selection"] && 
+		return ([[currentTool class] isEqualTo:[SWSelectionTool class]] && 
 				[(SWSelectionTool *)currentTool isSelected]);
 	} else if ([menuItem action] == @selector(paste:)) {
 		NSArray *array = [[NSPasteboard generalPasteboard] types];
@@ -423,9 +423,26 @@
 	}
 }
 
+// Used to shrink the image background while also isolating a specific
+// section of the image to save
 - (IBAction)crop:(id)sender
 {
 	NSLog(@"Cropping");
+	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
+	NSImage *writeToMe = [[NSImage alloc] initWithSize:rect.size];
+	[writeToMe lockFocus];
+	[[(SWSelectionTool *)currentTool backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
+													fromRect:rect
+												   operation:NSCompositeSourceOver
+													fraction:1.0];
+	[writeToMe unlockFocus];
+	
+	// Pretend they just changed the image size
+	[sizeController setWidth:rect.size.width];
+	[sizeController setHeight:rect.size.height];
+	[sizeController setScales:NO];
+	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:writeToMe];
+	[currentTool tieUpLooseEnds];
 }
 
 - (void)dealloc

@@ -664,18 +664,9 @@
 									<reference key="NSOnImage" ref="284147593"/>
 									<reference key="NSMixedImage" ref="493264723"/>
 								</object>
-								<object class="NSMenuItem" id="483799607">
-									<reference key="NSMenu" ref="565986592"/>
-									<string key="NSTitle">Change Canvas Size...</string>
-									<string key="NSKeyEquiv">c</string>
-									<int key="NSKeyEquivModMask">1573160</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="284147593"/>
-									<reference key="NSMixedImage" ref="493264723"/>
-								</object>
 								<object class="NSMenuItem" id="841027029">
 									<reference key="NSMenu" ref="565986592"/>
-									<string key="NSTitle">Change Image Size...</string>
+									<string key="NSTitle">Image Size...</string>
 									<string key="NSKeyEquiv">i</string>
 									<int key="NSKeyEquivModMask">1573160</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -683,17 +674,16 @@
 									<reference key="NSMixedImage" ref="493264723"/>
 									<int key="NSTag">1</int>
 								</object>
-								<object class="NSMenuItem" id="805260688">
+								<object class="NSMenuItem" id="483799607">
 									<reference key="NSMenu" ref="565986592"/>
-									<bool key="NSIsDisabled">YES</bool>
-									<bool key="NSIsSeparator">YES</bool>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
+									<string key="NSTitle">Canvas Size...</string>
+									<string key="NSKeyEquiv">c</string>
+									<int key="NSKeyEquivModMask">1573160</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="284147593"/>
 									<reference key="NSMixedImage" ref="493264723"/>
 								</object>
-								<object class="NSMenuItem" id="712657735">
+								<object class="NSMenuItem" id="76291852">
 									<reference key="NSMenu" ref="565986592"/>
 									<string key="NSTitle">Crop</string>
 									<string key="NSKeyEquiv"/>
@@ -1559,7 +1549,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">crop:</string>
 						<reference key="source" ref="10406187"/>
-						<reference key="destination" ref="712657735"/>
+						<reference key="destination" ref="76291852"/>
 					</object>
 					<int key="connectionID">502</int>
 				</object>
@@ -2078,13 +2068,12 @@
 						<reference key="object" ref="565986592"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="841027029"/>
 							<reference ref="483799607"/>
 							<reference ref="327597362"/>
 							<reference ref="940736199"/>
 							<reference ref="725835509"/>
-							<reference ref="712657735"/>
-							<reference ref="805260688"/>
+							<reference ref="76291852"/>
+							<reference ref="841027029"/>
 						</object>
 						<reference key="parent" ref="924215562"/>
 					</object>
@@ -2413,12 +2402,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">500</int>
-						<reference key="object" ref="712657735"/>
-						<reference key="parent" ref="565986592"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">501</int>
-						<reference key="object" ref="805260688"/>
+						<reference key="object" ref="76291852"/>
 						<reference key="parent" ref="565986592"/>
 					</object>
 				</object>
@@ -2649,7 +2633,6 @@
 					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
 					<string>500.IBPluginDependency</string>
-					<string>501.IBPluginDependency</string>
 					<string>56.IBPluginDependency</string>
 					<string>56.ImportedFromIB2</string>
 					<string>57.IBEditorWindowLastContentRect</string>
@@ -2794,7 +2777,7 @@
 					<reference ref="5"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
-					<string>{{87, 349}, {486, 20}}</string>
+					<string>{{88, 348}, {486, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2822,7 +2805,7 @@
 					<reference ref="5"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
-					<string>{{332, 226}, {242, 123}}</string>
+					<string>{{333, 235}, {193, 113}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2906,7 +2889,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
@@ -3068,6 +3050,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>actualSize:</string>
 							<string>copy:</string>
+							<string>crop:</string>
 							<string>cut:</string>
 							<string>flipHorizontal:</string>
 							<string>flipVertical:</string>
@@ -3078,6 +3061,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

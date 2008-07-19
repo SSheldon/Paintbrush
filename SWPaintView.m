@@ -349,6 +349,7 @@
 	}
 	[mainImage lockFocus];
 	if (scale) {
+		// Stretch the image to the correct size
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		[newImage drawInRect:[self bounds]
 					fromRect:NSZeroRect

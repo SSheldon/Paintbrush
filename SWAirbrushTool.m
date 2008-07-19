@@ -41,20 +41,19 @@
 			x = (random() % (4*(int)lineWidth))+end.x - 2*lineWidth;
 			y = (random() % (4*(int)lineWidth))+end.y - 2*lineWidth;
 		} while (![circle containsPoint:NSMakePoint(x,y)]);
-		[path appendBezierPathWithRect:NSMakeRect(x,y,0.5,0.5)];
+		[path appendBezierPathWithRect:NSMakeRect(x,y,0.0,0.0)];
 	}
 	return path;
 }
 
 - (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
 {
-	NSLog(@"%d", event);
 	p = point;
 	if (event == MOUSE_UP) {
 		[self endSpray:airbrushTimer];
 	} else if (event == MOUSE_DOWN) {
 		// Seed a random number based on the time!
-		srand(time(NULL));
+		srandom(time(NULL));
 
 		_secondImage = secondImage;
 		_anImage = anImage;
