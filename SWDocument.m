@@ -65,7 +65,13 @@
 	if (openedImage) {
 		openingRect.origin = NSZeroPoint;
 		openingRect.size = [openedImage size];
-		[paintView initWithFrame:openingRect animate:NO];
+		[paintView initWithFrame:openingRect];
+		// Use external method to determine the window bounds
+		NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+		
+		// Apply the changes to the new document
+		[[paintView window] setFrame:tempRect display:YES];
+		
 		[paintView setImage:openedImage scale:NO];
 	} else {
 		[super showWindows];
@@ -112,17 +118,26 @@
 			NSImage *backupImage = contextInfo ? (NSImage *)contextInfo : [paintView mainImage];
 
 			// Nothing to do if the size isn't changing!
-			if ([[paintView mainImage] size].width != openingRect.size.width || [[paintView mainImage] size].height != openingRect.size.height) {
+			if ([[paintView mainImage] size].width != openingRect.size.width || 
+				[[paintView mainImage] size].height != openingRect.size.height) {
 				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
 								   [NSNumber numberWithDouble:[backupImage size].width], @"Width", 
 								   [NSNumber numberWithDouble:[backupImage size].height], @"Height", nil];
 				[paintView prepUndo:d];
-				paintView = [paintView initWithFrame:openingRect animate:YES];
+				paintView = [paintView initWithFrame:openingRect];
+				
+				// Use external method to determine the window bounds
+				NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+				[[[paintView window] animator] setFrame:tempRect display:YES];
 				[paintView setImage:backupImage scale:[sizeController scales]];
 			}
 		} else {
 			// Initial creation
-			paintView = [paintView initWithFrame:openingRect animate:YES];
+			paintView = [paintView initWithFrame:openingRect];
+			
+			// Use external method to determine the window bounds
+			NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+			[[[paintView window] animator] setFrame:tempRect display:YES];
 		}
 	} else if (returnCode == NSCancelButton) {
 		// Close the document - they obviously don't want to play

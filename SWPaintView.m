@@ -25,9 +25,9 @@
 
 @implementation SWPaintView
 
-- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate
+- (id)initWithFrame:(NSRect)frameRect
 {	
-	if (self = [super initWithFrame:frameRect]) {
+	if ((self = [super initWithFrame:frameRect]) && !NSEqualRects(frameRect, NSZeroRect)) {
 		toolbox = [SWToolboxController sharedToolboxPanelController];
 		isPayingAttention = YES;
 		mainImage = [[NSImage alloc] initWithSize:frameRect.size];
@@ -39,18 +39,7 @@
 		[mainImage unlockFocus];
 		
 		secondImage = [[NSImage alloc] initWithSize:frameRect.size];	
-		
-		// Use external method to 
-		NSRect tempRect = [self calculateWindowBounds:frameRect];
-		
-		// Apply the changes to the new document
-		if (shouldAnimate) {
-			// Core Animation, baby!
-			[[[super window] animator] setFrame:tempRect display:YES];
-		} else {
-			[[super window] setFrame:tempRect display:YES];
-		}
-		
+				
 		// Tracking area
 		[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
 														   options: NSTrackingMouseMoved | NSTrackingCursorUpdate
@@ -84,7 +73,6 @@
 	// Set the window's maximum size to the size of the screen
 	// Does not seem to work all the time
 	NSRect screenRect = [[NSScreen mainScreen] frame];
-	//[[super window] setMaxSize:screenRect.size];
 	
 	// Center the shrunken/enlarged window with respect to its initial location
 	NSRect tempRect = [[super window] frameRectForContentRect:frameRect];
@@ -93,8 +81,8 @@
 	tempRect.size.width += [NSScroller scrollerWidth];
 	tempRect.size.height += [NSScroller scrollerWidth];
 	
-	newOrigin.y += (0.5 * ([[super window] frame].size.height - tempRect.size.height));
-	newOrigin.x += (0.5 * ([[super window] frame].size.width - tempRect.size.width));
+	newOrigin.y += floor(0.5 * ([[super window] frame].size.height - tempRect.size.height));
+	newOrigin.x += floor(0.5 * ([[super window] frame].size.width - tempRect.size.width));
 	tempRect.origin = newOrigin;
 	
 	// Ensures that the document is never wider than the screen
@@ -428,7 +416,11 @@
 	
 	NSRect tempRect = NSZeroRect;
 	tempRect.size = size;
-	[self initWithFrame:tempRect animate:YES];
+	[self initWithFrame:tempRect];
+	// Use external method to determine the window bounds
+	NSRect tempRect2 = [self calculateWindowBounds:tempRect];
+	[[[self window] animator] setFrame:tempRect2 display:YES];
+	
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
 	

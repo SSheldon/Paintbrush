@@ -44,7 +44,7 @@
 	NSColor *gridColor;
 }
 
-- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
+//- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale;
 - (void)setCurrentTool:(SWTool *)newTool;
