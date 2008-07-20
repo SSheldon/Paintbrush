@@ -20,6 +20,7 @@
 
 
 #import "SWDocument.h"
+#import "SWImageManipulator.h"
 
 @implementation SWDocument
 
@@ -378,9 +379,8 @@
 - (IBAction)flipHorizontal:(id)sender
 {
 	if ([[super windowForSheet] isKeyWindow]) {
-		NSRect aRect;
+		NSRect aRect = NSZeroRect;
 		aRect.size = [[paintView mainImage] size];
-		aRect.origin = NSZeroPoint;
 		NSAffineTransform *transform = [NSAffineTransform transform];
 		NSImage *tempImage = [[NSImage alloc] initWithSize:aRect.size];
 		
@@ -402,12 +402,11 @@
 - (IBAction)flipVertical:(id)sender
 {
 	if ([[super windowForSheet] isKeyWindow]) {
-		NSRect aRect;
+		NSRect aRect = NSZeroRect;
 		aRect.size = [[paintView mainImage] size];
-		aRect.origin = NSZeroPoint;
 		NSAffineTransform *transform = [NSAffineTransform transform];
 		NSImage *tempImage = [[NSImage alloc] initWithSize:aRect.size];
-		
+				
 		[transform scaleXBy:1.0 yBy:-1.0];
 		[transform translateXBy:0 yBy:-aRect.size.height];		
 		
@@ -443,6 +442,11 @@
 	[sizeController setScales:NO];
 	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:writeToMe];
 	[currentTool tieUpLooseEnds];
+}
+
+- (IBAction)invert:(id)sender
+{
+	
 }
 
 - (void)dealloc
