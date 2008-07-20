@@ -59,7 +59,7 @@
 - (IBAction)actualSize:(id)sender;
 //- (IBAction)fullScreen:(id)sender;
 - (IBAction)crop:(id)sender;
-- (IBAction)invert:(id)sender;
+//- (IBAction)invertColors:(id)sender;
 
 // Access the document's view (and provide access to the image)
 - (SWPaintView *)paintView;

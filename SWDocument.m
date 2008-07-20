@@ -444,10 +444,14 @@
 	[currentTool tieUpLooseEnds];
 }
 
-- (IBAction)invert:(id)sender
-{
-	
-}
+// We offload the heavy lifting to an external class
+// TODO: Turn this back on once we have NSBitmapImageReps
+//- (IBAction)invertColors:(id)sender
+//{
+//	[SWImageManipulator invertImage:[paintView mainImage]];
+//	[paintView prepUndo:nil];
+//	[paintView setNeedsDisplay:YES];
+//}
 
 - (void)dealloc
 {	

@@ -344,9 +344,9 @@
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale
 {	
 	//mainImage = newImage;
-	for (NSImageRep *rep in [mainImage representations]) {
-		[mainImage removeRepresentation:rep];
-	}
+//	for (NSImageRep *rep in [mainImage representations]) {
+//		[mainImage removeRepresentation:rep];
+//	}
 	[mainImage lockFocus];
 	if (scale) {
 		// Stretch the image to the correct size
@@ -544,22 +544,22 @@
 	[self cursorUpdate:nil];
 	NSImage *temp = [[NSImage alloc] initWithData:data];
 	
-	NSLog(@"[[self superview] bounds] == (%lf, %lf), @ %lf by %lf",
-		  //		  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
-		  //		  [[self superview] bounds].size.width, [[self superview] bounds].size.height);
-		  [self bounds].origin.x, [self bounds].origin.y, 
-		  [self bounds].size.width, [self bounds].size.height);
+	NSLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
+		  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
+		  [[self superview] bounds].size.width, [[self superview] bounds].size.height);
+		  //[self bounds].origin.x, [self bounds].origin.y, 
+		  //[self bounds].size.width, [self bounds].size.height);
 	
-	// Use ceiling because pixels can be fractions, but the tool assumes integer values
-	//NSPoint origin = NSMakePoint([[self superview] bounds].origin.x, 
-	//							 (ceil([[self superview] bounds].size.height) - ([temp size].height - origin.y)));
 	NSPoint origin = [[self superview] bounds].origin;
-	//	origin.y += abs([[self superview] bounds].size.height - [self bounds].size.height);
-	NSLog(@"origin = (%lf, %lf)", origin.x, origin.y);
 	if (origin.x < 0) origin.x = 0;
 	if (origin.y < 0) origin.y = 0;
-	origin.x++;
-	origin.y++;
+
+	//origin.y += abs([[self superview] bounds].size.height - [self bounds].size.height);
+	origin.y = [self bounds].size.height - origin.y;
+	origin.y -= [temp size].height;
+	//origin.y += [[self superview] bounds].size.height - [self bounds].size.height;
+
+	NSLog(@"origin = (%lf, %lf)", origin.x, origin.y);
 	
 	NSRect rect = NSZeroRect;
 	rect.origin = origin;
@@ -567,10 +567,14 @@
 	// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
 	rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
 	
-	// This loop removes all the representations in the overlay image, effectively clearing it
-	for (NSImageRep *rep in [secondImage representations]) {
-		[secondImage removeRepresentation:rep];
-	}
+//	// This loop removes all the representations in the overlay image, effectively clearing it
+//	for (NSImageRep *rep in [secondImage representations]) {
+//		[secondImage removeRepresentation:rep];
+//	}
+
+	// Trying out something new here
+	secondImage = [[NSImage alloc] initWithSize:NSMakeSize(fmax([mainImage size].width, rect.size.width), 
+														   fmax([mainImage size].height, rect.size.height))];
 	
 	[secondImage lockFocus];
 	[temp drawAtPoint:rect.origin

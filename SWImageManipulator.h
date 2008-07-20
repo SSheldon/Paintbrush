@@ -26,7 +26,6 @@
 
 }
 
-+ (void)flipImageHorizontal:(NSImage *)anImage;
-+ (void)flipImageVertical:(NSImage *)anImage;
++ (void)invertImage:(NSImage *)image;
 
 @end

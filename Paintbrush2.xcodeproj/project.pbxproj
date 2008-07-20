@@ -42,6 +42,7 @@
 		2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */; };
 		2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */; };
 		273E0B3B0E32F99D00D11815 /* SWImageManipulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageManipulator.m */; };
+		273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273E0B6D0E32FC2200D11815 /* QuartzCore.framework */; };
 		274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 274194B10C1DA5E400605CDC /* SWCenteringClipView.h */; };
 		274194B40C1DA5E400605CDC /* SWCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 274194B20C1DA5E400605CDC /* SWCenteringClipView.m */; };
 		2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2742CCA40DA58518004BF119 /* airbrush-cursor.png */; };
@@ -185,6 +186,7 @@
 		2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAirbrushTool.m; sourceTree = "<group>"; };
 		273E0B390E32F99D00D11815 /* SWImageManipulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWImageManipulator.m; sourceTree = "<group>"; };
 		273E0B3A0E32F99D00D11815 /* SWImageManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageManipulator.h; sourceTree = "<group>"; };
+		273E0B6D0E32FC2200D11815 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		274194B10C1DA5E400605CDC /* SWCenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCenteringClipView.h; sourceTree = "<group>"; };
 		274194B20C1DA5E400605CDC /* SWCenteringClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCenteringClipView.m; sourceTree = "<group>"; };
 		2742CCA40DA58518004BF119 /* airbrush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor.png"; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
 				27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */,
+				273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +301,7 @@
 		1058C7A8FEA54F5311CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				273E0B6D0E32FC2200D11815 /* QuartzCore.framework */,
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
 				13E42FBA07B3F13500E4EEF1 /* CoreData.framework */,
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
