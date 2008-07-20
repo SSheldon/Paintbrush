@@ -294,11 +294,15 @@
 										<int key="NSfFlags">1044</int>
 									</object>
 									<reference key="NSControlView" ref="236073089"/>
-									<int key="NSButtonFlags">921977087</int>
+									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">6</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">fill2</string>
+										<string key="NSResourceName">stroke</string>
+									</object>
+									<object class="NSCustomResource" key="NSAlternateImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">stroke2</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
@@ -312,11 +316,15 @@
 									<reference key="NSSupport" ref="312957423"/>
 									<int key="NSTag">1</int>
 									<reference key="NSControlView" ref="236073089"/>
-									<int key="NSButtonFlags">921977087</int>
+									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">6</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">fill3</string>
+										<string key="NSResourceName">fill</string>
+									</object>
+									<object class="NSCustomResource" key="NSAlternateImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">fill2</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
@@ -330,11 +338,15 @@
 									<reference key="NSSupport" ref="312957423"/>
 									<int key="NSTag">2</int>
 									<reference key="NSControlView" ref="236073089"/>
-									<int key="NSButtonFlags">921977087</int>
+									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">6</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">fill1</string>
+										<string key="NSResourceName">fillstroke</string>
+									</object>
+									<object class="NSCustomResource" key="NSAlternateImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">fillstroke2</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
@@ -986,9 +998,9 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference ref="742627739"/>
 							<reference ref="635902065"/>
 							<reference ref="1016855609"/>
-							<reference ref="236073089"/>
 							<reference ref="156246558"/>
 							<reference ref="875842575"/>
+							<reference ref="236073089"/>
 						</object>
 						<reference key="parent" ref="966462375"/>
 					</object>
