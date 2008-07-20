@@ -41,6 +41,7 @@
 		2734B4D20C9AFCC8003A32BF /* SWSelectionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */; };
 		2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */; };
 		2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */; };
+		273E0B3B0E32F99D00D11815 /* SWImageManipulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageManipulator.m */; };
 		274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 274194B10C1DA5E400605CDC /* SWCenteringClipView.h */; };
 		274194B40C1DA5E400605CDC /* SWCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 274194B20C1DA5E400605CDC /* SWCenteringClipView.m */; };
 		2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2742CCA40DA58518004BF119 /* airbrush-cursor.png */; };
@@ -182,6 +183,8 @@
 		2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWSelectionBuilder.h; sourceTree = "<group>"; };
 		273513490D8F83BB00F24379 /* SWAirbrushTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAirbrushTool.h; sourceTree = "<group>"; };
 		2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAirbrushTool.m; sourceTree = "<group>"; };
+		273E0B390E32F99D00D11815 /* SWImageManipulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWImageManipulator.m; sourceTree = "<group>"; };
+		273E0B3A0E32F99D00D11815 /* SWImageManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageManipulator.h; sourceTree = "<group>"; };
 		274194B10C1DA5E400605CDC /* SWCenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCenteringClipView.h; sourceTree = "<group>"; };
 		274194B20C1DA5E400605CDC /* SWCenteringClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCenteringClipView.m; sourceTree = "<group>"; };
 		2742CCA40DA58518004BF119 /* airbrush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor.png"; sourceTree = "<group>"; };
@@ -503,6 +506,8 @@
 		27F413BD0C4D2D0A00391496 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				273E0B3A0E32F99D00D11815 /* SWImageManipulator.h */,
+				273E0B390E32F99D00D11815 /* SWImageManipulator.m */,
 				2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */,
 				2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */,
 			);
@@ -718,6 +723,7 @@
 				2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */,
 				278D5BBE0E216E7F00C01A52 /* SWSlider.m in Sources */,
 				278D5CAA0E21793E00C01A52 /* SWGridPanelController.m in Sources */,
+				273E0B3B0E32F99D00D11815 /* SWImageManipulator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
