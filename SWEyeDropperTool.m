@@ -49,11 +49,6 @@
 	}
 }
 
-- (NSString *)name
-{
-	return @"EyeDropper";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"eyedrop-cursor.png"];

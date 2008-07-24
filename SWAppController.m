@@ -78,14 +78,14 @@
 }
 
 // Makes the grid panel appear and disappear
-- (IBAction)showGridPanel:(id)sender {
-	SWGridPanelController *gridPanel = [SWGridPanelController sharedGridPanelController];
-	if ([[gridPanel window] isVisible]) {
-		[gridPanel hideWindow:self];
-	} else {
-		[gridPanel showWindow:self];
-	}
-}
+//- (IBAction)showGridPanel:(id)sender {
+//	SWGridPanelController *gridPanel = [SWGridPanelController sharedGridPanelController];
+//	if ([[gridPanel window] isVisible]) {
+//		[gridPanel hideWindow:self];
+//	} else {
+//		[gridPanel showWindow:self];
+//	}
+//}
 
 - (IBAction)showPreferencePanel:(id)sender
 {

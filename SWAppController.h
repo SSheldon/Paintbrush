@@ -23,7 +23,7 @@
 #import <Sparkle/Sparkle.h>
 #import "SWPreferenceController.h"
 #import "SWToolboxController.h"
-#import "SWGridPanelController.h"
+//#import "SWGridPanelController.h"
 
 @interface SWAppController : NSObject
 {
@@ -31,7 +31,7 @@
 }
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)showToolboxPanel:(id)sender;
-- (IBAction)showGridPanel:(id)sender;
+//- (IBAction)showGridPanel:(id)sender;
 
 // A few methods to open a web page in the user's browser of choice
 - (IBAction)donate:(id)sender;

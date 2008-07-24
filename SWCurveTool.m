@@ -160,11 +160,6 @@
 	numberOfClicks = 0;
 }
 
-- (NSString *)name
-{
-	return @"Curve";
-}
-
 - (NSCursor *)cursor
 {
 	return [NSCursor crosshairCursor];

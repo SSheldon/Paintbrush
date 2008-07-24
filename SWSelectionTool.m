@@ -333,11 +333,6 @@
 	return isSelected;
 }
 
-- (NSString *)name
-{
-	return @"Selection";
-}
-
 - (NSCursor *)cursor
 {
 	return [NSCursor crosshairCursor];

@@ -112,11 +112,6 @@
 	}		
 }
 
-- (NSString *)name
-{
-	return @"Airbrush";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"airbrush-cursor-2.png"];

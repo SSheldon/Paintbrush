@@ -87,11 +87,6 @@
 	[drawToMe unlockFocus];
 }
 
-- (NSString *)name
-{
-	return @"Ellipse";
-}
-
 - (NSCursor *)cursor
 {
 	return [NSCursor crosshairCursor];

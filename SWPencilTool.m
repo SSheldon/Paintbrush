@@ -81,11 +81,6 @@
 	path = nil;
 }
 
-- (NSString *)name
-{
-	return @"Pencil";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"pencil-cursor.png"];

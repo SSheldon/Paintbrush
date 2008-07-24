@@ -117,11 +117,6 @@
 	canInsert = NO;
 }
 
-- (NSString *)name
-{
-	return @"Text";
-}
-
 - (NSCursor *)cursor
 {
 	return [NSCursor IBeamCursor];

@@ -115,11 +115,6 @@
 	isExploding = NO;
 }
 
-- (NSString *)name
-{
-	return @"Bomb";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"bomb-cursor.png"];

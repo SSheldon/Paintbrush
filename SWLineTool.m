@@ -97,12 +97,6 @@
 	
 }
 
-
-- (NSString *)name
-{
-	return @"Line";
-}
-
 - (NSCursor *)cursor
 {
 	return [NSCursor crosshairCursor];

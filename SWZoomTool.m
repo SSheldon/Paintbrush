@@ -47,11 +47,6 @@
 	}
 }
 
-- (NSString *)name
-{
-	return @"Zoom";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"zoom-cursor-2.png"];

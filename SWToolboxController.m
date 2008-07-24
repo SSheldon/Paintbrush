@@ -23,8 +23,8 @@
 
 @implementation SWToolboxController
 
+// Heights for the panel, based on what is shown
 #define LARGE_HEIGHT 467
-#define MID_HEIGHT 432
 #define SMALL_HEIGHT 367
 
 + (id)sharedToolboxPanelController {
@@ -150,23 +150,16 @@
 	
 	// Handle resizing of tool palette, based on which tool is selected
 	NSRect aRect = [[super window] frame];
-	if ([currentTool shouldShowFillOptions]) {
+	if ([currentTool shouldShowFillOptions] || [currentTool isKindOfClass:[SWSelectionTool class]]) {
 		aRect.origin.y += (aRect.size.height - LARGE_HEIGHT);
 		aRect.size.height = LARGE_HEIGHT;
 
 		[[super window] setFrame:aRect display:YES animate:YES];
 		
-		[[selectionMatrix animator] setHidden:YES];
-		[[fillMatrix animator] setHidden:NO];
-	} else if ([currentTool isKindOfClass:[SWSelectionTool class]]) {
-		// Selection tool
-		aRect.origin.y += (aRect.size.height - MID_HEIGHT);
-		aRect.size.height = MID_HEIGHT;
-		
-		[[super window] setFrame:aRect display:YES animate:YES];
-		
-		[[fillMatrix animator] setHidden:YES];
-		[[selectionMatrix animator] setHidden:NO];
+		// Hide the selection matrix for the shape tools, and hide the fill matrix
+		// for the selection tool
+		[[selectionMatrix animator] setHidden:[currentTool shouldShowFillOptions]];
+		[[fillMatrix animator] setHidden:[currentTool isKindOfClass:[SWSelectionTool class]]];
 	} else {
 		aRect.origin.y += (aRect.size.height - SMALL_HEIGHT);
 		aRect.size.height = SMALL_HEIGHT;

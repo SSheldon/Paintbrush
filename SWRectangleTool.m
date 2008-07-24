@@ -85,11 +85,6 @@
 	[drawToMe unlockFocus];
 }
 
-- (NSString *)name
-{
-	return @"Rectangle";
-}
-
 - (NSCursor *)cursor
 {
 	return [NSCursor crosshairCursor];

@@ -79,11 +79,6 @@
 	}
 }
 
-- (NSString *)name
-{
-	return @"Eraser";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"eraser-cursor.png"];

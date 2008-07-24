@@ -33,8 +33,6 @@
 		272A86F70D74FA0B00630D0B /* scissors2.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E30D74FA0B00630D0B /* scissors2.png */; };
 		272A86F80D74FA0B00630D0B /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E40D74FA0B00630D0B /* text.png */; };
 		272A86F90D74FA0B00630D0B /* text2.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E50D74FA0B00630D0B /* text2.png */; };
-		2734B1540C990297003A32BF /* SWGridView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B1520C990297003A32BF /* SWGridView.h */; };
-		2734B1550C990297003A32BF /* SWGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2734B1530C990297003A32BF /* SWGridView.m */; };
 		2734B4D20C9AFCC8003A32BF /* SWSelectionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */; };
 		2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */; };
 		2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */; };
@@ -53,8 +51,6 @@
 		2774CC770C0A1D5100FE7F0F /* SWCurveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */; };
 		278BF71A0D4E47D40046BCA2 /* SWEyeDropperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */; };
 		278D5BBE0E216E7F00C01A52 /* SWSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 278D5BBD0E216E7F00C01A52 /* SWSlider.m */; };
-		278D5CAA0E21793E00C01A52 /* SWGridPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 278D5CA90E21793E00C01A52 /* SWGridPanelController.m */; };
-		278D5CAC0E21794600C01A52 /* GridPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 278D5CAB0E21794600C01A52 /* GridPanel.xib */; };
 		27955CC00CFDE0C800D5AF99 /* SWColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */; };
 		27955D070CFDE7B900D5AF99 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
 		27A387590D6FA84F00457C9B /* eraser_lg.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A387580D6FA84F00457C9B /* eraser_lg.png */; };
@@ -140,7 +136,6 @@
 				2744468F0C0E515C00D84CE1 /* SWBombTool.h in CopyFiles */,
 				274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */,
 				27A4872A0C57AEE00047DF3C /* SWSizeWindowController.h in CopyFiles */,
-				2734B1540C990297003A32BF /* SWGridView.h in CopyFiles */,
 				2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,8 +173,6 @@
 		272A86E30D74FA0B00630D0B /* scissors2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scissors2.png; sourceTree = "<group>"; };
 		272A86E40D74FA0B00630D0B /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		272A86E50D74FA0B00630D0B /* text2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text2.png; sourceTree = "<group>"; };
-		2734B1520C990297003A32BF /* SWGridView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWGridView.h; sourceTree = "<group>"; };
-		2734B1530C990297003A32BF /* SWGridView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWGridView.m; sourceTree = "<group>"; };
 		2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWSelectionBuilder.m; sourceTree = "<group>"; };
 		2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWSelectionBuilder.h; sourceTree = "<group>"; };
 		273513490D8F83BB00F24379 /* SWAirbrushTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAirbrushTool.h; sourceTree = "<group>"; };
@@ -202,9 +195,6 @@
 		278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWEyeDropperTool.m; sourceTree = "<group>"; };
 		278D5BBC0E216E7F00C01A52 /* SWSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSlider.h; sourceTree = "<group>"; };
 		278D5BBD0E216E7F00C01A52 /* SWSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSlider.m; sourceTree = "<group>"; };
-		278D5CA80E21793E00C01A52 /* SWGridPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWGridPanelController.h; sourceTree = "<group>"; };
-		278D5CA90E21793E00C01A52 /* SWGridPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWGridPanelController.m; sourceTree = "<group>"; };
-		278D5CAB0E21794600C01A52 /* GridPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GridPanel.xib; sourceTree = "<group>"; };
 		27955CBE0CFDE0C800D5AF99 /* SWColorWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWColorWell.h; sourceTree = "<group>"; };
 		27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWColorWell.m; sourceTree = "<group>"; };
 		27955D060CFDE7B900D5AF99 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -394,8 +384,6 @@
 				27AFFDF10D68C06800368E2B /* SWAppController.m */,
 				27A60E250B879A6A0091A1B0 /* SWDocument.h */,
 				27A60E260B879A6A0091A1B0 /* SWDocument.m */,
-				278D5CA80E21793E00C01A52 /* SWGridPanelController.h */,
-				278D5CA90E21793E00C01A52 /* SWGridPanelController.m */,
 				275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */,
 				275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */,
 				27A487280C57AEE00047DF3C /* SWSizeWindowController.h */,
@@ -415,8 +403,6 @@
 				274194B20C1DA5E400605CDC /* SWCenteringClipView.m */,
 				27955CBE0CFDE0C800D5AF99 /* SWColorWell.h */,
 				27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */,
-				2734B1520C990297003A32BF /* SWGridView.h */,
-				2734B1530C990297003A32BF /* SWGridView.m */,
 				27A60E210B879A6A0091A1B0 /* SWPaintView.h */,
 				27A60E220B879A6A0091A1B0 /* SWPaintView.m */,
 				27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */,
@@ -553,7 +539,6 @@
 			children = (
 				27EA85140D3FDF4A00A376A2 /* Cursors */,
 				2738BF750BB5AE84003A8B2E /* Images */,
-				278D5CAB0E21794600C01A52 /* GridPanel.xib */,
 				27F7B8900DE3671D0038ED41 /* MainMenu.xib */,
 				27F7B8940DE3673B0038ED41 /* MyDocument.xib */,
 				27F7B8970DE3674C0038ED41 /* Preferences.xib */,
@@ -692,7 +677,6 @@
 				27F7B89B0DE368CC0038ED41 /* SizeWindow.xib in Resources */,
 				27F7B89E0DE368FA0038ED41 /* TextEntry.xib in Resources */,
 				27F7B8A10DE369080038ED41 /* Toolbox.xib in Resources */,
-				278D5CAC0E21794600C01A52 /* GridPanel.xib in Resources */,
 				27E08C320E33F807002F49E6 /* stroke.png in Resources */,
 				27E08C330E33F807002F49E6 /* stroke2.png in Resources */,
 				27E08C360E33F811002F49E6 /* fill.png in Resources */,
@@ -730,7 +714,6 @@
 				274446900C0E515C00D84CE1 /* SWBombTool.m in Sources */,
 				274194B40C1DA5E400605CDC /* SWCenteringClipView.m in Sources */,
 				27A4872B0C57AEE10047DF3C /* SWSizeWindowController.m in Sources */,
-				2734B1550C990297003A32BF /* SWGridView.m in Sources */,
 				2734B4D20C9AFCC8003A32BF /* SWSelectionBuilder.m in Sources */,
 				27955CC00CFDE0C800D5AF99 /* SWColorWell.m in Sources */,
 				278BF71A0D4E47D40046BCA2 /* SWEyeDropperTool.m in Sources */,
@@ -738,7 +721,6 @@
 				27F3C6030D85C550006AB05A /* SWZoomTool.m in Sources */,
 				2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */,
 				278D5BBE0E216E7F00C01A52 /* SWSlider.m in Sources */,
-				278D5CAA0E21793E00C01A52 /* SWGridPanelController.m in Sources */,
 				273E0B3B0E32F99D00D11815 /* SWImageManipulator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

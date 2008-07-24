@@ -97,11 +97,6 @@
 	}
 }	
 
-- (NSString *)name
-{
-	return @"Fill";
-}
-
 - (NSCursor *)cursor
 {
 	NSImage *customImage = [NSImage imageNamed:@"bucket-cursor.png"];
