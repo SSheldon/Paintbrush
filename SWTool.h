@@ -64,7 +64,7 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 - (NSRect)addRectToRedrawRect:(NSRect)newRect;
 - (NSRect)invalidRect;
 - (void)resetRedrawRect;
-
+- (BOOL)shouldShowContextualMenu;
 - (NSBezierPath *)path;
 
 // A few useful C functions

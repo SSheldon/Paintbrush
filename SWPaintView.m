@@ -159,6 +159,14 @@
     return theMenu;
 }
 
+- (void)updateCurrentTool {
+	[currentTool resetRedrawRect];
+	if (currentTool != [toolbox currentTool]) {
+		currentTool = [toolbox currentTool];
+		[self clearOverlay];
+	}
+}
+
 #pragma mark Mouse/keyboard events: the cornerstone of the drawing process
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -171,17 +179,13 @@
 	isPayingAttention = YES;
 	NSPoint p = [event locationInWindow];
 	downPoint = [self convertPoint:p fromView:nil];
-	[currentTool resetRedrawRect];
 	
 	// Necessary for when the view is zoomed above 100%
 	currentPoint.x = floor(downPoint.x);
 	currentPoint.y = floor(downPoint.y);
 	
-	// Since it's the click, let's confirm which tool we're dealing with
-	if (currentTool != [toolbox currentTool]) {
-		currentTool = [toolbox currentTool];
-		[self clearOverlay];
-	}
+	[self updateCurrentTool];
+
 	[currentTool setSavedPoint:currentPoint];
 	
 	// If it's shifted, do something about it
@@ -236,9 +240,12 @@
 // We want right-clicks to result in the use of the background color
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
+	[self updateCurrentTool];
+	NSUInteger flags = [theEvent modifierFlags] | ([currentTool shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
+	
 	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseDown
 												location:[theEvent locationInWindow] 
-										   modifierFlags:[theEvent modifierFlags] | NSAlternateKeyMask
+										   modifierFlags:flags
 											   timestamp:[theEvent timestamp]
 											windowNumber:[theEvent windowNumber]
 												 context:[theEvent context]
@@ -250,9 +257,11 @@
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
+	NSUInteger flags = [theEvent modifierFlags] | ([currentTool shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
+	
 	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseDragged
 												location:[theEvent locationInWindow] 
-										   modifierFlags:[theEvent modifierFlags] | NSAlternateKeyMask
+										   modifierFlags:flags
 											   timestamp:[theEvent timestamp]
 											windowNumber:[theEvent windowNumber]
 												 context:[theEvent context]
@@ -264,9 +273,11 @@
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
+	NSUInteger flags = [theEvent modifierFlags] | ([currentTool shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
+	
 	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseUp
 												location:[theEvent locationInWindow] 
-										   modifierFlags:[theEvent modifierFlags] | NSAlternateKeyMask
+										   modifierFlags:flags
 											   timestamp:[theEvent timestamp]
 											windowNumber:[theEvent windowNumber]
 												 context:[theEvent context]

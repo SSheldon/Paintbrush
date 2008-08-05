@@ -55,12 +55,14 @@
 		[secondImage lockFocus];
 		
 		// Assign the redrawRect based on the string's size and the insertion point
-		//[super setRedrawRectFromPoint:point 
-		//					  toPoint:NSMakePoint(point.x + [stringToInsert size].width, point.y + [stringToInsert size].height)];
-		[super addRectToRedrawRect:NSMakeRect(point.x, point.y, [stringToInsert size].width, [stringToInsert size].height)];
+		NSInteger drawingOptions = 0 ;
+		NSRect rect = [stringToInsert boundingRectWithSize:[stringToInsert size] options:drawingOptions];
+		rect.origin = point;
+//		NSLog(@"%@ versus %@", [NSValue valueWithRect:rect], [NSValue valueWithSize:[stringToInsert size]]);
+		[super addRectToRedrawRect:rect];
 		
 		
-		[stringToInsert drawAtPoint:point];
+		[stringToInsert drawWithRect:rect options:drawingOptions];
 		[secondImage unlockFocus];
 		//[[NSNotificationCenter defaultCenter] postNotificationName:@"SWRefresh" object:nil];
 		[NSApp sendAction:@selector(refreshImage:)
@@ -125,6 +127,12 @@
 - (BOOL)shouldShowFillOptions
 {
 	return NO;
+}
+
+// Overridden for right-click
+- (BOOL)shouldShowContextualMenu
+{
+	return YES;
 }
 
 - (void)dealloc

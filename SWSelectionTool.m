@@ -60,7 +60,7 @@
 {	
 	_secondImage = secondImage;
 	_anImage = anImage;
-
+	
 	// If the rectangle has already been drawn
 	if (isSelected) {
 		if (event == MOUSE_DRAGGED || [[NSBezierPath bezierPathWithRect:clippingRect] containsPoint:point]) {
@@ -341,6 +341,12 @@
 - (BOOL)shouldShowFillOptions
 {
 	return NO;
+}
+
+// Overridden for right-click
+- (BOOL)shouldShowContextualMenu
+{
+	return YES;
 }
 
 @end

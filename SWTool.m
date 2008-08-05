@@ -119,58 +119,39 @@
 	return path;
 }
 
-// Used to make the drawing faster
-// TODO: deprecate this method
-//- (NSRect)setRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2
-//{
-//	NSRect tempRect = NSZeroRect;
-//	tempRect.origin = NSMakePoint((fmin(p1.x, p2.x) - (lineWidth/2) - 1), (fmin(p1.y, p2.y) - (lineWidth/2) - 1));
-//	tempRect.size = NSMakeSize((abs(p1.x - p2.x) + lineWidth + 2), (abs(p1.y - p2.y) + lineWidth + 2));
-//	//redrawRect = tempRect;
-//	if (tempRect.origin.x != savedRect.origin.x || tempRect.origin.y != savedRect.origin.y) {
-//		redrawRect = NSMakeRect(fmin(tempRect.origin.x, savedRect.origin.x), fmin(tempRect.origin.y, savedRect.origin.y), 
-//								(tempRect.size.width + savedRect.size.width), (tempRect.size.height + savedRect.size.height));
-//	} else {
-//		redrawRect = NSMakeRect(fmin(tempRect.origin.x, savedRect.origin.x), fmin(tempRect.origin.y, savedRect.origin.y), 
-//								fmax(tempRect.size.width, savedRect.size.width), fmax(tempRect.size.height, savedRect.size.height));
-//	}
-//
-//	savedRect = tempRect;
-//
-//	return redrawRect;
-//}
+// By default, no contextual menu
+- (BOOL)shouldShowContextualMenu
+{
+	return NO;
+}
 
+// Used to make the drawing faster
 - (NSRect)setRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2
 {
 	NSRect tempRect;
-	tempRect.origin = NSMakePoint((fmin(p1.x, p2.x) - (lineWidth/2) - 1), (fmin(p1.y, p2.y) - (lineWidth/2) - 1));
+	tempRect.origin = NSMakePoint(round(fmin(p1.x, p2.x) - (lineWidth/2) - 1), round(fmin(p1.y, p2.y) - (lineWidth/2) - 1));
 	tempRect.size = NSMakeSize((abs(p1.x - p2.x) + lineWidth + 2), (abs(p1.y - p2.y) + lineWidth + 2));
 	return [self addRectToRedrawRect:tempRect];
 }
 
-// TODO: Finish implementing this method - it will replace the older setRedrawRectFromPoint:toPoint:
 - (NSRect)addRectToRedrawRect:(NSRect)newRect
 {
-	// Here's some funky math to make it work... don't question the algorithm!
-	//NSRect sumRect;
-	//sumRect.origin.x = fmin(newRect.origin.x, savedRect.origin.x);
-	//sumRect.origin.y = fmin(newRect.origin.y, savedRect.origin.y);
-	//sumRect.size.width = fmax(NSMaxX(newRect), NSMaxX(savedRect)) - sumRect.origin.x;
-	//sumRect.size.height = fmax(NSMaxY(newRect), NSMaxY(savedRect)) - sumRect.origin.y;
-	
+	// The redraw region should include both the current rectangle and
+	// the last action's rectangle
 	redrawRect = NSUnionRect(newRect, savedRect);
 	
-	//NSLog(@"%@", [NSValue valueWithRect:newRect]);
-	
-	// Save the current new rectangle
+	// Save the current new rectangle for next time
 	savedRect = newRect;
+	
+	// Just to be save, outsed the right of the rectangle by an extra pixel
+	// Hack to fix bug with some fonts and the text tool
+	redrawRect.size.width += 1.0;
 	
 	return redrawRect;
 }
 
 - (NSRect)invalidRect
 {
-	//NSLog(@"%lf, %lf, %lf, %lf", 0, 0, [_anImage size].width, [_anImage size].height);
 	return redrawRect;
 }
 
