@@ -48,6 +48,7 @@
 		278FC1020E47879B006065E6 /* selection-regular.png in Resources */ = {isa = PBXBuildFile; fileRef = 278FC1000E47879B006065E6 /* selection-regular.png */; };
 		278FC1030E47879B006065E6 /* selection-transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 278FC1010E47879B006065E6 /* selection-transparent.png */; };
 		278FC1570E478C86006065E6 /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 278FC1560E478C86006065E6 /* airbrush.png */; };
+		278FC2BA0E4A3E21006065E6 /* SWToolboxPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FC2B90E4A3E21006065E6 /* SWToolboxPanel.m */; };
 		27955CC00CFDE0C800D5AF99 /* SWColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */; };
 		27955D070CFDE7B900D5AF99 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
 		27A4872A0C57AEE00047DF3C /* SWSizeWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A487280C57AEE00047DF3C /* SWSizeWindowController.h */; };
@@ -175,6 +176,8 @@
 		278FC1000E47879B006065E6 /* selection-regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selection-regular.png"; sourceTree = "<group>"; };
 		278FC1010E47879B006065E6 /* selection-transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selection-transparent.png"; sourceTree = "<group>"; };
 		278FC1560E478C86006065E6 /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
+		278FC2B80E4A3E21006065E6 /* SWToolboxPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWToolboxPanel.h; sourceTree = "<group>"; };
+		278FC2B90E4A3E21006065E6 /* SWToolboxPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWToolboxPanel.m; sourceTree = "<group>"; };
 		27955CBE0CFDE0C800D5AF99 /* SWColorWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWColorWell.h; sourceTree = "<group>"; };
 		27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWColorWell.m; sourceTree = "<group>"; };
 		27955D060CFDE7B900D5AF99 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 			children = (
 				273E0B3A0E32F99D00D11815 /* SWImageManipulator.h */,
 				273E0B390E32F99D00D11815 /* SWImageManipulator.m */,
+				278FC2B80E4A3E21006065E6 /* SWToolboxPanel.h */,
+				278FC2B90E4A3E21006065E6 /* SWToolboxPanel.m */,
 				2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */,
 				2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */,
 			);
@@ -652,6 +657,7 @@
 				278D5BBE0E216E7F00C01A52 /* SWSlider.m in Sources */,
 				273E0B3B0E32F99D00D11815 /* SWImageManipulator.m in Sources */,
 				278FC09F0E478024006065E6 /* SWButtonCell.m in Sources */,
+				278FC2BA0E4A3E21006065E6 /* SWToolboxPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

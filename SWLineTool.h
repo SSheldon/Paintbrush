@@ -22,6 +22,8 @@
 #import <Cocoa/Cocoa.h>
 #import "SWTool.h"
 
-@interface SWLineTool : SWTool
+@interface SWLineTool : SWTool {
+	NSColor *primaryColor;
+}
 
 @end

@@ -42,7 +42,10 @@
 	return nil;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {
 	_anImage = anImage;
 	_secondImage = secondImage;
@@ -124,10 +127,7 @@
 	return [NSCursor IBeamCursor];
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}
+
 
 // Overridden for right-click
 - (BOOL)shouldShowContextualMenu

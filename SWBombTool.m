@@ -28,7 +28,10 @@
 	return nil;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event;
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event;
 {	
 	if (event == MOUSE_DOWN) {
 		// If there's an explosion going on, kill it
@@ -122,10 +125,7 @@
 	return customCursor;
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}
+
 
 // Overwrite to stop the animation
 - (void)tieUpLooseEnds

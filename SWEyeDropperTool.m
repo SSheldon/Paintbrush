@@ -24,7 +24,10 @@
 
 @implementation SWEyeDropperTool
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event;
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event;
 {
 	// This only needs to happen once
 	if (event == MOUSE_DOWN) {
@@ -56,10 +59,7 @@
 	return customCursor;
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}	
+	
 
 
 @end

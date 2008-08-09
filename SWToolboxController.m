@@ -53,13 +53,15 @@
 		[toolList setObject:[[SWFillTool alloc] init] forKey:@"Fill"];
 		[toolList setObject:[[SWSelectionTool alloc] init] forKey:@"Selection"];
 		[toolList setObject:[[SWTextTool alloc] init] forKey:@"Text"];
-		[toolList setObject:[[SWBombTool alloc] init] forKey:@"Bomb"]; // Not currently in use...
+		[toolList setObject:[[SWBombTool alloc] init] forKey:@"Bomb"];
 		[toolList setObject:[[SWEyeDropperTool alloc] init] forKey:@"EyeDropper"];
 		[toolList setObject:[[SWZoomTool alloc] init] forKey:@"Zoom"];
 		[toolList setObject:[[SWAirbrushTool alloc] init] forKey:@"Airbrush"];
 		
 		// It's a panel, not a real window
-		[(NSPanel *)[super window] setBecomesKeyOnlyIfNeeded:YES];
+		// NOTE: This is no longer necessary, as our custom NSPanel subclass
+		// can NEVER become the key window.
+		//[(NSPanel *)[super window] setBecomesKeyOnlyIfNeeded:YES];
 	}
 	return self;
 }
@@ -150,7 +152,7 @@
 	
 	// Handle resizing of tool palette, based on which tool is selected
 	NSRect aRect = [[super window] frame];
-	if ([currentTool shouldShowFillOptions] || [currentTool isKindOfClass:[SWSelectionTool class]]) {
+	if ([currentTool shouldShowFillOptions] || [currentTool shouldShowTransparencyOptions]) {
 		aRect.origin.y += (aRect.size.height - LARGE_HEIGHT);
 		aRect.size.height = LARGE_HEIGHT;
 
@@ -159,7 +161,7 @@
 		// Hide the selection matrix for the shape tools, and hide the fill matrix
 		// for the selection tool
 		[[selectionMatrix animator] setHidden:[currentTool shouldShowFillOptions]];
-		[[fillMatrix animator] setHidden:[currentTool isKindOfClass:[SWSelectionTool class]]];
+		[[fillMatrix animator] setHidden:[currentTool shouldShowTransparencyOptions]];
 	} else {
 		aRect.origin.y += (aRect.size.height - SMALL_HEIGHT);
 		aRect.size.height = SMALL_HEIGHT;

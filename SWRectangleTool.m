@@ -47,7 +47,10 @@
 	return path;	
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {
 	// Use the points clicked to build a redraw rectangle
 	[super setRedrawRectFromPoint:savedPoint toPoint:point];
@@ -69,16 +72,27 @@
 	[drawToMe lockFocus]; 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
+	// Which colors should we draw with?
+	if (event == MOUSE_DOWN) {
+		if (flags & NSAlternateKeyMask) {
+			primaryColor = backColor;
+			secondaryColor = frontColor;
+		} else {
+			primaryColor = frontColor;
+			secondaryColor = backColor;
+		}
+	}
+	
 	if (shouldFill && shouldStroke) {
-		[frontColor setStroke];
-		[backColor setFill];
+		[primaryColor setStroke];
+		[secondaryColor setFill];
 		[[self pathFromPoint:savedPoint toPoint:point] fill];
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 	} else if (shouldFill) {
-		[frontColor setFill];
+		[primaryColor setFill];
 		[[self pathFromPoint:savedPoint toPoint:point] fill];
 	} else if (shouldStroke) {
-		[frontColor setStroke];
+		[primaryColor setStroke];
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 	}
 	

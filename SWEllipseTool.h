@@ -22,6 +22,9 @@
 #import <Cocoa/Cocoa.h>
 #import "SWTool.h"
 
-@interface SWEllipseTool : SWTool
+@interface SWEllipseTool : SWTool {
+	NSColor *primaryColor;
+	NSColor *secondaryColor;
+}
 
 @end

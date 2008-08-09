@@ -76,11 +76,16 @@
 }
 
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
 		numberOfClicks++;
+		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	}
+	
 	// This loop removes all the representations in the overlay image, effectively clearing it
 	for (NSImageRep *rep in [secondImage representations]) {
 		[secondImage removeRepresentation:rep];
@@ -117,7 +122,7 @@
 	[drawToMe lockFocus]; 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
-	[frontColor setStroke];
+	[primaryColor setStroke];
 	NSBezierPath *p = [self pathFromPoint:savedPoint toPoint:point];
 	[p stroke];
 	
@@ -165,9 +170,6 @@
 	return [NSCursor crosshairCursor];
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}
+
 
 @end

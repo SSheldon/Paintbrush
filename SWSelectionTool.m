@@ -56,7 +56,10 @@
 	return path;	
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {	
 	_secondImage = secondImage;
 	_anImage = anImage;
@@ -338,9 +341,9 @@
 	return [NSCursor crosshairCursor];
 }
 
-- (BOOL)shouldShowFillOptions
+- (BOOL)shouldShowTransparencyOptions
 {
-	return NO;
+	return YES;
 }
 
 // Overridden for right-click

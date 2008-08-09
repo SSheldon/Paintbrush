@@ -19,34 +19,9 @@
  */
 
 
-#import "SWColorWell.h"
+#import <Cocoa/Cocoa.h>
 
-@implementation SWColorWell
 
-// Overwriting NSColorWell to add one interesting feature: when an active
-//  well is selected (deactivating it), the associated NSColorPanel is 
-//  closed, reinforcing the fact that it has been deselected, as well as
-//  eliminating the possibility of CGFloat-clicking and unknowingly
-//  deactivating the well.
-- (void)deactivate {
-	[super deactivate];
-	[[NSColorPanel sharedColorPanel] close];
-}
-
-- (void)drawRect:(NSRect)rect
-{
-	NSLog(@"%@", [NSValue valueWithRect:rect]);
-	//[super drawRect:rect];
-	[self lockFocus];
-	//rect = NSInsetRect(rect, 3.0, 3.0);
-	[[self color] setFill];
-	[NSBezierPath fillRect:rect];
-	[self unlockFocus];
-}
-
-- (BOOL)isOpaque
-{
-	return NO;
-}
+@interface SWToolboxPanel : NSPanel
 
 @end

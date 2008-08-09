@@ -41,7 +41,10 @@
 	return path;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {	
 	// Use the points clicked to build a redraw rectangle
 	[super setRedrawRectFromPoint:point toPoint:savedPoint];
@@ -88,9 +91,6 @@
 	return customCursor;
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}
+
 
 @end

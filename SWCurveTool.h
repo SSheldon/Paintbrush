@@ -24,7 +24,8 @@
 
 @interface SWCurveTool : SWTool {
 	NSInteger numberOfClicks;
-	
+	NSColor *primaryColor;
+
 	NSPoint cp1, cp2, beginPoint, endPoint;
 }
 

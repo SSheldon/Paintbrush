@@ -155,17 +155,29 @@
 	return redrawRect;
 }
 
+- (BOOL)shouldShowFillOptions
+{
+	return NO;
+}
+
+- (BOOL)shouldShowTransparencyOptions
+{
+	return NO;
+}
+
 
 BOOL colorsAreEqual(NSColor *clicked, NSColor *painting)
 {
-	NSInteger r1, r2, g1, g2, b1, b2;
+	CGFloat r1, r2, g1, g2, b1, b2, a1, a2;
+	[clicked getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+	[painting getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
 	
-	r1 = roundf(255*[clicked redComponent]);
-	r2 = roundf(255*[painting redComponent]);
-	g1 = roundf(255*[clicked greenComponent]);
-	g2 = roundf(255*[painting greenComponent]);
-	b1 = roundf(255*[clicked blueComponent]);
-	b2 = roundf(255*[painting blueComponent]);
+	r1 = roundf(255*r1);
+	r2 = roundf(255*r2);
+	g1 = roundf(255*g1);
+	g2 = roundf(255*g2);
+	b1 = roundf(255*b1);
+	b2 = roundf(255*b2);
 	//NSLog(@"%d = %d, %d = %d, %d = %d", r1, r2, g1, g2, b1, b2);
 	return (r1==r2) && (g1==g2) && (b1==b2);
 }

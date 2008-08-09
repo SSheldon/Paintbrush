@@ -22,6 +22,9 @@
 #import <Cocoa/Cocoa.h>
 #import "SWTool.h"
 
-@interface SWRectangleTool : SWTool
+@interface SWRectangleTool : SWTool {
+	NSColor *primaryColor;
+	NSColor *secondaryColor;
+}
 
 @end

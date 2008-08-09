@@ -46,7 +46,10 @@
 	return path;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {
 	p = point;
 	if (event == MOUSE_UP) {
@@ -119,10 +122,7 @@
 	return customCursor;
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}
+
 
 - (void)tieUpLooseEnds
 {

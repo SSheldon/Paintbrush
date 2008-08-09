@@ -67,7 +67,10 @@
 	return path;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event
 {
 	// Use the points clicked to build a redraw rectangle
 	[super setRedrawRectFromPoint:savedPoint toPoint:point];
@@ -86,10 +89,15 @@
 		drawToMe = secondImage;
 	}
 	
+	// Which color do we use?
+	if (event == MOUSE_DOWN) {
+		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
+	}
+	
 	[drawToMe lockFocus]; 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
-	[frontColor setStroke];
+	[primaryColor setStroke];
 	[[self pathFromPoint:savedPoint toPoint:point] stroke];
 	
 	[drawToMe unlockFocus];
@@ -102,9 +110,6 @@
 	return [NSCursor crosshairCursor];
 }
 
-- (BOOL)shouldShowFillOptions
-{
-	return NO;
-}
+
 
 @end

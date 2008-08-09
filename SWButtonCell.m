@@ -53,6 +53,10 @@
 					  fromRect:NSZeroRect
 					 operation:NSCompositeSourceOver
 					  fraction:1.0];
+		NSShadow *shadow = [NSShadow new];
+		[shadow setShadowBlurRadius:4.0];
+		[shadow setShadowColor:[NSColor whiteColor]];
+		[shadow set];
 		[normal drawAtPoint:NSZeroPoint
 				   fromRect:NSZeroRect
 				  operation:NSCompositeSourceOver

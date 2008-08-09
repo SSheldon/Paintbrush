@@ -65,6 +65,8 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 - (NSRect)invalidRect;
 - (void)resetRedrawRect;
 - (BOOL)shouldShowContextualMenu;
+- (BOOL)shouldShowFillOptions;
+- (BOOL)shouldShowTransparencyOptions;
 - (NSBezierPath *)path;
 
 // A few useful C functions
@@ -75,9 +77,11 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 @interface SWTool (Abstract)
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end;
-- (void)performDrawAtPoint:(NSPoint)point withMainImage:(NSImage *)anImage secondImage:(NSImage *)secondImage mouseEvent:(SWMouseEvent)event;
+- (void)performDrawAtPoint:(NSPoint)point 
+			 withMainImage:(NSImage *)anImage 
+			   secondImage:(NSImage *)secondImage 
+				mouseEvent:(SWMouseEvent)event;
 //- (NSString *)name;
 - (NSCursor *)cursor;
-- (BOOL)shouldShowFillOptions;
 
 @end

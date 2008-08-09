@@ -27,12 +27,13 @@
 	// Draw a dark gray gradient background, using the new NSGradient class that has been added in Leopard.
 	if (backgroundGradient == nil) {
         backgroundGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.88 alpha:1.0]
-														   endingColor:[NSColor colorWithCalibratedWhite:0.8 alpha:1.0]];
+														   endingColor:[NSColor colorWithCalibratedWhite:0.78 alpha:1.0]];
 	}
 	[backgroundGradient drawInRect:[self bounds] angle:90.0];
 	
 //	for (NSView *view in [self subviews]) {
-//		NSLog(@"%@ %lf %lf %lf %lf", view, [view frame].size.width, [view frame].size.height, [view frame].origin.x, [view frame].origin.y);
+//		NSLog(@"%@ %lf %lf %lf %lf", view, [view frame].size.width, [view frame].size.height, 
+//			  [view frame].origin.x, [view frame].origin.y);
 //		NSShadow *shadow = [[NSShadow alloc] init];
 //		[shadow setShadowColor:[NSColor grayColor]];
 //		[shadow setShadowOffset:NSMakeSize(5,5)];
