@@ -21,6 +21,7 @@
 
 
 #import "SWTextToolWindowController.h"
+#import "SWToolboxController.h"
 
 
 @implementation SWTextToolWindowController
@@ -62,7 +63,8 @@
 	[textView selectAll:textView];
 	[self close];
 	[NSApp endSheet:[self window]];
-	[[[SWToolboxController sharedToolboxPanelController] currentTool] tieUpLooseEnds];
+	SWTool *currentTool = [[SWToolboxController sharedToolboxPanelController] currentTool];
+	[currentTool tieUpLooseEnds];
 }
 
 - (void)dealloc

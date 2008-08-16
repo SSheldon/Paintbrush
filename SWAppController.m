@@ -21,6 +21,8 @@
 
 #import "SWAppController.h"
 #import "SWSizeWindowController.h"
+#import "SWPreferenceController.h"
+#import "SWToolboxController.h"
 
 @implementation SWAppController
 

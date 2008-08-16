@@ -21,7 +21,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SWTool.h"
-#import "SWSelectionBuilder.h"
+
+@class SWSelectionBuilder;
 
 @interface SWFillTool : SWTool {
 	NSBitmapImageRep *aRep, *imageRep;

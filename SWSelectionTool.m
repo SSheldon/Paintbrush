@@ -330,7 +330,6 @@
 	return backedImage;
 }
 
-
 - (BOOL)isSelected
 {
 	return isSelected;

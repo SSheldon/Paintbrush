@@ -123,7 +123,6 @@
 }
 
 
-
 - (void)tieUpLooseEnds
 {
 	if (isSpraying) {

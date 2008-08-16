@@ -21,9 +21,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Sparkle/Sparkle.h>
-#import "SWPreferenceController.h"
-#import "SWToolboxController.h"
-//#import "SWGridPanelController.h"
+
+@class SWPreferenceController;
+@class SWToolboxController;
 
 @interface SWAppController : NSObject
 {

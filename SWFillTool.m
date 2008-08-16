@@ -20,6 +20,8 @@
 
 
 #import "SWFillTool.h"
+#import "SWSelectionBuilder.h"
+
 
 @interface SWFillTool (Private)
 
@@ -107,8 +109,6 @@
 	return customCursor;
 }
 
-
-	
 
 @end
 

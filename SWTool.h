@@ -21,9 +21,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-//#define MOUSE_DOWN 0
-//#define MOUSE_DRAGGED 1
-//#define MOUSE_UP 2
 
 typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 
@@ -46,11 +43,10 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 - (void)setFrontColor:(NSColor *)front;
 - (void)setBackColor:(NSColor *)back;
 - (void)setLineWidth:(CGFloat)width;
-- (void)shouldFill:(BOOL)fill stroke:(BOOL)stroke;
+- (void)setShouldFill:(BOOL)fill stroke:(BOOL)stroke;
 
 
 - (NSPoint)savedPoint;
-//- (NSString *)type;
 - (NSColor *)drawingColor;
 - (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(CGFloat)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
 - (void)setModifierFlags:(NSUInteger)modifierFlags;
@@ -81,7 +77,6 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 			 withMainImage:(NSImage *)anImage 
 			   secondImage:(NSImage *)secondImage 
 				mouseEvent:(SWMouseEvent)event;
-//- (NSString *)name;
 - (NSCursor *)cursor;
 
 @end

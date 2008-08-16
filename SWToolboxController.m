@@ -20,6 +20,8 @@
 
 
 #import "SWToolboxController.h"
+#import "SWToolList.h"
+#import "SWColorWell.h"
 
 @implementation SWToolboxController
 
@@ -186,7 +188,7 @@
 		shouldFill = YES;
 		shouldStroke = YES;
 	}
-	[currentTool shouldFill:shouldFill stroke:shouldStroke];
+	[currentTool setShouldFill:shouldFill stroke:shouldStroke];
 }
 
 // The slider moved, meaning the line width should change

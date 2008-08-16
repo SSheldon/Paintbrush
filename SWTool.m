@@ -26,8 +26,6 @@
 - (id)init
 {
 	if(self = [super init]) {
-//		path = [[NSBezierPath alloc] init];
-//		[path setLineCapStyle:NSRoundLineCapStyle];
 		[self resetRedrawRect];
 	}
 	return self;
@@ -64,7 +62,7 @@
 	lineWidth = width;
 }
 
-- (void)shouldFill:(BOOL)fill stroke:(BOOL)stroke
+- (void)setShouldFill:(BOOL)fill stroke:(BOOL)stroke
 {
 	shouldFill = fill;
 	shouldStroke = stroke;

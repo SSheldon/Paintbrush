@@ -21,13 +21,15 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "SWPaintView.h"
-#import "SWToolList.h"
-#import "SWScalingScrollView.h"
-#import "SWCenteringClipView.h"
-#import "SWToolboxController.h"
-#import "SWTextToolWindowController.h"
-#import "SWSizeWindowController.h"
+
+@class SWPaintView;
+@class SWScalingScrollView;
+@class SWTool;
+@class SWPaintView;
+@class SWToolboxController;
+@class SWSizeWindowController;
+@class SWCenteringClipView;
+@class SWTextToolWindowController;
 
 @interface SWDocument : NSDocument
 {

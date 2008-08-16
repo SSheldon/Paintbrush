@@ -20,6 +20,7 @@
 
 
 #import "SWEyeDropperTool.h"
+#import "SWToolboxController.h"
 
 
 @implementation SWEyeDropperTool
@@ -58,8 +59,6 @@
 	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(1,15)];
 	return customCursor;
 }
-
-	
 
 
 @end

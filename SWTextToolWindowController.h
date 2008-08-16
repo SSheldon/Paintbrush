@@ -20,7 +20,6 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "SWToolboxController.h"
 
 
 @interface SWTextToolWindowController : NSWindowController {

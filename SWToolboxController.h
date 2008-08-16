@@ -20,8 +20,9 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "SWToolList.h"
-#import "SWColorWell.h"
+
+@class SWColorWell;
+@class SWTool;
 
 @interface SWToolboxController : NSWindowController {
 	

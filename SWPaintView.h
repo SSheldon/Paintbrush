@@ -20,8 +20,9 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "SWToolList.h"
-#import "SWToolboxController.h"
+
+@class SWToolboxController;
+@class SWTool;
 
 @interface SWPaintView : NSView {
 	NSImage *mainImage;

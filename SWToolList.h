@@ -19,6 +19,7 @@
  */
 
 
+// Just a collection of all the tools in the program
 #import "SWTool.h"
 #import "SWRectangleTool.h"
 #import "SWEraserTool.h"

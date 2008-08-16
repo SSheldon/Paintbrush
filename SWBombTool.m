@@ -126,7 +126,6 @@
 }
 
 
-
 // Overwrite to stop the animation
 - (void)tieUpLooseEnds
 {

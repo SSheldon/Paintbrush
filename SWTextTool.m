@@ -128,7 +128,6 @@
 }
 
 
-
 // Overridden for right-click
 - (BOOL)shouldShowContextualMenu
 {

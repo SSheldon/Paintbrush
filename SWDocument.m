@@ -21,6 +21,13 @@
 
 #import "SWDocument.h"
 #import "SWImageManipulator.h"
+#import "SWPaintView.h"
+#import "SWScalingScrollView.h"
+#import "SWCenteringClipView.h"
+#import "SWToolboxController.h"
+#import "SWTextToolWindowController.h"
+#import "SWSizeWindowController.h"
+#import "SWToolList.h"
 
 @implementation SWDocument
 

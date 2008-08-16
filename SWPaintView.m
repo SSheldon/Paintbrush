@@ -22,6 +22,8 @@
 #import "SWPaintView.h"
 #import "SWCenteringClipView.h"
 #import "SWScalingScrollView.h"
+#import "SWToolList.h"
+#import "SWToolboxController.h"
 
 @implementation SWPaintView
 
