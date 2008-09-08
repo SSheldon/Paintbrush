@@ -26,9 +26,11 @@
 // Generates the path to be drawn to the image
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	path = [NSBezierPath new];
-	[path setLineWidth:lineWidth];
-	[path setLineCapStyle:NSRoundLineCapStyle];
+	if (!path) {
+		path = [NSBezierPath new];
+		[path setLineWidth:lineWidth];
+		[path setLineCapStyle:NSRoundLineCapStyle];
+	}
 	if (lineWidth == 1) {
 		begin.x += 0.5;
 		begin.y += 0.5;
@@ -59,13 +61,14 @@
 					   operation:NSCompositeSourceOver 
 						fraction:1.0];
 		[anImage unlockFocus];
-		
-		// This loop removes all the representations in the overlay image, effectively clearing it
-		for (NSImageRep *rep in [secondImage representations]) {
-			[secondImage removeRepresentation:rep];
-		}		
-	} else {
+
+		path = nil;
+	} else {		
 		[secondImage lockFocus]; 
+		
+		// The best way I can come up with to clear the image
+		[[NSColor clearColor] setFill];
+		NSRectFill(NSMakeRect(0,0,[secondImage size].width, [secondImage size].height));
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {
@@ -78,10 +81,6 @@
 		
 		[secondImage unlockFocus];
 	}
-	
-	//redrawRect = NSMakeRect(0, 0, 1280, 1024);
-	
-	path = nil;
 }
 
 - (NSCursor *)cursor

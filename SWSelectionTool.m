@@ -230,6 +230,11 @@
 						
 			// Delete it from the main image
 			[anImage lockFocus];
+			
+			// The best way I can come up with to clear the image
+			[[NSColor clearColor] setFill];
+			NSRectFill(NSMakeRect(0,0,[anImage size].width, [anImage size].height));
+			
 			[backColor set];
 			[NSBezierPath fillRect:clippingRect];
 			[anImage unlockFocus];

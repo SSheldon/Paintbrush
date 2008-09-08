@@ -24,6 +24,8 @@
 
 @interface SWSizeWindowController : NSWindowController {
 	IBOutlet NSPopUpButton *sizeButton;
+	IBOutlet NSMenuItem *clipboard;
+	
 	IBOutlet NSTextField *heightField;
 	IBOutlet NSTextField *widthField;
 	

@@ -76,7 +76,12 @@
 		
 		// Perform the actual drawing
 		[image lockFocus];
-		[bombColor set];
+		
+		// The best way I can come up with to clear the image
+		[[NSColor clearColor] setFill];
+		NSRectFill(NSMakeRect(0,0,[image size].width, [image size].height));
+		
+		[[bombColor colorWithAlphaComponent:1.0] set];
 		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
 		[image unlockFocus];
 		
@@ -103,9 +108,9 @@
 				   to:nil
 				 from:nil];
 	
-	[mainImage lockFocus];
+	[mainImage lockFocus];	
 	[bombColor set];
-	[[NSBezierPath bezierPathWithRect:NSMakeRect(0, 0, [mainImage size].width, [mainImage size].height)] fill];
+	NSRectFill(NSMakeRect(0,0,[mainImage size].width, [mainImage size].height));
 	[mainImage unlockFocus];
 
 	// This loop removes all the representations in the overlay image, effectively clearing it

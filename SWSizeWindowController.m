@@ -20,7 +20,7 @@
 
 
 #import "SWSizeWindowController.h"
-
+#import "SWDocument.h"
 
 @implementation SWSizeWindowController
 
@@ -52,36 +52,53 @@
 // change the two text fields to stay synchronized with it
 - (IBAction)changeSizeButton:(id)sender
 {
-	NSString *newSize = [sizeButton titleOfSelectedItem];
-	
-	if ([newSize isEqualToString:@"640 x 480"]) {
-		[widthField setIntValue:640];
-		[heightField setIntValue:480];
-	} else if ([newSize isEqualToString:@"800 x 600"]) {
-		[widthField setIntValue:800];
-		[heightField setIntValue:600];
-	} else if ([newSize isEqualToString:@"1024 x 768"]) {
-		[widthField setIntValue:1024];
-		[heightField setIntValue:768];
-	} else if ([newSize isEqualToString:@"1280 x 1024"]) {
-		[widthField setIntValue:1280];
-		[heightField setIntValue:1024];
+	if ([sender selectedItem] == clipboard) {
+		NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+		if (data) {
+			NSImage *temp = [[NSImage alloc] initWithData:data];
+			[widthField setIntValue:[temp size].width];
+			[heightField setIntValue:[temp size].height];
+		}
+	} else {
+		NSString *newSize = [sizeButton titleOfSelectedItem];
+		NSScanner *scanner = [NSScanner scannerWithString:newSize];
+		NSInteger width, height;
+		
+		// Parse the string to decide on a width and height
+		if ([scanner scanInteger:&width] && [scanner scanString:@"x" intoString:NULL] && [scanner scanInteger:&height]) {
+			//NSLog(@"%d %d", width, height);
+			[widthField setIntValue:width];
+			[heightField setIntValue:height];
+		}
 	}
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	if (menuItem == clipboard) {
+		return ([SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
+	}
+	return YES;
 }
 
 // Each time the user types in the width or height field, check to see if it's
 // one of the preset values in the popup button
 - (void)textDidChange:(NSNotification *)aNotification
 {
-	if ([widthField integerValue] == 640 && [heightField integerValue] == 480) {
-		[sizeButton selectItemWithTitle:@"640 x 480"];
-	} else if ([widthField integerValue] == 800 && [heightField integerValue] == 600) {
-		[sizeButton selectItemWithTitle:@"800 x 600"];
-	} else if ([widthField integerValue] == 1024 && [heightField integerValue] == 768) {
-		[sizeButton selectItemWithTitle:@"1024 x 768"];
-	} else if ([widthField integerValue] == 1280 && [heightField integerValue] == 1024) {
-		[sizeButton selectItemWithTitle:@"1280 x 1024"];
-	} else {
+	NSInteger width = [widthField integerValue];
+	NSInteger height = [heightField integerValue];
+	BOOL isFound = NO;
+
+	NSString *string = [NSString stringWithFormat:@"%d x %d", width, height];
+	for (NSMenuItem *item in [sizeButton itemArray]) {
+		if ([[item title] isEqualTo:string]) {
+			[sizeButton selectItem:item];
+			isFound = YES;
+			break;
+		}
+	}
+	
+	if (!isFound) {
 		[sizeButton selectItemWithTitle:@"Custom"];
 	}
 }

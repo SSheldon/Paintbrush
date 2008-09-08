@@ -109,8 +109,14 @@
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		
 		// Fill the background, but maintain transparency of mainImage
-		[[toolbox backgroundColor] set];
+		//[[toolbox backgroundColor] set];
 		//[NSBezierPath fillRect:[self bounds]];
+		
+//		if (backgroundColor) {
+//			[backgroundColor setFill];
+//			//NSLog(@"%@", [NSValue valueWithRect:[(NSScrollView *)[self superview] documentVisibleRect]]);
+//			NSRectFill(rect);
+//		}
 		
 		[NSGraphicsContext saveGraphicsState];
 		
@@ -197,8 +203,8 @@
 						secondImage:secondImage 
 						 mouseEvent:MOUSE_DOWN];
 	
-	//[self setNeedsDisplayInRect:[currentTool invalidRect]];
-	[self setNeedsDisplay:YES];
+	[self setNeedsDisplayInRect:[currentTool invalidRect]];
+	//[self setNeedsDisplay:YES];
 }
 
 - (void)mouseDragged:(NSEvent *)event
@@ -234,8 +240,8 @@
 		[currentTool performDrawAtPoint:downPoint withMainImage:mainImage secondImage:secondImage mouseEvent:MOUSE_UP];
 		currentPoint = downPoint;
 		
-		//[self setNeedsDisplayInRect:[currentTool invalidRect]];
-		[self setNeedsDisplay:YES];
+		[self setNeedsDisplayInRect:[currentTool invalidRect]];
+		//[self setNeedsDisplay:YES];
 	}
 }
 
@@ -345,9 +351,9 @@
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale
 {	
 	//mainImage = newImage;
-//	for (NSImageRep *rep in [mainImage representations]) {
-//		[mainImage removeRepresentation:rep];
-//	}
+	for (NSImageRep *rep in [mainImage representations]) {
+		[mainImage removeRepresentation:rep];
+	}
 	[mainImage lockFocus];
 	if (scale) {
 		// Stretch the image to the correct size
@@ -370,6 +376,11 @@
 - (void)setCurrentTool:(SWTool *)newTool
 {
 	currentTool = newTool;
+}
+
+- (void)setBackgroundColor:(NSColor *)color
+{
+	backgroundColor = color;
 }
 
 #pragma mark Handling undo: a "prep" and then the actual method
@@ -549,9 +560,9 @@
 	[self cursorUpdate:nil];
 	NSImage *temp = [[NSImage alloc] initWithData:data];
 	
-	NSLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
-		  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
-		  [[self superview] bounds].size.width, [[self superview] bounds].size.height);
+	//NSLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
+	//	  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
+	//	  [[self superview] bounds].size.width, [[self superview] bounds].size.height);
 		  //[self bounds].origin.x, [self bounds].origin.y, 
 		  //[self bounds].size.width, [self bounds].size.height);
 	
@@ -564,7 +575,7 @@
 	origin.y -= [temp size].height;
 	//origin.y += [[self superview] bounds].size.height - [self bounds].size.height;
 
-	NSLog(@"origin = (%lf, %lf)", origin.x, origin.y);
+	//NSLog(@"origin = (%lf, %lf)", origin.x, origin.y);
 	
 	NSRect rect = NSZeroRect;
 	rect.origin = origin;
@@ -619,7 +630,7 @@
 // Optimizes speed a bit
 - (BOOL)isOpaque
 {
-	return YES;
+	return NO;
 }
 
 - (BOOL)hasRun
@@ -651,30 +662,3 @@
  }*/
 
 @end
-
-//void DrawGridWithSettingsInRect(CGFloat spacing, NSColor *color, NSRect rect, NSPoint gridOrigin) 
-//{
-//    int curLine, endLine;
-//    NSBezierPath *gridPath = [NSBezierPath bezierPath];
-//	
-//    [color set];
-//	
-//    // Columns
-//    curLine = ceil((NSMinX(rect) - gridOrigin.x) / spacing);
-//    endLine = floor((NSMaxX(rect) - gridOrigin.x) / spacing);
-//    for (; curLine<=endLine; curLine++) {
-//        [gridPath moveToPoint:NSMakePoint((curLine * spacing) + gridOrigin.x, NSMinY(rect))];
-//        [gridPath lineToPoint:NSMakePoint((curLine * spacing) + gridOrigin.x, NSMaxY(rect))];
-//    }
-//	
-//    // Rows
-//    curLine = ceil((NSMinY(rect) - gridOrigin.y) / spacing);
-//    endLine = floor((NSMaxY(rect) - gridOrigin.y) / spacing);
-//    for (; curLine<=endLine; curLine++) {
-//        [gridPath moveToPoint:NSMakePoint(NSMinX(rect), (curLine * spacing) + gridOrigin.y)];
-//        [gridPath lineToPoint:NSMakePoint(NSMaxX(rect), (curLine * spacing) + gridOrigin.y)];
-//    }
-//	
-//    [gridPath setLineWidth:0.0];
-//    [gridPath stroke];
-//}

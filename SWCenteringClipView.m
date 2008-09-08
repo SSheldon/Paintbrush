@@ -20,6 +20,7 @@
 
 
 #import "SWCenteringClipView.h"
+#import "SWScalingScrollView.h"
 
 @implementation SWCenteringClipView
 
@@ -29,6 +30,7 @@
         backgroundGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.88 alpha:1.0]
 														   endingColor:[NSColor colorWithCalibratedWhite:0.78 alpha:1.0]];
 	}
+	//NSLog(@"%@", [NSValue valueWithRect:[self bounds]]);
 	[backgroundGradient drawInRect:[self bounds] angle:90.0];
 	
 //	for (NSView *view in [self subviews]) {
@@ -71,17 +73,18 @@
 	
 	// If the clip view is wider than the doc, we can't scroll horizontally
 	if (docRect.size.width < clipRect.size.width) {
-		newScrollPoint.x = roundf(maxX / 2.0);
+		newScrollPoint.x = round(maxX / 2.0);
 	} else {
-		newScrollPoint.x = roundf(MAX(0,MIN(newScrollPoint.x,maxX)));
+		newScrollPoint.x = round(MAX(0,MIN(newScrollPoint.x,maxX)));
 	}
 	
 	// If the clip view is taller than the doc, we can't scroll vertically
 	if (docRect.size.height < clipRect.size.height) {
-		newScrollPoint.y = roundf( maxY / 2.0 );
+		newScrollPoint.y = round( maxY / 2.0 );
 	} else {
-		newScrollPoint.y = roundf( MAX(0,MIN(newScrollPoint.y,maxY)) );
+		newScrollPoint.y = round( MAX(0,MIN(newScrollPoint.y,maxY)) );
 	}
+
 	return newScrollPoint;
 }
 

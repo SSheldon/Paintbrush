@@ -21,6 +21,7 @@
 
 #import "SWScalingScrollView.h"
 #import "SWCenteringClipView.h"
+#import "SWDocument.h"
 
 static NSString *scaleMenuLabels[] = { @"25%", @"50%", @"100%", @"200%", @"400%", @"800%", @"1600%"};
 static CGFloat scaleMenuFactors[] = { 0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0};
@@ -36,9 +37,9 @@ static unsigned defaultIndex = 2;
     return self;
 }
 
-//- (void)drawRect:(NSRect)rect
-//{
-//	NSLog(@"BOOM");
+- (void)drawRect:(NSRect)rect
+{
+//	NSLog(@"%@", [NSValue valueWithRect:rect]);
 //	for (NSView *view in [self subviews]) {
 //		NSLog(@"%@ %lf %lf %lf %lf", view, [view frame].size.width, [view frame].size.height, [view frame].origin.x, [view frame].origin.y);
 //		NSShadow *shadow = [[NSShadow alloc] init];
@@ -47,7 +48,7 @@ static unsigned defaultIndex = 2;
 //		[shadow setShadowBlurRadius:5.0];
 //		[view setShadow:shadow];
 //	}
-//}
+}
 
 - (void)makeScalePopUpButton {
     if (scalePopUpButton == nil) {
@@ -139,7 +140,7 @@ static unsigned defaultIndex = 2;
 - (void)setScaleFactor:(CGFloat)factor atPoint:(NSPoint)point adjustPopup:(BOOL)flag
 {
 	[self setScaleFactor:factor adjustPopup:flag];
-	NSLog(@"%f, %f", point.x, point.y);
+	NSLog(@"Zooming in on %f, %f", point.x, point.y);
 	SWCenteringClipView *clipView = (SWCenteringClipView *)[[self documentView] superview];
 	NSSize size = [clipView bounds].size;
 
@@ -149,7 +150,7 @@ static unsigned defaultIndex = 2;
 	// Scroll to the correct centered spot thing
 	point.x -= size.width / 2;
 	point.y -= size.height / 2;
-	[clipView setBoundsOrigin:point];
+	[clipView setBoundsOrigin:[clipView constrainScrollPoint:point]];
 }
 
 
@@ -197,6 +198,22 @@ static unsigned defaultIndex = 2;
 		// Finally, inform the clip view of the changes we've made		
 		[clipView setBoundsSize:newDocBoundsSize];
 		[clipView setBoundsOrigin:newDocBoundsOrigin];
+		
+		// Make sure the window size is correct
+		NSRect frame = [[self window] frame];
+		
+		NSDocumentController *controller = [NSDocumentController sharedDocumentController];
+		id document = [controller documentForWindow: [self window]];
+		
+		// Constrain the size
+		if (document && [document isKindOfClass:[SWDocument class]]) {
+			NSSize newSize = [(SWDocument *)document windowWillResize:[self window] toSize:frame.size];
+			frame.size = newSize;
+		}
+		[[self window] setFrame:frame display:YES animate:YES];
+		
+		// Constrain the origin
+		[clipView setBoundsOrigin:[clipView constrainScrollPoint:[clipView bounds].origin]];
 	}
 }
 

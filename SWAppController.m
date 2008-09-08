@@ -23,6 +23,7 @@
 #import "SWSizeWindowController.h"
 #import "SWPreferenceController.h"
 #import "SWToolboxController.h"
+#import "SWDocument.h"
 
 @implementation SWAppController
 
@@ -61,6 +62,7 @@
 													 name:SUUpdaterWillRestartNotification 
 												   object:nil];
 
+		[[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
 		[NSColorPanel setPickerMode:NSCrayonModeColorPanel];
 		[[SWToolboxController sharedToolboxPanelController] showWindow:self];
 	}
@@ -78,16 +80,6 @@
 		[toolboxPanel showWindow:self];
 	}
 }
-
-// Makes the grid panel appear and disappear
-//- (IBAction)showGridPanel:(id)sender {
-//	SWGridPanelController *gridPanel = [SWGridPanelController sharedGridPanelController];
-//	if ([[gridPanel window] isVisible]) {
-//		[gridPanel hideWindow:self];
-//	} else {
-//		[gridPanel showWindow:self];
-//	}
-//}
 
 - (IBAction)showPreferencePanel:(id)sender
 {
@@ -112,6 +104,27 @@
 {
 	[self killTheSheet:nil];
 	[NSApp terminate:self];
+}
+
+// Creates a new instance of SWDocument based on the image in the clipboard
+- (IBAction)newFromClipboard:(id)sender
+{
+	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+	if (data) {
+		[NSApp sendAction:@selector(newDocument:)
+					   to:nil 
+					 from:self];
+	}
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	SEL action = [menuItem action];
+	if (action == @selector(newFromClipboard:)) {
+		return ([SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
+
+	}
+	return YES;
 }
 
 

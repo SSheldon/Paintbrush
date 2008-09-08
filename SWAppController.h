@@ -40,6 +40,7 @@
 
 // Overrides "Quit" to remove a sheet, if present
 - (IBAction)quit:(id)sender;
+- (IBAction)newFromClipboard:(id)sender;
 
 
 @end

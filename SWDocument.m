@@ -34,7 +34,6 @@
 - (id)init
 {
     if (self = [super init]) {
-		
 		// Observers for the toolbox
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
@@ -61,7 +60,7 @@
 	
 	clipView = [[SWCenteringClipView alloc] initWithFrame:[[scrollView contentView] frame]];
 	//[clipView setBackgroundColor:[NSColor windowBackgroundColor]];
-	[clipView setBackgroundColor:[NSColor gridColor]];
+	[clipView setBackgroundColor:[NSColor blueColor]];
 	
 	// The Scroll View contains the clip view, which is the superclass of the paint view (whew!)
 	[scrollView setContentView:(NSClipView *)clipView];
@@ -81,11 +80,46 @@
 		
 		[paintView setImage:openedImage scale:NO];
 	} else {
-		[super showWindows];
+		[[aController window] orderFront:self];
 		[self raiseSizeSheet:aController];
 	}
+	
+	[paintView setBackgroundColor:[NSColor colorWithPatternImage:[NSImage imageNamed:@"background.png"]]];
 }
 
+- (NSString *)pathForImageBackgrounds
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+	NSString *folder = @"~/Library/Application Support/Paintbrush/Background Images/";
+	folder = [folder stringByExpandingTildeInPath];
+	
+	if ([fileManager fileExistsAtPath: folder] == NO)
+	{
+		[fileManager createDirectoryAtPath: folder attributes: nil];
+	}
+    
+	NSString *fileName = @"backgroundImage.png";
+	return [folder stringByAppendingPathComponent:fileName];;    
+}
+
+// When zoomed in, we dont want to display partial pixels
+- (NSSize)windowWillResize:(NSWindow *)aWindow toSize:(NSSize)proposedFrameSize
+{
+	NSSize newSize = proposedFrameSize;
+	CGFloat scaleFactor = [scrollView scaleFactor];
+	if (scaleFactor > 1.0) {
+		NSRect contentRect = [aWindow contentRectForFrameRect:NSMakeRect(0,0,proposedFrameSize.width-[NSScroller scrollerWidth],
+																		 proposedFrameSize.height-[NSScroller scrollerWidth])];
+		contentRect.size.width =  round(contentRect.size.width / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
+		contentRect.size.height = round(contentRect.size.height / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
+		
+		NSRect newRect = [aWindow frameRectForContentRect:contentRect];
+		
+		newSize = newRect.size;
+	}
+	return newSize;
+}
 
 #pragma mark Sheets - Size and Text
 
@@ -254,7 +288,7 @@
 	NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
 	openedImage = [[NSImage alloc] initWithSize:NSMakeSize([imageRep pixelsWide], [imageRep pixelsHigh])];
 	[openedImage addRepresentation:imageRep];
-	
+	NSLog(@"Opening an image");
 	return (openedImage != nil);
 }
 
@@ -287,20 +321,16 @@
 }
 
 // Used by Paste to retrieve an image from the pasteboard
-- (BOOL)readImageFromPasteboard:(NSPasteboard *)pb
++ (NSData *)readImageFromPasteboard:(NSPasteboard *)pb
 {
-	NSData *data;
+	NSData *data = nil;
 	
 	if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]]) {
 		data = [pb dataForType:NSTIFFPboardType];
-		[paintView pasteData:data];
-		return YES;
 	} else if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]]) {
 		data = [pb dataForType:NSPICTPboardType];
-		[paintView pasteData:data];
-		return YES;
 	}
-	return NO;
+	return data;
 }
 
 // Cut: same as copy, but clears the overlay
@@ -319,7 +349,10 @@
 // Paste
 - (IBAction)paste:(id)sender
 {
-	[self readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+	if (data) {
+		[paintView pasteData:data];		
+	}
 }
 
 // Select all
@@ -360,16 +393,25 @@
 	[sender setState:[paintView showsGrid]];
 }
 
-// Decides which menu items to enable, and which to disable (and when)
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+// This method creates a new document using the image currently copied to the clipboard
+- (IBAction)newFromClipboard:(id)sender
 {
+	NSLog(@"Yay!");
+}
+
+// Decides which menu items to enable, and which to disable (and when)
+//- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+- (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem
+{
+	SEL action = [anItem action];
+	NSLog(@"%@", anItem);
 	currentTool = [toolboxController currentTool];
-	if (([menuItem action] == @selector(copy:)) || 
-		([menuItem action] == @selector(cut:)) || 
-		([menuItem action] == @selector(crop:))) {
+	if ((action == @selector(copy:)) || 
+		(action == @selector(cut:)) || 
+		(action == @selector(crop:))) {
 		return ([[currentTool class] isEqualTo:[SWSelectionTool class]] && 
 				[(SWSelectionTool *)currentTool isSelected]);
-	} else if ([menuItem action] == @selector(paste:)) {
+	} else if (action == @selector(paste:)) {
 		NSArray *array = [[NSPasteboard generalPasteboard] types];
 		BOOL paste = NO;
 		id object;
@@ -379,12 +421,14 @@
 			}
 		}
 		return paste;
-	} else if ([menuItem action] == @selector(zoomIn:)) {
+	} else if (action == @selector(zoomIn:)) {
 		return [scrollView scaleFactor] < 16;
-	} else if ([menuItem action] == @selector(zoomOut:)) {
+	} else if (action == @selector(zoomOut:)) {
 		return [scrollView scaleFactor] > 0.25;
-	} else if ([menuItem action] == @selector(showGrid:)) {
+	} else if (action == @selector(showGrid:)) {
 		return [scrollView scaleFactor] > 2.0;
+	} else if (action == @selector(newFromClipboard:)) {
+		return YES;
 	} else {
 		return YES;
 	}

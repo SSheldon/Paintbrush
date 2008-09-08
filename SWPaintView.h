@@ -39,6 +39,8 @@
 	BOOL isPayingAttention;
 	BOOL hasRun;
 	
+	NSColor *backgroundColor;
+	
 	// Grid related
 	BOOL showsGrid;
 	CGFloat gridSpacing;
@@ -49,6 +51,7 @@
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale;
 - (void)setCurrentTool:(SWTool *)newTool;
+- (void)setBackgroundColor:(NSColor *)color;
 - (void)undoImage:(NSData *)imageData;
 - (void)undoResize:(NSData *)mainImageData oldSize:(NSSize)size;
 - (void)pasteData:(NSData *)data;
