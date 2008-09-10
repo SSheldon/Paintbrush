@@ -31,6 +31,9 @@
 
 @implementation SWDocument
 
+// TODO: Nasty hack
+static BOOL kSWDocumentWillShowSheet = YES;
+
 - (id)init
 {
     if (self = [super init]) {
@@ -60,7 +63,6 @@
 	
 	clipView = [[SWCenteringClipView alloc] initWithFrame:[[scrollView contentView] frame]];
 	//[clipView setBackgroundColor:[NSColor windowBackgroundColor]];
-	[clipView setBackgroundColor:[NSColor blueColor]];
 	
 	// The Scroll View contains the clip view, which is the superclass of the paint view (whew!)
 	[scrollView setContentView:(NSClipView *)clipView];
@@ -69,22 +71,35 @@
 		
 	// If the user opened an image
 	if (openedImage) {
-		openingRect.origin = NSZeroPoint;
-		openingRect.size = [openedImage size];
-		[paintView initWithFrame:openingRect];
-		// Use external method to determine the window bounds
-		NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-		
-		// Apply the changes to the new document
-		[[paintView window] setFrame:tempRect display:YES];
-		
-		[paintView setImage:openedImage scale:NO];
+		[self setUpPaintView];
 	} else {
-		[[aController window] orderFront:self];
-		[self raiseSizeSheet:aController];
+		// When we create a new document
+		if (kSWDocumentWillShowSheet) {
+			[[aController window] orderFront:self];
+			[self raiseSizeSheet:aController];
+		} else {
+			[SWDocument setWillShowSheet:YES];
+			openedImage = [[NSImage alloc] initWithData:[SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]]];
+			[self setUpPaintView];
+		}
 	}
 	
 	[paintView setBackgroundColor:[NSColor colorWithPatternImage:[NSImage imageNamed:@"background.png"]]];
+}
+
+- (void)setUpPaintView
+{
+	openingRect.origin = NSZeroPoint;
+	openingRect.size = [openedImage size];
+	[paintView initWithFrame:openingRect];
+	
+	// Use external method to determine the window bounds
+	NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+	
+	// Apply the changes to the new document
+	[[paintView window] setFrame:tempRect display:YES];
+	
+	[paintView setImage:openedImage scale:NO];	
 }
 
 - (NSString *)pathForImageBackgrounds
@@ -146,8 +161,8 @@
 // After the sheet ends, this takes over. If the user clicked "OK", a new
 // PaintView is initialized. Otherwise, the window closes.
 - (void)sizeSheetDidEnd:(NSWindow *)sheet
-		 returnCode:(NSInteger)returnCode
-		contextInfo:(void *)contextInfo
+			 returnCode:(NSInteger)returnCode
+			contextInfo:(void *)contextInfo
 {
 	if (returnCode == NSOKButton) {
 		openingRect.origin = NSZeroPoint;
@@ -393,12 +408,6 @@
 	[sender setState:[paintView showsGrid]];
 }
 
-// This method creates a new document using the image currently copied to the clipboard
-- (IBAction)newFromClipboard:(id)sender
-{
-	NSLog(@"Yay!");
-}
-
 // Decides which menu items to enable, and which to disable (and when)
 //- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 - (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem
@@ -432,6 +441,12 @@
 	} else {
 		return YES;
 	}
+}
+
+// TODO: Nasty nasty hack - fix it!
++ (void)setWillShowSheet:(BOOL)showSheet
+{
+	kSWDocumentWillShowSheet = showSheet;
 }
 
 

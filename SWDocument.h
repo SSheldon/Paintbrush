@@ -62,7 +62,6 @@
 //- (IBAction)fullScreen:(id)sender;
 - (IBAction)crop:(id)sender;
 //- (IBAction)invertColors:(id)sender;
-- (IBAction)newFromClipboard:(id)sender;
 
 // Access the document's view (and provide access to the image)
 - (SWPaintView *)paintView;
@@ -72,10 +71,12 @@
 			 returnCode:(NSInteger)returnCode
 			contextInfo:(void *)contextInfo;
 - (IBAction)raiseSizeSheet:(id)sender;
+- (void)setUpPaintView;
 
 // For copy-and-paste
 - (void)writeImageToPasteboard:(NSPasteboard *)pb;
 + (NSData *)readImageFromPasteboard:(NSPasteboard *)pb;
 
++ (void)setWillShowSheet:(BOOL)showSheet;
 
 @end
