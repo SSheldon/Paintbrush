@@ -111,6 +111,7 @@
 {
 	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
 	if (data) {
+		[SWDocument setWillShowSheet:NO];
 		[NSApp sendAction:@selector(newDocument:)
 					   to:nil 
 					 from:self];
