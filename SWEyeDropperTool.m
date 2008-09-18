@@ -42,13 +42,9 @@
 	if (colorClicked != nil) {
 		colorClicked = [colorClicked colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
 		if (flags & NSAlternateKeyMask) {
-			[[[SWToolboxController sharedToolboxPanelController] backgroundColorWell] setColor:colorClicked];
-			[[SWToolboxController sharedToolboxPanelController] changeBackgroundColor:
-			 [[SWToolboxController sharedToolboxPanelController] backgroundColorWell]];
+			[[SWToolboxController sharedToolboxPanelController] setBackgroundColor:colorClicked];
 		} else {
-			[[[SWToolboxController sharedToolboxPanelController] foregroundColorWell] setColor:colorClicked];
-			[[SWToolboxController sharedToolboxPanelController] changeForegroundColor:
-			 [[SWToolboxController sharedToolboxPanelController] foregroundColorWell]];			
+			[[SWToolboxController sharedToolboxPanelController] setForegroundColor:colorClicked];
 		}
 	}
 }

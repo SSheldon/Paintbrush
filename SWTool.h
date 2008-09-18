@@ -21,8 +21,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class SWToolboxController;
 
-typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
+typedef enum {
+	MOUSE_DOWN, 
+	MOUSE_DRAGGED,
+	MOUSE_UP
+} SWMouseEvent;
 
 @interface SWTool : NSObject {
 	NSColor *frontColor;
@@ -34,10 +39,14 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 	CGFloat lineWidth;
 	BOOL shouldFill;
 	BOOL shouldStroke;
+	BOOL shouldShowFillOptions;
+	BOOL shouldShowTransparencyOptions;
 	NSUInteger flags;
 	NSPoint savedPoint;
 	NSRect redrawRect, savedRect;
 }
+
+- (id)initWithController:(SWToolboxController *)controller;
 
 // Some setters
 - (void)setFrontColor:(NSColor *)front;
@@ -61,9 +70,12 @@ typedef enum { MOUSE_DOWN, MOUSE_DRAGGED, MOUSE_UP } SWMouseEvent;
 - (NSRect)invalidRect;
 - (void)resetRedrawRect;
 - (BOOL)shouldShowContextualMenu;
-- (BOOL)shouldShowFillOptions;
-- (BOOL)shouldShowTransparencyOptions;
+//- (BOOL)shouldShowFillOptions;
+//- (BOOL)shouldShowTransparencyOptions;
 - (NSBezierPath *)path;
+
+@property (readonly) BOOL shouldShowFillOptions;
+@property (readonly) BOOL shouldShowTransparencyOptions;
 
 // A few useful C functions
 BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);

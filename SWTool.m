@@ -20,15 +20,53 @@
 
 
 #import "SWTool.h"
+#import "SWToolboxController.h"
 
 @implementation SWTool
 
-- (id)init
+- (id)initWithController:(SWToolboxController *)controller
 {
 	if(self = [super init]) {
 		[self resetRedrawRect];
+		[controller addObserver:self 
+					 forKeyPath:@"lineWidth" 
+						options:NSKeyValueObservingOptionNew 
+						context:NULL];
+		[controller addObserver:self 
+					 forKeyPath:@"foregroundColor" 
+						options:NSKeyValueObservingOptionNew 
+						context:NULL];
+		[controller addObserver:self 
+					 forKeyPath:@"backgroundColor" 
+						options:NSKeyValueObservingOptionNew 
+						context:NULL];
+		[controller addObserver:self 
+					 forKeyPath:@"fillStyle" 
+						options:NSKeyValueObservingOptionNew 
+						context:NULL];
 	}
 	return self;
+}
+
+// The tools will observe several values set by the toolbox
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+					  ofObject:(id)object 
+						change:(NSDictionary *)change 
+					   context:(void *)context
+{
+	id thing = [change objectForKey:NSKeyValueChangeNewKey];
+	
+	if ([keyPath isEqualToString:@"lineWidth"]) {
+		[self setLineWidth:[thing integerValue]];
+	} else if ([keyPath isEqualToString:@"foregroundColor"]) {
+		[self setFrontColor:thing];
+	} else if ([keyPath isEqualToString:@"backgroundColor"]) {
+		[self setBackColor:thing];
+	} else if ([keyPath isEqualToString:@"fillStyle"]) {
+		SWFillStyle fillStyle = [thing integerValue];
+		[self setShouldFill:(fillStyle == FILL_ONLY || fillStyle == FILL_AND_STROKE) 
+					 stroke:(fillStyle == STROKE_ONLY || fillStyle == FILL_AND_STROKE)];
+	}
 }
 
 - (void)resetRedrawRect

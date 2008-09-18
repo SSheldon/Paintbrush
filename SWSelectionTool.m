@@ -24,13 +24,32 @@
 
 @implementation SWSelectionTool
 
-- (id)init
+- (id)initWithController:(SWToolboxController *)controller;
 {
-	if (self = [super init]) {
+	if (self = [super initWithController:controller]) {
+		[controller addObserver:self
+					 forKeyPath:@"selectionTransparency" 
+						options:NSKeyValueObservingOptionNew 
+						context:NULL];
 		deltax = deltay = 0;
 		isSelected = NO;
 	}
 	return self;
+}
+
+// The tools will observe several values set by the toolbox
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+					  ofObject:(id)object 
+						change:(NSDictionary *)change 
+					   context:(void *)context
+{
+	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	
+	id thing = [change objectForKey:NSKeyValueChangeNewKey];
+	
+	if ([keyPath isEqualToString:@"selectionTransparency"]) {
+		shouldOmitBackground = [thing boolValue];
+	}
 }
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
@@ -180,7 +199,7 @@
 			[secondImage lockFocus];
 			[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 
-			if ([[SWToolboxController sharedToolboxPanelController] shouldOmitBackground]) {
+			if (shouldOmitBackground) {
 				// EXPERIMENTAL: Transparency
 				// TODO: Faster, and possibly somewhere else?
 				NSInteger x, y;
@@ -232,8 +251,8 @@
 			[anImage lockFocus];
 			
 			// The best way I can come up with to clear the image
-			[[NSColor clearColor] setFill];
-			NSRectFill(NSMakeRect(0,0,[anImage size].width, [anImage size].height));
+//			[[NSColor clearColor] setFill];
+//			NSRectFill(NSMakeRect(0,0,[anImage size].width, [anImage size].height));
 			
 			[backColor set];
 			[NSBezierPath fillRect:clippingRect];

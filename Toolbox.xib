@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.02">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">9E17</string>
+		<string key="IBDocument.SystemVersion">9F33</string>
 		<string key="IBDocument.InterfaceBuilderVersion">670</string>
-		<string key="IBDocument.AppKitVersion">949.33</string>
+		<string key="IBDocument.AppKitVersion">949.34</string>
 		<string key="IBDocument.HIToolboxVersion">352.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -392,7 +392,7 @@
 						<object class="NSMatrix" id="1016855609">
 							<reference key="NSNextResponder" ref="562555035"/>
 							<int key="NSvFlags">269</int>
-							<string key="NSFrame">{{4, 325}, {64, 224}}</string>
+							<string key="NSFrame">{{4, 326}, {64, 224}}</string>
 							<reference key="NSSuperview" ref="562555035"/>
 							<bool key="NSEnabled">YES</bool>
 							<int key="NSNumRows">7</int>
@@ -705,7 +705,6 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 									<int key="NSCellFlags2">134217728</int>
 									<string key="NSContents">Regular</string>
 									<reference key="NSSupport" ref="312957423"/>
-									<int key="NSTag">1</int>
 									<reference key="NSControlView" ref="875842575"/>
 									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">6</int>
@@ -723,6 +722,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 									<int key="NSCellFlags2">134217728</int>
 									<string key="NSContents">Transparency</string>
 									<reference key="NSSupport" ref="312957423"/>
+									<int key="NSTag">1</int>
 									<reference key="NSControlView" ref="875842575"/>
 									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">6</int>
@@ -774,92 +774,12 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<int key="connectionID">9</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">backgroundColorWell</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="268327910"/>
-					</object>
-					<int key="connectionID">17</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">window</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="966462375"/>
-					</object>
-					<int key="connectionID">19</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">foregroundColorWell</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="252046496"/>
-					</object>
-					<int key="connectionID">59</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">lineSlider</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="742627739"/>
-					</object>
-					<int key="connectionID">75</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">changeTool:</string>
+						<string key="label">changeCurrentTool:</string>
 						<reference key="source" ref="473471126"/>
 						<reference key="destination" ref="1016855609"/>
 					</object>
-					<int key="connectionID">188</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">toolMatrix</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="1016855609"/>
-					</object>
-					<int key="connectionID">189</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">fillMatrix</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="236073089"/>
-					</object>
-					<int key="connectionID">214</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">changeFill:</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="236073089"/>
-					</object>
-					<int key="connectionID">215</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">changeForegroundColor:</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="252046496"/>
-					</object>
-					<int key="connectionID">266</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">changeBackgroundColor:</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="268327910"/>
-					</object>
-					<int key="connectionID">267</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">changeLineWidth:</string>
-						<reference key="source" ref="473471126"/>
-						<reference key="destination" ref="742627739"/>
-					</object>
-					<int key="connectionID">270</int>
+					<int key="connectionID">444</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -867,15 +787,119 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<reference key="source" ref="473471126"/>
 						<reference key="destination" ref="156246558"/>
 					</object>
-					<int key="connectionID">272</int>
+					<int key="connectionID">445</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">selectionMatrix</string>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: foregroundColor</string>
+						<reference key="source" ref="252046496"/>
+						<reference key="destination" ref="473471126"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="252046496"/>
+							<reference key="NSDestination" ref="473471126"/>
+							<string key="NSLabel">value: foregroundColor</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">foregroundColor</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">446</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: backgroundColor</string>
+						<reference key="source" ref="268327910"/>
+						<reference key="destination" ref="473471126"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="268327910"/>
+							<reference key="NSDestination" ref="473471126"/>
+							<string key="NSLabel">value: backgroundColor</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">backgroundColor</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">447</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: lineWidth</string>
+						<reference key="source" ref="742627739"/>
+						<reference key="destination" ref="473471126"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="742627739"/>
+							<reference key="NSDestination" ref="473471126"/>
+							<string key="NSLabel">value: lineWidth</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">lineWidth</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">448</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeFillStyle:</string>
+						<reference key="source" ref="473471126"/>
+						<reference key="destination" ref="236073089"/>
+					</object>
+					<int key="connectionID">450</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeSelectionTransparency:</string>
 						<reference key="source" ref="473471126"/>
 						<reference key="destination" ref="875842575"/>
 					</object>
-					<int key="connectionID">361</int>
+					<int key="connectionID">451</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">window</string>
+						<reference key="source" ref="473471126"/>
+						<reference key="destination" ref="966462375"/>
+					</object>
+					<int key="connectionID">452</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: currentTool.shouldShowTransparencyOptions</string>
+						<reference key="source" ref="875842575"/>
+						<reference key="destination" ref="473471126"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="875842575"/>
+							<reference key="NSDestination" ref="473471126"/>
+							<string key="NSLabel">hidden: currentTool.shouldShowTransparencyOptions</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">currentTool.shouldShowTransparencyOptions</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">477</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: currentTool.shouldShowFillOptions</string>
+						<reference key="source" ref="236073089"/>
+						<reference key="destination" ref="473471126"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="236073089"/>
+							<reference key="NSDestination" ref="473471126"/>
+							<string key="NSLabel">hidden: currentTool.shouldShowFillOptions</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">currentTool.shouldShowFillOptions</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">478</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -925,11 +949,11 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference ref="252046496"/>
 							<reference ref="742627739"/>
 							<reference ref="635902065"/>
-							<reference ref="1016855609"/>
 							<reference ref="236073089"/>
 							<reference ref="875842575"/>
 							<reference ref="268327910"/>
 							<reference ref="156246558"/>
+							<reference ref="1016855609"/>
 						</object>
 						<reference key="parent" ref="966462375"/>
 					</object>
@@ -1480,9 +1504,9 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<string>SWButtonCell</string>
 					<string>SWButtonCell</string>
 					<string>SWButtonCell</string>
-					<string>{{557, 173}, {72, 553}}</string>
+					<string>{{66, 153}, {72, 553}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{557, 173}, {72, 553}}</string>
+					<string>{{66, 153}, {72, 553}}</string>
 					<reference ref="506877919"/>
 					<reference ref="506877919"/>
 					<reference ref="506877919"/>
@@ -1547,7 +1571,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">390</int>
+			<int key="maxID">478</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1603,14 +1627,10 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>changeBackgroundColor:</string>
-							<string>changeFill:</string>
-							<string>changeForegroundColor:</string>
-							<string>changeLineWidth:</string>
-							<string>changeTool:</string>
+							<string>changeCurrentTool:</string>
+							<string>changeFillStyle:</string>
+							<string>changeSelectionTransparency:</string>
 							<string>flipColors:</string>
-							<string>hideWindow:</string>
-							<string>showWindow:</string>
 							<string>switchToScissors:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1620,31 +1640,6 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSMutableArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>backgroundColorWell</string>
-							<string>fillMatrix</string>
-							<string>foregroundColorWell</string>
-							<string>lineSlider</string>
-							<string>selectionMatrix</string>
-							<string>toolMatrix</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>SWColorWell</string>
-							<string>NSMatrix</string>
-							<string>SWColorWell</string>
-							<string>NSSlider</string>
-							<string>NSMatrix</string>
-							<string>NSMatrix</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

@@ -75,7 +75,7 @@
 {
 	SWToolboxController *toolboxPanel = [SWToolboxController sharedToolboxPanelController];
 	if ([[toolboxPanel window] isVisible]) {
-		[toolboxPanel hideWindow:self];
+		[toolboxPanel close];
 	} else {
 		[toolboxPanel showWindow:self];
 	}

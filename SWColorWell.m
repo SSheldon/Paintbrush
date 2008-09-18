@@ -35,7 +35,6 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	NSLog(@"%@", [NSValue valueWithRect:rect]);
 	//[super drawRect:rect];
 	[self lockFocus];
 	//rect = NSInsetRect(rect, 3.0, 3.0);

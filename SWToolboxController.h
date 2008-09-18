@@ -21,49 +21,42 @@
 
 #import <Cocoa/Cocoa.h>
 
+typedef enum {
+	STROKE_ONLY,
+	FILL_ONLY,
+	FILL_AND_STROKE
+} SWFillStyle;
+
 @class SWColorWell;
 @class SWTool;
 
-@interface SWToolboxController : NSWindowController {
-	
-	IBOutlet SWColorWell *foregroundColorWell;
-	IBOutlet SWColorWell *backgroundColorWell;
-	IBOutlet NSMatrix *toolMatrix;
-	IBOutlet NSMatrix *fillMatrix;
-	IBOutlet NSMatrix *selectionMatrix;
-	IBOutlet NSSlider *lineSlider;
+@interface SWToolboxController : NSWindowController {	
 	NSColor *foregroundColor;
 	NSColor *backgroundColor;
 	SWTool *currentTool;
 	NSInteger lineWidth;
-	BOOL shouldFill;
-	BOOL shouldStroke;
+	SWFillStyle fillStyle;
+	BOOL selectionTransparency;
 	NSMutableDictionary *toolList;
 }
 
+// Accessors
 + (id)sharedToolboxPanelController;
 
-// Accessors
-- (SWTool *)currentTool;
-- (NSColor *)foregroundColor;
-- (NSColor *)backgroundColor;
-- (NSInteger)lineWidth;
-- (SWColorWell *)foregroundColorWell;
-- (SWColorWell *)backgroundColorWell;
-
 // Mutators
-- (IBAction)changeForegroundColor:(id)sender;
-- (IBAction)changeBackgroundColor:(id)sender;
-- (IBAction)changeTool:(id)sender;
-- (IBAction)changeFill:(id)sender;
-- (IBAction)changeLineWidth:(id)sender;
+- (IBAction)changeCurrentTool:(id)sender;
+- (IBAction)changeFillStyle:(id)sender;
+- (IBAction)changeSelectionTransparency:(id)sender;
 
 // Other stuff
 - (void)switchToScissors:(id)sender;
-- (BOOL)shouldOmitBackground;
-- (IBAction)showWindow:(id)sender;
-- (IBAction)hideWindow:(id)sender;
 - (IBAction)flipColors:(id)sender;
 
+@property (assign) NSInteger lineWidth;
+@property (assign) BOOL selectionTransparency;
+@property (assign) SWTool *currentTool;
+@property (assign) SWFillStyle fillStyle;
+@property (retain) NSColor *foregroundColor;
+@property (retain) NSColor *backgroundColor;
 
 @end

@@ -48,10 +48,11 @@
 			   secondImage:(NSImage *)secondImage 
 				mouseEvent:(SWMouseEvent)event
 {	
-	// Use the points clicked to build a redraw rectangle
-	[super setRedrawRectFromPoint:point toPoint:savedPoint];
 
 	if (event == MOUSE_UP) {
+		// No need to redraw
+		[super resetRedrawRect];
+
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:nil];
@@ -63,7 +64,10 @@
 		[anImage unlockFocus];
 
 		path = nil;
-	} else {		
+	} else {
+		// Use the points clicked to build a redraw rectangle
+		[super setRedrawRectFromPoint:point toPoint:savedPoint];
+
 		[secondImage lockFocus]; 
 		
 		// The best way I can come up with to clear the image

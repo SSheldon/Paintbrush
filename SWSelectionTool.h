@@ -32,6 +32,8 @@
 	BOOL isAlreadyShifting;
 	NSInteger deltax, deltay;
 	char direction;					// Either X or Y
+	
+	BOOL shouldOmitBackground;
 }
 
 - (BOOL)isSelected;

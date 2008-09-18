@@ -163,6 +163,7 @@
 		275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPreferenceController.h; sourceTree = "<group>"; };
 		275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWPreferenceController.m; sourceTree = "<group>"; };
 		275E293D0C7E46F300A99231 /* Changes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Changes.rtf; sourceTree = "<group>"; };
+		2772A6760E78D23100E513F3 /* SWToolboxControllerBAK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWToolboxControllerBAK.m; sourceTree = "<group>"; };
 		2774CC740C0A1D5100FE7F0F /* SWCurveTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCurveTool.h; sourceTree = "<group>"; };
 		2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCurveTool.m; sourceTree = "<group>"; };
 		278BF7180D4E47D40046BCA2 /* SWEyeDropperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWEyeDropperTool.h; sourceTree = "<group>"; };
@@ -344,6 +345,7 @@
 				270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */,
 				27A60E230B879A6A0091A1B0 /* SWToolboxController.h */,
 				27A60E240B879A6A0091A1B0 /* SWToolboxController.m */,
+				2772A6760E78D23100E513F3 /* SWToolboxControllerBAK.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

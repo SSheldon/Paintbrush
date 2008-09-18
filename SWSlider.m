@@ -41,13 +41,14 @@
 	}
 	
 	if (fabs(savedScroll) >= 1.0) {
-		[self setIntegerValue:[self integerValue] + (savedScroll / fabs(savedScroll))];	
+		NSInteger newValue = [self integerValue] + (savedScroll / fabs(savedScroll));
+		[self setIntegerValue:fmax(fmin(0, newValue), [self maxValue])];
 		savedScroll = 0.0;
 	}
 	
 	// Notify the toolbox controller that we've moved the slider through
 	// an alternate channel
-	[[SWToolboxController sharedToolboxPanelController] changeLineWidth:self];
+	[[SWToolboxController sharedToolboxPanelController] setLineWidth:[self integerValue]];
 }
 
 

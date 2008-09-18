@@ -22,7 +22,7 @@
 
 #import "SWTextToolWindowController.h"
 #import "SWToolboxController.h"
-
+#import "SWTool.h"
 
 @implementation SWTextToolWindowController
 
