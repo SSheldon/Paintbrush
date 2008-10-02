@@ -74,22 +74,35 @@
 	return self;
 }
 
+// Alert the observers that something's going on
 - (void)awakeFromNib
 {
 	[self setCurrentTool:[toolList objectForKey:@"Pencil"]];
 	
-	[self setLineWidth:3];
+	[self setLineWidthDisplay:3];
 	[self setForegroundColor:[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
 	[self setBackgroundColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+	[self setFillStyle:STROKE_ONLY];
+	[self setSelectionTransparency:NO];
 }
 
 // The slider moved, meaning the line width should change
 - (void)setLineWidth:(NSInteger)width
 {
 	// Allows for more line widths with less tick marks
-	lineWidth = 2 * width - 1;
+	lineWidth = 2*width - 1;
 
 	[currentTool setLineWidth:lineWidth];
+}
+
+- (void)setLineWidthDisplay:(NSInteger)width
+{
+	[self setLineWidth:width];
+}
+
+- (NSInteger)lineWidthDisplay
+{
+	return (1+lineWidth) / 2;
 }
 
 // Override the default to make some additions
@@ -102,15 +115,11 @@
 	if ([currentTool shouldShowFillOptions] || [currentTool shouldShowTransparencyOptions]) {
 		aRect.origin.y += (aRect.size.height - LARGE_HEIGHT);
 		aRect.size.height = LARGE_HEIGHT;
-		
-		[[super window] setFrame:aRect display:YES ];
-		
 	} else {
 		aRect.origin.y += (aRect.size.height - SMALL_HEIGHT);
 		aRect.size.height = SMALL_HEIGHT;
-		
-		[[super window] setFrame:aRect display:YES ];
-	}	
+	}
+	[[super window] setFrame:aRect display:YES animate:YES];
 }
 
 - (void)keyDown:(NSEvent *)event

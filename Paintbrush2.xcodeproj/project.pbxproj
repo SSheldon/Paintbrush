@@ -86,6 +86,8 @@
 		27F3C6B50D864B35006AB05A /* zoom-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F3C6B40D864B35006AB05A /* zoom-cursor.png */; };
 		27F3C6C90D864D1C006AB05A /* zoom-cursor-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F3C6C80D864D1C006AB05A /* zoom-cursor-2.png */; };
 		27F3C7070D865915006AB05A /* eraser-new.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F3C7050D865915006AB05A /* eraser-new.png */; };
+		27F5364E0E8C2A67001FA420 /* SWMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5364D0E8C2A67001FA420 /* SWMatrix.m */; };
+		27F537D00E917CA4001FA420 /* hovered.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F537CF0E917CA4001FA420 /* hovered.png */; };
 		27F7B8920DE3671D0038ED41 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8900DE3671D0038ED41 /* MainMenu.xib */; };
 		27F7B8950DE3673B0038ED41 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8940DE3673B0038ED41 /* MyDocument.xib */; };
 		27F7B8980DE3674C0038ED41 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8970DE3674C0038ED41 /* Preferences.xib */; };
@@ -163,7 +165,6 @@
 		275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPreferenceController.h; sourceTree = "<group>"; };
 		275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWPreferenceController.m; sourceTree = "<group>"; };
 		275E293D0C7E46F300A99231 /* Changes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Changes.rtf; sourceTree = "<group>"; };
-		2772A6760E78D23100E513F3 /* SWToolboxControllerBAK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWToolboxControllerBAK.m; sourceTree = "<group>"; };
 		2774CC740C0A1D5100FE7F0F /* SWCurveTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCurveTool.h; sourceTree = "<group>"; };
 		2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCurveTool.m; sourceTree = "<group>"; };
 		278BF7180D4E47D40046BCA2 /* SWEyeDropperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWEyeDropperTool.h; sourceTree = "<group>"; };
@@ -230,6 +231,9 @@
 		27F3C6B40D864B35006AB05A /* zoom-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoom-cursor.png"; sourceTree = "<group>"; };
 		27F3C6C80D864D1C006AB05A /* zoom-cursor-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoom-cursor-2.png"; sourceTree = "<group>"; };
 		27F3C7050D865915006AB05A /* eraser-new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eraser-new.png"; sourceTree = "<group>"; };
+		27F5364C0E8C2A67001FA420 /* SWMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWMatrix.h; sourceTree = "<group>"; };
+		27F5364D0E8C2A67001FA420 /* SWMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMatrix.m; sourceTree = "<group>"; };
+		27F537CF0E917CA4001FA420 /* hovered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hovered.png; sourceTree = "<group>"; };
 		27F7B8910DE3671D0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		27F7B8940DE3673B0038ED41 /* MyDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDocument.xib; sourceTree = "<group>"; };
 		27F7B8970DE3674C0038ED41 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
@@ -287,6 +291,7 @@
 		272A86C40D74F9F500630D0B /* NewTools */ = {
 			isa = PBXGroup;
 			children = (
+				27F537CF0E917CA4001FA420 /* hovered.png */,
 				27EAAA550E68A75100DDD9EA /* background.png */,
 				278FC0E50E47845E006065E6 /* pressedsmall.png */,
 				278FC0FE0E47871B006065E6 /* pressedwide.png */,
@@ -345,7 +350,6 @@
 				270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */,
 				27A60E230B879A6A0091A1B0 /* SWToolboxController.h */,
 				27A60E240B879A6A0091A1B0 /* SWToolboxController.m */,
-				2772A6760E78D23100E513F3 /* SWToolboxControllerBAK.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -359,6 +363,8 @@
 				274194B20C1DA5E400605CDC /* SWCenteringClipView.m */,
 				27955CBE0CFDE0C800D5AF99 /* SWColorWell.h */,
 				27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */,
+				27F5364C0E8C2A67001FA420 /* SWMatrix.h */,
+				27F5364D0E8C2A67001FA420 /* SWMatrix.m */,
 				27A60E210B879A6A0091A1B0 /* SWPaintView.h */,
 				27A60E220B879A6A0091A1B0 /* SWPaintView.m */,
 				27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */,
@@ -623,6 +629,7 @@
 				278FC1030E47879B006065E6 /* selection-transparent.png in Resources */,
 				278FC1570E478C86006065E6 /* airbrush.png in Resources */,
 				27EAAA560E68A75100DDD9EA /* background.png in Resources */,
+				27F537D00E917CA4001FA420 /* hovered.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -664,6 +671,7 @@
 				273E0B3B0E32F99D00D11815 /* SWImageManipulator.m in Sources */,
 				278FC09F0E478024006065E6 /* SWButtonCell.m in Sources */,
 				278FC2BA0E4A3E21006065E6 /* SWToolboxPanel.m in Sources */,
+				27F5364E0E8C2A67001FA420 /* SWMatrix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

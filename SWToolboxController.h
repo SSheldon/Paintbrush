@@ -52,6 +52,7 @@ typedef enum {
 - (void)switchToScissors:(id)sender;
 - (IBAction)flipColors:(id)sender;
 
+@property (assign) NSInteger lineWidthDisplay;
 @property (assign) NSInteger lineWidth;
 @property (assign) BOOL selectionTransparency;
 @property (assign) SWTool *currentTool;

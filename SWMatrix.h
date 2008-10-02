@@ -21,15 +21,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class SWButtonCell;
 
-@interface SWButtonCell : NSButtonCell {
-	NSImage *altImage;
-	NSImage *hovImage;
-	NSImage *backupImage;
+@interface SWMatrix : NSMatrix {
+	SWButtonCell *hoveredCell;
+	NSPoint hoveredPoint;
 }
-
-- (void)generateAltImage;
-- (void)generateHovImage;
-- (void)setIsHovered:(BOOL)flag;
 
 @end

@@ -468,7 +468,7 @@
 	
     // Columns
     curLine = ceil((NSMinX(rect)) / gridSpacing) + 1;
-    endLine = floor((NSMaxX(rect)) / gridSpacing);
+    endLine = ceil((NSMaxX(rect)) / gridSpacing) - 1;
     for (; curLine<=endLine; curLine++) {
         [gridPath moveToPoint:NSMakePoint((curLine * gridSpacing), NSMinY(rect))];
         [gridPath lineToPoint:NSMakePoint((curLine * gridSpacing), NSMaxY(rect))];
@@ -476,7 +476,7 @@
 	
     // Rows
     curLine = ceil((NSMinY(rect)) / gridSpacing) + 1;
-    endLine = floor((NSMaxY(rect)) / gridSpacing);
+    endLine = ceil((NSMaxY(rect)) / gridSpacing) - 1;
     for (; curLine<=endLine; curLine++) {
         [gridPath moveToPoint:NSMakePoint(NSMinX(rect), (curLine * gridSpacing))];
         [gridPath lineToPoint:NSMakePoint(NSMaxX(rect), (curLine * gridSpacing))];

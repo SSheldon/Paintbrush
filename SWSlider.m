@@ -37,18 +37,21 @@
 		savedScroll -= deltaX;
 	} else if (deltaY) {
 		savedScroll += deltaY;
-		NSLog(@"They scrolled y by %lf", deltaY);
 	}
 	
 	if (fabs(savedScroll) >= 1.0) {
 		NSInteger newValue = [self integerValue] + (savedScroll / fabs(savedScroll));
-		[self setIntegerValue:fmax(fmin(0, newValue), [self maxValue])];
+		NSInteger newValue2 = fmin(fmax(0, newValue), [self maxValue]);
+		//[self setIntegerValue:newValue2];
 		savedScroll = 0.0;
-	}
+		
+		// Notify the toolbox controller that we've moved the slider through
+		// an alternate channel
+		SWToolboxController *t = [SWToolboxController sharedToolboxPanelController];
+		[t setLineWidthDisplay:newValue2];
 	
-	// Notify the toolbox controller that we've moved the slider through
-	// an alternate channel
-	[[SWToolboxController sharedToolboxPanelController] setLineWidth:[self integerValue]];
+		NSLog(@"%d", [t lineWidth]);
+	}
 }
 
 

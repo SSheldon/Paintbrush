@@ -26,10 +26,24 @@
 
 - (void)setAlternateImage:(NSImage *)image
 {
+	// We never want an alternate image other than ours to be set
 	return;
 }
 
-- (NSImage *)alternateImage
+- (id)initWithCoder:(NSCoder *)coder
+{
+	[super initWithCoder:coder];
+	
+	backupImage = [[self image] retain];
+	
+	// Generate the two images we'll use for the other states
+	[self generateAltImage];
+	[self generateHovImage];
+	
+	return self;
+}
+
+- (void)generateAltImage
 {
 	if (!altImage) {
 		NSImage *normal = [self image];
@@ -42,11 +56,8 @@
 			highlight = [NSImage imageNamed:@"pressedwide.png"];
 		} else if (NSEqualSizes(size, NSMakeSize(64, 48))) {
 			highlight = [NSImage imageNamed:@"pressedwidetall.png"];
-		} else {
-			NSLog(@"Error: Button %@ is attempting to create alt image of size %@", [self title], [NSValue valueWithSize:size]);
-			return nil;
-		}
-
+		} else return;
+		
 		altImage = [[NSImage alloc] initWithSize:size];
 		[altImage lockFocus];
 		[highlight drawAtPoint:NSZeroPoint
@@ -63,8 +74,64 @@
 				   fraction:1.0];
 		[altImage unlockFocus];
 	}
-	
+}
+
+- (void)generateHovImage
+{
+	if (!hovImage) {
+		NSImage *normal = [self image];
+		NSImage *highlight;
+		NSSize size = [normal size];
+		
+		if (NSEqualSizes(size, NSMakeSize(32, 32))) {
+			highlight = [NSImage imageNamed:@"hovered.png"];			
+		} else return;
+		
+		hovImage = [[NSImage alloc] initWithSize:size];
+		[hovImage lockFocus];
+		[highlight drawAtPoint:NSZeroPoint
+					  fromRect:NSZeroRect
+					 operation:NSCompositeSourceOver
+					  fraction:1.0];
+		
+		[normal drawAtPoint:NSZeroPoint
+				   fromRect:NSZeroRect
+				  operation:NSCompositeSourceOver
+				   fraction:1.0];
+		[hovImage unlockFocus];
+	}
+}
+
+- (void)setIsHovered:(BOOL)flag;
+{
+	if (flag) {
+		[self setImage:hovImage];
+	} else {
+		[self setImage:backupImage];
+	}
+}
+
+- (NSImage *)alternateImage
+{
+	if (!altImage) {
+		[self generateAltImage];
+	}
 	return altImage;
 }
+
+- (BOOL)isOpaque
+{
+	return NO;
+}
+
+- (void)dealloc
+{
+	[altImage release];
+	[hovImage release];
+	[backupImage release];
+	
+	[super dealloc];
+}
+
 
 @end
