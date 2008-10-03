@@ -118,7 +118,7 @@
 //			NSRectFill(rect);
 //		}
 		
-		[NSGraphicsContext saveGraphicsState];
+		//[NSGraphicsContext saveGraphicsState];
 		
 		// Draw the NSImage to the view
 		if (mainImage) {
@@ -143,7 +143,7 @@
 			[[self gridInRect:[self frame]] stroke];
 		}
 		
-		[NSGraphicsContext restoreGraphicsState];
+		//[NSGraphicsContext restoreGraphicsState];
 	}
 }
 

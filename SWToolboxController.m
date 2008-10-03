@@ -169,6 +169,7 @@
 // If "Paste" or "Select All" is chosen, we should switch to the scissors tool
 - (void)switchToScissors:(id)sender
 {
+	[currentTool tieUpLooseEnds];
 	[self setCurrentTool:[toolList objectForKey:@"Selection"]];
 }
 

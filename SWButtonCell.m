@@ -119,11 +119,6 @@
 	return altImage;
 }
 
-- (BOOL)isOpaque
-{
-	return NO;
-}
-
 - (void)dealloc
 {
 	[altImage release];
