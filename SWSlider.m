@@ -41,7 +41,7 @@
 	
 	if (fabs(savedScroll) >= 1.0) {
 		NSInteger newValue = [self integerValue] + (savedScroll / fabs(savedScroll));
-		NSInteger newValue2 = fmin(fmax(0, newValue), [self maxValue]);
+		NSInteger newValue2 = fmin(fmax(1, newValue), [self maxValue]);
 		//[self setIntegerValue:newValue2];
 		savedScroll = 0.0;
 		
@@ -49,8 +49,6 @@
 		// an alternate channel
 		SWToolboxController *t = [SWToolboxController sharedToolboxPanelController];
 		[t setLineWidthDisplay:newValue2];
-	
-		NSLog(@"%d", [t lineWidth]);
 	}
 }
 
