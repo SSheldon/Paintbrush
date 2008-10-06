@@ -130,7 +130,9 @@
 	}
 }
 
-- (NSString *)description {
+
+- (NSString *)description
+{
 	return @"Airbrush";
 }
 

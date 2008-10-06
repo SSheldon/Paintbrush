@@ -94,7 +94,8 @@
 	return customCursor;
 }
 
-- (NSString *)description {
+- (NSString *)description
+{
 	return @"Pencil";
 }
 

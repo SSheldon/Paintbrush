@@ -139,7 +139,8 @@
 	}
 }
 
-- (NSString *)description {
+- (NSString *)description
+{
 	return @"Bomb";
 }
 

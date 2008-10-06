@@ -170,7 +170,8 @@
 	return [NSCursor crosshairCursor];
 }
 
-- (NSString *)description {
+- (NSString *)description
+{
 	return @"Curve";
 }
 

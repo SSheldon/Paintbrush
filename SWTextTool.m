@@ -134,7 +134,8 @@
 	return YES;
 }
 
-- (NSString *)description {
+- (NSString *)description
+{
 	return @"Text";
 }
 

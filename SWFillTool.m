@@ -109,6 +109,10 @@
 	return customCursor;
 }
 
+- (NSString *)description
+{
+	return @"Fill";
+}
 
 @end
 

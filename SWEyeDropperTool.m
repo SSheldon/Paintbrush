@@ -56,8 +56,9 @@
 	return customCursor;
 }
 
-- (NSString *)description {
-	return @"eyedropper";
+- (NSString *)description
+{
+	return @"Eyedropper";
 }
 
 
