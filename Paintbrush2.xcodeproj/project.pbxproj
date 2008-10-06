@@ -13,15 +13,12 @@
 		271EEB0E0BBC34A800319865 /* SWSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB0C0BBC34A800319865 /* SWSelectionTool.m */; };
 		271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 271EEB1B0BBC352300319865 /* SWTextTool.h */; };
 		271EEB1E0BBC352300319865 /* SWTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB1C0BBC352300319865 /* SWTextTool.m */; };
-		272A86E60D74FA0B00630D0B /* fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D20D74FA0B00630D0B /* fill.png */; };
 		272A86E80D74FA0B00630D0B /* curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D40D74FA0B00630D0B /* curve.png */; };
 		272A86EA0D74FA0B00630D0B /* ellipse.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D60D74FA0B00630D0B /* ellipse.png */; };
 		272A86EC0D74FA0B00630D0B /* eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D80D74FA0B00630D0B /* eraser.png */; };
 		272A86EE0D74FA0B00630D0B /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86DA0D74FA0B00630D0B /* line.png */; };
 		272A86F00D74FA0B00630D0B /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86DC0D74FA0B00630D0B /* pencil.png */; };
 		272A86F20D74FA0B00630D0B /* rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86DE0D74FA0B00630D0B /* rectangle.png */; };
-		272A86F40D74FA0B00630D0B /* rounded rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E00D74FA0B00630D0B /* rounded rectangle.png */; };
-		272A86F60D74FA0B00630D0B /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E20D74FA0B00630D0B /* selection.png */; };
 		272A86F80D74FA0B00630D0B /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E40D74FA0B00630D0B /* text.png */; };
 		2734B4D20C9AFCC8003A32BF /* SWSelectionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */; };
 		2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */; };
@@ -69,7 +66,6 @@
 		27D62F7E0BF6CF6E008DA207 /* SWScalingScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */; };
 		27D62F7F0BF6CF6E008DA207 /* SWScalingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D62F7D0BF6CF6E008DA207 /* SWScalingScrollView.m */; };
 		27E08C320E33F807002F49E6 /* stroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E08C300E33F807002F49E6 /* stroke.png */; };
-		27E08C360E33F811002F49E6 /* fillonly.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E08C340E33F811002F49E6 /* fillonly.png */; };
 		27E08C3A0E33F817002F49E6 /* fillstroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E08C380E33F817002F49E6 /* fillstroke.png */; };
 		27E1BB420D906A6600C9BB74 /* bomb.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E1BB400D906A6600C9BB74 /* bomb.png */; };
 		27E1BB620D90704A00C9BB74 /* bomb-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E1BB610D90704A00C9BB74 /* bomb-cursor.png */; };
@@ -138,15 +134,12 @@
 		271EEB0C0BBC34A800319865 /* SWSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSelectionTool.m; sourceTree = "<group>"; };
 		271EEB1B0BBC352300319865 /* SWTextTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextTool.h; sourceTree = "<group>"; };
 		271EEB1C0BBC352300319865 /* SWTextTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextTool.m; sourceTree = "<group>"; };
-		272A86D20D74FA0B00630D0B /* fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fill.png; sourceTree = "<group>"; };
 		272A86D40D74FA0B00630D0B /* curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = curve.png; sourceTree = "<group>"; };
 		272A86D60D74FA0B00630D0B /* ellipse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ellipse.png; sourceTree = "<group>"; };
 		272A86D80D74FA0B00630D0B /* eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eraser.png; sourceTree = "<group>"; };
 		272A86DA0D74FA0B00630D0B /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		272A86DC0D74FA0B00630D0B /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
 		272A86DE0D74FA0B00630D0B /* rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rectangle.png; sourceTree = "<group>"; };
-		272A86E00D74FA0B00630D0B /* rounded rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded rectangle.png"; sourceTree = "<group>"; };
-		272A86E20D74FA0B00630D0B /* selection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selection.png; sourceTree = "<group>"; };
 		272A86E40D74FA0B00630D0B /* text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text.png; sourceTree = "<group>"; };
 		2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWSelectionBuilder.m; sourceTree = "<group>"; };
 		2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWSelectionBuilder.h; sourceTree = "<group>"; };
@@ -212,7 +205,6 @@
 		27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWScalingScrollView.h; sourceTree = "<group>"; };
 		27D62F7D0BF6CF6E008DA207 /* SWScalingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWScalingScrollView.m; sourceTree = "<group>"; };
 		27E08C300E33F807002F49E6 /* stroke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stroke.png; sourceTree = "<group>"; };
-		27E08C340E33F811002F49E6 /* fillonly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fillonly.png; sourceTree = "<group>"; };
 		27E08C380E33F817002F49E6 /* fillstroke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fillstroke.png; sourceTree = "<group>"; };
 		27E1BB400D906A6600C9BB74 /* bomb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb.png; sourceTree = "<group>"; };
 		27E1BB610D90704A00C9BB74 /* bomb-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bomb-cursor.png"; sourceTree = "<group>"; };
@@ -296,12 +288,10 @@
 				278FC0FC0E478713006065E6 /* pressedwidetall.png */,
 				278FC1000E47879B006065E6 /* selection-regular.png */,
 				278FC1010E47879B006065E6 /* selection-transparent.png */,
-				27E08C340E33F811002F49E6 /* fillonly.png */,
 				27E08C380E33F817002F49E6 /* fillstroke.png */,
 				27E08C300E33F807002F49E6 /* stroke.png */,
 				278FC1560E478C86006065E6 /* airbrush.png */,
 				27E1BB400D906A6600C9BB74 /* bomb.png */,
-				272A86D20D74FA0B00630D0B /* fill.png */,
 				272A86D40D74FA0B00630D0B /* curve.png */,
 				272A86D60D74FA0B00630D0B /* ellipse.png */,
 				272A86D80D74FA0B00630D0B /* eraser.png */,
@@ -309,8 +299,6 @@
 				272A86DA0D74FA0B00630D0B /* line.png */,
 				272A86DC0D74FA0B00630D0B /* pencil.png */,
 				272A86DE0D74FA0B00630D0B /* rectangle.png */,
-				272A86E00D74FA0B00630D0B /* rounded rectangle.png */,
-				272A86E20D74FA0B00630D0B /* selection.png */,
 				272A86E40D74FA0B00630D0B /* text.png */,
 				27F3C6630D85F66D006AB05A /* zoom.png */,
 			);
@@ -590,15 +578,12 @@
 				27EA85460D3FDF6200A376A2 /* bucket-cursor.png in Resources */,
 				27EA85470D3FDF6200A376A2 /* eraser-cursor.png in Resources */,
 				27EA85480D3FDF6200A376A2 /* pencil-cursor.png in Resources */,
-				272A86E60D74FA0B00630D0B /* fill.png in Resources */,
 				272A86E80D74FA0B00630D0B /* curve.png in Resources */,
 				272A86EA0D74FA0B00630D0B /* ellipse.png in Resources */,
 				272A86EC0D74FA0B00630D0B /* eraser.png in Resources */,
 				272A86EE0D74FA0B00630D0B /* line.png in Resources */,
 				272A86F00D74FA0B00630D0B /* pencil.png in Resources */,
 				272A86F20D74FA0B00630D0B /* rectangle.png in Resources */,
-				272A86F40D74FA0B00630D0B /* rounded rectangle.png in Resources */,
-				272A86F60D74FA0B00630D0B /* selection.png in Resources */,
 				272A86F80D74FA0B00630D0B /* text.png in Resources */,
 				27F3C6650D85F66D006AB05A /* zoom.png in Resources */,
 				27F3C6800D85F9A8006AB05A /* eyedrop-cursor.png in Resources */,
@@ -616,7 +601,6 @@
 				27F7B89E0DE368FA0038ED41 /* TextEntry.xib in Resources */,
 				27F7B8A10DE369080038ED41 /* Toolbox.xib in Resources */,
 				27E08C320E33F807002F49E6 /* stroke.png in Resources */,
-				27E08C360E33F811002F49E6 /* fillonly.png in Resources */,
 				27E08C3A0E33F817002F49E6 /* fillstroke.png in Resources */,
 				278FC0E60E47845E006065E6 /* pressedsmall.png in Resources */,
 				278FC0FD0E478713006065E6 /* pressedwidetall.png in Resources */,
