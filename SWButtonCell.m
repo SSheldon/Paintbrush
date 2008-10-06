@@ -84,7 +84,11 @@
 		NSSize size = [normal size];
 		
 		if (NSEqualSizes(size, NSMakeSize(32, 32))) {
-			highlight = [NSImage imageNamed:@"hovered.png"];			
+			highlight = [NSImage imageNamed:@"hoveredsmall.png"];			
+		} else if (NSEqualSizes(size, NSMakeSize(64, 32))) {
+			highlight = [NSImage imageNamed:@"hoveredwide.png"];
+		} else if (NSEqualSizes(size, NSMakeSize(64, 48))) {
+			highlight = [NSImage imageNamed:@"hoveredwidetall.png"];
 		} else return;
 		
 		hovImage = [[NSImage alloc] initWithSize:size];

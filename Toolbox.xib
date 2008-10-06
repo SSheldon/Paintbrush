@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">352.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="70"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1254,6 +1254,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<string>181.CustomClassName</string>
 					<string>181.IBPluginDependency</string>
 					<string>181.ImportedFromIB2</string>
+					<string>210.CustomClassName</string>
 					<string>210.IBPluginDependency</string>
 					<string>210.ImportedFromIB2</string>
 					<string>211.CustomClassName</string>
@@ -1275,6 +1276,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<string>271.IBAttributePlaceholdersKey</string>
 					<string>271.IBPluginDependency</string>
 					<string>271.ImportedFromIB2</string>
+					<string>352.CustomClassName</string>
 					<string>352.IBPluginDependency</string>
 					<string>352.ImportedFromIB2</string>
 					<string>353.CustomClassName</string>
@@ -1334,6 +1336,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<string>SWMatrix</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="506877919"/>
+					<string>SWMatrix</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="506877919"/>
 					<string>SWButtonCell</string>
@@ -1390,6 +1393,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="506877919"/>
+					<string>SWMatrix</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="506877919"/>
 					<string>SWButtonCell</string>
