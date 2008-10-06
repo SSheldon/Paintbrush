@@ -28,6 +28,7 @@
 {
 	if(self = [super init]) {
 		[self resetRedrawRect];
+		toolbox = controller;
 		[controller addObserver:self 
 					 forKeyPath:@"lineWidth" 
 						options:NSKeyValueObservingOptionNew 
@@ -47,6 +48,14 @@
 	}
 	return self;
 }
+
+// Returns a copy of this object
+//- (id)copyWithZone:(NSZone *)zone
+//{
+//    SWTool *copy = [[[self class] allocWithZone: zone] initWithController:toolbox];
+//	
+//    return copy;
+//}
 
 // The tools will observe several values set by the toolbox
 - (void)observeValueForKeyPath:(NSString *)keyPath 
@@ -201,6 +210,10 @@
 	return NO;
 }
 
+- (NSString *)emptyString
+{
+	return @"";
+}
 
 BOOL colorsAreEqual(NSColor *clicked, NSColor *painting)
 {

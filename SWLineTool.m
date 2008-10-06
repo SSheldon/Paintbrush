@@ -110,5 +110,8 @@
 	return [NSCursor crosshairCursor];
 }
 
+- (NSString *)description {
+	return @"Line";
+}
 
 @end

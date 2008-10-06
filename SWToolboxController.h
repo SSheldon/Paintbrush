@@ -38,6 +38,7 @@ typedef enum {
 	SWFillStyle fillStyle;
 	BOOL selectionTransparency;
 	NSMutableDictionary *toolList;
+	NSMutableArray *toolListArray;
 }
 
 // Accessors
@@ -59,5 +60,6 @@ typedef enum {
 @property (assign) SWFillStyle fillStyle;
 @property (retain) NSColor *foregroundColor;
 @property (retain) NSColor *backgroundColor;
+//@property (readonly) NSMutableArray *toolListArray;
 
 @end

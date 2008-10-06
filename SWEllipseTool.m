@@ -109,4 +109,8 @@
 	return YES;
 }
 
+- (NSString *)description {
+	return @"Ellipse";
+}
+
 @end

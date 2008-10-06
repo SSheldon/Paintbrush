@@ -57,5 +57,8 @@
 	return customCursor;
 }
 
+- (NSString *)description {
+	return @"Zoom";
+}
 
 @end

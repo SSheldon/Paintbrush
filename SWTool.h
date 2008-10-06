@@ -44,9 +44,13 @@ typedef enum {
 	NSUInteger flags;
 	NSPoint savedPoint;
 	NSRect redrawRect, savedRect;
+	SWToolboxController *toolbox;
+	
+	NSImage *iconImage;
 }
 
 - (id)initWithController:(SWToolboxController *)controller;
+//- (id)copyWithZone:(NSZone *)zone;
 
 // Some setters
 - (void)setFrontColor:(NSColor *)front;
@@ -73,6 +77,7 @@ typedef enum {
 //- (BOOL)shouldShowFillOptions;
 //- (BOOL)shouldShowTransparencyOptions;
 - (NSBezierPath *)path;
+- (NSString *)emptyString;
 
 @property (readonly) BOOL shouldShowFillOptions;
 @property (readonly) BOOL shouldShowTransparencyOptions;

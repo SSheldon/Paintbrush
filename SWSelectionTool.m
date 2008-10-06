@@ -375,4 +375,8 @@
 	return YES;
 }
 
+- (NSString *)description {
+	return @"Selection";
+}
+
 @end

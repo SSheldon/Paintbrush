@@ -152,4 +152,8 @@
 	return YES;
 }
 
+- (NSString *)description {
+	return @"Rounded Rectangle";
+}
+
 @end

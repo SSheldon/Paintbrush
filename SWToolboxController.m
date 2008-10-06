@@ -53,22 +53,43 @@
 {
 	if (self = [super initWithWindowNibName:windowNibName]) {		
 		// Lots o' tools
-		toolList = [[NSMutableDictionary alloc] init];
-		[toolList setObject:[[SWPencilTool alloc] initWithController:self] forKey:@"Pencil"];
-		[toolList setObject:[[SWRectangleTool alloc] initWithController:self] forKey:@"Rectangle"];
-		[toolList setObject:[[SWRoundedRectangleTool alloc] initWithController:self] forKey:@"RoundedRectangle"];
-		[toolList setObject:[[SWEllipseTool alloc] initWithController:self] forKey:@"Ellipse"];
-		[toolList setObject:[[SWLineTool alloc] initWithController:self] forKey:@"Line"];
-		[toolList setObject:[[SWCurveTool alloc] initWithController:self] forKey:@"Curve"];
-		[toolList setObject:[[SWEraserTool alloc] initWithController:self] forKey:@"Eraser"];
-		[toolList setObject:[[SWFillTool alloc] initWithController:self] forKey:@"Fill"];
-		[toolList setObject:[[SWSelectionTool alloc] initWithController:self] forKey:@"Selection"];
-		[toolList setObject:[[SWTextTool alloc] initWithController:self] forKey:@"Text"];
-		[toolList setObject:[[SWBombTool alloc] initWithController:self] forKey:@"Bomb"];
-		[toolList setObject:[[SWEyeDropperTool alloc] initWithController:self] forKey:@"EyeDropper"];
-		[toolList setObject:[[SWZoomTool alloc] initWithController:self] forKey:@"Zoom"];
-		[toolList setObject:[[SWAirbrushTool alloc] initWithController:self] forKey:@"Airbrush"];
-				
+		toolListArray = [[NSMutableArray alloc] initWithCapacity:14];
+		[toolListArray addObject:[[SWPencilTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWEraserTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWSelectionTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWEyeDropperTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWTextTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWFillTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWLineTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWCurveTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWRectangleTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWEllipseTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWRoundedRectangleTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWZoomTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWBombTool alloc] initWithController:self]];
+		
+		// Create the dictionary
+		toolList = [[NSMutableDictionary alloc] initWithCapacity:14];
+		for (SWTool *tool in toolListArray) {
+			[toolList setObject:tool forKey:[tool description]];
+		}
+		
+//		[toolList setObject:[[SWPencilTool alloc] initWithController:self] forKey:@"Pencil"];
+//		[toolList setObject:[[SWRectangleTool alloc] initWithController:self] forKey:@"Rectangle"];
+//		[toolList setObject:[[SWRoundedRectangleTool alloc] initWithController:self] forKey:@"RoundedRectangle"];
+//		[toolList setObject:[[SWEllipseTool alloc] initWithController:self] forKey:@"Ellipse"];
+//		[toolList setObject:[[SWLineTool alloc] initWithController:self] forKey:@"Line"];
+//		[toolList setObject:[[SWCurveTool alloc] initWithController:self] forKey:@"Curve"];
+//		[toolList setObject:[[SWEraserTool alloc] initWithController:self] forKey:@"Eraser"];
+//		[toolList setObject:[[SWFillTool alloc] initWithController:self] forKey:@"Fill"];
+//		[toolList setObject:[[SWSelectionTool alloc] initWithController:self] forKey:@"Selection"];
+//		[toolList setObject:[[SWTextTool alloc] initWithController:self] forKey:@"Text"];
+//		[toolList setObject:[[SWBombTool alloc] initWithController:self] forKey:@"Bomb"];
+//		[toolList setObject:[[SWEyeDropperTool alloc] initWithController:self] forKey:@"EyeDropper"];
+//		[toolList setObject:[[SWZoomTool alloc] initWithController:self] forKey:@"Zoom"];
+//		[toolList setObject:[[SWAirbrushTool alloc] initWithController:self] forKey:@"Airbrush"];
+		
 	}
 	
 	return self;
@@ -169,7 +190,6 @@
 // If "Paste" or "Select All" is chosen, we should switch to the scissors tool
 - (void)switchToScissors:(id)sender
 {
-	[currentTool tieUpLooseEnds];
 	[self setCurrentTool:[toolList objectForKey:@"Selection"]];
 }
 

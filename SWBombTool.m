@@ -138,4 +138,9 @@
 		[self endExplosion:bombTimer];
 	}
 }
+
+- (NSString *)description {
+	return @"Bomb";
+}
+
 @end

@@ -134,6 +134,10 @@
 	return YES;
 }
 
+- (NSString *)description {
+	return @"Text";
+}
+
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];

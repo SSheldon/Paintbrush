@@ -145,4 +145,9 @@
 	[NSGraphicsContext restoreGraphicsState];
 }
 
+
+- (NSString *)description {
+	return @"Fill";
+}
+
 @end

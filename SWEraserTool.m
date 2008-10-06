@@ -95,5 +95,8 @@
 	return backColor;
 }
 
+- (NSString *)description {
+	return @"Eraser";
+}
 
 @end
