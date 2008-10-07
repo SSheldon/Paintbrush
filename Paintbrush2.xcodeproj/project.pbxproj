@@ -66,6 +66,7 @@
 		27A60E2E0B879A6A0091A1B0 /* SWPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E220B879A6A0091A1B0 /* SWPaintView.m */; };
 		27A60E2F0B879A6A0091A1B0 /* SWToolboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E240B879A6A0091A1B0 /* SWToolboxController.m */; };
 		27A60E300B879A6A0091A1B0 /* SWDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E260B879A6A0091A1B0 /* SWDocument.m */; };
+		27A99A0E0E9AF9A100C9781C /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99A0D0E9AF9A100C9781C /* airbrush.png */; };
 		27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
 		27A9D0900E32B05000D5FCAA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
@@ -213,6 +214,7 @@
 		27A60E240B879A6A0091A1B0 /* SWToolboxController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWToolboxController.m; sourceTree = "<group>"; };
 		27A60E250B879A6A0091A1B0 /* SWDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWDocument.h; sourceTree = "<group>"; };
 		27A60E260B879A6A0091A1B0 /* SWDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWDocument.m; sourceTree = "<group>"; };
+		27A99A0D0E9AF9A100C9781C /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
 		27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		27AFFDF10D68C06800368E2B /* SWAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAppController.m; sourceTree = "<group>"; };
 		27B686C30BA1395B0028A526 /* SWFillTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFillTool.h; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				27E08C380E33F817002F49E6 /* fillstroke.png */,
 				27E08C300E33F807002F49E6 /* stroke.png */,
 				27A45C4A0E9AB05000AC15F0 /* knob.png */,
+				27A99A0D0E9AF9A100C9781C /* airbrush.png */,
 				27E1BB400D906A6600C9BB74 /* bomb.png */,
 				272A86D40D74FA0B00630D0B /* curve.png */,
 				272A86D60D74FA0B00630D0B /* ellipse.png */,
@@ -639,6 +642,7 @@
 				27A45BEB0E9A82B400AC15F0 /* hoveredwidetall.png in Resources */,
 				27A45BEC0E9A82B400AC15F0 /* hoveredwide.png in Resources */,
 				27A45C4B0E9AB05000AC15F0 /* knob.png in Resources */,
+				27A99A0E0E9AF9A100C9781C /* airbrush.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

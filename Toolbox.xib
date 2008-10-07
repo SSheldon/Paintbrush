@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">352.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="70"/>
+			<integer value="181"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -460,7 +460,7 @@
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">eyedropper</string>
+										<string key="NSResourceName">airbrush</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -476,7 +476,7 @@
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">text</string>
+										<string key="NSResourceName">fill</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -492,7 +492,7 @@
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">fill</string>
+										<string key="NSResourceName">bomb</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -588,7 +588,7 @@
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">zoom</string>
+										<string key="NSResourceName">text</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -604,7 +604,7 @@
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">airbrush</string>
+										<string key="NSResourceName">eyedropper</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -620,7 +620,7 @@
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">bomb</string>
+										<string key="NSResourceName">zoom</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>

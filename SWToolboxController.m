@@ -57,17 +57,17 @@
 		[toolListArray addObject:[[SWPencilTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWEraserTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWSelectionTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWEyeDropperTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWTextTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWFillTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWBombTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWLineTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWCurveTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWRectangleTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWEllipseTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWRoundedRectangleTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWTextTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWEyeDropperTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWZoomTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWBombTool alloc] initWithController:self]];
 		
 		// Create the dictionary
 		toolList = [[NSMutableDictionary alloc] initWithCapacity:14];
