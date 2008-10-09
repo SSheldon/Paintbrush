@@ -54,7 +54,7 @@
 	if (self = [super initWithWindowNibName:windowNibName]) {		
 		// Lots o' tools
 		toolListArray = [[NSMutableArray alloc] initWithCapacity:14];
-		[toolListArray addObject:[[SWPencilTool alloc] initWithController:self]];
+		[toolListArray addObject:[[SWBrushTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWEraserTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWSelectionTool alloc] initWithController:self]];
 		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
@@ -98,7 +98,7 @@
 // Alert the observers that something's going on
 - (void)awakeFromNib
 {
-	[self setCurrentTool:[toolList objectForKey:@"Pencil"]];
+	[self setCurrentTool:[toolList objectForKey:@"Brush"]];
 	
 	[self setLineWidthDisplay:3];
 	[self setForegroundColor:[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
@@ -129,6 +129,7 @@
 // Override the default to make some additions
 - (void)setCurrentTool:(SWTool *)tool
 {
+	[currentTool tieUpLooseEnds];
 	currentTool = tool;
 	
 	// Handle resizing of tool palette, based on which tool is selected
@@ -145,17 +146,17 @@
 
 - (void)keyDown:(NSEvent *)event
 {
-	// At the moment, all the keyboard shortcuts are set in Interface Builder
+	// At the moment, most of the keyboard shortcuts are set in Interface Builder
 	NSUInteger modifiers = [event modifierFlags];
 	
 	if (modifiers & NSAlternateKeyMask) {
 		// They held option
 		if ([event keyCode] == 125) {
 			// They pressed down
-			[self setLineWidth:[self lineWidth]-1];
+			[self setLineWidthDisplay:fmax([self lineWidthDisplay]-1,1)];
 		} else if ([event keyCode] == 126) {
 			// They pressed up
-			[self setLineWidth:[self lineWidth]+1];
+			[self setLineWidthDisplay:[self lineWidthDisplay]+1];
 		}
 	}
 }
@@ -171,7 +172,6 @@
 
 - (IBAction)changeCurrentTool:(id)sender
 {
-	[currentTool tieUpLooseEnds];
 	NSString *string = [[sender selectedCell] title];
 	SWTool *theTool = [toolList objectForKey:string];
 	[self setCurrentTool:theTool];

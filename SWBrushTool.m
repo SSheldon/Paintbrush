@@ -19,9 +19,9 @@
  */
 
 
-#import "SWPencilTool.h"
+#import "SWBrushTool.h"
 
-@implementation SWPencilTool
+@implementation SWBrushTool
 
 // Generates the path to be drawn to the image
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
@@ -89,14 +89,14 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"pencil-cursor.png"];
+	NSImage *customImage = [NSImage imageNamed:@"brush-cursor.png"];
 	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(3,15)];
 	return customCursor;
 }
 
 - (NSString *)description
 {
-	return @"Pencil";
+	return @"Brush";
 }
 
 @end

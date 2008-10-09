@@ -23,7 +23,7 @@
 #import "SWTool.h"
 #import "SWRectangleTool.h"
 #import "SWEraserTool.h"
-#import "SWPencilTool.h"
+#import "SWBrushTool.h"
 #import "SWEllipseTool.h"
 #import "SWLineTool.h"
 #import "SWCurveTool.h"

@@ -22,6 +22,6 @@
 #import <Cocoa/Cocoa.h>
 #import "SWTool.h"
 
-@interface SWPencilTool : SWTool
+@interface SWBrushTool : SWTool
 
 @end

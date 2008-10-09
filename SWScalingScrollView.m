@@ -37,8 +37,8 @@ static unsigned defaultIndex = 2;
     return self;
 }
 
-- (void)drawRect:(NSRect)rect
-{
+//- (void)drawRect:(NSRect)rect
+//{
 //	NSLog(@"%@", [NSValue valueWithRect:rect]);
 //	for (NSView *view in [self subviews]) {
 //		NSLog(@"%@ %lf %lf %lf %lf", view, [view frame].size.width, [view frame].size.height, [view frame].origin.x, [view frame].origin.y);
@@ -48,7 +48,7 @@ static unsigned defaultIndex = 2;
 //		[shadow setShadowBlurRadius:5.0];
 //		[view setShadow:shadow];
 //	}
-}
+//}
 
 - (void)makeScalePopUpButton {
     if (scalePopUpButton == nil) {

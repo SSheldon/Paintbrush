@@ -294,9 +294,13 @@
 						fraction:1.0];
 		
 		[_anImage unlockFocus];
-	}
-	
-	clippingRect = NSZeroRect;
+
+		[super addRectToRedrawRect:selectedRect];
+//		super->redrawRect.origin = NSZeroPoint;
+//		super->redrawRect
+	} else {
+		[super resetRedrawRect];
+	}	
 }
 
 - (NSRect)clippingRect

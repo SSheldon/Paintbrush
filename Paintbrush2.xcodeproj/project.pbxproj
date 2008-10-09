@@ -61,12 +61,14 @@
 		27A60E280B879A6A0091A1B0 /* SWEllipseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E150B879A6A0091A1B0 /* SWEllipseTool.m */; };
 		27A60E290B879A6A0091A1B0 /* SWEraserTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E170B879A6A0091A1B0 /* SWEraserTool.m */; };
 		27A60E2A0B879A6A0091A1B0 /* SWLineTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E190B879A6A0091A1B0 /* SWLineTool.m */; };
-		27A60E2B0B879A6A0091A1B0 /* SWPencilTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E1B0B879A6A0091A1B0 /* SWPencilTool.m */; };
+		27A60E2B0B879A6A0091A1B0 /* SWBrushTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E1B0B879A6A0091A1B0 /* SWBrushTool.m */; };
 		27A60E2C0B879A6A0091A1B0 /* SWRectangleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E1D0B879A6A0091A1B0 /* SWRectangleTool.m */; };
 		27A60E2E0B879A6A0091A1B0 /* SWPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E220B879A6A0091A1B0 /* SWPaintView.m */; };
 		27A60E2F0B879A6A0091A1B0 /* SWToolboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E240B879A6A0091A1B0 /* SWToolboxController.m */; };
 		27A60E300B879A6A0091A1B0 /* SWDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E260B879A6A0091A1B0 /* SWDocument.m */; };
 		27A99A0E0E9AF9A100C9781C /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99A0D0E9AF9A100C9781C /* airbrush.png */; };
+		27A99AA30E9D792300C9781C /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AA20E9D792300C9781C /* brush.png */; };
+		27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AD60E9D842200C9781C /* brush-cursor.png */; };
 		27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
 		27A9D0900E32B05000D5FCAA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
@@ -202,8 +204,8 @@
 		27A60E170B879A6A0091A1B0 /* SWEraserTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWEraserTool.m; sourceTree = "<group>"; };
 		27A60E180B879A6A0091A1B0 /* SWLineTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWLineTool.h; sourceTree = "<group>"; };
 		27A60E190B879A6A0091A1B0 /* SWLineTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWLineTool.m; sourceTree = "<group>"; };
-		27A60E1A0B879A6A0091A1B0 /* SWPencilTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWPencilTool.h; sourceTree = "<group>"; };
-		27A60E1B0B879A6A0091A1B0 /* SWPencilTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWPencilTool.m; sourceTree = "<group>"; };
+		27A60E1A0B879A6A0091A1B0 /* SWBrushTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWBrushTool.h; sourceTree = "<group>"; };
+		27A60E1B0B879A6A0091A1B0 /* SWBrushTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWBrushTool.m; sourceTree = "<group>"; };
 		27A60E1C0B879A6A0091A1B0 /* SWRectangleTool.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWRectangleTool.h; sourceTree = "<group>"; };
 		27A60E1D0B879A6A0091A1B0 /* SWRectangleTool.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWRectangleTool.m; sourceTree = "<group>"; };
 		27A60E1E0B879A6A0091A1B0 /* SWToolList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWToolList.h; sourceTree = "<group>"; };
@@ -215,6 +217,8 @@
 		27A60E250B879A6A0091A1B0 /* SWDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWDocument.h; sourceTree = "<group>"; };
 		27A60E260B879A6A0091A1B0 /* SWDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWDocument.m; sourceTree = "<group>"; };
 		27A99A0D0E9AF9A100C9781C /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
+		27A99AA20E9D792300C9781C /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
+		27A99AD60E9D842200C9781C /* brush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brush-cursor.png"; sourceTree = "<group>"; };
 		27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		27AFFDF10D68C06800368E2B /* SWAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAppController.m; sourceTree = "<group>"; };
 		27B686C30BA1395B0028A526 /* SWFillTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFillTool.h; sourceTree = "<group>"; };
@@ -312,6 +316,8 @@
 				27E08C300E33F807002F49E6 /* stroke.png */,
 				27A45C4A0E9AB05000AC15F0 /* knob.png */,
 				27A99A0D0E9AF9A100C9781C /* airbrush.png */,
+				27A99AA20E9D792300C9781C /* brush.png */,
+				272A86DC0D74FA0B00630D0B /* pencil.png */,
 				27E1BB400D906A6600C9BB74 /* bomb.png */,
 				272A86D40D74FA0B00630D0B /* curve.png */,
 				272A86D60D74FA0B00630D0B /* ellipse.png */,
@@ -319,7 +325,6 @@
 				27F3C6AA0D864A1B006AB05A /* eyedropper.png */,
 				27A45BC20E99E5D000AC15F0 /* fill.png */,
 				272A86DA0D74FA0B00630D0B /* line.png */,
-				272A86DC0D74FA0B00630D0B /* pencil.png */,
 				272A86DE0D74FA0B00630D0B /* rectangle.png */,
 				27A45BC00E99E5D000AC15F0 /* selection.png */,
 				272A86E40D74FA0B00630D0B /* text.png */,
@@ -451,10 +456,10 @@
 			children = (
 				273513490D8F83BB00F24379 /* SWAirbrushTool.h */,
 				2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */,
+				27A60E1A0B879A6A0091A1B0 /* SWBrushTool.h */,
+				27A60E1B0B879A6A0091A1B0 /* SWBrushTool.m */,
 				27A60E160B879A6A0091A1B0 /* SWEraserTool.h */,
 				27A60E170B879A6A0091A1B0 /* SWEraserTool.m */,
-				27A60E1A0B879A6A0091A1B0 /* SWPencilTool.h */,
-				27A60E1B0B879A6A0091A1B0 /* SWPencilTool.m */,
 			);
 			name = SketchTools;
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				2742CCA40DA58518004BF119 /* airbrush-cursor.png */,
 				2742CCEC0DA58A44004BF119 /* airbrush-cursor-2.png */,
 				27E1BB610D90704A00C9BB74 /* bomb-cursor.png */,
+				27A99AD60E9D842200C9781C /* brush-cursor.png */,
 				27EA85430D3FDF6200A376A2 /* bucket-cursor.png */,
 				27EA85440D3FDF6200A376A2 /* eraser-cursor.png */,
 				27F3C67F0D85F9A8006AB05A /* eyedrop-cursor.png */,
@@ -643,6 +649,8 @@
 				27A45BEC0E9A82B400AC15F0 /* hoveredwide.png in Resources */,
 				27A45C4B0E9AB05000AC15F0 /* knob.png in Resources */,
 				27A99A0E0E9AF9A100C9781C /* airbrush.png in Resources */,
+				27A99AA30E9D792300C9781C /* brush.png in Resources */,
+				27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,7 +667,7 @@
 				27A60E280B879A6A0091A1B0 /* SWEllipseTool.m in Sources */,
 				27A60E290B879A6A0091A1B0 /* SWEraserTool.m in Sources */,
 				27A60E2A0B879A6A0091A1B0 /* SWLineTool.m in Sources */,
-				27A60E2B0B879A6A0091A1B0 /* SWPencilTool.m in Sources */,
+				27A60E2B0B879A6A0091A1B0 /* SWBrushTool.m in Sources */,
 				27A60E2C0B879A6A0091A1B0 /* SWRectangleTool.m in Sources */,
 				27A60E2E0B879A6A0091A1B0 /* SWPaintView.m in Sources */,
 				27A60E2F0B879A6A0091A1B0 /* SWToolboxController.m in Sources */,

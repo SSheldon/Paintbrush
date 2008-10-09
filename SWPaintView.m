@@ -120,6 +120,7 @@
 		
 		//[NSGraphicsContext saveGraphicsState];
 		
+		
 		// Draw the NSImage to the view
 		if (mainImage) {
 			[mainImage drawInRect:drawRect
