@@ -62,6 +62,8 @@
 //- (IBAction)fullScreen:(id)sender;
 - (IBAction)crop:(id)sender;
 //- (IBAction)invertColors:(id)sender;
+- (void)showTextSheet:(NSNotification *)n;
+- (void)undoLevelChanged:(NSNotification *)n;
 
 // Access the document's view (and provide access to the image)
 - (SWPaintView *)paintView;

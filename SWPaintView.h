@@ -53,7 +53,7 @@
 - (void)setCurrentTool:(SWTool *)newTool;
 - (void)setBackgroundColor:(NSColor *)color;
 - (void)undoImage:(NSData *)imageData;
-- (void)undoResize:(NSData *)mainImageData oldSize:(NSSize)size;
+- (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame;
 - (void)pasteData:(NSData *)data;
 - (void)prepUndo:(id)sender;
 - (void)clearOverlay;

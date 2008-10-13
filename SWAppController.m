@@ -25,6 +25,8 @@
 #import "SWToolboxController.h"
 #import "SWDocument.h"
 
+NSString * const kSWUndoKey = @"UndoLevels";
+
 @implementation SWAppController
 
 
@@ -51,7 +53,7 @@
 		// Put initial defaults in the dictionary
 		[defaultValues setObject:[NSNumber numberWithInt:640] forKey:@"HorizontalSize"];
 		[defaultValues setObject:[NSNumber numberWithInt:480] forKey:@"VerticalSize"];
-		[defaultValues setObject:[NSNumber numberWithInt:10] forKey:@"UndoLevels"];
+		[defaultValues setObject:[NSNumber numberWithInt:10] forKey:kSWUndoKey];
 		[defaultValues setObject:@"PNG" forKey:@"FileType"];
 		
 		// Register the dictionary of defaults

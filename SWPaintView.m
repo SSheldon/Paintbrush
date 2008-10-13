@@ -24,6 +24,7 @@
 #import "SWScalingScrollView.h"
 #import "SWToolList.h"
 #import "SWToolboxController.h"
+#import "SWAppController.h"
 
 @implementation SWPaintView
 
@@ -54,9 +55,9 @@
 		// Set the initial cursor
 		[(NSClipView *)[self superview] setDocumentCursor:[[toolbox currentTool] cursor]];
 		
-		// Set levels of undos based on user defaults
-		NSNumber *undo = [[NSUserDefaults standardUserDefaults] objectForKey:@"UndoLevels"];
-		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
+//		// Set levels of undos based on user defaults
+//		NSNumber *undo = [[NSUserDefaults standardUserDefaults] objectForKey:kSWUndoKey];
+//		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
 		
 		// Grid related
 		showsGrid = NO;
@@ -399,11 +400,8 @@
 			[[undo prepareWithInvocationTarget:self] undoImage:(NSData *)[sender objectForKey:@"Image"]];
 		} else {
 			// It was a resize... oh dear!
-			NSSize oldSize = NSZeroSize;
-			oldSize.width = [[(NSDictionary *)sender objectForKey:@"Width"] doubleValue];
-			oldSize.height = [[(NSDictionary *)sender objectForKey:@"Height"] doubleValue];
-			NSLog(@"%f, %f", oldSize.width, oldSize.height);
-			[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldSize:oldSize];
+			NSRect oldFrame = [[(NSDictionary *)sender objectForKey:@"Frame"] rectValue];
+			[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
 		}
 	} else {
 		[[undo prepareWithInvocationTarget:self] undoImage:[mainImage TIFFRepresentation]];
@@ -431,21 +429,17 @@
 }
 
 // Undo canvas resizing
-- (void)undoResize:(NSData *)mainImageData oldSize:(NSSize)size
+- (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame
 {
 	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldSize:[mainImage size]];
+	NSRect currentFrame = NSZeroRect;
+	currentFrame.size = [mainImage size];
+	[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:currentFrame];
 	if (![undo isUndoing]) {
 		[undo setActionName:@"Resize"];
 	}
 	
-	NSRect tempRect = NSZeroRect;
-	tempRect.size = size;
-	[self initWithFrame:tempRect];
-	// Use external method to determine the window bounds
-	NSRect tempRect2 = [self calculateWindowBounds:tempRect];
-	[[[self window] animator] setFrame:tempRect2 display:YES];
-	
+	[self initWithFrame:frame];	
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
 	

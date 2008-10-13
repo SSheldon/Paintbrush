@@ -25,6 +25,8 @@
 @class SWPreferenceController;
 @class SWToolboxController;
 
+extern NSString * const kSWUndoKey;
+
 @interface SWAppController : NSObject
 {
 	SWPreferenceController *preferenceController;

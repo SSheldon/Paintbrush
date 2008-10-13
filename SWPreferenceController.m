@@ -20,6 +20,7 @@
 
 
 #import "SWPreferenceController.h"
+#import "SWAppController.h"
 
 @implementation SWPreferenceController
 
@@ -52,8 +53,8 @@
 - (void)windowDidLoad
 {
 	// Load current defaults into the various fields
-	[undoStepper setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:@"UndoLevels"] integerValue]];
-	[undoTextField setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:@"UndoLevels"] integerValue]];
+	[undoStepper setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:kSWUndoKey] integerValue]];
+	[undoTextField setIntValue:[[[NSUserDefaults standardUserDefaults] valueForKey:kSWUndoKey] integerValue]];
 	[fileTypeButton selectItemWithTitle:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
 }
 
@@ -66,20 +67,24 @@
 
 - (IBAction)changeUndoLimit:(id)sender {
 	if ([sender integerValue] == 0) {
-		[undoStepper setIntValue:0];
-		[undoTextField setIntValue:0];
+		[undoStepper setIntegerValue:0];
+		[undoTextField setIntegerValue:0];
 	} else if ([sender integerValue] < 0) {
 		NSBeep();
-		[undoStepper setIntValue:0];
-		[undoTextField setIntValue:0];
+		[undoStepper setIntegerValue:0];
+		[undoTextField setIntegerValue:0];
 	} else {
-		[undoStepper setIntValue:[sender integerValue]];
-		[undoTextField setIntValue:[sender integerValue]];
+		[undoStepper setIntegerValue:[sender integerValue]];
+		[undoTextField setIntegerValue:[sender integerValue]];
 	}
 	
 	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:[sender integerValue]]
-											  forKey:@"UndoLevels"];
-	//NSLog(@"Spin the spinner! %d", [sender integerValue]);
+											  forKey:kSWUndoKey];
+	
+	// Post a notification that the level has changed
+	[[NSNotificationCenter defaultCenter] postNotificationName:kSWUndoKey 
+														object:[NSNumber numberWithInteger:[sender integerValue]]];
+//	NSLog(@"Spin the spinner! %d", [sender integerValue]);
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification

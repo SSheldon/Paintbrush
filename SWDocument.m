@@ -28,6 +28,7 @@
 #import "SWTextToolWindowController.h"
 #import "SWSizeWindowController.h"
 #import "SWToolList.h"
+#import "SWAppController.h"
 
 @implementation SWDocument
 
@@ -43,6 +44,16 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			   selector:@selector(showTextSheet:)
 				   name:@"SWText"
 				 object:nil];
+		
+		[nc addObserver:self 
+			   selector:@selector(undoLevelChanged:) 
+				   name:kSWUndoKey 
+				 object:nil];
+		
+		// Set levels of undos based on user defaults
+		NSNumber *undo = [[NSUserDefaults standardUserDefaults] objectForKey:kSWUndoKey];
+		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
+		
 	}
     return self;
 }
@@ -171,14 +182,15 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		if ([paintView hasRun]) {
 			NSLog(@"Resizing");
 			// Trying to resize the image!
+			NSLog(@"%@", [(id)contextInfo class]);
 			NSImage *backupImage = contextInfo ? (NSImage *)contextInfo : [paintView mainImage];
 
 			// Nothing to do if the size isn't changing!
 			if ([[paintView mainImage] size].width != openingRect.size.width || 
 				[[paintView mainImage] size].height != openingRect.size.height) {
 				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
-								   [NSNumber numberWithDouble:[backupImage size].width], @"Width", 
-								   [NSNumber numberWithDouble:[backupImage size].height], @"Height", nil];
+								   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
+								   @"Frame", nil];
 				[paintView prepUndo:d];
 				paintView = [paintView initWithFrame:openingRect];
 				
@@ -203,7 +215,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	}
 }
 
-- (IBAction)showTextSheet:(id)sender
+// Keep the current document's undo manager up to date
+- (void)undoLevelChanged:(NSNotification *)n
+{
+	NSNumber *number = [n object];
+	[[self undoManager] setLevelsOfUndo:[number integerValue]];
+}
+
+- (void)showTextSheet:(NSNotification *)n
 {
 	if ([[super windowForSheet] isKeyWindow]) {
 		if (!textController) {
@@ -221,7 +240,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		
 		// Assigns the current front color (according to the sharedColorPanel) 
 		// to the frontColor reference
-		[[NSColorPanel sharedColorPanel] setColor:[sender object]];
+		[[NSColorPanel sharedColorPanel] setColor:[n object]];
 		
 	}
 }
@@ -521,6 +540,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[sizeController setWidth:rect.size.width];
 	[sizeController setHeight:rect.size.height];
 	[sizeController setScales:NO];
+//	NSDictionary *dict = [NSDictionary dictionaryWithObject:<#(id)object#> forKey:<#(id)key#>
 	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:writeToMe];
 	[currentTool tieUpLooseEnds];
 }
