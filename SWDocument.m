@@ -190,7 +190,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 				[[paintView mainImage] size].height != openingRect.size.height) {
 				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
 								   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
-								   @"Frame", nil];
+								   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
 				[paintView prepUndo:d];
 				paintView = [paintView initWithFrame:openingRect];
 				
@@ -339,13 +339,16 @@ static BOOL kSWDocumentWillShowSheet = YES;
 }
 
 // Called whenever Copy or Cut are called (copies the overlay image to the pasteboard)
+// TODO: Relieve some of this method's dependencies on the Selection tool
 - (void)writeImageToPasteboard:(NSPasteboard *)pb
 {
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
 	NSImage *writeToMe = [[NSImage alloc] initWithSize:rect.size];
 	[writeToMe lockFocus];
-	[[(SWSelectionTool *)currentTool backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
-							   fromRect:rect
+	NSImage *backedImage = [(SWSelectionTool *)currentTool backedImage];
+	NSPoint oldOrigin = [(SWSelectionTool *)currentTool oldOrigin];
+	[backedImage drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
+							   fromRect:NSMakeRect(oldOrigin.x,oldOrigin.y,rect.size.width, rect.size.height)
 							  operation:NSCompositeSourceOver
 							   fraction:1.0];
 	[writeToMe unlockFocus];
@@ -432,7 +435,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem
 {
 	SEL action = [anItem action];
-	NSLog(@"%@", anItem);
+//	NSLog(@"%@", anItem);
 	currentTool = [toolboxController currentTool];
 	if ((action == @selector(copy:)) || 
 		(action == @selector(cut:)) || 
@@ -527,6 +530,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)crop:(id)sender
 {
 	NSLog(@"Cropping");
+	
+	// First we need to make a temporary copy of what's selected by the selection tool
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
 	NSImage *writeToMe = [[NSImage alloc] initWithSize:rect.size];
 	[writeToMe lockFocus];
@@ -535,14 +540,16 @@ static BOOL kSWDocumentWillShowSheet = YES;
 												   operation:NSCompositeSourceOver
 													fraction:1.0];
 	[writeToMe unlockFocus];
+	[currentTool tieUpLooseEnds];
 	
-	// Pretend they just changed the image size
+	// Tell the controller that they just changed the image size
 	[sizeController setWidth:rect.size.width];
 	[sizeController setHeight:rect.size.height];
 	[sizeController setScales:NO];
-//	NSDictionary *dict = [NSDictionary dictionaryWithObject:<#(id)object#> forKey:<#(id)key#>
-	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:writeToMe];
-	[currentTool tieUpLooseEnds];
+	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:[paintView mainImage]];
+	
+	// Now we cheat and set the image
+	[paintView setImage:writeToMe scale:NO];
 }
 
 // We offload the heavy lifting to an external class

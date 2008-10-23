@@ -69,10 +69,9 @@
 		27A99A0E0E9AF9A100C9781C /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99A0D0E9AF9A100C9781C /* airbrush.png */; };
 		27A99AA30E9D792300C9781C /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AA20E9D792300C9781C /* brush.png */; };
 		27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AD60E9D842200C9781C /* brush-cursor.png */; };
-		27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
-		27A9D0900E32B05000D5FCAA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
 		27B686C50BA1395B0028A526 /* SWFillTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B686C40BA1395B0028A526 /* SWFillTool.m */; };
+		27CBED9A0EB13E9B00541F98 /* bomb3.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CBED990EB13E9B00541F98 /* bomb3.png */; };
 		27D62F7E0BF6CF6E008DA207 /* SWScalingScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */; };
 		27D62F7F0BF6CF6E008DA207 /* SWScalingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D62F7D0BF6CF6E008DA207 /* SWScalingScrollView.m */; };
 		27E08C320E33F807002F49E6 /* stroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E08C300E33F807002F49E6 /* stroke.png */; };
@@ -117,7 +116,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				27A9D0900E32B05000D5FCAA /* Sparkle.framework in CopyFiles */,
 				275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */,
 				271EEB0D0BBC34A800319865 /* SWSelectionTool.h in CopyFiles */,
 				271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */,
@@ -219,10 +217,10 @@
 		27A99A0D0E9AF9A100C9781C /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
 		27A99AA20E9D792300C9781C /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
 		27A99AD60E9D842200C9781C /* brush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brush-cursor.png"; sourceTree = "<group>"; };
-		27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		27AFFDF10D68C06800368E2B /* SWAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAppController.m; sourceTree = "<group>"; };
 		27B686C30BA1395B0028A526 /* SWFillTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFillTool.h; sourceTree = "<group>"; };
 		27B686C40BA1395B0028A526 /* SWFillTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFillTool.m; sourceTree = "<group>"; };
+		27CBED990EB13E9B00541F98 /* bomb3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb3.png; sourceTree = "<group>"; };
 		27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWScalingScrollView.h; sourceTree = "<group>"; };
 		27D62F7D0BF6CF6E008DA207 /* SWScalingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWScalingScrollView.m; sourceTree = "<group>"; };
 		27E08C300E33F807002F49E6 /* stroke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stroke.png; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
-				27A9D08E0E32B02F00D5FCAA /* Sparkle.framework in Frameworks */,
 				273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,6 +316,7 @@
 				27A99AA20E9D792300C9781C /* brush.png */,
 				272A86DC0D74FA0B00630D0B /* pencil.png */,
 				27E1BB400D906A6600C9BB74 /* bomb.png */,
+				27CBED990EB13E9B00541F98 /* bomb3.png */,
 				272A86D40D74FA0B00630D0B /* curve.png */,
 				272A86D60D74FA0B00630D0B /* ellipse.png */,
 				272A86D80D74FA0B00630D0B /* eraser.png */,
@@ -547,7 +545,6 @@
 		594D30730DFF93770095E075 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				27A9D08D0E32B02F00D5FCAA /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -651,6 +648,7 @@
 				27A99A0E0E9AF9A100C9781C /* airbrush.png in Resources */,
 				27A99AA30E9D792300C9781C /* brush.png in Resources */,
 				27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */,
+				27CBED9A0EB13E9B00541F98 /* bomb3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

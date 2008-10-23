@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">352.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="6"/>
+			<integer value="181"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -404,7 +404,7 @@
 								<object class="NSButtonCell" id="632930163">
 									<int key="NSCellFlags">-2080244224</int>
 									<int key="NSCellFlags2">0</int>
-									<string key="NSContents">Pencil</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -424,7 +424,7 @@
 									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
-									<int key="NSButtonFlags">-931380993</int>
+									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
@@ -437,7 +437,7 @@
 								<object class="NSButtonCell" id="833128928">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -453,7 +453,7 @@
 								<object class="NSButtonCell" id="771170910">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -469,7 +469,7 @@
 								<object class="NSButtonCell" id="377608857">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -485,14 +485,14 @@
 								<object class="NSButtonCell" id="837483746">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
 									<int key="NSButtonFlags2">45</int>
 									<object class="NSCustomResource" key="NSNormalImage">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">bomb</string>
+										<string key="NSResourceName">bomb3</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -501,7 +501,7 @@
 								<object class="NSButtonCell" id="592704265">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -517,7 +517,7 @@
 								<object class="NSButtonCell" id="390466159">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -533,7 +533,7 @@
 								<object class="NSButtonCell" id="107418998">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -549,7 +549,7 @@
 								<object class="NSButtonCell" id="653771030">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -565,7 +565,7 @@
 								<object class="NSButtonCell" id="115725932">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -581,7 +581,7 @@
 								<object class="NSButtonCell" id="771346157">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -597,7 +597,7 @@
 								<object class="NSButtonCell" id="883830144">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -613,7 +613,7 @@
 								<object class="NSButtonCell" id="156491467">
 									<int key="NSCellFlags">67239488</int>
 									<int key="NSCellFlags2">1024</int>
-									<string key="NSContents">Radio</string>
+									<string key="NSContents"/>
 									<reference key="NSSupport" ref="29"/>
 									<reference key="NSControlView" ref="1016855609"/>
 									<int key="NSButtonFlags">-931905281</int>
@@ -634,7 +634,7 @@
 							<object class="NSButtonCell" key="NSProtoCell" id="960975735">
 								<int key="NSCellFlags">67239488</int>
 								<int key="NSCellFlags2">1024</int>
-								<string key="NSContents">Radio</string>
+								<string key="NSContents"/>
 								<reference key="NSSupport" ref="29"/>
 								<int key="NSButtonFlags">-931905281</int>
 								<int key="NSButtonFlags2">45</int>

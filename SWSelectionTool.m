@@ -24,6 +24,8 @@
 
 @implementation SWSelectionTool
 
+@synthesize oldOrigin;
+
 - (id)initWithController:(SWToolboxController *)controller;
 {
 	if (self = [super initWithController:controller]) {
@@ -270,7 +272,7 @@
 	[super tieUpLooseEnds];
 	
 	isSelected = NO;
-	if (imageRep) {
+	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ ) {
 		//NSLog(@"%@", imageRep);
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
@@ -295,9 +297,7 @@
 		
 		[_anImage unlockFocus];
 
-		[super addRectToRedrawRect:selectedRect];
-//		super->redrawRect.origin = NSZeroPoint;
-//		super->redrawRect
+		[super addRectToRedrawRect:NSMakeRect(0,0,[_anImage size].width,[_anImage size].height)];
 	} else {
 		[super resetRedrawRect];
 	}	
@@ -368,9 +368,11 @@
 	return [NSCursor crosshairCursor];
 }
 
+// Once we get better color accuracy (hopefully in 2.1), we'll flip this back on
 - (BOOL)shouldShowTransparencyOptions
 {
-	return YES;
+	//return YES;
+	return NO;
 }
 
 // Overridden for right-click

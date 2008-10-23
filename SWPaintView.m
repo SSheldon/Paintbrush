@@ -55,10 +55,6 @@
 		// Set the initial cursor
 		[(NSClipView *)[self superview] setDocumentCursor:[[toolbox currentTool] cursor]];
 		
-//		// Set levels of undos based on user defaults
-//		NSNumber *undo = [[NSUserDefaults standardUserDefaults] objectForKey:kSWUndoKey];
-//		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
-		
 		// Grid related
 		showsGrid = NO;
 		gridSpacing = 1;
@@ -365,6 +361,8 @@
 				   operation:NSCompositeSourceOver
 					fraction:1.0];
 	} else {
+		[[toolbox backgroundColor] setFill];
+		NSRectFill([self bounds]);
 		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)
 					 fromRect:NSZeroRect
 					operation:NSCompositeSourceOver
@@ -395,38 +393,48 @@
 - (void)prepUndo:(id)sender
 {
 	NSUndoManager *undo = [self undoManager];
-	if (sender) {
-		if ([(NSDictionary *)sender objectForKey:@"Image"]) {
-			[[undo prepareWithInvocationTarget:self] undoImage:(NSData *)[sender objectForKey:@"Image"]];
-		} else {
+	NSRect oldFrame = NSZeroRect;
+	if (sender && [(NSDictionary *)sender objectForKey:@"Image"]) {
+		if ([(NSDictionary *)sender objectForKey:@"Frame"]) {
 			// It was a resize... oh dear!
-			NSRect oldFrame = [[(NSDictionary *)sender objectForKey:@"Frame"] rectValue];
-			[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
+			oldFrame = [[(NSDictionary *)sender objectForKey:@"Frame"] rectValue];
+			[[undo prepareWithInvocationTarget:self] undoResize:(NSData *)[sender objectForKey:@"Image"] oldFrame:oldFrame];
+			if (![undo isUndoing]) {
+				[undo setActionName:@"Resize"];
+			}			
+			//[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
+		} else {
+			[[undo prepareWithInvocationTarget:self] undoResize:(NSData *)[sender objectForKey:@"Image"] oldFrame:oldFrame];
+			if (![undo isUndoing]) {
+				[undo setActionName:@"Drawing"];
+			}			
+//			[[undo prepareWithInvocationTarget:self] undoImage:(NSData *)[sender objectForKey:@"Image"]];
 		}
 	} else {
-		[[undo prepareWithInvocationTarget:self] undoImage:[mainImage TIFFRepresentation]];
-	}
-	if (![undo isUndoing]) {
-		[undo setActionName:@"Drawing"];
+		//[[undo prepareWithInvocationTarget:self] undoImage:[mainImage TIFFRepresentation]];
+		[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
+		if (![undo isUndoing]) {
+			[undo setActionName:@"Drawing"];
+		}		
 	}
 }
 
 // Undo for drawing that doesn't change the canvas
-- (void)undoImage:(NSData *)mainImageData
-{
-	NSUndoManager *undo = [self undoManager];
-	[[undo prepareWithInvocationTarget:self] undoImage:[[self mainImage] TIFFRepresentation]];
-	if (![undo isUndoing]) {
-		[undo setActionName:@"Drawing"];
-	}
-	
-	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
-	
-	[mainImage lockFocus];
-	[imageRep drawAtPoint:NSZeroPoint];
-	[mainImage unlockFocus];
-	[self clearOverlay];
-}
+//- (void)undoImage:(NSData *)mainImageData
+//{
+//	NSUndoManager *undo = [self undoManager];
+//	[[undo prepareWithInvocationTarget:self] undoImage:[[self mainImage] TIFFRepresentation]];
+//	if (![undo isUndoing]) {
+//		[undo setActionName:@"Drawing"];
+//	}
+//	
+//	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
+//	
+//	[mainImage lockFocus];
+//	[imageRep drawAtPoint:NSZeroPoint];
+//	[mainImage unlockFocus];
+//	[self clearOverlay];
+//}
 
 // Undo canvas resizing
 - (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame
@@ -436,10 +444,18 @@
 	currentFrame.size = [mainImage size];
 	[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:currentFrame];
 	if (![undo isUndoing]) {
-		[undo setActionName:@"Resize"];
+		if (NSEqualRects(frame, NSZeroRect)) {
+			[undo setActionName:@"Drawing"];
+		} else {
+			[undo setActionName:@"Resize"];
+		}
 	}
 	
-	[self initWithFrame:frame];	
+	if (!NSEqualRects(frame, NSZeroRect)) {
+		[self initWithFrame:frame];
+		NSRect tempRect = [self calculateWindowBounds:frame];
+		[[[self window] animator] setFrame:tempRect display:YES];
+	}
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
 	

@@ -98,6 +98,8 @@
 			[anImage lockFocus];
 			[imageRep drawAtPoint:NSZeroPoint];
 			[anImage unlockFocus];
+			
+			[super setRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([imageRep pixelsWide], [imageRep pixelsHigh])];
 		}
 	}
 }	
@@ -118,7 +120,7 @@
 
 @implementation SWFillTool (Private)
 
-- (CGImageRef) floodFillSelect:(NSPoint)point tolerance:(CGFloat)tolerance
+- (CGImageRef)floodFillSelect:(NSPoint)point tolerance:(CGFloat)tolerance
 {
 	// Building up a selection mask is pretty involved, so we're going to pass
 	//	the task to a helper class that can build up temporary state.
@@ -126,7 +128,7 @@
 	return [builder mask];
 }
 
-- (void) fillMask:(CGImageRef)mask withColor:(NSColor *)color
+- (void)fillMask:(CGImageRef)mask withColor:(NSColor *)color
 {
 	// We want to render the image into our bitmap image rep, so create a
 	//	NSGraphicsContext from it.

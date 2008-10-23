@@ -52,7 +52,7 @@
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale;
 - (void)setCurrentTool:(SWTool *)newTool;
 - (void)setBackgroundColor:(NSColor *)color;
-- (void)undoImage:(NSData *)imageData;
+//- (void)undoImage:(NSData *)imageData;
 - (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame;
 - (void)pasteData:(NSData *)data;
 - (void)prepUndo:(id)sender;

@@ -41,7 +41,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 		// Pop up a warning dialog... 
 		NSRunAlertPanel(@"Sorry, this program requires Mac OS X 10.5.3 or later", @"You are running %@", 
 						@"OK", nil, nil, [[NSProcessInfo alloc] operatingSystemVersionString]);
-		NSLog(@"%lf", NSAppKitVersionNumber);
+		NSLog(@"Failed to run: running version %lf", NSAppKitVersionNumber);
 		// then quit the program
 		[NSApp terminate:self]; 
 		
@@ -59,10 +59,10 @@ NSString * const kSWUndoKey = @"UndoLevels";
 		// Register the dictionary of defaults
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];		
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(killTheSheet:) 
-													 name:SUUpdaterWillRestartNotification 
-												   object:nil];
+//		[[NSNotificationCenter defaultCenter] addObserver:self 
+//												 selector:@selector(killTheSheet:) 
+//													 name:SUUpdaterWillRestartNotification 
+//												   object:nil];
 
 		[[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
 		[NSColorPanel setPickerMode:NSCrayonModeColorPanel];
@@ -100,6 +100,12 @@ NSString * const kSWUndoKey = @"UndoLevels";
 			//[NSApp endSheet:window returnCode:NSCancelButton];
 		}
 	}
+}
+
+// Called immediately before relaunching by Sparkle
+- (void)updaterWillRelaunchApplication:(SUUpdater *)updater
+{
+	[self killTheSheet:nil];
 }
 
 - (IBAction)quit:(id)sender
@@ -140,22 +146,22 @@ NSString * const kSWUndoKey = @"UndoLevels";
 
 - (IBAction)donate:(id)sender
 {	
-	// Open the URL.
-	(void) [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:
+	// Open the URL
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:
 												   @"http://sourceforge.net/project/project_donations.php?group_id=191288"]];
 }
 
 - (IBAction)forums:(id)sender
 {	
-	// Open the URL.
-	(void) [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/forum/?group_id=191288"]];
+	// Open the URL
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/forum/?group_id=191288"]];
 	
 }
 
 - (IBAction)contact:(id)sender
 {	
-	// Open the URL.
-	(void) [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:soggywaffles@gmail.com"]];
+	// Open the URL
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:soggywaffles@gmail.com"]];
 }
 
 - (void)dealloc
