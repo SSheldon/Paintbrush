@@ -40,6 +40,9 @@
 	//rect = NSInsetRect(rect, 3.0, 3.0);
 	[[self color] setFill];
 	[NSBezierPath fillRect:rect];
+//	rect = NSInsetRect(rect, 10, 10);
+//	[[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.0] setFill];
+//	NSRectFill(rect);
 	[self unlockFocus];
 }
 

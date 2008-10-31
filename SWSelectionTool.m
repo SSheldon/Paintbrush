@@ -34,7 +34,10 @@
 						options:NSKeyValueObservingOptionNew 
 						context:NULL];
 		deltax = deltay = 0;
+		dottedLineOffset = 0;
 		isSelected = NO;
+		dottedLineArray[0] = 5.0;
+		dottedLineArray[1] = 3.0;
 	}
 	return self;
 }
@@ -57,11 +60,8 @@
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
 	path = [NSBezierPath new];
-	[path setLineWidth:0.0];
-	CGFloat array[2];
-	array[0] = 5.0;
-	array[1] = 3.0;
-	[path setLineDash:array count:2 phase:5.0];
+	[path setLineWidth:1.0];
+	[path setLineDash:dottedLineArray count:2 phase:dottedLineOffset];
 	[path setLineCapStyle:NSSquareLineCapStyle];	
 
 	//if (flags & NSShiftKeyMask) {
@@ -71,8 +71,9 @@
 		clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
 	//}
 	
+	// The 0.5s help because the width is 1, and that does weird stuff
 	[path appendBezierPathWithRect:
-		NSMakeRect(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width-1, clippingRect.size.height-1)];
+		NSMakeRect(clippingRect.origin.x+0.5, clippingRect.origin.y+0.5, clippingRect.size.width-1, clippingRect.size.height-1)];
 
 	return path;	
 }
@@ -85,6 +86,17 @@
 	_secondImage = secondImage;
 	_anImage = anImage;
 	
+	// Running the selection animator
+	if (event == MOUSE_UP && !NSEqualPoints(point, savedPoint)) {
+		animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.075 // 75 ms, or 13.33 Hz
+														  target:self
+														selector:@selector(drawNewBorder:)
+														userInfo:nil
+														 repeats:YES];		
+	} else if (event == MOUSE_DOWN) {
+		[animationTimer invalidate];
+	}
+	
 	// If the rectangle has already been drawn
 	if (isSelected) {
 		if (event == MOUSE_DRAGGED || [[NSBezierPath bezierPathWithRect:clippingRect] containsPoint:point]) {
@@ -94,17 +106,7 @@
 			
 			if (flags & NSShiftKeyMask) {				
 				// Are we already moving horizontally/vertically?
-				if (isAlreadyShifting) {
-					if (direction == 'X') {
-						deltay = 0;
-						deltax += point.x - previousPoint.x;
-					} else if (direction == 'Y') {
-						deltax = 0;
-						deltay += point.y - previousPoint.y;
-					} else {
-						NSLog(@"Houston, we have a problem");
-					}
-				} else {
+				if (!isAlreadyShifting) {
 					isAlreadyShifting = YES;
 					NSUInteger dx = abs(point.x - previousPoint.x);
 					NSUInteger dy = abs(point.y - previousPoint.y);
@@ -113,6 +115,16 @@
 						direction = 'X';
 					} else {
 						direction = 'Y';
+					}
+				} else {
+					if (direction == 'X') {
+						deltay = 0;
+						deltax += point.x - previousPoint.x;
+					} else if (direction == 'Y') {
+						deltax = 0;
+						deltay += point.y - previousPoint.y;
+					} else {
+						NSLog(@"Houston, we have a problem");
 					}
 				}			
 			} else {
@@ -136,23 +148,8 @@
 			// The clipping rect is the new redraw rect
 			[super addRectToRedrawRect:clippingRect];
 			
-			[secondImage lockFocus];
-//			[outlinedImage drawAtPoint:NSMakePoint(deltax, deltay)
-//						   fromRect:NSZeroRect
-//						  operation:NSCompositeSourceOver
-//						   fraction:1.0];
-			NSPoint p1 = NSMakePoint(deltax, deltay);
-			[backedImage drawAtPoint:p1
-							fromRect:NSZeroRect
-						   operation:NSCompositeSourceOver
-							fraction:1.0];
-			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-			[[NSColor darkGrayColor] setStroke];
-			[[self pathFromPoint:clippingRect.origin 
-						 toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
-											 clippingRect.origin.y + clippingRect.size.height)] stroke];			
-			[secondImage unlockFocus];
-			
+			// Finally, move the image and stroke it
+			[self drawNewBorder:nil];
 		} else {
 			[self tieUpLooseEnds];
 		}
@@ -176,7 +173,9 @@
 		if (point.y > [anImage size].height)
 			point.y = [anImage size].height;
 		
-		if ((point.x != savedPoint.x) && (point.y != savedPoint.y)) {
+		// If this check fails, then they didn't draw a rectangle
+		if (!NSEqualPoints(point, savedPoint)) {
+			
 			// Set the redraw rectangle
 			[super setRedrawRectFromPoint:savedPoint toPoint:point];
 			
@@ -186,91 +185,103 @@
 			[[NSColor darkGrayColor] setStroke];
 			[[self pathFromPoint:savedPoint toPoint:point] stroke];
 			[secondImage unlockFocus];
-		}
 				
-		if ((event == MOUSE_UP) && (point.x != savedPoint.x) && (point.y != savedPoint.y)) {
-			// Copy the rectangle's contents to the second image
-			
-			imageRep = [[NSBitmapImageRep alloc] initWithData:[anImage TIFFRepresentation]];
-			
-			// This loop removes all the representations in the overlay image, effectively clearing it
-			for (NSImageRep *rep in [secondImage representations]) {
-				[secondImage removeRepresentation:rep];
-			}
-			
-			[secondImage lockFocus];
-			[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+			if (event == MOUSE_UP) {
+				// Copy the rectangle's contents to the second image
+				
+				imageRep = [[NSBitmapImageRep alloc] initWithData:[anImage TIFFRepresentation]];
+				
+				// This loop removes all the representations in the overlay image, effectively clearing it
+				for (NSImageRep *rep in [secondImage representations]) {
+					[secondImage removeRepresentation:rep];
+				}
+				
+				backedImage = [[NSImage alloc] initWithSize:[anImage size]];
+				[backedImage lockFocus];
 
-			if (shouldOmitBackground) {
-				// EXPERIMENTAL: Transparency
-				// TODO: Faster, and possibly somewhere else?
-				NSInteger x, y;
-				NSBitmapImageRep *secondRep = [NSBitmapImageRep imageRepWithData:[secondImage TIFFRepresentation]];
-				for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
-					for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
-						 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
-						if (!colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
-							[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
+				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+
+				if (shouldOmitBackground) {
+					// EXPERIMENTAL: Transparency
+					// TODO: Faster, and possibly somewhere else?
+					NSInteger x, y;
+					NSBitmapImageRep *secondRep = [NSBitmapImageRep imageRepWithData:[secondImage TIFFRepresentation]];
+					for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
+						for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
+							 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
+							if (!colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
+								[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
+							}
 						}
 					}
+					[secondRep drawAtPoint:NSZeroPoint];
+					
+				} else {
+					// This is without transparency, and is much faster
+					[anImage drawInRect:clippingRect
+							   fromRect:clippingRect
+							  operation:NSCompositeSourceOver 
+							   fraction:1.0];				
 				}
-				[secondRep drawAtPoint:NSZeroPoint];
-				
-			} else {
-				// This is without transparency, and is much faster
-				[anImage drawInRect:clippingRect
-						   fromRect:clippingRect
-						  operation:NSCompositeSourceOver 
-						   fraction:1.0];				
-			}
-			[secondImage unlockFocus];
-			
-			backedImage = [[NSImage alloc] initWithSize:[anImage size]];
-			[backedImage lockFocus];
-			[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-			[secondImage drawInRect:clippingRect
-						   fromRect:clippingRect
-						  operation:NSCompositeSourceOver 
-						   fraction:1.0];
-			[backedImage unlockFocus];
-			
-			[secondImage lockFocus];
-			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-			[[NSColor darkGrayColor] setStroke];
-			[[self pathFromPoint:savedPoint toPoint:point] stroke];
-			[secondImage unlockFocus];
 
-//			outlinedImage = [[NSImage alloc] initWithSize:[anImage size]];
-//			[outlinedImage lockFocus];
-//			[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-//			[secondImage drawAtPoint:NSZeroPoint
-//							fromRect:NSZeroRect
-//						   operation:NSCompositeSourceOver
-//							fraction:1.0];
-//			[outlinedImage unlockFocus];
-						
-			// Delete it from the main image
-			[anImage lockFocus];
-			
-			// The best way I can come up with to clear the image
-//			[[NSColor clearColor] setFill];
-//			NSRectFill(NSMakeRect(0,0,[anImage size].width, [anImage size].height));
-			
-			[backColor set];
-			[NSBezierPath fillRect:clippingRect];
-			[anImage unlockFocus];
-			
-			oldOrigin = clippingRect.origin;
-			
-			isSelected = YES;
+				[backedImage unlockFocus];
+				
+				[self drawNewBorder:nil];
+
+				// Delete it from the main image
+				[anImage lockFocus];
+				
+				// The best way I can come up with to clear the image
+//				[[NSColor clearColor] setFill];
+//				NSRectFill(NSMakeRect(0,0,[anImage size].width, [anImage size].height));
+				
+				[backColor set];
+				[NSBezierPath fillRect:clippingRect];
+				[anImage unlockFocus];
+				
+				oldOrigin = clippingRect.origin;
+				
+				isSelected = YES;
+			}
 		}
 	}
+}
+
+// Tick the timer!
+- (void)drawNewBorder:(NSTimer *)timer
+{
+	dottedLineOffset = (dottedLineOffset + 1) % 8;
+	
+	// Draw the backed image to the overlay
+	if (_secondImage) {
+		[_secondImage lockFocus];
+		if (backedImage) {
+			[backedImage drawAtPoint:NSMakePoint(deltax, deltay)
+							fromRect:NSZeroRect
+						   operation:NSCompositeSourceOver
+							fraction:1.0];			
+		}
+		
+		// Next, stroke it
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+		[[NSColor darkGrayColor] setStroke];
+		[[self pathFromPoint:clippingRect.origin 
+					 toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
+										 clippingRect.origin.y + clippingRect.size.height)] stroke];			
+		[_secondImage unlockFocus];		
+	}
+	
+	// Get the view to perform a redraw to see the new border
+	[NSApp sendAction:@selector(refreshImage:)
+				   to:nil
+				 from:self];
 }
 
 - (void)tieUpLooseEnds
 {
 	[super tieUpLooseEnds];
 	
+	[animationTimer invalidate];
 	isSelected = NO;
 	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ ) {
 		//NSLog(@"%@", imageRep);
@@ -278,7 +289,7 @@
 					   to:nil
 					 from:[NSDictionary dictionaryWithObject:[imageRep TIFFRepresentation] forKey:@"Image"]];
 	}
-	
+
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_secondImage && _anImage && [[_secondImage representations] count] > 0) {
 		// This loop removes all the representations in the overlay image, effectively clearing it
@@ -294,6 +305,9 @@
 						fromRect:selectedRect
 					   operation:NSCompositeSourceOver
 						fraction:1.0];
+		
+		[backedImage release];
+		backedImage = nil;
 		
 		[_anImage unlockFocus];
 
@@ -335,17 +349,15 @@
 				 toPoint:NSMakePoint(rect.size.width+rect.origin.x,rect.size.height+rect.origin.y)] stroke];
 	[image unlockFocus];
 	
-	// Copy that image somewhere else
-//	outlinedImage = [[NSImage alloc] initWithSize:[image size]];
-//	[outlinedImage lockFocus];
-//	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-//	[image drawAtPoint:NSZeroPoint
-//			  fromRect:NSZeroRect
-//			 operation:NSCompositeSourceOver
-//			  fraction:1.0];
-//	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-//	[[NSColor darkGrayColor] setStroke];
-//	[outlinedImage unlockFocus];
+	// Set the redraw rect!
+	[super addRectToRedrawRect:clippingRect];
+	
+	// Manually create the timer
+	animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.075 // 75 ms, or 13.33 Hz
+													  target:self
+													selector:@selector(drawNewBorder:)
+													userInfo:nil
+													 repeats:YES];	
 }
 
 - (NSData *)imageData

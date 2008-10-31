@@ -25,6 +25,9 @@
 @interface SWSelectionTool : SWTool {
 	NSRect clippingRect;
 	NSImage *backedImage/*, *outlinedImage*/;
+	NSTimer *animationTimer;
+	CGFloat dottedLineArray[2];
+	NSInteger dottedLineOffset;
 	NSBitmapImageRep *imageRep;
 	NSPoint previousPoint;
 	NSPoint oldOrigin;
@@ -41,6 +44,7 @@
 - (NSImage *)backedImage;
 - (NSData *)imageData;
 - (void)setClippingRect:(NSRect)rect forImage:(NSImage *)image;
+- (void)drawNewBorder:(NSTimer *)timer;
 
 @property (assign, readonly) NSPoint oldOrigin;
 

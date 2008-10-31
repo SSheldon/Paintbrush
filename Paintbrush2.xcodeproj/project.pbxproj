@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2709A7F50EB401C50050A019 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2709A7F40EB401C50050A019 /* Sparkle.framework */; };
+		2709A8300EB401D70050A019 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2709A7F40EB401C50050A019 /* Sparkle.framework */; };
 		270F02730BD0218F005B92A3 /* SWTextToolWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */; };
 		270F02740BD0218F005B92A3 /* SWTextToolWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */; };
 		271EEB0D0BBC34A800319865 /* SWSelectionTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 271EEB0B0BBC34A800319865 /* SWSelectionTool.h */; };
@@ -116,6 +118,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2709A8300EB401D70050A019 /* Sparkle.framework in CopyFiles */,
 				275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */,
 				271EEB0D0BBC34A800319865 /* SWSelectionTool.h in CopyFiles */,
 				271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */,
@@ -135,6 +138,7 @@
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2704064A0BFE3F3600C308C8 /* ToDo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ToDo.rtf; sourceTree = "<group>"; };
+		2709A7F40EB401C50050A019 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextToolWindowController.h; sourceTree = "<group>"; };
 		270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextToolWindowController.m; sourceTree = "<group>"; };
 		271B97BB0D85C47200D1B36D /* SWZoomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWZoomTool.h; sourceTree = "<group>"; };
@@ -271,6 +275,7 @@
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
 				273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */,
+				2709A7F50EB401C50050A019 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +550,7 @@
 		594D30730DFF93770095E075 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2709A7F40EB401C50050A019 /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
