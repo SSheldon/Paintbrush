@@ -27,12 +27,12 @@
 @interface SWPaintView : NSView {
 	NSImage *mainImage;
 	NSImage *secondImage;
-	NSPoint downPoint;
 	NSPoint currentPoint;
 	NSColor *frontColor;
 	NSColor *backColor;
 	NSBitmapImageRep *imageRep;
 	NSData *undoData;
+	NSBezierPath *expPath;
 	SWToolboxController *toolbox;
 	SWTool *currentTool;
 

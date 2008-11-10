@@ -26,10 +26,10 @@
 
 @implementation SWZoomTool
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {
 	// Only zoom on a down-click
 	if (event == MOUSE_DOWN) {
@@ -48,6 +48,7 @@
 			}
 		}
 	}
+	return nil;
 }
 
 - (NSCursor *)cursor

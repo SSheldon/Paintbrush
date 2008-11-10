@@ -89,7 +89,11 @@
 //		[toolList setObject:[[SWEyeDropperTool alloc] initWithController:self] forKey:@"EyeDropper"];
 //		[toolList setObject:[[SWZoomTool alloc] initWithController:self] forKey:@"Zoom"];
 //		[toolList setObject:[[SWAirbrushTool alloc] initWithController:self] forKey:@"Airbrush"];
-		
+	
+		// Do some other initialization stuff
+		[NSBezierPath setDefaultLineCapStyle:NSRoundLineCapStyle];
+		[NSBezierPath setDefaultLineJoinStyle:NSRoundLineJoinStyle];
+		[NSBezierPath setDefaultWindingRule:NSEvenOddWindingRule];
 	}
 	
 	return self;

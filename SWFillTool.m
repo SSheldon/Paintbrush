@@ -38,10 +38,10 @@
 	return nil;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event;
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
 
@@ -99,10 +99,11 @@
 			[imageRep drawAtPoint:NSZeroPoint];
 			[anImage unlockFocus];
 			
-			[super setRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([imageRep pixelsWide], [imageRep pixelsHigh])];
+			[super addRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([imageRep pixelsWide], [imageRep pixelsHigh])];
 		}
 	}
-}	
+	return nil;
+}
 
 - (NSCursor *)cursor
 {

@@ -44,7 +44,8 @@
 	NSRange range;
 	range.length = [[textView string] length];
 	range.location = 0;
-	NSAttributedString *attrString = [[NSAttributedString alloc] initWithAttributedString:[textView attributedSubstringFromRange:range]];
+	NSAttributedString *attrString = [[NSAttributedString alloc] initWithAttributedString:
+									  [textView attributedSubstringFromRange:range]];
 	NSDictionary *d = [NSDictionary dictionaryWithObject:attrString forKey:@"newText"];
 	NSNotification *n = [NSNotification notificationWithName:@"SWTextEntered"
 													  object:self

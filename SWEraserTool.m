@@ -29,7 +29,6 @@
 	if (!path) {
 		path = [NSBezierPath new];
 		[path setLineWidth:lineWidth];
-		[path setLineCapStyle:NSRoundLineCapStyle];
 	}
 	if (lineWidth == 1) {
 		begin.x += 0.5;
@@ -43,13 +42,13 @@
 	return path;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 	// Use the points clicked to build a redraw rectangle
-	[super setRedrawRectFromPoint:point toPoint:savedPoint];
+	[super addRedrawRectFromPoint:point toPoint:savedPoint];
 	
 	if (event == MOUSE_UP) {
 		[NSApp sendAction:@selector(prepUndo:)
@@ -81,6 +80,7 @@
 		
 		[secondImage unlockFocus];
 	}
+	return nil;
 }
 
 - (NSCursor *)cursor

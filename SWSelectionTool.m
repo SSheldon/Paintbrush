@@ -78,27 +78,29 @@
 	return path;	
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 	_secondImage = secondImage;
 	_anImage = anImage;
 	
 	// Running the selection animator
-	if (event == MOUSE_UP && !NSEqualPoints(point, savedPoint)) {
+	if (event == MOUSE_DOWN) {
+		[animationTimer invalidate];
+	} else if (event == MOUSE_UP && !NSEqualPoints(point, savedPoint)) {
 		animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.075 // 75 ms, or 13.33 Hz
 														  target:self
 														selector:@selector(drawNewBorder:)
 														userInfo:nil
 														 repeats:YES];		
-	} else if (event == MOUSE_DOWN) {
-		[animationTimer invalidate];
-	}
+	} 
 	
 	// If the rectangle has already been drawn
 	if (isSelected) {
+		// We checked for the drag because it's possible that the cursor has been dragged outside the 
+		// clipping rect in one single event
 		if (event == MOUSE_DRAGGED || [[NSBezierPath bezierPathWithRect:clippingRect] containsPoint:point]) {
 			if (event == MOUSE_DOWN) {
 				previousPoint = point;
@@ -138,9 +140,10 @@
 			// Do the moving thing
 			
 			// This loop removes all the representations in the overlay image, effectively clearing it
-			for (NSImageRep *rep in [secondImage representations]) {
-				[secondImage removeRepresentation:rep];
-			}
+//			for (NSImageRep *rep in [secondImage representations]) {
+//				[secondImage removeRepresentation:rep];
+//			}
+			SWClearImage(secondImage);
 			
 			clippingRect.origin.x = oldOrigin.x + deltax;
 			clippingRect.origin.y = oldOrigin.y + deltay;
@@ -159,9 +162,10 @@
 		deltax = deltay = 0;
 
 		// This loop removes all the representations in the overlay image, effectively clearing it
-		for (NSImageRep *rep in [secondImage representations]) {
-			[secondImage removeRepresentation:rep];
-		}
+//		for (NSImageRep *rep in [secondImage representations]) {
+//			[secondImage removeRepresentation:rep];
+//		}
+		SWClearImage(secondImage);
 		
 		// Taking care of the outer bounds of the image
 		if (point.x < 0)
@@ -172,12 +176,12 @@
 			point.x = [anImage size].width;
 		if (point.y > [anImage size].height)
 			point.y = [anImage size].height;
-		
+				
 		// If this check fails, then they didn't draw a rectangle
 		if (!NSEqualPoints(point, savedPoint)) {
 			
 			// Set the redraw rectangle
-			[super setRedrawRectFromPoint:savedPoint toPoint:point];
+			[super addRedrawRectFromPoint:savedPoint toPoint:point];
 			
 			// Draw the dotted line
 			[secondImage lockFocus]; 
@@ -192,9 +196,10 @@
 				imageRep = [[NSBitmapImageRep alloc] initWithData:[anImage TIFFRepresentation]];
 				
 				// This loop removes all the representations in the overlay image, effectively clearing it
-				for (NSImageRep *rep in [secondImage representations]) {
-					[secondImage removeRepresentation:rep];
-				}
+//				for (NSImageRep *rep in [secondImage representations]) {
+//					[secondImage removeRepresentation:rep];
+//				}
+				SWClearImage(secondImage);
 				
 				backedImage = [[NSImage alloc] initWithSize:[anImage size]];
 				[backedImage lockFocus];
@@ -245,6 +250,10 @@
 			}
 		}
 	}
+//	return [self pathFromPoint:clippingRect.origin 
+//					   toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
+//										   clippingRect.origin.y + clippingRect.size.height)];
+	return nil;
 }
 
 // Tick the timer!
@@ -293,9 +302,11 @@
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_secondImage && _anImage && [[_secondImage representations] count] > 0) {
 		// This loop removes all the representations in the overlay image, effectively clearing it
-		for (NSImageRep *rep in [_secondImage representations]) {
-			[_secondImage removeRepresentation:rep];
-		}
+//		for (NSImageRep *rep in [_secondImage representations]) {
+//			[_secondImage removeRepresentation:rep];
+//		}
+		SWClearImage(_secondImage);
+
 		[_anImage lockFocus];
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		
@@ -390,7 +401,7 @@
 // Overridden for right-click
 - (BOOL)shouldShowContextualMenu
 {
-	return YES;
+	return NO;
 }
 
 - (NSString *)description

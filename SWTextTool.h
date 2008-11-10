@@ -25,8 +25,9 @@
 @interface SWTextTool : SWTool {
 	BOOL canInsert;
 	NSAttributedString *stringToInsert;
-	NSPoint aPoint;
 	NSImage *image;
 }
+
+- (void)insertText:(NSNotification *)note;
 
 @end

@@ -22,10 +22,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SWImageManipulator : NSObject {
+@interface SWImageTools : NSObject {
 
 }
 
 + (void)invertImage:(NSImage *)image;
+
+void SWClearImage(NSImage *image);
+void SWClearImageRect(NSImage *image, NSRect rect);
 
 @end

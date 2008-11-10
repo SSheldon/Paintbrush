@@ -24,6 +24,8 @@
 
 @implementation SWTool
 
+@synthesize flags;
+
 - (id)initWithController:(SWToolboxController *)controller
 {
 	if(self = [super init]) {
@@ -115,18 +117,18 @@
 	shouldStroke = stroke;
 }
 
-- (void)setFrontColor:(NSColor *)front 
-			backColor:(NSColor *)back 
-			lineWidth:(CGFloat)width 
-		   shouldFill:(BOOL)fill 
-		 shouldStroke:(BOOL)stroke
-{
-	frontColor = front;
-	backColor = back;
-	lineWidth = width;
-	shouldFill = fill;
-	shouldStroke = stroke;
-}
+//- (void)setFrontColor:(NSColor *)front 
+//			backColor:(NSColor *)back 
+//			lineWidth:(CGFloat)width 
+//		   shouldFill:(BOOL)fill 
+//		 shouldStroke:(BOOL)stroke
+//{
+//	frontColor = front;
+//	backColor = back;
+//	lineWidth = width;
+//	shouldFill = fill;
+//	shouldStroke = stroke;
+//}
 
 - (NSPoint)savedPoint
 {
@@ -136,11 +138,6 @@
 - (void)setSavedPoint:(NSPoint)aPoint
 {
 	savedPoint = aPoint;
-}
-
-- (void)setModifierFlags:(NSUInteger)modifierFlags
-{
-	flags = modifierFlags;
 }
 
 - (void)tieUpLooseEnds
@@ -171,7 +168,7 @@
 }
 
 // Used to make the drawing faster
-- (NSRect)setRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2
+- (NSRect)addRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2
 {
 	NSRect tempRect;
 	tempRect.origin = NSMakePoint(round(fmin(p1.x, p2.x) - (lineWidth/2) - 1), round(fmin(p1.y, p2.y) - (lineWidth/2) - 1));

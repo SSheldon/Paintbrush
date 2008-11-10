@@ -29,7 +29,6 @@
 	if (!path) {
 		path = [NSBezierPath new];
 		[path setLineWidth:lineWidth];
-		[path setLineCapStyle:NSRoundLineCapStyle];
 	}
 	if (lineWidth == 1) {
 		begin.x += 0.5;
@@ -43,10 +42,10 @@
 	return path;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 
 	if (event == MOUSE_UP) {
@@ -57,22 +56,29 @@
 					   to:nil
 					 from:nil];
 		[anImage lockFocus];
-		[secondImage drawAtPoint:NSZeroPoint
-						fromRect:NSZeroRect
-					   operation:NSCompositeSourceOver 
-						fraction:1.0];
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+		if (flags & NSAlternateKeyMask) {
+			[backColor setStroke];
+		} else {
+			[frontColor setStroke];
+		}
+		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		[[NSColor redColor] setFill];
+		[path closePath];
+		[path fill];
 		[anImage unlockFocus];
 
 		path = nil;
 	} else {
 		// Use the points clicked to build a redraw rectangle
-		[super setRedrawRectFromPoint:point toPoint:savedPoint];
+		[super addRedrawRectFromPoint:point toPoint:savedPoint];
 
 		[secondImage lockFocus]; 
 		
 		// The best way I can come up with to clear the image
 		[[NSColor clearColor] setFill];
-		NSRectFill(NSMakeRect(0,0,[secondImage size].width, [secondImage size].height));
+		//NSRectFill(NSMakeRect(0,0,[secondImage size].width, [secondImage size].height));
+		NSRectFill(redrawRect);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {
@@ -85,6 +91,7 @@
 		
 		[secondImage unlockFocus];
 	}
+	return nil;
 }
 
 - (NSCursor *)cursor

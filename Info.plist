@@ -102,7 +102,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>application-leopard</string>
+	<string>newicon</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.soggywaffles.Paintbrush</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -116,7 +116,7 @@
 	<key>CFBundleSignature</key>
 	<string>Pbsh</string>
 	<key>CFBundleVersion</key>
-	<string>20080413</string>
+	<string>20081110</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

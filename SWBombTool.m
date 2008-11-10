@@ -28,10 +28,10 @@
 	return nil;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event;
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
 		// If there's an explosion going on, kill it
@@ -61,6 +61,7 @@
 													repeats:YES];
 		isExploding = YES;
 	}
+	return nil;
 }
 
 // Each time this method is called (by the timer), a larger circle is drawn. This happens
@@ -114,9 +115,10 @@
 	[mainImage unlockFocus];
 
 	// This loop removes all the representations in the overlay image, effectively clearing it
-	for (NSImageRep *rep in [image representations]) {
-		[image removeRepresentation:rep];
-	}
+//	for (NSImageRep *rep in [image representations]) {
+//		[image removeRepresentation:rep];
+//	}
+	SWClearImage(image);
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil
 				 from:nil];

@@ -26,7 +26,8 @@
 typedef enum {
 	MOUSE_DOWN, 
 	MOUSE_DRAGGED,
-	MOUSE_UP
+	MOUSE_UP,
+	MOUSE_MOVED
 } SWMouseEvent;
 
 @interface SWTool : NSObject {
@@ -61,15 +62,15 @@ typedef enum {
 
 - (NSPoint)savedPoint;
 - (NSColor *)drawingColor;
-- (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(CGFloat)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
-- (void)setModifierFlags:(NSUInteger)modifierFlags;
+//- (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(CGFloat)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
+//- (void)setModifierFlags:(NSUInteger)modifierFlags;
 - (void)setSavedPoint:(NSPoint)aPoint;
 - (void)tieUpLooseEnds;
 - (void)mouseHasMoved:(NSPoint)aPoint;
 - (BOOL)isEqualToTool:(SWTool *)aTool;
 
 // Used for faster drawing: don't redraw the entire screen, just this portion
-- (NSRect)setRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2;
+- (NSRect)addRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2;
 - (NSRect)addRectToRedrawRect:(NSRect)newRect;
 - (NSRect)invalidRect;
 - (void)resetRedrawRect;
@@ -81,6 +82,7 @@ typedef enum {
 
 @property (readonly) BOOL shouldShowFillOptions;
 @property (readonly) BOOL shouldShowTransparencyOptions;
+@property (assign) NSUInteger flags;
 
 // A few useful C functions
 BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
@@ -90,10 +92,10 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 @interface SWTool (Abstract)
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end;
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event;
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event;
 - (NSCursor *)cursor;
 
 @end

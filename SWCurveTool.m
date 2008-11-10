@@ -23,9 +23,9 @@
 
 @implementation SWCurveTool
 
-- (id)init
+- (id)initWithController:(SWToolboxController *)controller
 {
-	if (self = [super init]) {
+	if (self = [super initWithController:controller]) {
 		numberOfClicks = 0;
 	}
 	return self;
@@ -35,7 +35,6 @@
 {
 	path = [NSBezierPath new];
 	[path setLineWidth:lineWidth];
-	[path setLineCapStyle:NSRoundLineCapStyle];
 	[path moveToPoint:beginPoint];
 	if (lineWidth == 1) {
 		begin.x += 0.5;
@@ -76,10 +75,10 @@
 }
 
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
 		numberOfClicks++;
@@ -87,9 +86,10 @@
 	}
 	
 	// This loop removes all the representations in the overlay image, effectively clearing it
-	for (NSImageRep *rep in [secondImage representations]) {
-		[secondImage removeRepresentation:rep];
-	}
+//	for (NSImageRep *rep in [secondImage representations]) {
+//		[secondImage removeRepresentation:rep];
+//	}
+	SWClearImage(secondImage);
 	drawToMe = secondImage;
 	
 	_secondImage = secondImage;
@@ -129,8 +129,13 @@
 	[drawToMe unlockFocus];
 	
 	// Use the points clicked to build a redraw rectangle
-	[super setRedrawRectFromPoint:[p bounds].origin toPoint:NSMakePoint([p bounds].size.width + [p bounds].origin.x, 
-																		[p bounds].size.height + [p bounds].origin.y)];
+	NSRect curveRect = [p bounds];
+	curveRect.origin.x -= lineWidth;
+	curveRect.origin.y -= lineWidth;
+	curveRect.size.width += 2*lineWidth;
+	curveRect.size.height += 2*lineWidth;
+	[super addRectToRedrawRect:curveRect];
+	return nil;
 }
 
 - (void)setNumberOfClicks:(NSInteger)clicks

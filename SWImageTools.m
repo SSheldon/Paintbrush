@@ -19,11 +19,11 @@
  */
 
 
-#import "SWImageManipulator.h"
+#import "SWImageTools.h"
 #import <QuartzCore/QuartzCore.h>
 
 
-@implementation SWImageManipulator
+@implementation SWImageTools
 
 // Uses Core Image filters to invert the colors of the image
 + (void)invertImage:(NSImage *)image
@@ -73,6 +73,23 @@
 	
 	[image lockFocus];
 	[imageRep drawAtPoint:NSZeroPoint];
+	[image unlockFocus];	
+}
+
+void SWClearImage(NSImage *image)
+{
+	NSRect rect = {
+		NSZeroPoint,
+		[image size]
+	};
+	SWClearImageRect(image,rect);
+}
+
+void SWClearImageRect(NSImage *image, NSRect rect)
+{
+	[image lockFocus];
+	[[NSColor clearColor] setFill];
+	NSRectFill(rect);
 	[image unlockFocus];	
 }
 

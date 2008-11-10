@@ -25,10 +25,10 @@
 
 @implementation SWEyeDropperTool
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event;
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {
 	// This only needs to happen once
 	if (event == MOUSE_DOWN) {
@@ -47,6 +47,7 @@
 			[[SWToolboxController sharedToolboxPanelController] setForegroundColor:colorClicked];
 		}
 	}
+	return nil;
 }
 
 - (NSCursor *)cursor

@@ -27,7 +27,6 @@
 {
 	path = [NSBezierPath new];
 	[path setLineWidth:lineWidth];
-	[path setLineCapStyle:NSRoundLineCapStyle];
 	[path moveToPoint:begin];
 	if (lineWidth == 1) {
 		begin.x += 0.5;
@@ -47,18 +46,19 @@
 	return path;	
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {	
 	// Use the points clicked to build a redraw rectangle
-	[super setRedrawRectFromPoint:savedPoint toPoint:point];
+	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
 	// This loop removes all the representations in the overlay image, effectively clearing it
-	for (NSImageRep *rep in [secondImage representations]) {
-		[secondImage removeRepresentation:rep];
-	}
+//	for (NSImageRep *rep in [secondImage representations]) {
+//		[secondImage removeRepresentation:rep];
+//	}
+	SWClearImage(secondImage);
 	
 	if (event == MOUSE_UP) {
 		[NSApp sendAction:@selector(prepUndo:)
@@ -97,6 +97,7 @@
 	}
 
 	[drawToMe unlockFocus];
+	return nil;
 }
 
 - (NSCursor *)cursor

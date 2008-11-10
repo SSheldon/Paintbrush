@@ -20,7 +20,6 @@
 
 
 #import "SWDocument.h"
-#import "SWImageManipulator.h"
 #import "SWPaintView.h"
 #import "SWScalingScrollView.h"
 #import "SWCenteringClipView.h"

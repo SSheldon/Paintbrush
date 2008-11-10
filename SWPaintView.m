@@ -37,12 +37,13 @@
 		
 		// New document, not an opened image: gotta paint the background color
 		[mainImage lockFocus];
-		[[toolbox backgroundColor] set];
-		[NSBezierPath fillRect:frameRect];
+		[[toolbox backgroundColor] setFill];
+		NSRectFill(frameRect);
 		[mainImage unlockFocus];
 		
 		secondImage = [[NSImage alloc] initWithSize:frameRect.size];	
-				
+
+		
 		// Tracking area
 		[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
 														   options: NSTrackingMouseMoved | NSTrackingCursorUpdate
@@ -141,6 +142,11 @@
 			[[self gridInRect:[self frame]] stroke];
 		}
 		
+		if (expPath) {
+			[[NSColor blueColor] set];
+			[expPath stroke];
+		}
+		
 		//[NSGraphicsContext restoreGraphicsState];
 	}
 }
@@ -166,7 +172,7 @@
 }
 
 - (void)updateCurrentTool {
-	[currentTool resetRedrawRect];
+	//[currentTool resetRedrawRect];
 	if (currentTool != [toolbox currentTool]) {
 		currentTool = [toolbox currentTool];
 		[self clearOverlay];
@@ -182,61 +188,72 @@
 
 - (void)mouseDown:(NSEvent *)event
 {
-	isPayingAttention = YES;
-	NSPoint p = [event locationInWindow];
-	downPoint = [self convertPoint:p fromView:nil];
-	
-	// Necessary for when the view is zoomed above 100%
-	currentPoint.x = floor(downPoint.x);
-	currentPoint.y = floor(downPoint.y);
-	
-	[self updateCurrentTool];
+//	NSLog(@"Down, control = %d", ([event modifierFlags] & NSControlKeyMask));
+//	if (!([event modifierFlags] & NSControlKeyMask)) {
+		isPayingAttention = YES;
+		NSPoint p = [event locationInWindow];
+		NSPoint downPoint = [self convertPoint:p fromView:nil];
+		
+		// Necessary for when the view is zoomed above 100%
+		currentPoint.x = floor(downPoint.x);
+		currentPoint.y = floor(downPoint.y);
+		
+		[self updateCurrentTool];
 
-	[currentTool setSavedPoint:currentPoint];
-	
-	// If it's shifted, do something about it
-	[currentTool setModifierFlags:[event modifierFlags]];
-	[currentTool performDrawAtPoint:currentPoint 
-					  withMainImage:mainImage 
-						secondImage:secondImage 
-						 mouseEvent:MOUSE_DOWN];
-	
-	[self setNeedsDisplayInRect:[currentTool invalidRect]];
-	//[self setNeedsDisplay:YES];
+		[currentTool setSavedPoint:currentPoint];
+		
+		// If it's shifted, do something about it
+		[currentTool setFlags:[event modifierFlags]];
+		[currentTool performDrawAtPoint:currentPoint 
+						  withMainImage:mainImage 
+							secondImage:secondImage 
+							 mouseEvent:MOUSE_DOWN];
+		
+		[self setNeedsDisplayInRect:[currentTool invalidRect]];
+		//[self setNeedsDisplay:YES];		
+//	}
 }
 
 - (void)mouseDragged:(NSEvent *)event
 {
-	//NSLog(@"Dragged");
+//	NSLog(@"Dragged, control = %d", ([event modifierFlags] & NSControlKeyMask));
 	if (isPayingAttention) {
 		NSPoint p = [event locationInWindow];
 		NSPoint dragPoint = [self convertPoint:p fromView:nil];
 		
 		// Necessary for when the view is zoomed above 100%
-		dragPoint.x = floor(dragPoint.x);
-		dragPoint.y = floor(dragPoint.y);
+		currentPoint.x = floor(dragPoint.x);
+		currentPoint.y = floor(dragPoint.y);
 		
-		[currentTool setModifierFlags:[event modifierFlags]];
-		[currentTool performDrawAtPoint:dragPoint withMainImage:mainImage secondImage:secondImage mouseEvent:MOUSE_DRAGGED];
+		[currentTool setFlags:[event modifierFlags]];
+		[currentTool performDrawAtPoint:currentPoint 
+						  withMainImage:mainImage 
+							secondImage:secondImage 
+							 mouseEvent:MOUSE_DRAGGED];
 		
-		currentPoint = dragPoint;
 		[self setNeedsDisplayInRect:[currentTool invalidRect]];
 	}
 }
 
 - (void)mouseUp:(NSEvent *)event
 {
+//	NSLog(@"Up, control = %d", ([currentTool flags] & NSControlKeyMask));
 	if (isPayingAttention) {
-		
 		NSPoint p = [event locationInWindow];
-		downPoint = [self convertPoint:p fromView:nil];
+		NSPoint upPoint = [self convertPoint:p fromView:nil];
 		
 		// Necessary for when the view is zoomed above 100%
-		downPoint.x = floor(downPoint.x);
-		downPoint.y = floor(downPoint.y);
-		[currentTool setModifierFlags:[event modifierFlags]];
-		[currentTool performDrawAtPoint:downPoint withMainImage:mainImage secondImage:secondImage mouseEvent:MOUSE_UP];
-		currentPoint = downPoint;
+		currentPoint.x = floor(upPoint.x);
+		currentPoint.y = floor(upPoint.y);
+		[currentTool setFlags:[event modifierFlags]];
+		NSBezierPath *path = [currentTool performDrawAtPoint:currentPoint 
+											   withMainImage:mainImage 
+												 secondImage:secondImage 
+												  mouseEvent:MOUSE_UP];
+		
+		if (path) {
+			expPath = path;
+		}
 		
 		[self setNeedsDisplayInRect:[currentTool invalidRect]];
 		//[self setNeedsDisplay:YES];
@@ -326,9 +343,12 @@
 		isPayingAttention = NO;
 		[currentTool tieUpLooseEnds];
 		// This loop removes all the representations in the overlay image, effectively clearing it
-		for (NSImageRep *rep in [secondImage representations]) {
-			[secondImage removeRepresentation:rep];
-		}
+//		for (NSImageRep *rep in [secondImage representations]) {
+//			[secondImage removeRepresentation:rep];
+//		}
+//		NSRect temp = NSZeroRect;
+//		temp.size = [secondImage size];
+		SWClearImage(secondImage);
 		[self setNeedsDisplay:YES];
 		
 		// Delete keys (back and forward)
@@ -349,9 +369,10 @@
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale
 {	
 	//mainImage = newImage;
-	for (NSImageRep *rep in [mainImage representations]) {
-		[mainImage removeRepresentation:rep];
-	}
+//	for (NSImageRep *rep in [mainImage representations]) {
+//		[mainImage removeRepresentation:rep];
+//	}
+	SWClearImage(mainImage);
 	[mainImage lockFocus];
 	if (scale) {
 		// Stretch the image to the correct size
@@ -555,9 +576,10 @@
 - (void)clearOverlay
 {
 	// This loop removes all the representations in the overlay image, effectively clearing it
-	for (NSImageRep *rep in [secondImage representations]) {
-		[secondImage removeRepresentation:rep];
-	}
+//	for (NSImageRep *rep in [secondImage representations]) {
+//		[secondImage removeRepresentation:rep];
+//	}
+	SWClearImage(secondImage);
 	[currentTool tieUpLooseEnds];
 	[self setNeedsDisplay:YES];
 }
@@ -600,8 +622,8 @@
 //	}
 
 	// Trying out something new here
-	secondImage = [[NSImage alloc] initWithSize:NSMakeSize(fmax([mainImage size].width, rect.size.width), 
-														   fmax([mainImage size].height, rect.size.height))];
+//	secondImage = [[NSImage alloc] initWithSize:NSMakeSize(fmax([mainImage size].width, rect.size.width), 
+//														   fmax([mainImage size].height, rect.size.height))];
 	
 	[secondImage lockFocus];
 	[temp drawAtPoint:rect.origin

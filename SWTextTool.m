@@ -23,16 +23,15 @@
 
 @implementation SWTextTool
 
-- (id)init
+- (id)initWithController:(SWToolboxController *)controller
 {
-	if (self = [super init]) {
+	if (self = [super initWithController:controller]) {
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(insertText:)
 													 name:@"SWTextEntered"
 												   object:nil];
-		//image = [NSImage alloc];
 		canInsert = NO;
-		stringToInsert = @"";
+		stringToInsert = nil;
 	}
 	return self;
 }
@@ -42,51 +41,63 @@
 	return nil;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {
 	_anImage = anImage;
 	_secondImage = secondImage;
 	
-	if (event == MOUSE_DRAGGED) {
+	if (canInsert && event == MOUSE_MOVED) {
 		// This loop removes all the representations in the overlay image, effectively clearing it
-		for (NSImageRep *rep in [secondImage representations]) {
-			[secondImage removeRepresentation:rep];
-		}
+//		for (NSImageRep *rep in [secondImage representations]) {
+//			[secondImage removeRepresentation:rep];
+//		}
+		SWClearImage(secondImage);
 		[secondImage lockFocus];
 		
 		// Assign the redrawRect based on the string's size and the insertion point
-		NSInteger drawingOptions = 0 ;
-		NSRect rect = [stringToInsert boundingRectWithSize:[stringToInsert size] options:drawingOptions];
+		NSRect rectA = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesDeviceMetrics];
+		NSRect rectB = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesFontLeading];
+
+		NSRect rect = NSUnionRect(rectA, rectB);
+		CGFloat xOffset = abs(rect.origin.x);
+		rect.size.width += xOffset;
 		rect.origin = point;
-//		NSLog(@"%@ versus %@", [NSValue valueWithRect:rect], [NSValue valueWithSize:[stringToInsert size]]);
+		rect.origin.y -= (rectB.size.height - rectA.size.height);
+		
 		[super addRectToRedrawRect:rect];
 		
+		rect.origin.x += xOffset;
+		rect.size.width += xOffset;
 		
-		[stringToInsert drawWithRect:rect options:drawingOptions];
+		[stringToInsert drawInRect:rect];
 		[secondImage unlockFocus];
-		//[[NSNotificationCenter defaultCenter] postNotificationName:@"SWRefresh" object:nil];
+
 		[NSApp sendAction:@selector(refreshImage:)
 					   to:nil
 					 from:self];
 	} else if (event == MOUSE_DOWN) {
-		aPoint = point;
 		if (canInsert) {
 			// This loop removes all the representations in the overlay image, effectively clearing it
-			for (NSImageRep *rep in [secondImage representations]) {
-				[secondImage removeRepresentation:rep];
-			}
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil
 						 from:nil];
 			[anImage lockFocus];
-			[stringToInsert drawAtPoint:point];
+			[secondImage drawAtPoint:NSZeroPoint 
+							fromRect:NSZeroRect 
+						   operation:NSCompositeSourceOver 
+							fraction:1.0];
 			[anImage unlockFocus];
 			canInsert = NO;
-			stringToInsert = @"";
-			//[[NSNotificationCenter defaultCenter] postNotificationName:@"SWRefresh" object:nil];
+			stringToInsert = nil;
+			
+//			for (NSImageRep *rep in [secondImage representations]) {
+//				[secondImage removeRepresentation:rep];
+//			}
+			SWClearImage(secondImage);
+
 			[NSApp sendAction:@selector(refreshImage:)
 						   to:nil
 						 from:nil];
@@ -95,6 +106,7 @@
 			canInsert = YES;
 		} 
 	}
+	return nil;
 }
 
 // Summoned by the NSNotificationCenter when the user clicks "OK" in the sheet
@@ -109,8 +121,8 @@
 // Overridden for drawing to the buffer image
 - (void)mouseHasMoved:(NSPoint)point
 {
-	if (![stringToInsert isEqualTo:@""]) {
-		[self performDrawAtPoint:point withMainImage:_anImage secondImage:_secondImage mouseEvent:MOUSE_DRAGGED];		
+	if (stringToInsert) {
+		[self performDrawAtPoint:point withMainImage:_anImage secondImage:_secondImage mouseEvent:MOUSE_MOVED];		
 	}
 }
 
@@ -118,7 +130,7 @@
 {
 	[super tieUpLooseEnds];
 	
-	stringToInsert = @"";
+	stringToInsert = nil;
 	canInsert = NO;
 }
 

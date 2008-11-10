@@ -31,25 +31,25 @@
 	redrawRect = NSMakeRect(end.x - 2*lineWidth, end.y - 2*lineWidth, 4*lineWidth, 4*lineWidth);
 	
 	path = [NSBezierPath new];
-	[path setLineWidth:0];
-	[path setLineCapStyle:NSRoundLineCapStyle];
+//	[path setLineWidth:0];
 	NSBezierPath *circle = [NSBezierPath bezierPathWithOvalInRect:redrawRect];
 	
 	NSInteger i, x, y;
+	NSInteger modNumber = 4*(int)lineWidth;
 	for (i = 0; i < (lineWidth*lineWidth)/2; i++) {
 		do {
-			x = (random() % (4*(int)lineWidth))+end.x - 2*lineWidth;
-			y = (random() % (4*(int)lineWidth))+end.y - 2*lineWidth;
+			x = (random() % modNumber)+end.x - 2*lineWidth;
+			y = (random() % modNumber)+end.y - 2*lineWidth;
 		} while (![circle containsPoint:NSMakePoint(x,y)]);
 		[path appendBezierPathWithRect:NSMakeRect(x,y,0.0,0.0)];
 	}
 	return path;
 }
 
-- (void)performDrawAtPoint:(NSPoint)point 
-			 withMainImage:(NSImage *)anImage 
-			   secondImage:(NSImage *)secondImage 
-				mouseEvent:(SWMouseEvent)event
+- (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
+					   withMainImage:(NSImage *)anImage 
+						 secondImage:(NSImage *)secondImage 
+						  mouseEvent:(SWMouseEvent)event
 {
 	p = point;
 	if (event == MOUSE_UP) {
@@ -68,6 +68,7 @@
 		isSpraying = YES;
 	}
 	path = nil;
+	return nil;
 }
 
 - (void)spray:(NSTimer *)timer
@@ -110,9 +111,10 @@
 	[_anImage unlockFocus];
 	
 	// This loop removes all the representations in the overlay image, effectively clearing it
-	for (NSImageRep *rep in [_secondImage representations]) {
-		[_secondImage removeRepresentation:rep];
-	}		
+//	for (NSImageRep *rep in [_secondImage representations]) {
+//		[_secondImage removeRepresentation:rep];
+//	}
+	SWClearImage(_secondImage);
 }
 
 - (NSCursor *)cursor

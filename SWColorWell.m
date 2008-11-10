@@ -35,15 +35,13 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	//[super drawRect:rect];
-	[self lockFocus];
+	[super drawRect:rect];
 	//rect = NSInsetRect(rect, 3.0, 3.0);
 	[[self color] setFill];
 	[NSBezierPath fillRect:rect];
-//	rect = NSInsetRect(rect, 10, 10);
-//	[[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.0] setFill];
-//	NSRectFill(rect);
-	[self unlockFocus];
+	rect = NSInsetRect(rect, 12, 12);
+	[[NSColor windowBackgroundColor] setFill];
+	NSRectFill(rect);
 }
 
 - (BOOL)isOpaque
