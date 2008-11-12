@@ -140,6 +140,11 @@
 	savedPoint = aPoint;
 }
 
+- (void)deleteKey
+{
+	// ?
+}
+
 - (void)tieUpLooseEnds
 {
 	// Must be overridden if you want something more interesting to happen

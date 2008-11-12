@@ -85,10 +85,6 @@
 		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	}
 	
-	// This loop removes all the representations in the overlay image, effectively clearing it
-//	for (NSImageRep *rep in [secondImage representations]) {
-//		[secondImage removeRepresentation:rep];
-//	}
 	SWClearImage(secondImage);
 	drawToMe = secondImage;
 	

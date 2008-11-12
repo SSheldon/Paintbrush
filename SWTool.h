@@ -68,6 +68,7 @@ typedef enum {
 - (void)tieUpLooseEnds;
 - (void)mouseHasMoved:(NSPoint)aPoint;
 - (BOOL)isEqualToTool:(SWTool *)aTool;
+- (void)deleteKey;
 
 // Used for faster drawing: don't redraw the entire screen, just this portion
 - (NSRect)addRedrawRectFromPoint:(NSPoint)p1 toPoint:(NSPoint)p2;

@@ -55,10 +55,6 @@
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
-	// This loop removes all the representations in the overlay image, effectively clearing it
-//	for (NSImageRep *rep in [secondImage representations]) {
-//		[secondImage removeRepresentation:rep];
-//	}
 	SWClearImage(secondImage);
 	
 	if (event == MOUSE_UP) {

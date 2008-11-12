@@ -138,11 +138,6 @@
 			previousPoint = point;
 			
 			// Do the moving thing
-			
-			// This loop removes all the representations in the overlay image, effectively clearing it
-//			for (NSImageRep *rep in [secondImage representations]) {
-//				[secondImage removeRepresentation:rep];
-//			}
 			SWClearImage(secondImage);
 			
 			clippingRect.origin.x = oldOrigin.x + deltax;
@@ -161,10 +156,6 @@
 		// Still drawing the dotted line
 		deltax = deltay = 0;
 
-		// This loop removes all the representations in the overlay image, effectively clearing it
-//		for (NSImageRep *rep in [secondImage representations]) {
-//			[secondImage removeRepresentation:rep];
-//		}
 		SWClearImage(secondImage);
 		
 		// Taking care of the outer bounds of the image
@@ -195,10 +186,6 @@
 				
 				imageRep = [[NSBitmapImageRep alloc] initWithData:[anImage TIFFRepresentation]];
 				
-				// This loop removes all the representations in the overlay image, effectively clearing it
-//				for (NSImageRep *rep in [secondImage representations]) {
-//					[secondImage removeRepresentation:rep];
-//				}
 				SWClearImage(secondImage);
 				
 				backedImage = [[NSImage alloc] initWithSize:[anImage size]];
@@ -286,6 +273,12 @@
 				 from:self];
 }
 
+- (void)deleteKey
+{
+	[backedImage release];
+	backedImage = nil;//[self tieUpLooseEnds];
+}
+
 - (void)tieUpLooseEnds
 {
 	[super tieUpLooseEnds];
@@ -300,17 +293,17 @@
 	}
 
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
-	if (_secondImage && _anImage && [[_secondImage representations] count] > 0) {
-		// This loop removes all the representations in the overlay image, effectively clearing it
-//		for (NSImageRep *rep in [_secondImage representations]) {
-//			[_secondImage removeRepresentation:rep];
-//		}
+	if (_secondImage && _anImage) {
 		SWClearImage(_secondImage);
 
 		[_anImage lockFocus];
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		
-		NSRect selectedRect = NSMakeRect(oldOrigin.x, oldOrigin.y, clippingRect.size.width, clippingRect.size.height);
+		NSRect selectedRect = {
+			oldOrigin,
+			clippingRect.size
+		};
+		//NSMakeRect(oldOrigin.x, oldOrigin.y, clippingRect.size.width, clippingRect.size.height);
 		
 		[backedImage drawInRect:clippingRect
 						fromRect:selectedRect

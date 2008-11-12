@@ -114,10 +114,6 @@
 	NSRectFill(NSMakeRect(0,0,[mainImage size].width, [mainImage size].height));
 	[mainImage unlockFocus];
 
-	// This loop removes all the representations in the overlay image, effectively clearing it
-//	for (NSImageRep *rep in [image representations]) {
-//		[image removeRepresentation:rep];
-//	}
 	SWClearImage(image);
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil

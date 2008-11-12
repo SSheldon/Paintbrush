@@ -50,10 +50,6 @@
 	_secondImage = secondImage;
 	
 	if (canInsert && event == MOUSE_MOVED) {
-		// This loop removes all the representations in the overlay image, effectively clearing it
-//		for (NSImageRep *rep in [secondImage representations]) {
-//			[secondImage removeRepresentation:rep];
-//		}
 		SWClearImage(secondImage);
 		[secondImage lockFocus];
 		
@@ -80,7 +76,6 @@
 					 from:self];
 	} else if (event == MOUSE_DOWN) {
 		if (canInsert) {
-			// This loop removes all the representations in the overlay image, effectively clearing it
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil
 						 from:nil];
@@ -93,9 +88,6 @@
 			canInsert = NO;
 			stringToInsert = nil;
 			
-//			for (NSImageRep *rep in [secondImage representations]) {
-//				[secondImage removeRepresentation:rep];
-//			}
 			SWClearImage(secondImage);
 
 			[NSApp sendAction:@selector(refreshImage:)

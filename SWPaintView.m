@@ -342,17 +342,11 @@
 	if ([event keyCode] == 53) {
 		isPayingAttention = NO;
 		[currentTool tieUpLooseEnds];
-		// This loop removes all the representations in the overlay image, effectively clearing it
-//		for (NSImageRep *rep in [secondImage representations]) {
-//			[secondImage removeRepresentation:rep];
-//		}
-//		NSRect temp = NSZeroRect;
-//		temp.size = [secondImage size];
 		SWClearImage(secondImage);
 		[self setNeedsDisplay:YES];
 		
-		// Delete keys (back and forward)
 	} else if ([event keyCode] == 51 || [event keyCode] == 117) {
+		// Delete keys (back and forward)
 		[self clearOverlay];
 	} else {
 		[[[toolbox window] contentView] keyDown:event];
@@ -368,10 +362,6 @@
 
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale
 {	
-	//mainImage = newImage;
-//	for (NSImageRep *rep in [mainImage representations]) {
-//		[mainImage removeRepresentation:rep];
-//	}
 	SWClearImage(mainImage);
 	[mainImage lockFocus];
 	if (scale) {
@@ -575,11 +565,8 @@
 // Releases the overlay image, then tells the tool about it
 - (void)clearOverlay
 {
-	// This loop removes all the representations in the overlay image, effectively clearing it
-//	for (NSImageRep *rep in [secondImage representations]) {
-//		[secondImage removeRepresentation:rep];
-//	}
 	SWClearImage(secondImage);
+	[currentTool deleteKey];
 	[currentTool tieUpLooseEnds];
 	[self setNeedsDisplay:YES];
 }
@@ -616,14 +603,7 @@
 	// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
 	rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
 	
-//	// This loop removes all the representations in the overlay image, effectively clearing it
-//	for (NSImageRep *rep in [secondImage representations]) {
-//		[secondImage removeRepresentation:rep];
-//	}
-
-	// Trying out something new here
-//	secondImage = [[NSImage alloc] initWithSize:NSMakeSize(fmax([mainImage size].width, rect.size.width), 
-//														   fmax([mainImage size].height, rect.size.height))];
+	SWClearImage(secondImage);
 	
 	[secondImage lockFocus];
 	[temp drawAtPoint:rect.origin

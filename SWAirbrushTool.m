@@ -110,10 +110,6 @@
 					fraction:1.0];
 	[_anImage unlockFocus];
 	
-	// This loop removes all the representations in the overlay image, effectively clearing it
-//	for (NSImageRep *rep in [_secondImage representations]) {
-//		[_secondImage removeRepresentation:rep];
-//	}
 	SWClearImage(_secondImage);
 }
 
