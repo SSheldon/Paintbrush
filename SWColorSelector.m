@@ -31,7 +31,7 @@
 	
 	[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
 													   options: NSTrackingActiveInActiveApp | NSTrackingInVisibleRect 
-																| NSTrackingMouseMoved
+																| NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited
 														 owner:self
 													  userInfo:nil]];
 	[[self window] setAcceptsMouseMovedEvents:YES];
@@ -59,6 +59,13 @@
 - (BOOL)acceptsFirstMouse
 {
 	return YES;
+}
+
+- (void)mouseExited:(NSEvent *)event
+{
+	[backWell setIsHovered:NO];
+	[frontWell setIsHovered:NO];
+	[self updateWells:nil];
 }
 
 - (void)mouseMoved:(NSEvent *)event
