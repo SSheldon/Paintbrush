@@ -27,7 +27,7 @@ typedef enum {
 	FILL_AND_STROKE
 } SWFillStyle;
 
-@class SWColorWell;
+@class SWColorSelector;
 @class SWTool;
 
 @interface SWToolboxController : NSWindowController {	
@@ -39,6 +39,8 @@ typedef enum {
 	BOOL selectionTransparency;
 	NSMutableDictionary *toolList;
 	NSMutableArray *toolListArray;
+	
+	//IBOutlet SWColorSelector *colorSel;
 }
 
 // Accessors

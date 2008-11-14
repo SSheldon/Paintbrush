@@ -21,7 +21,7 @@
 
 #import "SWToolboxController.h"
 #import "SWToolList.h"
-#import "SWColorWell.h"
+#import "SWColorSelector.h"
 
 // Heights for the panel, based on what is shown
 #define LARGE_HEIGHT 467
@@ -94,6 +94,15 @@
 		[NSBezierPath setDefaultLineCapStyle:NSRoundLineCapStyle];
 		[NSBezierPath setDefaultLineJoinStyle:NSRoundLineJoinStyle];
 		[NSBezierPath setDefaultWindingRule:NSEvenOddWindingRule];
+		
+//		[self addObserver:colorSel 
+//			   forKeyPath:@"foregroundColor" 
+//				  options:NSKeyValueObservingOptionNew 
+//				  context:NULL];
+//		[self addObserver:colorSel 
+//			   forKeyPath:@"backgroundColor" 
+//				  options:NSKeyValueObservingOptionNew 
+//				  context:NULL];
 	}
 	
 	return self;

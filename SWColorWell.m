@@ -20,14 +20,28 @@
 
 
 #import "SWColorWell.h"
+#import "SWColorSelector.h"
 
 @implementation SWColorWell
+
+@synthesize isHovered;
 
 // Overwriting NSColorWell to add one interesting feature: when an active
 //  well is selected (deactivating it), the associated NSColorPanel is 
 //  closed, reinforcing the fact that it has been deselected, as well as
 //  eliminating the possibility of CGFloat-clicking and unknowingly
 //  deactivating the well.
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	[super initWithCoder:coder];
+	
+	hovImage = [NSImage imageNamed:@"hoveredwell.png"];
+	pressedImage = [NSImage imageNamed:@"pressedwell.png"];
+	
+	return self;
+}
+
 - (void)deactivate {
 	[super deactivate];
 	[[NSColorPanel sharedColorPanel] close];
@@ -35,13 +49,27 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	[super drawRect:rect];
-	//rect = NSInsetRect(rect, 3.0, 3.0);
+	rect = NSInsetRect(rect, 4.0, 4.0);
 	[[self color] setFill];
-	[NSBezierPath fillRect:rect];
-	rect = NSInsetRect(rect, 12, 12);
-	[[NSColor windowBackgroundColor] setFill];
-	NSRectFill(rect);
+	if ([self isActive]) {
+		[pressedImage drawAtPoint:NSZeroPoint 
+						 fromRect:NSZeroRect 
+						operation:NSCompositeSourceOver 
+						 fraction:1.0];	
+	} else if (isHovered) {
+		[hovImage drawAtPoint:NSZeroPoint 
+					 fromRect:NSZeroRect 
+					operation:NSCompositeSourceOver 
+					 fraction:1.0];	
+	}
+	[[NSBezierPath bezierPathWithRoundedRect:rect xRadius:5 yRadius:5] fill];
+		
+}
+
+- (void)setColor:(NSColor *)color
+{
+	[super setColor:color];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"SWColorSet" object:nil];
 }
 
 - (BOOL)isOpaque

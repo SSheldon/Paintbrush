@@ -21,15 +21,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SWColorWell : NSColorWell {
-	NSImage *hovImage;
-	NSImage *pressedImage;
-	
-	BOOL isHovered;
+@class SWColorWell;
+
+@interface SWColorSelector : NSView {
+	IBOutlet SWColorWell *frontWell;
+	IBOutlet SWColorWell *backWell;
 }
 
-//- (void)needsRedraw:(NSNotification *)n;
-
-@property (assign) BOOL isHovered;
+- (void)updateWells:(NSNotification *)n;
 
 @end

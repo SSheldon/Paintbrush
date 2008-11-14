@@ -250,6 +250,7 @@
 	
 	// Draw the backed image to the overlay
 	if (_secondImage) {
+		SWClearImage(_secondImage);
 		[_secondImage lockFocus];
 		if (backedImage) {
 			[backedImage drawAtPoint:NSMakePoint(deltax, deltay)
