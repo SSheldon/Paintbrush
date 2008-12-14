@@ -76,15 +76,18 @@
 		rect.size.height = 2*i;
 		
 		// Perform the actual drawing
-		[image lockFocus];
+		[mainImage lockFocus];
 		
-		// The best way I can come up with to clear the image
-		[[NSColor clearColor] setFill];
-		NSRectFill(NSMakeRect(0,0,[image size].width, [image size].height));
+		//SWClearImageRect(image, rect);
 		
-		[[bombColor colorWithAlphaComponent:1.0] set];
+//		[[NSColor clearColor] set];
+//		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
+		[bombColor set];
 		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
-		[image unlockFocus];
+		[NSGraphicsContext restoreGraphicsState];
+		[mainImage unlockFocus];
 		
 		// Change the redraw rect
 		redrawRect = rect;

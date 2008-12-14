@@ -142,10 +142,10 @@
 			[[self gridInRect:[self frame]] stroke];
 		}
 		
-		if (expPath) {
-			[[NSColor blueColor] set];
-			[expPath stroke];
-		}
+//		if (expPath) {
+//			[[NSColor blueColor] set];
+//			[expPath stroke];
+//		}
 		
 		//[NSGraphicsContext restoreGraphicsState];
 	}
@@ -369,14 +369,14 @@
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		[newImage drawInRect:[self bounds]
 					fromRect:NSZeroRect
-				   operation:NSCompositeSourceOver
+				   operation:NSCompositeCopy
 					fraction:1.0];
 	} else {
 		[[toolbox backgroundColor] setFill];
 		NSRectFill([self bounds]);
 		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)
 					 fromRect:NSZeroRect
-					operation:NSCompositeSourceOver
+					operation:NSCompositeCopy
 					 fraction:1.0];
 	}
 	[mainImage unlockFocus];

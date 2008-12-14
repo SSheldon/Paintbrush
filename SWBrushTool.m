@@ -76,9 +76,7 @@
 		[secondImage lockFocus]; 
 		
 		// The best way I can come up with to clear the image
-		[[NSColor clearColor] setFill];
-		//NSRectFill(NSMakeRect(0,0,[secondImage size].width, [secondImage size].height));
-		NSRectFill(redrawRect);
+		SWClearImageRect(secondImage, redrawRect);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {

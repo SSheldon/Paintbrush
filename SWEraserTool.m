@@ -28,7 +28,7 @@
 {
 	if (!path) {
 		path = [NSBezierPath new];
-		[path setLineWidth:lineWidth];
+		[path setLineWidth:lineWidth];		
 	}
 	if (lineWidth == 1) {
 		begin.x += 0.5;
@@ -55,10 +55,19 @@
 					   to:nil
 					 from:nil];
 		[anImage lockFocus];
-		[secondImage drawAtPoint:NSZeroPoint
-						fromRect:NSZeroRect
-					   operation:NSCompositeSourceOver 
-						fraction:1.0];
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+		
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
+		if (flags & NSAlternateKeyMask) {
+			[frontColor setStroke];	
+		} else {
+			[backColor setStroke];
+		}
+		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		[NSGraphicsContext restoreGraphicsState];
+		savedPoint = point;
+		
 		[anImage unlockFocus];
 		
 		path = nil;
@@ -66,16 +75,19 @@
 		[secondImage lockFocus]; 
 		
 		// The best way I can come up with to clear the image
-		[[NSColor clearColor] setFill];
-		NSRectFill(NSMakeRect(0,0,[secondImage size].width, [secondImage size].height));
+		SWClearImage(secondImage);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
 		if (flags & NSAlternateKeyMask) {
 			[frontColor setStroke];	
 		} else {
 			[backColor setStroke];
 		}
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;
 		
 		[secondImage unlockFocus];

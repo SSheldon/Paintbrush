@@ -19,10 +19,10 @@
  */
 
 
-#import "SWSelectionTool.h"
+#import "SWFreeformSelectionTool.h"
 #import "SWToolboxController.h"
 
-@implementation SWSelectionTool
+@implementation SWFreeformSelectionTool
 
 @synthesize oldOrigin;
 
@@ -59,22 +59,29 @@
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	path = [NSBezierPath new];
-	[path setLineWidth:1.0];
+	if (!path) {
+		path = [NSBezierPath new];
+		[path setLineWidth:1.0];
+		[path setLineCapStyle:NSSquareLineCapStyle];	
+	}
 	[path setLineDash:dottedLineArray count:2 phase:dottedLineOffset];
-	[path setLineCapStyle:NSSquareLineCapStyle];	
-
+	
 	//if (flags & NSShiftKeyMask) {
-		// CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
-		// We need something here! It's trickier than it looks.
+	// CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
+	// We need something here! It's trickier than it looks.
 	//} else {
-		clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
+	clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
 	//}
 	
 	// The 0.5s help because the width is 1, and that does weird stuff
-	[path appendBezierPathWithRect:
-		NSMakeRect(clippingRect.origin.x+0.5, clippingRect.origin.y+0.5, clippingRect.size.width-1, clippingRect.size.height-1)];
+	begin.x += 0.5;
+	begin.y += 0.5;
+	end.x += 0.5;
+	end.y += 0.5;
 
+	[path moveToPoint:begin];
+	[path lineToPoint:end];
+	
 	return path;	
 }
 
@@ -155,7 +162,7 @@
 	} else {
 		// Still drawing the dotted line
 		deltax = deltay = 0;
-
+		
 		SWClearImage(secondImage);
 		
 		// Taking care of the outer bounds of the image
@@ -167,7 +174,7 @@
 			point.x = [anImage size].width;
 		if (point.y > [anImage size].height)
 			point.y = [anImage size].height;
-				
+		
 		// If this check fails, then they didn't draw a rectangle
 		if (!NSEqualPoints(point, savedPoint)) {
 			
@@ -180,7 +187,7 @@
 			[[NSColor darkGrayColor] setStroke];
 			[[self pathFromPoint:savedPoint toPoint:point] stroke];
 			[secondImage unlockFocus];
-				
+			
 			if (event == MOUSE_UP) {
 				// Copy the rectangle's contents to the second image
 				
@@ -190,9 +197,9 @@
 				
 				backedImage = [[NSImage alloc] initWithSize:[anImage size]];
 				[backedImage lockFocus];
-
+				
 				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-
+				
 				if (shouldOmitBackground) {
 					// EXPERIMENTAL: Transparency
 					// TODO: Faster, and possibly somewhere else?
@@ -215,11 +222,11 @@
 							  operation:NSCompositeSourceOver 
 							   fraction:1.0];				
 				}
-
+				
 				[backedImage unlockFocus];
 				
 				[self drawNewBorder:nil];
-
+				
 				// Delete it from the main image
 				[anImage lockFocus];
 				
@@ -235,9 +242,9 @@
 			}
 		}
 	}
-//	return [self pathFromPoint:clippingRect.origin 
-//					   toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
-//										   clippingRect.origin.y + clippingRect.size.height)];
+	//	return [self pathFromPoint:clippingRect.origin 
+	//					   toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
+	//										   clippingRect.origin.y + clippingRect.size.height)];
 	return nil;
 }
 
@@ -290,11 +297,11 @@
 					   to:nil
 					 from:[NSDictionary dictionaryWithObject:[imageRep TIFFRepresentation] forKey:@"Image"]];
 	}
-
+	
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_secondImage && _anImage) {
 		SWClearImage(_secondImage);
-
+		
 		[_anImage lockFocus];
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		
@@ -305,15 +312,15 @@
 		//NSMakeRect(oldOrigin.x, oldOrigin.y, clippingRect.size.width, clippingRect.size.height);
 		
 		[backedImage drawInRect:clippingRect
-						fromRect:selectedRect
-					   operation:NSCompositeSourceOver
-						fraction:1.0];
+					   fromRect:selectedRect
+					  operation:NSCompositeSourceOver
+					   fraction:1.0];
 		
 		[backedImage release];
 		backedImage = nil;
 		
 		[_anImage unlockFocus];
-
+		
 		[super addRectToRedrawRect:NSMakeRect(0,0,[_anImage size].width,[_anImage size].height)];
 	} else {
 		[super resetRedrawRect];
@@ -339,9 +346,9 @@
 	[backedImage lockFocus];
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	[image drawInRect:clippingRect
-			   fromRect:clippingRect
-			  operation:NSCompositeSourceOver 
-			   fraction:1.0];
+			 fromRect:clippingRect
+			operation:NSCompositeSourceOver 
+			 fraction:1.0];
 	[backedImage unlockFocus];
 	
 	// Draw the dotted line around the selected region
@@ -398,7 +405,7 @@
 
 - (NSString *)description
 {
-	return @"Selection";
+	return @"Freeform Selection";
 }
 
 @end
