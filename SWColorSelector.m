@@ -44,22 +44,19 @@
 	return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath 
-					  ofObject:(id)object
-						change:(NSDictionary *)change 
-					   context:(void *)context
-{
-	if ([keyPath isEqualToString:@"foregroundColor"]) {
-		NSLog(@"Changed foreground color");
-	} else if ([keyPath isEqualToString:@"backgroundColor"]) {
-		NSLog(@"Changed background color");
-	}
-}
-
-- (BOOL)acceptsFirstMouse
-{
-	return YES;
-}
+//- (void)observeValueForKeyPath:(NSString *)keyPath 
+//					  ofObject:(id)object
+//						change:(NSDictionary *)change 
+//					   context:(void *)context
+//{
+//	if ([keyPath isEqualToString:@"foregroundColor"]) {
+//		NSLog(@"Changed foreground color");
+//	} else if ([keyPath isEqualToString:@"backgroundColor"]) {
+//		NSLog(@"Changed background color");
+//	} else {
+//		NSLog(@"BOOM");
+//	}
+//}
 
 - (void)mouseExited:(NSEvent *)event
 {
@@ -86,11 +83,17 @@
 	[self updateWells:nil];
 }
 
+
 // Called whenever one of the color wells has changed colors, so both can redraw
 - (void)updateWells:(NSNotification *)n
 {
 	[frontWell setNeedsDisplay:YES];
 	[backWell setNeedsDisplay:YES];
+}
+
+- (BOOL)acceptsFirstMouse
+{
+	return YES;
 }
 
 @end

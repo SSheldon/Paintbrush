@@ -68,8 +68,20 @@
 
 - (void)setColor:(NSColor *)color
 {
-	[super setColor:color];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"SWColorSet" object:nil];
+	[super setColor:color];
+}
+
+- (void)mouseDown:(NSEvent *)event
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"SWColorSet" object:nil];
+	[super mouseDown:event];
+}
+
+- (void)mouseUp:(NSEvent *)event
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"SWColorSet" object:nil];
+	[super mouseUp:event];
 }
 
 - (BOOL)isOpaque
