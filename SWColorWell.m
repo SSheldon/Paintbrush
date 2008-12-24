@@ -49,7 +49,7 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	rect = NSInsetRect(rect, 4.0, 4.0);
+	rect = NSInsetRect(rect, 3.0, 3.0);
 	[[self color] setFill];
 	if ([self isActive]) {
 		[pressedImage drawAtPoint:NSZeroPoint 
@@ -62,7 +62,7 @@
 					operation:NSCompositeSourceOver 
 					 fraction:1.0];	
 	}
-	[[NSBezierPath bezierPathWithRoundedRect:rect xRadius:5 yRadius:5] fill];
+	[[NSBezierPath bezierPathWithRoundedRect:rect xRadius:4 yRadius:4] fill];
 		
 }
 
