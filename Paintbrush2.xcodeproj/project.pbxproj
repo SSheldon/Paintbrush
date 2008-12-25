@@ -38,7 +38,6 @@
 		275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */; };
 		275C82DE0BAF98DC00F836FA /* SWPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */; };
 		275E293E0C7E46F300A99231 /* Changes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 275E293D0C7E46F300A99231 /* Changes.rtf */; };
-		27629E8D0EE47C110049CFBA /* newicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27629E8C0EE47C110049CFBA /* newicon.icns */; };
 		2774CC760C0A1D5100FE7F0F /* SWCurveTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2774CC740C0A1D5100FE7F0F /* SWCurveTool.h */; };
 		2774CC770C0A1D5100FE7F0F /* SWCurveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */; };
 		278BF71A0D4E47D40046BCA2 /* SWEyeDropperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */; };
@@ -91,6 +90,7 @@
 		27EA85480D3FDF6200A376A2 /* pencil-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EA85450D3FDF6200A376A2 /* pencil-cursor.png */; };
 		27EAAA560E68A75100DDD9EA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EAAA550E68A75100DDD9EA /* background.png */; };
 		27EF10F00D6A1CE800851E2E /* SWRoundedRectangleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF10EF0D6A1CE800851E2E /* SWRoundedRectangleTool.m */; };
+		27F123CC0F02E00100CACB40 /* newicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27F123CB0F02E00100CACB40 /* newicon.icns */; };
 		27F3C6030D85C550006AB05A /* SWZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3C6020D85C550006AB05A /* SWZoomTool.m */; };
 		27F3C6650D85F66D006AB05A /* zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F3C6630D85F66D006AB05A /* zoom.png */; };
 		27F3C6800D85F9A8006AB05A /* eyedrop-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F3C67F0D85F9A8006AB05A /* eyedrop-cursor.png */; };
@@ -178,7 +178,6 @@
 		275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPreferenceController.h; sourceTree = "<group>"; };
 		275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWPreferenceController.m; sourceTree = "<group>"; };
 		275E293D0C7E46F300A99231 /* Changes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Changes.rtf; sourceTree = "<group>"; };
-		27629E8C0EE47C110049CFBA /* newicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = newicon.icns; sourceTree = "<group>"; };
 		2774CC740C0A1D5100FE7F0F /* SWCurveTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCurveTool.h; sourceTree = "<group>"; };
 		2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCurveTool.m; sourceTree = "<group>"; };
 		278BF7180D4E47D40046BCA2 /* SWEyeDropperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWEyeDropperTool.h; sourceTree = "<group>"; };
@@ -251,6 +250,7 @@
 		27EAAA550E68A75100DDD9EA /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		27EF10EE0D6A1CE800851E2E /* SWRoundedRectangleTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRoundedRectangleTool.h; sourceTree = "<group>"; };
 		27EF10EF0D6A1CE800851E2E /* SWRoundedRectangleTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRoundedRectangleTool.m; sourceTree = "<group>"; };
+		27F123CB0F02E00100CACB40 /* newicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = newicon.icns; sourceTree = "<group>"; };
 		27F3C6020D85C550006AB05A /* SWZoomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWZoomTool.m; sourceTree = "<group>"; };
 		27F3C6630D85F66D006AB05A /* zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom.png; sourceTree = "<group>"; };
 		27F3C67F0D85F9A8006AB05A /* eyedrop-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyedrop-cursor.png"; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 				272A86C40D74F9F500630D0B /* NewTools */,
 				27E929FD0CD437C300368B73 /* application-leopard.icns */,
 				27955D060CFDE7B900D5AF99 /* arrow.png */,
-				27629E8C0EE47C110049CFBA /* newicon.icns */,
+				27F123CB0F02E00100CACB40 /* newicon.icns */,
 				27FEFC230C0759C700AB63F0 /* BMP.icns */,
 				27FEFC240C0759C700AB63F0 /* PNG.icns */,
 				27FEFC250C0759C700AB63F0 /* JPEG.icns */,
@@ -688,7 +688,7 @@
 				27BE1DA70EC8FB1B00B0A0F1 /* zoom-cursor-2.png in Resources */,
 				27FFFE970ECCC78E0036CFE6 /* pressedwell.png in Resources */,
 				27FFFEA30ECCE40E0036CFE6 /* hoveredwell.png in Resources */,
-				27629E8D0EE47C110049CFBA /* newicon.icns in Resources */,
+				27F123CC0F02E00100CACB40 /* newicon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

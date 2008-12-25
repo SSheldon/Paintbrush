@@ -37,6 +37,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (id)init
 {
     if (self = [super init]) {
+		NSLog(@"New document");
 		// Observers for the toolbox
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
