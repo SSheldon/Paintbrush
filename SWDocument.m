@@ -1,5 +1,5 @@
 /**
- * Copyright 2007, 2008 Soggy Waffles
+ * Copyright 2007-2009 Soggy Waffles
  *
  * This file is part of Paintbrush.
  *
@@ -102,7 +102,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	openingRect.origin = NSZeroPoint;
 	openingRect.size = [openedImage size];
-	[paintView initWithFrame:openingRect];
+	[paintView setFrame:openingRect];
+	[paintView setUpPaintView];
 	
 	// Use external method to determine the window bounds
 	NSRect tempRect = [paintView calculateWindowBounds:openingRect];
@@ -180,9 +181,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		openingRect.size.width = [sizeController width];
 		openingRect.size.height = [sizeController height];
 		if ([paintView hasRun]) {
-			NSLog(@"Resizing");
 			// Trying to resize the image!
-			NSLog(@"%@", [(id)contextInfo class]);
 			NSImage *backupImage = contextInfo ? (NSImage *)contextInfo : [paintView mainImage];
 
 			// Nothing to do if the size isn't changing!
@@ -192,16 +191,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
 								   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
 								   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
 				[paintView prepUndo:d];
-				paintView = [paintView initWithFrame:openingRect];
-				
-				// Use external method to determine the window bounds
-				NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-				[[[paintView window] animator] setFrame:tempRect display:YES];
+				[paintView setFrame:openingRect];
+				[paintView setUpPaintView];
 				[paintView setImage:backupImage scale:[sizeController scales]];
 			}
 		} else {
 			// Initial creation
-			paintView = [paintView initWithFrame:openingRect];
+			[paintView setFrame:openingRect];
+			[paintView setUpPaintView];
 			
 			// Use external method to determine the window bounds
 			NSRect tempRect = [paintView calculateWindowBounds:openingRect];

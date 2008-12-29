@@ -1,5 +1,5 @@
 /**
- * Copyright 2007, 2008 Soggy Waffles
+ * Copyright 2007-2009 Soggy Waffles
  *
  * This file is part of Paintbrush.
  *

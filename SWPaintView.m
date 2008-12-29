@@ -1,5 +1,5 @@
 /**
- * Copyright 2007, 2008 Soggy Waffles
+ * Copyright 2007-2009 Soggy Waffles
  *
  * This file is part of Paintbrush.
  *
@@ -31,42 +31,49 @@
 - (id)initWithFrame:(NSRect)frameRect
 {	
 	if ((self = [super initWithFrame:frameRect]) && !NSEqualRects(frameRect, NSZeroRect)) {
-		toolbox = [SWToolboxController sharedToolboxPanelController];
-		isPayingAttention = YES;
-		mainImage = [[NSImage alloc] initWithSize:frameRect.size];
-		
-		// New document, not an opened image: gotta paint the background color
-		[mainImage lockFocus];
-		[[toolbox backgroundColor] setFill];
-		NSRectFill(frameRect);
-		[mainImage unlockFocus];
-		
-		secondImage = [[NSImage alloc] initWithSize:frameRect.size];	
-
-		
-		// Tracking area
-		[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
-														   options: NSTrackingMouseMoved | NSTrackingCursorUpdate
-							   | NSTrackingEnabledDuringMouseDrag | NSTrackingActiveWhenFirstResponder
-															 owner:self
-														  userInfo:nil]];
-		[[self window] setAcceptsMouseMovedEvents:YES];
-		
-		
-		// Set the initial cursor
-		[(NSClipView *)[self superview] setDocumentCursor:[[toolbox currentTool] cursor]];
-		
-		// Grid related
-		showsGrid = NO;
-		gridSpacing = 1;
-		gridColor = [NSColor gridColor];
-		
-		// VERY important for resizing image/canvas!
-		hasRun = YES;
-		
-		[self setNeedsDisplay:YES];
+		[self setUpPaintView];
 	}
 	return self;
+}
+
+- (void)setUpPaintView
+{
+	NSRect frameRect = [self frame];
+	
+	toolbox = [SWToolboxController sharedToolboxPanelController];
+	isPayingAttention = YES;
+	mainImage = [[NSImage alloc] initWithSize:frameRect.size];
+	
+	// New document, not an opened image: gotta paint the background color
+	[mainImage lockFocus];
+	[[toolbox backgroundColor] setFill];
+	NSRectFill(frameRect);
+	[mainImage unlockFocus];
+	
+	secondImage = [[NSImage alloc] initWithSize:frameRect.size];	
+	
+	
+	// Tracking area
+	[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
+													   options: NSTrackingMouseMoved | NSTrackingCursorUpdate
+						   | NSTrackingEnabledDuringMouseDrag | NSTrackingActiveWhenFirstResponder
+														 owner:self
+													  userInfo:nil]];
+	[[self window] setAcceptsMouseMovedEvents:YES];
+	
+	
+	// Set the initial cursor
+	[(NSClipView *)[self superview] setDocumentCursor:[[toolbox currentTool] cursor]];
+	
+	// Grid related
+	showsGrid = NO;
+	gridSpacing = 1;
+	gridColor = [NSColor gridColor];
+	
+	// VERY important for resizing image/canvas!
+	hasRun = YES;
+	
+	[self setNeedsDisplay:YES];	
 }
 
 - (NSRect)calculateWindowBounds:(NSRect)frameRect {

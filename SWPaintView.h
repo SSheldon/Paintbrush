@@ -1,5 +1,5 @@
 /**
- * Copyright 2007, 2008 Soggy Waffles
+ * Copyright 2007-2009 Soggy Waffles
  *
  * This file is part of Paintbrush.
  *
@@ -48,6 +48,7 @@
 }
 
 //- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
+- (void)setUpPaintView;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setImage:(NSImage *)newImage scale:(BOOL)scale;
 - (void)setCurrentTool:(SWTool *)newTool;
