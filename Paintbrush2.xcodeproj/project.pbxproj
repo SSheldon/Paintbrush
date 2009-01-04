@@ -28,7 +28,6 @@
 		273E0B3B0E32F99D00D11815 /* SWImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageTools.m */; };
 		273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273E0B6D0E32FC2200D11815 /* QuartzCore.framework */; };
 		273E77980EBD71850094C630 /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 273E77970EBD71850094C630 /* selection.png */; };
-		273E77BB0EBD76020094C630 /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 273E77BA0EBD76020094C630 /* airbrush.png */; };
 		2740C9150ED5F62B00DA6A98 /* SWFreeformSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2740C9140ED5F62B00DA6A98 /* SWFreeformSelectionTool.m */; };
 		274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 274194B10C1DA5E400605CDC /* SWCenteringClipView.h */; };
 		274194B40C1DA5E400605CDC /* SWCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 274194B20C1DA5E400605CDC /* SWCenteringClipView.m */; };
@@ -73,6 +72,7 @@
 		27A99AA30E9D792300C9781C /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AA20E9D792300C9781C /* brush.png */; };
 		27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AD60E9D842200C9781C /* brush-cursor.png */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
+		27B30B110F0DAD3800AF880F /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B30B100F0DAD3800AF880F /* airbrush.png */; };
 		27B686C50BA1395B0028A526 /* SWFillTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B686C40BA1395B0028A526 /* SWFillTool.m */; };
 		27BE1DA50EC8FB1200B0A0F1 /* airbrush-cursor-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BE1DA40EC8FB1200B0A0F1 /* airbrush-cursor-2.png */; };
 		27BE1DA70EC8FB1B00B0A0F1 /* zoom-cursor-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BE1DA60EC8FB1B00B0A0F1 /* zoom-cursor-2.png */; };
@@ -166,7 +166,6 @@
 		273E0B3A0E32F99D00D11815 /* SWImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageTools.h; sourceTree = "<group>"; };
 		273E0B6D0E32FC2200D11815 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		273E77970EBD71850094C630 /* selection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selection.png; sourceTree = "<group>"; };
-		273E77BA0EBD76020094C630 /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
 		2740C9130ED5F62B00DA6A98 /* SWFreeformSelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFreeformSelectionTool.h; sourceTree = "<group>"; };
 		2740C9140ED5F62B00DA6A98 /* SWFreeformSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFreeformSelectionTool.m; sourceTree = "<group>"; };
 		274194B10C1DA5E400605CDC /* SWCenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCenteringClipView.h; sourceTree = "<group>"; };
@@ -229,6 +228,7 @@
 		27A99AA20E9D792300C9781C /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
 		27A99AD60E9D842200C9781C /* brush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brush-cursor.png"; sourceTree = "<group>"; };
 		27AFFDF10D68C06800368E2B /* SWAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAppController.m; sourceTree = "<group>"; };
+		27B30B100F0DAD3800AF880F /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
 		27B686C30BA1395B0028A526 /* SWFillTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFillTool.h; sourceTree = "<group>"; };
 		27B686C40BA1395B0028A526 /* SWFillTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFillTool.m; sourceTree = "<group>"; };
 		27BE1DA40EC8FB1200B0A0F1 /* airbrush-cursor-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor-2.png"; sourceTree = "<group>"; };
@@ -331,7 +331,7 @@
 				27E08C380E33F817002F49E6 /* fillstroke.png */,
 				27E08C300E33F807002F49E6 /* stroke.png */,
 				27A45C4A0E9AB05000AC15F0 /* knob.png */,
-				273E77BA0EBD76020094C630 /* airbrush.png */,
+				27B30B100F0DAD3800AF880F /* airbrush.png */,
 				27A99AA20E9D792300C9781C /* brush.png */,
 				272A86DC0D74FA0B00630D0B /* pencil.png */,
 				27E1BB400D906A6600C9BB74 /* bomb.png */,
@@ -679,12 +679,12 @@
 				27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */,
 				27CBED9A0EB13E9B00541F98 /* bomb3.png in Resources */,
 				273E77980EBD71850094C630 /* selection.png in Resources */,
-				273E77BB0EBD76020094C630 /* airbrush.png in Resources */,
 				27BE1DA50EC8FB1200B0A0F1 /* airbrush-cursor-2.png in Resources */,
 				27BE1DA70EC8FB1B00B0A0F1 /* zoom-cursor-2.png in Resources */,
 				27FFFE970ECCC78E0036CFE6 /* pressedwell.png in Resources */,
 				27FFFEA30ECCE40E0036CFE6 /* hoveredwell.png in Resources */,
 				27F123CC0F02E00100CACB40 /* newicon.icns in Resources */,
+				27B30B110F0DAD3800AF880F /* airbrush.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

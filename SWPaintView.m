@@ -470,9 +470,10 @@
 	}
 	
 	if (!NSEqualRects(frame, NSZeroRect)) {
-		[self initWithFrame:frame];
-		NSRect tempRect = [self calculateWindowBounds:frame];
-		[[[self window] animator] setFrame:tempRect display:YES];
+		[self setFrame:frame];
+		[self setUpPaintView];
+		//NSRect tempRect = [self calculateWindowBounds:frame];
+		//[[self window] setFrame:tempRect display:YES];
 	}
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];

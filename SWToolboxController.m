@@ -171,6 +171,16 @@
 			// They pressed up
 			[self setLineWidthDisplay:[self lineWidthDisplay]+1];
 		}
+	} else {
+		// Check the letter pressed
+		NSString *string = [[event characters] lowercaseString];
+		NSLog(@"%@", string);
+		
+		switch([string characterAtIndex:0]) {
+			case 'a':
+				NSLog(@"AAA");
+				break;
+		}
 	}
 }
 
