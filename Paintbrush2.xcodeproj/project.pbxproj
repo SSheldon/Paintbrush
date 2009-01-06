@@ -74,6 +74,7 @@
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
 		27B30B110F0DAD3800AF880F /* airbrush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B30B100F0DAD3800AF880F /* airbrush.png */; };
 		27B686C50BA1395B0028A526 /* SWFillTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B686C40BA1395B0028A526 /* SWFillTool.m */; };
+		27BA9CCC0F13EFD10053045D /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 27BA9CCB0F13EFD10053045D /* COPYING */; };
 		27BE1DA50EC8FB1200B0A0F1 /* airbrush-cursor-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BE1DA40EC8FB1200B0A0F1 /* airbrush-cursor-2.png */; };
 		27BE1DA70EC8FB1B00B0A0F1 /* zoom-cursor-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BE1DA60EC8FB1B00B0A0F1 /* zoom-cursor-2.png */; };
 		27BE1F350ECB738000B0A0F1 /* SWColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BE1F340ECB738000B0A0F1 /* SWColorSelector.m */; };
@@ -231,6 +232,7 @@
 		27B30B100F0DAD3800AF880F /* airbrush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbrush.png; sourceTree = "<group>"; };
 		27B686C30BA1395B0028A526 /* SWFillTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFillTool.h; sourceTree = "<group>"; };
 		27B686C40BA1395B0028A526 /* SWFillTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFillTool.m; sourceTree = "<group>"; };
+		27BA9CCB0F13EFD10053045D /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		27BE1DA40EC8FB1200B0A0F1 /* airbrush-cursor-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor-2.png"; sourceTree = "<group>"; };
 		27BE1DA60EC8FB1B00B0A0F1 /* zoom-cursor-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoom-cursor-2.png"; sourceTree = "<group>"; };
 		27BE1F330ECB738000B0A0F1 /* SWColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWColorSelector.h; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				27BE1F450ECB741900B0A0F1 /* NIBs */,
 				275E293D0C7E46F300A99231 /* Changes.rtf */,
 				2704064A0BFE3F3600C308C8 /* ToDo.rtf */,
+				27BA9CCB0F13EFD10053045D /* COPYING */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 			);
@@ -685,6 +688,7 @@
 				27FFFEA30ECCE40E0036CFE6 /* hoveredwell.png in Resources */,
 				27F123CC0F02E00100CACB40 /* newicon.icns in Resources */,
 				27B30B110F0DAD3800AF880F /* airbrush.png in Resources */,
+				27BA9CCC0F13EFD10053045D /* COPYING in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
