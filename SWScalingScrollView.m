@@ -200,15 +200,21 @@ static unsigned defaultIndex = 2;
 		
 		// Make sure the window size is correct
 		NSRect frame = [[self window] frame];
-		
-		NSDocumentController *controller = [NSDocumentController sharedDocumentController];
-		id document = [controller documentForWindow: [self window]];
-		
-		// Constrain the size
-		if (document && [document isKindOfClass:[SWDocument class]]) {
-			NSSize newSize = [(SWDocument *)document windowWillResize:[self window] toSize:frame.size];
-			frame.size = newSize;
+				
+		// Initially constrain the window size
+		if (scaleFactor > 1.0) {
+			NSRect contentRect = [[self window] contentRectForFrameRect:NSMakeRect(0,0,frame.size.width-[NSScroller scrollerWidth],
+																				   frame.size.height-[NSScroller scrollerWidth])];
+			contentRect.size.width =  round(contentRect.size.width / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
+			contentRect.size.height = round(contentRect.size.height / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
+			
+			NSRect newRect = [[self window] frameRectForContentRect:contentRect];
+			
+			frame.size = newRect.size;
 		}
+		
+		CGFloat factor = fmax(1.0, scaleFactor);
+		[[self window] setResizeIncrements:NSMakeSize(factor, factor)];
 		[[self window] setFrame:frame display:YES animate:YES];
 		
 		// Constrain the origin
