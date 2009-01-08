@@ -129,24 +129,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	return [folder stringByAppendingPathComponent:fileName];;    
 }
 
-// When zoomed in, we dont want to display partial pixels
-- (NSSize)windowWillResize:(NSWindow *)aWindow toSize:(NSSize)proposedFrameSize
-{
-	NSSize newSize = proposedFrameSize;
-	CGFloat scaleFactor = [scrollView scaleFactor];
-	if (scaleFactor > 1.0) {
-		NSRect contentRect = [aWindow contentRectForFrameRect:NSMakeRect(0,0,proposedFrameSize.width-[NSScroller scrollerWidth],
-																		 proposedFrameSize.height-[NSScroller scrollerWidth])];
-		contentRect.size.width =  round(contentRect.size.width / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
-		contentRect.size.height = round(contentRect.size.height / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
-		
-		NSRect newRect = [aWindow frameRectForContentRect:contentRect];
-		
-		newSize = newRect.size;
-	}
-	return newSize;
-}
-
 #pragma mark Sheets - Size and Text
 
 ////////////////////////////////////////////////////////////////////////////////
