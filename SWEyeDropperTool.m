@@ -51,8 +51,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"eyedrop-cursor.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(1,15)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"eyedrop-cursor.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(1,15)];
+	}
 	return customCursor;
 }
 

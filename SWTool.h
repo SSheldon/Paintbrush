@@ -47,6 +47,8 @@ typedef enum {
 	SWToolboxController *toolbox;
 	
 	NSImage *iconImage;
+	
+	NSCursor *customCursor;
 }
 
 - (id)initWithController:(SWToolboxController *)controller;

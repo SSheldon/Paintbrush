@@ -114,8 +114,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"airbrush-cursor-2.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(6,3)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"airbrush-cursor-2.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(6,3)];
+	}
 	return customCursor;
 }
 

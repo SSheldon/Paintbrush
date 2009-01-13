@@ -167,7 +167,10 @@
 
 - (NSCursor *)cursor
 {
-	return [NSCursor crosshairCursor];
+	if (!customCursor) {
+		customCursor = [[NSCursor crosshairCursor] retain];
+	}
+	return customCursor;
 }
 
 - (NSString *)description

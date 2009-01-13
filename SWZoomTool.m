@@ -52,8 +52,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"zoom-cursor-2.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(1,15)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"zoom-cursor-2.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(1,15)];
+	}
 	return customCursor;
 }
 

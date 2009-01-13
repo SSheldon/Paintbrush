@@ -127,7 +127,10 @@
 
 - (NSCursor *)cursor
 {
-	return [NSCursor IBeamCursor];
+	if (!customCursor) {
+		customCursor = [[NSCursor IBeamCursor] retain];
+	}
+	return customCursor;
 }
 
 

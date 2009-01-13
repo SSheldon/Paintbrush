@@ -379,7 +379,10 @@
 
 - (NSCursor *)cursor
 {
-	return [NSCursor crosshairCursor];
+	if (!customCursor) {
+		customCursor = [[NSCursor crosshairCursor] retain];
+	}
+	return customCursor;
 }
 
 // Once we get better color accuracy (hopefully in 2.1), we'll flip this back on

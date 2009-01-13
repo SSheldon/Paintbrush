@@ -57,7 +57,7 @@
 	[fileTypeButton selectItemWithTitle:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
 }
 
-// Sets the default filetype for new documents (can always be set in the save dialog, however
+// Sets the default filetype for new documents (can always be set in the save dialog, however)
 - (IBAction)changeFileType:(id)sender {
 	[[NSUserDefaults standardUserDefaults] setValue:[sender titleOfSelectedItem]
 											 forKey:@"FileType"];

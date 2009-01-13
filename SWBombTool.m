@@ -125,8 +125,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"bomb-cursor.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(8,8)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"bomb-cursor.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(8,8)];
+	}
 	return customCursor;
 }
 

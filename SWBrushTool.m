@@ -93,8 +93,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"brush-cursor.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(3,15)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"brush-cursor.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(1,14)];
+	}
 	return customCursor;
 }
 

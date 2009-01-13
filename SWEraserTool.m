@@ -96,8 +96,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"eraser-cursor.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(2,12)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"eraser-cursor.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(2,13)];
+	}
 	return customCursor;
 }
 

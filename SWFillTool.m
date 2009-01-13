@@ -106,8 +106,10 @@
 
 - (NSCursor *)cursor
 {
-	NSImage *customImage = [NSImage imageNamed:@"bucket-cursor.png"];
-	NSCursor *customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(14,13)];
+	if (!customCursor) {
+		NSImage *customImage = [NSImage imageNamed:@"bucket-cursor.png"];
+		customCursor = [[NSCursor alloc] initWithImage:customImage hotSpot:NSMakePoint(14,13)];
+	}
 	return customCursor;
 }
 
