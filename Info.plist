@@ -116,12 +116,14 @@
 	<key>CFBundleSignature</key>
 	<string>Pbsh</string>
 	<key>CFBundleVersion</key>
-	<string>20090108</string>
+	<string>20090115</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
 	<string>http://paintbrush.sourceforge.net/updates2x.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.plist</string>
 </dict>
 </plist>
