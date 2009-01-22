@@ -124,6 +124,6 @@
 	<key>SUFeedURL</key>
 	<string>http://paintbrush.sourceforge.net/updates2x.xml</string>
 	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.plist</string>
+	<string>dsa_pub.pem</string>
 </dict>
 </plist>
