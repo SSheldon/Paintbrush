@@ -1,144 +1,58 @@
 {\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf430
 {\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green0\blue0;\red0\green128\blue0;\red0\green128\blue64;
+{\colortbl;\red255\green255\blue255;\red255\green0\blue0;\red0\green128\blue0;\red0\green0\blue0;
 }
 \deftab720
 \pard\pardeftab720\ql\qnatural
 
-\f0\b\fs28 \cf2 Last Minute Changes:
+\f0\b\fs28 \cf0 Features:
 \b0 \
 
-\fs24 \cf3 \strike \strikec3 \'95 No more window resize for image/canvas resize\
-\cf0 \strike0\striked0 \'95 "About" panel\
-\'95\'a0Keyboard shortcuts for tools\
-\cf3 \strike \strikec3 \'95 Update airbrush icon\
-\'95 Finalize app icon\
-\'95 Correct pixel for cursors?\
-\cf3 \strikec3 \'95 New site!\
-\'95 Include new icons\
-\cf2 \strike0\striked0 \'95 Figure out how to sign app\
-
-\b\fs28 \cf0 \
-Features:
-\b0 \
-
-\fs24 \cf3 \strike \strikec3 \'95 Objective-C 2.0 and garbage collection\
-\cf0 \strike0\striked0 \'95 Internationalization support\
-\'95 Remember panel status?\
-\'95 Updated/streamlined interface\
-\cf3 \strike \strikec3 	\'95 More CoreAnimation\
-	\'95 Redo Toolbox Panel: it's ugly!\
-\cf0 \strike0\striked0 		\'95 New images for selection transparency\
-		\'95 Give rect fill icons shadows?\
-\cf3 \strike \strikec3 		\'95 Something for color choosers\
-			\'95 Outline, a la Illustrator?\
-\'95 New APIs to check out:\
-	\'95 Utilize NSTrackingArea\
-	\'95 NSGradient\
-	\'95 IKImageView\
-\cf0 \strike0\striked0 \'95 iSight support\
+\fs24 \cf2 \'95 Disable garbage collection\
+\'95 Internationalization support\
+\'95 Replace NSImages with NSBitmapImageReps for better color accuracy\
+\cf0 	\'95 Invert colors\
+\'95 Improved support for transparency\
+	\'95 Transparency when resizing?\
+\'95 Problem pasting images taller than the view\
+\'95 JPEG quality\
+\cf2 \'95 64-bit\
+\cf0 \'95 Preference for remembering panel status\
+\'95 iSight support\
 \'95 Full Screen\
-\cf3 \strike \strikec3 \'95 Transparent background for selection\
-\cf0 \strike0\striked0 \'95 Updating tools\
-\cf3 \strike \strikec3 	\'95 Airbrush\
-		\'95 Icon\
-		\'95 Cursor\
-	\'95 Eye dropper\
-		\'95 Icon for Eye dropper\
-	\'95 Rounded Rectangles! w00t!\
-		\'95 Shift bug\
-	\'95 Zoom @ point\
-		\'95 Zoom out with Option\
-		\'95 Cursor\
-	\'95Pencil tool -> Brush tool (new icon/cursor)?\
-		\'95 strokeLineFromPoint:toPoint\
-\cf0 \strike0\striked0 	\'95 Fill tool with gradient?\
-\cf3 \strike \strikec3 	\'95 Selection and transparency\
-\cf0 \strike0\striked0 		\'95 Improve speed\
+\'95 Updating tools\
+\cf2 	\'95 Selection and transparency\
+		\'95 Improve speed\
 		\'95 Check for transparency on paste\
-\cf3 \strike \strikec3 \'95 Move bomb tool to menu \'96 "Clear Image" or something (CoreAnimation?)\
-\'95 Move text around immediately after insertion (rewrite of text tool)\
-\cf0 \strike0\striked0 \'95 Option = make a copy\
-\cf3 \strike \strikec3 \'95 Resize image\
-\'95 Resizing canvas\
-\cf0 \strike0\striked0 \'95 Add more preference options\
-\cf3 \strike \strikec3 	\'95 Undo level\
-\cf0 \strike0\striked0 	\'95 On paste of large thing, resize canvas?\
+		\'95 New images for selection transparency\
+\cf0 	\'95 New tool: Lasso\
+\cf4 \'95 Move bomb tool to menu \'96 "Clear Image" or something (CoreAnimation?)\
+\cf0 \'95 Option = make a copy\
+\'95 Add more preference options\
+	\'95 On paste of large thing, resize canvas?\
 	\'95 Color used for transparency (Advanced)\
 		\'95 Provide a defaultpattern?\
-\cf3 \strike \strikec3 	\'95 Default file format\
-\cf0 \strike0\striked0 	\'95 Smooth image when resizing?\
+	\'95 Smooth image when resizing?\
 		\'95 Part of resize panel, perhaps?\
 	\'95 Background gradient colors\
-\cf3 \strike \strikec3 \'95 Fix preference tabs\
-\'95 Refactor to include SW prefix for classes\
-\'95 Selection tool should allow selecting outmost pixels of image\
-\cf2 \strike0\striked0 \'95 Slim down API, remove unnecessary instance variables/public methods\
+\cf4 \'95 Slim down API, remove unnecessary instance variables/public methods\
 \'95 Comment all changes, particularly in interfaces\
-\cf3 \strike \strikec3 \'95 Improve draw times for tools using custom redraw rect\
-\cf0 \strike0\striked0 \'95 Some sort of border or drop shadow for SWPaintView\
 \cf2 \'95 Help documentation\
-\'95 Keyboard shortcuts to switch between tools\
-\cf0 \'95 Sparkle - check OS version for updates!\
-\cf3 \strike \strikec3 \'95 Scrolling on line width NSSlider == moving scroller\
-\'95 Crop feature\
-	\'95 Undo\
-\'95 Remove all type/name references in tools\
-\'95 New document size option: "From Clipboard"\
-\cf2 \strike0\striked0 \'95 Update About Panel\cf0 \
-\
+\cf4 \'95 Keyboard shortcuts to switch between tools\
+\cf0 \
 
-\b\fs28 Regressions:\
-
-\b0\fs24 \cf3 \strike \strikec3 \'95 Switching to scissor tool starts selection in bottom-left\
-\'95 Drag-and-drop for color picker throws exceptions\
-\cf0 \strike0\striked0 \'95 Memory leak...? May be related to undo/redo\
-\cf3 \strike \strikec3 \'95 Incorrectly displays small images on reopen/resize\
-\'95 Cancel on resize closes image\
-\'95 Various selection tool bugs\
-	\'95 OBLITERATES undo and redo\
-	\'95 Right-click causes issues\
-	\'95 Animate the dotted line between up and down click\
-	\'95 Causing gray outline to appear\
-	\'95 Can't delete\
-	\'95 Can't paste properly (stretches image)\
-	\'95 Paste at top-left, instead of bottom-left\
-	\'95 Delete doesn't cause an undo to generate\
-	\'95 Select all and drag-and-drop\
-	\'95 Copying uses wrong rectangle\
-\'95 Grid renovation or removal\
-\'95 Line/Curve tool redraw issues (when paired with shift)\
-\'95 Restore right-click support for shape tools\cf4 \strikec4 , selection, text\
-	\'95 Create nil-targeted Ctrl-Click?\
-\cf3 \strikec3 \'95 Clip view's origin isn't (0, 0)\
-\'95 Placing italicized text causes redraw issues\
-	\'95 Look at Zapfino too\
+\b\fs28 Regressions:
+\b0\fs24 \cf3 \strike \strikec3 \
 \cf0 \strike0\striked0 \
 
 \b\fs28 Website:
 \b0 \
 
-\fs24 \cf2 \'95 Add PayPal button\
-\'95 Note to Developers (code commits, requesting modules, direct source code link)\
-\'95 Completely new site (Rapidweaver?)\
-\cf0 \
-
-\b\fs28 Punted to 2.1:
-\b0\fs24 \
-\'95 Replace NSImages with NSBitmapImageReps for better color accuracy\
-	\'95 Invert colors\
-\'95 Improved support for transparency\
-	\'95 Transparency when resizing?\
-\'95 Backport to 10.4?\
-\'95 Problem pasting images taller than the view\
-\'95 JPEG quality\
-\'95 Ruler\
-\'95 64-bit\
-\'95 Freeform Lasso tool, to replace bomb tool\
-\
+\fs24 \
 
 \b\fs28 Punted to 3.0:
 \b0\fs24 \
 \'95 All-new UI\
 \'95 Color palette \'96 similar to MS Paint\
+\'95 Ruler\
 }
