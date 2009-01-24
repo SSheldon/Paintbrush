@@ -74,20 +74,6 @@
 			[toolList setObject:tool forKey:[tool description]];
 		}
 		
-//		[toolList setObject:[[SWPencilTool alloc] initWithController:self] forKey:@"Pencil"];
-//		[toolList setObject:[[SWRectangleTool alloc] initWithController:self] forKey:@"Rectangle"];
-//		[toolList setObject:[[SWRoundedRectangleTool alloc] initWithController:self] forKey:@"RoundedRectangle"];
-//		[toolList setObject:[[SWEllipseTool alloc] initWithController:self] forKey:@"Ellipse"];
-//		[toolList setObject:[[SWLineTool alloc] initWithController:self] forKey:@"Line"];
-//		[toolList setObject:[[SWCurveTool alloc] initWithController:self] forKey:@"Curve"];
-//		[toolList setObject:[[SWEraserTool alloc] initWithController:self] forKey:@"Eraser"];
-//		[toolList setObject:[[SWFillTool alloc] initWithController:self] forKey:@"Fill"];
-//		[toolList setObject:[[SWSelectionTool alloc] initWithController:self] forKey:@"Selection"];
-//		[toolList setObject:[[SWTextTool alloc] initWithController:self] forKey:@"Text"];
-//		[toolList setObject:[[SWBombTool alloc] initWithController:self] forKey:@"Bomb"];
-//		[toolList setObject:[[SWEyeDropperTool alloc] initWithController:self] forKey:@"EyeDropper"];
-//		[toolList setObject:[[SWZoomTool alloc] initWithController:self] forKey:@"Zoom"];
-//		[toolList setObject:[[SWAirbrushTool alloc] initWithController:self] forKey:@"Airbrush"];
 	
 		// Do some other initialization stuff
 		[NSBezierPath setDefaultLineCapStyle:NSRoundLineCapStyle];
@@ -213,6 +199,17 @@
 - (void)switchToScissors:(id)sender
 {
 	[self setCurrentTool:[toolList objectForKey:@"Selection"]];
+}
+
+- (void)dealloc
+{
+	for (id i in toolList) {
+		[i release];
+	}
+	[toolList release];
+	[toolListArray release];
+	
+	[super dealloc];
 }
 
 @end

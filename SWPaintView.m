@@ -53,11 +53,11 @@
 	
 	
 	// Tracking area
-	[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
-													   options: NSTrackingMouseMoved | NSTrackingCursorUpdate
-						   | NSTrackingEnabledDuringMouseDrag | NSTrackingActiveWhenFirstResponder
-														 owner:self
-													  userInfo:nil]];
+	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
+														options: NSTrackingMouseMoved | NSTrackingCursorUpdate
+							| NSTrackingEnabledDuringMouseDrag | NSTrackingActiveWhenFirstResponder
+														  owner:self
+													   userInfo:nil] autorelease]];
 	[[self window] setAcceptsMouseMovedEvents:YES];
 	
 	
@@ -166,7 +166,7 @@
 
 + (NSMenu *)defaultMenu {
 	//NSMenu *theMenu = [super initWithWindowNibName:@"Preferences"];
-    NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Contextual Menu"];
+    NSMenu *theMenu = [[[NSMenu alloc] initWithTitle:@"Contextual Menu"] autorelease];
     [theMenu insertItemWithTitle:@"Cut" action:@selector(cut:) keyEquivalent:@"" atIndex:0];
     [theMenu insertItemWithTitle:@"Copy" action:@selector(copy:) keyEquivalent:@"" atIndex:1];
     [theMenu insertItemWithTitle:@"Paste" action:@selector(paste:) keyEquivalent:@"" atIndex:2];
@@ -392,11 +392,15 @@
 
 - (void)setCurrentTool:(SWTool *)newTool
 {
+	[newTool retain];
+	[currentTool release];
 	currentTool = newTool;
 }
 
 - (void)setBackgroundColor:(NSColor *)color
 {
+	[color retain];
+	[backgroundColor release];
 	backgroundColor = color;
 }
 
@@ -479,6 +483,7 @@
 	
 	[mainImage lockFocus];
 	[imageRep drawAtPoint:NSMakePoint(0, [self bounds].size.height - [imageRep pixelsHigh])];
+	[imageRep release];
 	[mainImage unlockFocus];
 	[self clearOverlay];
 }
@@ -538,10 +543,10 @@
 // Change the color of the grid from the default gray
 - (void)setGridColor:(NSColor *)newGridColor 
 {
-	if (gridColor != newGridColor) {
-		gridColor = newGridColor;
-		[self setNeedsDisplay: YES];
-	}
+	[newGridColor retain];
+	[gridColor release];
+	gridColor = newGridColor;
+	[self setNeedsDisplay: YES];
 }
 
 // Should the grid be shown? Hmm...
@@ -597,12 +602,8 @@
 	if (origin.x < 0) origin.x = 0;
 	if (origin.y < 0) origin.y = 0;
 
-	//origin.y += abs([[self superview] bounds].size.height - [self bounds].size.height);
 	origin.y = [self bounds].size.height - origin.y;
 	origin.y -= [temp size].height;
-	//origin.y += [[self superview] bounds].size.height - [self bounds].size.height;
-
-	//NSLog(@"origin = (%lf, %lf)", origin.x, origin.y);
 	
 	NSRect rect = NSZeroRect;
 	rect.origin = origin;
@@ -621,6 +622,7 @@
 	
 	[(SWSelectionTool *)currentTool setClippingRect:rect
 										   forImage:secondImage];
+	[temp release];
 	[self setNeedsDisplay:YES];
 }
 
@@ -664,21 +666,21 @@
 	return YES;
 }
 
-/*- (void)dealloc
- {
- if (undoData) {
- [undoData release];
- }
- [[NSNotificationCenter defaultCenter] removeObserver:self];
- [frontColor release];
- [backColor release];
- [mainImage release];
- [imageRep release];
- [[self undoManager] removeAllActions]; 
- // Note: do NOT release the current tool, as it is just a pointer to the
- // object inherited from ToolboxController
+- (void)dealloc
+{
+	if (undoData) {
+		[undoData release];
+	}
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[frontColor release];
+	[backColor release];
+	[mainImage release];
+	[imageRep release];
+	[[self undoManager] removeAllActions]; 
+	// Note: do NOT release the current tool, as it is just a pointer to the
+	// object inherited from ToolboxController
  
- [super dealloc];
- }*/
+	[super dealloc];
+}
 
 @end

@@ -27,10 +27,10 @@
 {
 	[super initWithCoder:coder];
 	
-	[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
+	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
 													   options: NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect
 														 owner:self
-													  userInfo:nil]];
+													  userInfo:nil] autorelease]];
 	
 	[[self window] setAcceptsMouseMovedEvents:YES];
 	hoveredPoint = NSMakePoint(-1,-1);

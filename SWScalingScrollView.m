@@ -222,4 +222,10 @@ static unsigned defaultIndex = 2;
 	}
 }
 
+- (void)dealloc
+{
+	[scalePopUpButton release];
+	[super dealloc];
+}
+
 @end

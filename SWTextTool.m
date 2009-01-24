@@ -103,6 +103,7 @@
 // Summoned by the NSNotificationCenter when the user clicks "OK" in the sheet
 - (void)insertText:(NSNotification *)note
 {
+	[stringToInsert release];
 	stringToInsert = [[NSAttributedString alloc] initWithAttributedString:[[note userInfo] objectForKey:@"newText"]];
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil
@@ -148,6 +149,7 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[stringToInsert release];
 	[super dealloc];
 }
 

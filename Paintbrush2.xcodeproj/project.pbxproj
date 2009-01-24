@@ -25,6 +25,11 @@
 		2734B4D20C9AFCC8003A32BF /* SWSelectionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */; };
 		2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */; };
 		2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */; };
+		27389A170F2A9AB50062831A /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A160F2A9AB50062831A /* MyDocument.xib */; };
+		27389A190F2A9ABC0062831A /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A180F2A9ABC0062831A /* Preferences.xib */; };
+		27389A1C0F2A9AD90062831A /* SizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A1B0F2A9AD90062831A /* SizeWindow.xib */; };
+		27389A1E0F2A9AE00062831A /* TextEntry.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A1D0F2A9AE00062831A /* TextEntry.xib */; };
+		27389A200F2A9AE60062831A /* Toolbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A1F0F2A9AE60062831A /* Toolbox.xib */; };
 		273E0B3B0E32F99D00D11815 /* SWImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageTools.m */; };
 		273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273E0B6D0E32FC2200D11815 /* QuartzCore.framework */; };
 		273E77980EBD71850094C630 /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 273E77970EBD71850094C630 /* selection.png */; };
@@ -104,11 +109,6 @@
 		27F5364E0E8C2A67001FA420 /* SWMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5364D0E8C2A67001FA420 /* SWMatrix.m */; };
 		27F537D00E917CA4001FA420 /* hoveredsmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F537CF0E917CA4001FA420 /* hoveredsmall.png */; };
 		27F7B8920DE3671D0038ED41 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8900DE3671D0038ED41 /* MainMenu.xib */; };
-		27F7B8950DE3673B0038ED41 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8940DE3673B0038ED41 /* MyDocument.xib */; };
-		27F7B8980DE3674C0038ED41 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8970DE3674C0038ED41 /* Preferences.xib */; };
-		27F7B89B0DE368CC0038ED41 /* SizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B89A0DE368CC0038ED41 /* SizeWindow.xib */; };
-		27F7B89E0DE368FA0038ED41 /* TextEntry.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B89D0DE368FA0038ED41 /* TextEntry.xib */; };
-		27F7B8A10DE369080038ED41 /* Toolbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8A00DE369080038ED41 /* Toolbox.xib */; };
 		27FFFE970ECCC78E0036CFE6 /* pressedwell.png in Resources */ = {isa = PBXBuildFile; fileRef = 27FFFE960ECCC78E0036CFE6 /* pressedwell.png */; };
 		27FFFEA30ECCE40E0036CFE6 /* hoveredwell.png in Resources */ = {isa = PBXBuildFile; fileRef = 27FFFEA20ECCE40E0036CFE6 /* hoveredwell.png */; };
 		594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D309E0DFF939E0095E075 /* Cocoa.framework */; };
@@ -265,11 +265,11 @@
 		27F5364D0E8C2A67001FA420 /* SWMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWMatrix.m; sourceTree = "<group>"; };
 		27F537CF0E917CA4001FA420 /* hoveredsmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hoveredsmall.png; sourceTree = "<group>"; };
 		27F7B8910DE3671D0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		27F7B8940DE3673B0038ED41 /* MyDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDocument.xib; sourceTree = "<group>"; };
-		27F7B8970DE3674C0038ED41 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		27F7B89A0DE368CC0038ED41 /* SizeWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SizeWindow.xib; sourceTree = "<group>"; };
-		27F7B89D0DE368FA0038ED41 /* TextEntry.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextEntry.xib; sourceTree = "<group>"; };
-		27F7B8A00DE369080038ED41 /* Toolbox.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Toolbox.xib; sourceTree = "<group>"; };
+		27F7B8940DE3673B0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		27F7B8970DE3674C0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
+		27F7B89A0DE368CC0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SizeWindow.xib; sourceTree = "<group>"; };
+		27F7B89D0DE368FA0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TextEntry.xib; sourceTree = "<group>"; };
+		27F7B8A00DE369080038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Toolbox.xib; sourceTree = "<group>"; };
 		27FFFE960ECCC78E0036CFE6 /* pressedwell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pressedwell.png; sourceTree = "<group>"; };
 		27FFFEA20ECCE40E0036CFE6 /* hoveredwell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hoveredwell.png; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -440,11 +440,11 @@
 			isa = PBXGroup;
 			children = (
 				27F7B8900DE3671D0038ED41 /* MainMenu.xib */,
-				27F7B8940DE3673B0038ED41 /* MyDocument.xib */,
-				27F7B8970DE3674C0038ED41 /* Preferences.xib */,
-				27F7B89A0DE368CC0038ED41 /* SizeWindow.xib */,
-				27F7B89D0DE368FA0038ED41 /* TextEntry.xib */,
-				27F7B8A00DE369080038ED41 /* Toolbox.xib */,
+				27389A160F2A9AB50062831A /* MyDocument.xib */,
+				27389A180F2A9ABC0062831A /* Preferences.xib */,
+				27389A1B0F2A9AD90062831A /* SizeWindow.xib */,
+				27389A1D0F2A9AE00062831A /* TextEntry.xib */,
+				27389A1F0F2A9AE60062831A /* Toolbox.xib */,
 			);
 			name = NIBs;
 			sourceTree = "<group>";
@@ -649,11 +649,11 @@
 				27E1BB620D90704A00C9BB74 /* bomb-cursor.png in Resources */,
 				2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */,
 				27F7B8920DE3671D0038ED41 /* MainMenu.xib in Resources */,
-				27F7B8950DE3673B0038ED41 /* MyDocument.xib in Resources */,
-				27F7B8980DE3674C0038ED41 /* Preferences.xib in Resources */,
-				27F7B89B0DE368CC0038ED41 /* SizeWindow.xib in Resources */,
-				27F7B89E0DE368FA0038ED41 /* TextEntry.xib in Resources */,
-				27F7B8A10DE369080038ED41 /* Toolbox.xib in Resources */,
+				27389A170F2A9AB50062831A /* MyDocument.xib in Resources */,
+				27389A190F2A9ABC0062831A /* Preferences.xib in Resources */,
+				27389A1C0F2A9AD90062831A /* SizeWindow.xib in Resources */,
+				27389A1E0F2A9AE00062831A /* TextEntry.xib in Resources */,
+				27389A200F2A9AE60062831A /* Toolbox.xib in Resources */,
 				27E08C320E33F807002F49E6 /* stroke.png in Resources */,
 				27E08C3A0E33F817002F49E6 /* fillstroke.png in Resources */,
 				278FC0E60E47845E006065E6 /* pressedsmall.png in Resources */,
@@ -746,6 +746,46 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		27389A160F2A9AB50062831A /* MyDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27F7B8940DE3673B0038ED41 /* English */,
+			);
+			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		27389A180F2A9ABC0062831A /* Preferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27F7B8970DE3674C0038ED41 /* English */,
+			);
+			name = Preferences.xib;
+			sourceTree = "<group>";
+		};
+		27389A1B0F2A9AD90062831A /* SizeWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27F7B89A0DE368CC0038ED41 /* English */,
+			);
+			name = SizeWindow.xib;
+			sourceTree = "<group>";
+		};
+		27389A1D0F2A9AE00062831A /* TextEntry.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27F7B89D0DE368FA0038ED41 /* English */,
+			);
+			name = TextEntry.xib;
+			sourceTree = "<group>";
+		};
+		27389A1F0F2A9AE60062831A /* Toolbox.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27F7B8A00DE369080038ED41 /* English */,
+			);
+			name = Toolbox.xib;
+			sourceTree = "<group>";
+		};
 		27F7B8900DE3671D0038ED41 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -761,7 +801,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2.0.0;
+				CURRENT_PROJECT_VERSION = 2.1.0;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -774,6 +814,7 @@
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -792,7 +833,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CURRENT_PROJECT_VERSION = 2.0.0;
+				CURRENT_PROJECT_VERSION = 2.1.0;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -804,6 +845,7 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G4;

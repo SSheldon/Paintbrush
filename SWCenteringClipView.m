@@ -27,7 +27,7 @@
 	// Draw a dark gray gradient background, using the new NSGradient class that has been added in Leopard.
 	if (backgroundGradient == nil) {
         backgroundGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.88 alpha:1.0]
-														   endingColor:[NSColor colorWithCalibratedWhite:0.78 alpha:1.0]];
+															endingColor:[NSColor colorWithCalibratedWhite:0.78 alpha:1.0]];
 	}
 	//NSLog(@"%@", [NSValue valueWithRect:[self bounds]]);
 	[backgroundGradient drawInRect:[self bounds] angle:90.0];
@@ -145,6 +145,12 @@
 - (BOOL)isFlipped
 {
 	return YES;
+}
+
+- (void)dealloc
+{
+	[backgroundGradient release];
+	[super dealloc];
 }
 
 

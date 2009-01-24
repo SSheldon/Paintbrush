@@ -39,7 +39,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 	if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_4) {
 		// Pop up a warning dialog... 
 		NSRunAlertPanel(@"Sorry, this program requires Mac OS X 10.5.3 or later", @"You are running %@", 
-						@"OK", nil, nil, [[NSProcessInfo alloc] operatingSystemVersionString]);
+						@"OK", nil, nil, [[[NSProcessInfo alloc] operatingSystemVersionString] autorelease]);
 		NSLog(@"Failed to run: running version %lf", NSAppKitVersionNumber);
 		// then quit the program
 		[NSApp terminate:self]; 

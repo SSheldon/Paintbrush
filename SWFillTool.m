@@ -100,6 +100,8 @@
 			
 			[super addRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([imageRep pixelsWide], [imageRep pixelsHigh])];
 		}
+		
+		[imageRep release];
 	}
 	return nil;
 }
@@ -126,8 +128,10 @@
 {
 	// Building up a selection mask is pretty involved, so we're going to pass
 	//	the task to a helper class that can build up temporary state.
-	builder = [[SWSelectionBuilder alloc] initWithBitmapImageRep:imageRep point:point tolerance:tolerance];
-	return [builder mask];
+	SWSelectionBuilder *builder = [[SWSelectionBuilder alloc] initWithBitmapImageRep:imageRep point:point tolerance:tolerance];
+	CGImageRef ref = [builder mask];
+	[builder release];
+	return ref;
 }
 
 - (void)fillMask:(CGImageRef)mask withColor:(NSColor *)color

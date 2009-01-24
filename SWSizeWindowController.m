@@ -57,6 +57,7 @@
 			NSImage *temp = [[NSImage alloc] initWithData:data];
 			[widthField setIntValue:[temp size].width];
 			[heightField setIntValue:[temp size].height];
+			[temp release];
 		}
 	} else {
 		NSString *newSize = [sizeButton titleOfSelectedItem];

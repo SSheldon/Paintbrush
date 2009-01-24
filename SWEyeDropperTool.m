@@ -31,6 +31,9 @@
 {
 	// This only needs to happen once
 	if (event == MOUSE_DOWN) {
+		if (imageRep) {
+			[imageRep release];
+		}
 		imageRep = [[NSBitmapImageRep alloc] initWithData:[anImage TIFFRepresentation]];
 		[imageRep setColorSpaceName:NSDeviceRGBColorSpace];
 	}
@@ -46,6 +49,7 @@
 			[[SWToolboxController sharedToolboxPanelController] setForegroundColor:colorClicked];
 		}
 	}
+
 	return nil;
 }
 

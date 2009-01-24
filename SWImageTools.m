@@ -67,12 +67,14 @@
 	CIFilter *colorInvert = [CIFilter filterWithName:@"CIColorInvert"];
 	[colorInvert setValue: [[CIImage alloc] initWithBitmapImageRep:imageRep] forKey: @"inputImage"];
 	CIImage *result = [colorInvert valueForKey: @"outputImage"];
+	[imageRep release];
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithCIImage:result];
 	
 	[image lockFocus];
 	[imageRep drawAtPoint:NSZeroPoint];
-	[image unlockFocus];	
+	[image unlockFocus];
+	[imageRep release];
 }
 
 void SWClearImage(NSImage *image)

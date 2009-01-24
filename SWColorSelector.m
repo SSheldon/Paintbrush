@@ -28,11 +28,11 @@
 {
 	[super initWithFrame:frame];
 	
-	[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
+	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
 													   options: NSTrackingActiveInActiveApp | NSTrackingInVisibleRect 
 																| NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited
 														 owner:self
-													  userInfo:nil]];
+													  userInfo:nil] autorelease]];
 	[[self window] setAcceptsMouseMovedEvents:YES];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self

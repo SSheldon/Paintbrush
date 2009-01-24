@@ -86,8 +86,9 @@
 	_anImage = anImage;
 	
 	// Running the selection animator
-	if (event == MOUSE_DOWN) {
+	if (event == MOUSE_DOWN && animationTimer) {
 		[animationTimer invalidate];
+		animationTimer = nil;
 	} else if (event == MOUSE_UP && !NSEqualPoints(point, savedPoint)) {
 		animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.075 // 75 ms, or 13.33 Hz
 														  target:self
@@ -281,7 +282,10 @@
 {
 	[super tieUpLooseEnds];
 	
-	[animationTimer invalidate];
+	if (animationTimer) {
+		[animationTimer invalidate];
+		animationTimer = nil;
+	}
 	isSelected = NO;
 	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ ) {
 		//NSLog(@"%@", imageRep);
@@ -401,6 +405,13 @@
 - (NSString *)description
 {
 	return @"Selection";
+}
+
+- (void)dealloc
+{
+	[imageRep release];
+	[backedImage release];
+	[super dealloc];
 }
 
 @end

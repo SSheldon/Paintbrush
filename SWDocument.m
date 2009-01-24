@@ -252,8 +252,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Saving data: returns the correctly-formatted image data
 - (NSData *)dataOfType:(NSString *)aType error:(NSError *)anError
 {
-	NSData *data;
-	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithData:[[paintView mainImage] TIFFRepresentation]];
+	NSData *data = [[paintView mainImage] TIFFRepresentation];
+	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithData:data] autorelease];
 	if ([aType isEqualToString:@"BMP"]) {
 		data = [bitmap representationUsingType: NSBMPFileType
 									properties: nil];
@@ -333,6 +333,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
 
 	[pb setData:[writeToMe TIFFRepresentation] forType:NSTIFFPboardType];
+	[writeToMe release];
 }
 
 // Used by Paste to retrieve an image from the pasteboard
@@ -477,6 +478,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[tempImage unlockFocus];
 		[paintView prepUndo:nil];
 		[paintView setImage:tempImage scale:NO];
+		[tempImage release];
 	}
 }
 
@@ -500,6 +502,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[tempImage unlockFocus];
 		[paintView prepUndo:nil];
 		[paintView setImage:tempImage scale:NO];
+		[tempImage release];
 	}
 }
 
@@ -528,6 +531,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	
 	// Now we cheat and set the image
 	[paintView setImage:writeToMe scale:NO];
+	[writeToMe release];
 }
 
 // We offload the heavy lifting to an external class
@@ -542,6 +546,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (void)dealloc
 {	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[sizeController release];
+	[clipView release];
+	[openedImage release];
+	[textController release];
 	[super dealloc];
 }
 

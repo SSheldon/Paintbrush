@@ -42,8 +42,8 @@
 	NSRange range;
 	range.length = [[textView string] length];
 	range.location = 0;
-	NSAttributedString *attrString = [[NSAttributedString alloc] initWithAttributedString:
-									  [textView attributedSubstringFromRange:range]];
+	NSAttributedString *attrString = [[[NSAttributedString alloc] initWithAttributedString:
+									  [textView attributedSubstringFromRange:range]] autorelease];
 	NSDictionary *d = [NSDictionary dictionaryWithObject:attrString forKey:@"newText"];
 	NSNotification *n = [NSNotification notificationWithName:@"SWTextEntered"
 													  object:self
@@ -66,10 +66,10 @@
 	[currentTool tieUpLooseEnds];
 }
 
-- (void)dealloc
-{
-	[textView release];
-	[super dealloc];
-}
+//- (void)dealloc
+//{
+//	[textView release];
+//	[super dealloc];
+//}
 
 @end

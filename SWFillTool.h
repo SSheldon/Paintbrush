@@ -25,7 +25,6 @@
 
 @interface SWFillTool : SWTool {
 	NSBitmapImageRep *aRep, *imageRep;
-	SWSelectionBuilder* builder;
 	NSImage *image;
 	NSInteger h;
 	NSInteger w;
