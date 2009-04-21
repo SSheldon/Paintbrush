@@ -183,7 +183,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			
 			// Use external method to determine the window bounds
 			NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-			[[[paintView window] animator] setFrame:tempRect display:YES];
+			[[paintView window] setFrame:tempRect display:YES animate:YES];
 		}
 	} else if (returnCode == NSCancelButton) {
 		// Close the document - they obviously don't want to play

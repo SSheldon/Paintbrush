@@ -37,6 +37,10 @@
 
 - (void)setUpPaintView
 {
+	// Make sure CA is turned off
+	[[[self window] contentView] setWantsLayer:NO];
+	
+	
 	NSRect frameRect = [self frame];
 	
 	toolbox = [SWToolboxController sharedToolboxPanelController];
@@ -72,7 +76,7 @@
 	// VERY important for resizing image/canvas!
 	hasRun = YES;
 	
-	[self setNeedsDisplay:YES];	
+	[self setNeedsDisplay:YES];
 }
 
 - (NSRect)calculateWindowBounds:(NSRect)frameRect {

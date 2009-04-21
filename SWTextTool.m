@@ -48,9 +48,8 @@
 	_anImage = anImage;
 	_secondImage = secondImage;
 	
-	if (canInsert && event == MOUSE_MOVED) {
-		SWClearImage(secondImage);
-		[secondImage lockFocus];
+	SWClearImage(secondImage);
+	if (canInsert) {
 		
 		// Assign the redrawRect based on the string's size and the insertion point
 		NSRect rectA = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesDeviceMetrics];
@@ -67,35 +66,23 @@
 		rect.origin.x += xOffset;
 		rect.size.width += xOffset;
 		
-		[stringToInsert drawInRect:rect];
-		[secondImage unlockFocus];
+		if (event == MOUSE_MOVED) {
+			[secondImage lockFocus];
+			[stringToInsert drawInRect:rect];
+			[secondImage unlockFocus];			
+		} else if (event == MOUSE_DOWN) {
+			[anImage lockFocus];
+			[stringToInsert drawInRect:rect];
+			[anImage unlockFocus];
+			canInsert = NO;
+		}
 
 		[NSApp sendAction:@selector(refreshImage:)
 					   to:nil
 					 from:self];
 	} else if (event == MOUSE_DOWN) {
-		if (canInsert) {
-			[NSApp sendAction:@selector(prepUndo:)
-						   to:nil
-						 from:nil];
-			[anImage lockFocus];
-			[secondImage drawAtPoint:NSZeroPoint 
-							fromRect:NSZeroRect 
-						   operation:NSCompositeSourceOver 
-							fraction:1.0];
-			[anImage unlockFocus];
-			canInsert = NO;
-			stringToInsert = nil;
-			
-			SWClearImage(secondImage);
-
-			[NSApp sendAction:@selector(refreshImage:)
-						   to:nil
-						 from:nil];
-		} else {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"SWText" object:frontColor];
-			canInsert = YES;
-		} 
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"SWText" object:frontColor];
+		canInsert = YES;
 	}
 	return nil;
 }
