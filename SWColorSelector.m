@@ -34,6 +34,7 @@
 														 owner:self
 													  userInfo:nil]];
 	[[self window] setAcceptsMouseMovedEvents:YES];
+//	[self seta
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateWells:) 
@@ -83,11 +84,18 @@
 }
 
 
+- (void)mouseDown:(NSEvent *)event
+{
+	NSLog(@"CLIIIICK");
+	[self updateWells:nil];
+}
+
+
 // Called whenever one of the color wells has changed colors, so both can redraw
 - (void)updateWells:(NSNotification *)n
 {
-	[frontWell setNeedsDisplay:YES];
 	[backWell setNeedsDisplay:YES];
+	[frontWell setNeedsDisplay:YES];
 }
 
 - (BOOL)acceptsFirstMouse
