@@ -86,7 +86,6 @@
 
 - (void)mouseDown:(NSEvent *)event
 {
-	NSLog(@"CLIIIICK");
 	[self updateWells:nil];
 }
 
