@@ -25,11 +25,6 @@
 
 @synthesize isHovered;
 
-// Overwriting NSColorWell to add one interesting feature: when an active
-//  well is selected (deactivating it), the associated NSColorPanel is 
-//  closed, reinforcing the fact that it has been deselected, as well as
-//  eliminating the possibility of CGFloat-clicking and unknowingly
-//  deactivating the well.
 
 - (id)initWithCoder:(NSCoder *)coder
 {
@@ -41,15 +36,25 @@
 	return self;
 }
 
+
+// Overwriting NSColorWell to add one interesting feature: when an active
+//  well is selected (deactivating it), the associated NSColorPanel is 
+//  closed, reinforcing the fact that it has been deselected, as well as
+//  eliminating the possibility of CGFloat-clicking and unknowingly
+//  deactivating the well.
 - (void)deactivate {
 	[super deactivate];
 	[[NSColorPanel sharedColorPanel] close];
 }
 
+
+// Instead of doing the regular drawing, we're kicking it up a notch!  Bam!
 - (void)drawRect:(NSRect)rect
 {
-	rect = NSInsetRect(rect, 3.0, 3.0);
+	rect = NSInsetRect(rect, 4.0, 4.0);
 	[[self color] setFill];
+	
+	// An SWColorWell can be hovered, selected, or neither
 	if ([self isActive]) {
 		[pressedImage drawAtPoint:NSZeroPoint 
 						 fromRect:NSZeroRect 
@@ -59,12 +64,15 @@
 		[hovImage drawAtPoint:NSZeroPoint 
 					 fromRect:NSZeroRect 
 					operation:NSCompositeSourceOver 
-					 fraction:1.0];	
+					 fraction:1.0];
 	}
+	
 	[[NSBezierPath bezierPathWithRoundedRect:rect xRadius:4 yRadius:4] fill];
 		
 }
 
+
+// When either of these three actions happens, make sure we redraw BOTH rects!  Very important.
 - (void)setColor:(NSColor *)color
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"SWColorSet" object:nil];
