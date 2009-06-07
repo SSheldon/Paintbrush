@@ -19,6 +19,7 @@
 
 
 #import "SWToolboxController.h"
+#import "SWToolbox.h"
 #import "SWToolList.h"
 #import "SWColorSelector.h"
 
@@ -34,6 +35,7 @@
 @synthesize fillStyle;
 @synthesize foregroundColor;
 @synthesize backgroundColor;
+@synthesize toolListArray;
 
 + (id)sharedToolboxPanelController
 {
@@ -52,42 +54,36 @@
 {
 	if (self = [super initWithWindowNibName:windowNibName]) {		
 		// Lots o' tools
+		
+		// Let's create a few shared objects
 		toolListArray = [[NSMutableArray alloc] initWithCapacity:14];
-		[toolListArray addObject:[[SWBrushTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWEraserTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWSelectionTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWFillTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWBombTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWLineTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWCurveTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWRectangleTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWEllipseTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWRoundedRectangleTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWTextTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWEyeDropperTool alloc] initWithController:self]];
-		[toolListArray addObject:[[SWZoomTool alloc] initWithController:self]];
+//		SWBrushTool *t = [[SWBrushTool alloc] initWithController:self];
+//		[toolListArray addObject:[[[t class] alloc] initWithController:self]];
+
+//		[toolListArray addObject:[[SWBrushTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWEraserTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWSelectionTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWFillTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWBombTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWLineTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWCurveTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWRectangleTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWEllipseTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWRoundedRectangleTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWTextTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWEyeDropperTool alloc] initWithController:self]];
+//		[toolListArray addObject:[[SWZoomTool alloc] initWithController:self]];
 		
-		// Create the dictionary
-		toolList = [[NSMutableDictionary alloc] initWithCapacity:14];
-		for (SWTool *tool in toolListArray) {
-			[toolList setObject:tool forKey:[tool description]];
-		}
-		
+		for (Class c in [SWToolbox toolClassList]) {
+			NSLog(@"%@", c);
+			[toolListArray addObject:[[c alloc] initWithController:self]];
+		}		
 	
 		// Do some other initialization stuff
 		[NSBezierPath setDefaultLineCapStyle:NSRoundLineCapStyle];
 		[NSBezierPath setDefaultLineJoinStyle:NSRoundLineJoinStyle];
 		[NSBezierPath setDefaultWindingRule:NSEvenOddWindingRule];
-		
-//		[self addObserver:colorSel 
-//			   forKeyPath:@"foregroundColor" 
-//				  options:NSKeyValueObservingOptionNew 
-//				  context:NULL];
-//		[self addObserver:colorSel 
-//			   forKeyPath:@"backgroundColor" 
-//				  options:NSKeyValueObservingOptionNew 
-//				  context:NULL];
 	}
 	
 	return self;
@@ -203,7 +199,7 @@
 
 - (void)dealloc
 {
-	for (id i in toolList) {
+	for (id i in toolListArray) {
 		[i release];
 	}
 	[toolList release];
