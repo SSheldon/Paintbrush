@@ -61,6 +61,6 @@ typedef enum {
 @property (assign) SWFillStyle fillStyle;
 @property (retain) NSColor *foregroundColor;
 @property (retain) NSColor *backgroundColor;
-//@property (readonly) NSMutableArray *toolListArray;
+@property (readonly) NSMutableArray *toolListArray;
 
 @end

@@ -25,14 +25,14 @@
 @implementation SWImageTools
 
 // Uses Core Image filters to invert the colors of the image
-+ (void)invertImage:(NSImage *)image
++ (void)invertImage:(NSBitmapImageRep *)image
 {
 	NSLog(@"Working on it!");
 //	[image lockFocus];
 //	NSGraphicsContext *gc = [NSGraphicsContext currentContext];
 //	CIContext *context = [gc CIContext];
 	
-	// Get the width and height of the image
+/*	// Get the width and height of the image
 	NSInteger w = [image size].width;
 	NSInteger h = [image size].height;
 	
@@ -75,23 +75,41 @@
 	[imageRep drawAtPoint:NSZeroPoint];
 	[image unlockFocus];
 	[imageRep release];
-}
+*/}
 
-void SWClearImage(NSImage *image)
+void SWClearImage(NSBitmapImageRep *image)
 {
-	NSRect rect = {
-		NSZeroPoint,
-		[image size]
-	};
+	NSRect rect = NSMakeRect(0,0,[image pixelsWide],[image pixelsHigh]);
 	SWClearImageRect(image,rect);
 }
 
-void SWClearImageRect(NSImage *image, NSRect rect)
+void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 {
-	[image lockFocus];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
 	[[NSColor clearColor] setFill];
 	NSRectFill(rect);
-	[image unlockFocus];	
+	[NSGraphicsContext restoreGraphicsState];
+}
+
+void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
+{
+	NSUInteger w = size.width;
+	NSUInteger h = size.height;
+	NSUInteger rowBytes = ((NSInteger)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
+
+	*imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil 
+														pixelsWide:w
+														pixelsHigh:h
+													 bitsPerSample:8 
+												   samplesPerPixel:4 
+														  hasAlpha:YES 
+														  isPlanar:NO 
+													colorSpaceName:NSDeviceRGBColorSpace 
+													  bitmapFormat:NSAlphaFirstBitmapFormat 
+													   bytesPerRow:rowBytes
+													  bitsPerPixel:32];
+	
 }
 
 @end

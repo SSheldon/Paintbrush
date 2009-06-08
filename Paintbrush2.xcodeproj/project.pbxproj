@@ -55,6 +55,7 @@
 		278FC2BA0E4A3E21006065E6 /* SWToolboxPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FC2B90E4A3E21006065E6 /* SWToolboxPanel.m */; };
 		27955CC00CFDE0C800D5AF99 /* SWColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */; };
 		27955D070CFDE7B900D5AF99 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
+		27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2E3AC0F31051500BD41AC /* SWToolbox.m */; };
 		27A45BC30E99E5D000AC15F0 /* rounded rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BBF0E99E5D000AC15F0 /* rounded rectangle.png */; };
 		27A45BC40E99E5D000AC15F0 /* selection_old.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BC00E99E5D000AC15F0 /* selection_old.png */; };
 		27A45BC50E99E5D000AC15F0 /* fillonly.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BC10E99E5D000AC15F0 /* fillonly.png */; };
@@ -80,6 +81,7 @@
 		27A60E2E0B879A6A0091A1B0 /* SWPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E220B879A6A0091A1B0 /* SWPaintView.m */; };
 		27A60E2F0B879A6A0091A1B0 /* SWToolboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E240B879A6A0091A1B0 /* SWToolboxController.m */; };
 		27A60E300B879A6A0091A1B0 /* SWDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E260B879A6A0091A1B0 /* SWDocument.m */; };
+		27A725BC0FCCBEC800731565 /* paint.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27A725BB0FCCBEC800731565 /* paint.icns */; };
 		27A99AA30E9D792300C9781C /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AA20E9D792300C9781C /* brush.png */; };
 		27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AD60E9D842200C9781C /* brush-cursor.png */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
@@ -195,6 +197,8 @@
 		27955CBE0CFDE0C800D5AF99 /* SWColorWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWColorWell.h; sourceTree = "<group>"; };
 		27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWColorWell.m; sourceTree = "<group>"; };
 		27955D060CFDE7B900D5AF99 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		27A2E3AB0F31051500BD41AC /* SWToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWToolbox.h; sourceTree = "<group>"; };
+		27A2E3AC0F31051500BD41AC /* SWToolbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWToolbox.m; sourceTree = "<group>"; };
 		27A45BBF0E99E5D000AC15F0 /* rounded rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded rectangle.png"; sourceTree = "<group>"; };
 		27A45BC00E99E5D000AC15F0 /* selection_old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selection_old.png; sourceTree = "<group>"; };
 		27A45BC10E99E5D000AC15F0 /* fillonly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fillonly.png; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 		27A60E240B879A6A0091A1B0 /* SWToolboxController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWToolboxController.m; sourceTree = "<group>"; };
 		27A60E250B879A6A0091A1B0 /* SWDocument.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWDocument.h; sourceTree = "<group>"; };
 		27A60E260B879A6A0091A1B0 /* SWDocument.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWDocument.m; sourceTree = "<group>"; };
+		27A725BB0FCCBEC800731565 /* paint.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = paint.icns; sourceTree = "<group>"; };
 		27A99AA20E9D792300C9781C /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
 		27A99AD60E9D842200C9781C /* brush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brush-cursor.png"; sourceTree = "<group>"; };
 		27AFFDF10D68C06800368E2B /* SWAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAppController.m; sourceTree = "<group>"; };
@@ -359,6 +364,7 @@
 				272A86C40D74F9F500630D0B /* NewTools */,
 				27955D060CFDE7B900D5AF99 /* arrow.png */,
 				27BA9CFA0F1553E90053045D /* newicon.icns */,
+				27A725BB0FCCBEC800731565 /* paint.icns */,
 				27A4E1780F1E9FF900A1F367 /* BMP.icns */,
 				27A4E1750F1E9FF900A1F367 /* GIF.icns */,
 				27A4E1740F1E9FF900A1F367 /* JPEG.icns */,
@@ -381,6 +387,8 @@
 				27A487290C57AEE00047DF3C /* SWSizeWindowController.m */,
 				270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */,
 				270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */,
+				27A2E3AB0F31051500BD41AC /* SWToolbox.h */,
+				27A2E3AC0F31051500BD41AC /* SWToolbox.m */,
 				27A60E230B879A6A0091A1B0 /* SWToolboxController.h */,
 				27A60E240B879A6A0091A1B0 /* SWToolboxController.m */,
 			);
@@ -687,6 +695,7 @@
 				27A4E17C0F1E9FF900A1F367 /* PNG.icns in Resources */,
 				27A4E17D0F1E9FF900A1F367 /* BMP.icns in Resources */,
 				27A4E2960F1FFF2E00A1F367 /* dsa_pub.pem in Resources */,
+				27A725BC0FCCBEC800731565 /* paint.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +741,7 @@
 				27A45C100E9A84B500AC15F0 /* SWSliderCell.m in Sources */,
 				27BE1F350ECB738000B0A0F1 /* SWColorSelector.m in Sources */,
 				2740C9150ED5F62B00DA6A98 /* SWFreeformSelectionTool.m in Sources */,
+				27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,7 +859,7 @@
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G4;
-				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Paintbrush;

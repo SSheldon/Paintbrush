@@ -102,7 +102,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>newicon</string>
+	<string>paint</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.soggywaffles.Paintbrush</string>
 	<key>CFBundleInfoDictionaryVersion</key>

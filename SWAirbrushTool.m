@@ -46,8 +46,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSImage *)anImage 
-						 secondImage:(NSImage *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)anImage 
+						 secondImage:(NSBitmapImageRep *)secondImage 
 						  mouseEvent:(SWMouseEvent)event
 {
 	p = point;

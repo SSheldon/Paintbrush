@@ -25,9 +25,10 @@
 
 }
 
-+ (void)invertImage:(NSImage *)image;
++ (void)invertImage:(NSBitmapImageRep *)image;
 
-void SWClearImage(NSImage *image);
-void SWClearImageRect(NSImage *image, NSRect rect);
+void SWClearImage(NSBitmapImageRep *image);
+void SWClearImageRect(NSBitmapImageRep *image, NSRect rect);
+void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size);
 
 @end

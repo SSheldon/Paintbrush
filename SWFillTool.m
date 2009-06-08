@@ -38,8 +38,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSImage *)anImage 
-						 secondImage:(NSImage *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)anImage 
+						 secondImage:(NSBitmapImageRep *)secondImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
@@ -141,7 +141,7 @@
 	NSGraphicsContext *imageContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
 	CGContextRef cgContext = [imageContext graphicsPort];
 	
-	// "Focus" our image rep so the NSImage will use it to draw into
+	// "Focus" our image rep so the NSBitmapImageRep will use it to draw into
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:imageContext];
 	

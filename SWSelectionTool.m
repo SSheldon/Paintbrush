@@ -78,8 +78,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSImage *)anImage 
-						 secondImage:(NSImage *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)anImage 
+						 secondImage:(NSBitmapImageRep *)secondImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	_secondImage = secondImage;
@@ -188,7 +188,7 @@
 				
 				SWClearImage(secondImage);
 				
-				backedImage = [[NSImage alloc] initWithSize:[anImage size]];
+				backedImage = [[NSBitmapImageRep alloc] initWithSize:[anImage size]];
 				[backedImage lockFocus];
 
 				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
@@ -329,7 +329,7 @@
 }
 
 // Called from the PaintView when an image is pasted
-- (void)setClippingRect:(NSRect)rect forImage:(NSImage *)image
+- (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image
 {	
 	_secondImage = image;
 	deltax = deltay = 0;
@@ -338,7 +338,7 @@
 	isSelected = YES;
 	
 	// Create the image to paste
-	backedImage = [[NSImage alloc] initWithSize:[image size]];
+	backedImage = [[NSBitmapImageRep alloc] initWithSize:[image size]];
 	[backedImage lockFocus];
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	[image drawInRect:clippingRect
@@ -371,7 +371,7 @@
 	return [imageRep TIFFRepresentation];
 }
 
-- (NSImage *)backedImage
+- (NSBitmapImageRep *)backedImage
 {
 	return backedImage;
 }

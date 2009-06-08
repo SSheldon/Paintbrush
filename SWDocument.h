@@ -25,6 +25,7 @@
 @class SWScalingScrollView;
 @class SWTool;
 @class SWPaintView;
+@class SWToolbox;
 @class SWToolboxController;
 @class SWSizeWindowController;
 @class SWCenteringClipView;
@@ -35,18 +36,20 @@
 	IBOutlet SWPaintView *paintView;
 	IBOutlet NSWindow *window;
 	IBOutlet SWScalingScrollView *scrollView;	/* ScrollView containing document */
-
-
 	
 	// A bunch of controllers and one view
 	SWToolboxController *toolboxController;
+	SWToolbox *toolbox;
 	SWCenteringClipView *clipView;
 	SWTextToolWindowController *textController;
 	SWSizeWindowController *sizeController;
-	NSImage *openedImage;
+	NSBitmapImageRep *openedImage;
 	SWTool *currentTool;
 	NSNotificationCenter *nc;
 	NSRect openingRect;
+	
+	// Let's keep an NSAutoreleasePool that drains every time the document closes
+	NSAutoreleasePool *pool;
 }
 
 // Methods called by menu items

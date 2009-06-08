@@ -54,7 +54,7 @@
 	if ([sender selectedItem] == clipboard) {
 		NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
 		if (data) {
-			NSImage *temp = [[NSImage alloc] initWithData:data];
+			NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 			[widthField setIntValue:[temp size].width];
 			[heightField setIntValue:[temp size].height];
 			[temp release];

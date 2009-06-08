@@ -29,8 +29,8 @@
 	NSInteger bombSpeed;
 	BOOL isExploding;
 	NSPoint p;
-	NSImage *image;
-	NSImage *mainImage;
+	NSBitmapImageRep *image;
+	NSBitmapImageRep *mainImage;
 	NSTimer *bombTimer;
 	NSColor *bombColor;
 }

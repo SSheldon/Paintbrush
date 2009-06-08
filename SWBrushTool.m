@@ -27,7 +27,7 @@
 {
 	if (!path) {
 		path = [NSBezierPath new];
-		[path setLineWidth:lineWidth];
+		[path setLineWidth:2];
 	}
 	if (lineWidth == 1) {
 		begin.x += 0.5;
@@ -42,8 +42,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSImage *)anImage 
-						 secondImage:(NSImage *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)anImage 
+						 secondImage:(NSBitmapImageRep *)secondImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 
@@ -54,7 +54,8 @@
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:nil];
-		[anImage lockFocus];
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:anImage]];
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {
 			[backColor setStroke];
@@ -65,17 +66,18 @@
 		[[NSColor redColor] setFill];
 		[path closePath];
 		[path fill];
-		[anImage unlockFocus];
+		[NSGraphicsContext restoreGraphicsState];
 
 		path = nil;
 	} else {
 		// Use the points clicked to build a redraw rectangle
 		[super addRedrawRectFromPoint:point toPoint:savedPoint];
 
-		[secondImage lockFocus]; 
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:anImage]];
 		
 		// The best way I can come up with to clear the image
-		SWClearImageRect(secondImage, redrawRect);
+		//SWClearImageRect(secondImage, redrawRect);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {
@@ -86,7 +88,7 @@
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 		savedPoint = point;
 		
-		[secondImage unlockFocus];
+		[NSGraphicsContext restoreGraphicsState];
 	}
 	return nil;
 }

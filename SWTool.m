@@ -219,6 +219,10 @@
 - (void)dealloc
 {
 	[customCursor release];
+	[toolbox removeObserver:self forKeyPath:@"lineWidth"];
+	[toolbox removeObserver:self forKeyPath:@"foregroundColor"];
+	[toolbox removeObserver:self forKeyPath:@"backgroundColor"];
+	[toolbox removeObserver:self forKeyPath:@"fillStyle"];
 	[super dealloc];
 }
 

@@ -28,12 +28,13 @@
 {
 	[super initWithFrame:frame];
 	
-	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
+	[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:[self frame]
 													   options: NSTrackingActiveInActiveApp | NSTrackingInVisibleRect 
-																| NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited
+						   | NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited
 														 owner:self
-													  userInfo:nil] autorelease]];
+													  userInfo:nil]];
 	[[self window] setAcceptsMouseMovedEvents:YES];
+	//	[self seta
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateWells:) 
@@ -83,11 +84,17 @@
 }
 
 
+- (void)mouseDown:(NSEvent *)event
+{
+	[self updateWells:nil];
+}
+
+
 // Called whenever one of the color wells has changed colors, so both can redraw
 - (void)updateWells:(NSNotification *)n
 {
-	[frontWell setNeedsDisplay:YES];
 	[backWell setNeedsDisplay:YES];
+	[frontWell setNeedsDisplay:YES];
 }
 
 - (BOOL)acceptsFirstMouse

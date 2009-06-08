@@ -32,9 +32,9 @@ typedef enum {
 @interface SWTool : NSObject {
 	NSColor *frontColor;
 	NSColor *backColor;
-	NSImage *drawToMe;
-	NSImage *_anImage;
-	NSImage *_secondImage;
+	NSBitmapImageRep *drawToMe;
+	NSBitmapImageRep *_anImage;
+	NSBitmapImageRep *_secondImage;
 	NSBezierPath *path;
 	CGFloat lineWidth;
 	BOOL shouldFill;
@@ -46,7 +46,7 @@ typedef enum {
 	NSRect redrawRect, savedRect;
 	SWToolboxController *toolbox;
 	
-	NSImage *iconImage;
+	NSBitmapImageRep *iconImage;
 	
 	NSCursor *customCursor;
 }
@@ -95,8 +95,8 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end;
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSImage *)anImage 
-						 secondImage:(NSImage *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)anImage 
+						 secondImage:(NSBitmapImageRep *)secondImage 
 						  mouseEvent:(SWMouseEvent)event;
 - (NSCursor *)cursor;
 

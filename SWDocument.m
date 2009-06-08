@@ -22,6 +22,7 @@
 #import "SWPaintView.h"
 #import "SWScalingScrollView.h"
 #import "SWCenteringClipView.h"
+#import "SWToolbox.h"
 #import "SWToolboxController.h"
 #import "SWTextToolWindowController.h"
 #import "SWSizeWindowController.h"
@@ -37,6 +38,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
     if (self = [super init]) {
 		NSLog(@"New document");
+		
+		pool = [[NSAutoreleasePool alloc] init];
+		
 		// Observers for the toolbox
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
@@ -52,6 +56,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		// Set levels of undos based on user defaults
 		NSNumber *undo = [[NSUserDefaults standardUserDefaults] objectForKey:kSWUndoKey];
 		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
+		
+		// Create my window's particular tools
+		toolbox = [[SWToolbox alloc] init];
 		
 	}
     return self;
@@ -89,7 +96,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			[self raiseSizeSheet:aController];
 		} else {
 			[SWDocument setWillShowSheet:YES];
-			openedImage = [[NSImage alloc] initWithData:[SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]]];
+			openedImage = [[NSBitmapImageRep alloc] initWithData:[SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]]];
 			[self setUpPaintView];
 		}
 	}
@@ -163,7 +170,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		openingRect.size.height = [sizeController height];
 		if ([paintView hasRun]) {
 			// Trying to resize the image!
-			NSImage *backupImage = contextInfo ? (NSImage *)contextInfo : [paintView mainImage];
+			NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
 
 			// Nothing to do if the size isn't changing!
 			if ([[paintView mainImage] size].width != openingRect.size.width || 
@@ -297,9 +304,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError *)anError
 {
 	// A temporary image
-	NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
-	openedImage = [[NSImage alloc] initWithSize:NSMakeSize([imageRep pixelsWide], [imageRep pixelsHigh])];
-	[openedImage addRepresentation:imageRep];
+	openedImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
+//	openedImage = [[NSBitmapImageRep alloc] initWithSize:NSMakeSize([imageRep pixelsWide], [imageRep pixelsHigh])];
 	NSLog(@"Opening an image");
 	return (openedImage != nil);
 }
@@ -321,15 +327,20 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (void)writeImageToPasteboard:(NSPasteboard *)pb
 {
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
-	NSImage *writeToMe = [[NSImage alloc] initWithSize:rect.size];
-	[writeToMe lockFocus];
-	NSImage *backedImage = [(SWSelectionTool *)currentTool backedImage];
-	NSPoint oldOrigin = [(SWSelectionTool *)currentTool oldOrigin];
-	[backedImage drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
-							   fromRect:NSMakeRect(oldOrigin.x,oldOrigin.y,rect.size.width, rect.size.height)
-							  operation:NSCompositeSourceOver
-							   fraction:1.0];
-	[writeToMe unlockFocus];
+	NSBitmapImageRep *writeToMe;
+	SWImageRepWithSize(&writeToMe, rect.size);
+	
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:writeToMe]];
+	//NSBitmapImageRep *backedImage = [(SWSelectionTool *)currentTool backedImage];
+	//NSPoint oldOrigin = [(SWSelectionTool *)currentTool oldOrigin];
+	// TODO: Make this work
+	NSLog(@"Copying is not currently supported in this build");
+//	[backedImage drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
+//							   fromRect:NSMakeRect(oldOrigin.x,oldOrigin.y,rect.size.width, rect.size.height)
+//							  operation:NSCompositeSourceOver
+//							   fraction:1.0];
+	[NSGraphicsContext restoreGraphicsState];
 	[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
 
 	[pb setData:[writeToMe TIFFRepresentation] forType:NSTIFFPboardType];
@@ -464,18 +475,22 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		NSRect aRect = NSZeroRect;
 		aRect.size = [[paintView mainImage] size];
 		NSAffineTransform *transform = [NSAffineTransform transform];
-		NSImage *tempImage = [[NSImage alloc] initWithSize:aRect.size];
+		NSBitmapImageRep *tempImage;
+		SWImageRepWithSize(&tempImage, aRect.size);
 		
 		[transform scaleXBy:-1.0 yBy:1.0];
 		[transform translateXBy:-aRect.size.width yBy:0];	
 		
-		[tempImage lockFocus];
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:tempImage]];
 		[transform concat];
-		[[paintView mainImage] drawInRect:aRect
-								 fromRect:NSZeroRect
-								operation:NSCompositeSourceOver
-								 fraction:1.0];
-		[tempImage unlockFocus];
+		// TODO: Fix this
+		NSLog(@"No flipping yet");
+//		[[paintView mainImage] drawInRect:aRect
+//								 fromRect:NSZeroRect
+//								operation:NSCompositeSourceOver
+//								 fraction:1.0];
+		[NSGraphicsContext restoreGraphicsState];
 		[paintView prepUndo:nil];
 		[paintView setImage:tempImage scale:NO];
 		[tempImage release];
@@ -488,18 +503,22 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		NSRect aRect = NSZeroRect;
 		aRect.size = [[paintView mainImage] size];
 		NSAffineTransform *transform = [NSAffineTransform transform];
-		NSImage *tempImage = [[NSImage alloc] initWithSize:aRect.size];
+		NSBitmapImageRep *tempImage;
+		SWImageRepWithSize(&tempImage, aRect.size);
 				
 		[transform scaleXBy:1.0 yBy:-1.0];
 		[transform translateXBy:0 yBy:-aRect.size.height];		
 		
-		[tempImage lockFocus];
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:tempImage]];
 		[transform concat];
-		[[paintView mainImage] drawInRect:aRect
-								 fromRect:NSZeroRect
-								operation:NSCompositeSourceOver
-								 fraction:1.0];
-		[tempImage unlockFocus];
+		// TODO: Fix this
+		NSLog(@"No flipping yet");
+		//		[[paintView mainImage] drawInRect:aRect
+		//								 fromRect:NSZeroRect
+		//								operation:NSCompositeSourceOver
+		//								 fraction:1.0];
+		[NSGraphicsContext restoreGraphicsState];
 		[paintView prepUndo:nil];
 		[paintView setImage:tempImage scale:NO];
 		[tempImage release];
@@ -510,17 +529,19 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // section of the image to save
 - (IBAction)crop:(id)sender
 {
-	NSLog(@"Cropping");
+	// TODO: Make this work again
+	NSLog(@"Cropping doesn't work yet either");
 	
 	// First we need to make a temporary copy of what's selected by the selection tool
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
-	NSImage *writeToMe = [[NSImage alloc] initWithSize:rect.size];
-	[writeToMe lockFocus];
-	[[(SWSelectionTool *)currentTool backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
-													fromRect:rect
-												   operation:NSCompositeSourceOver
-													fraction:1.0];
-	[writeToMe unlockFocus];
+	NSBitmapImageRep *writeToMe;
+	SWImageRepWithSize(&writeToMe, rect.size);
+//	[writeToMe lockFocus];
+//	[[(SWSelectionTool *)currentTool backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
+//													fromRect:rect
+//												   operation:NSCompositeSourceOver
+//													fraction:1.0];
+//	[writeToMe unlockFocus];
 	[currentTool tieUpLooseEnds];
 	
 	// Tell the controller that they just changed the image size
@@ -550,6 +571,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[clipView release];
 	[openedImage release];
 	[textController release];
+	[toolbox release];
+	[pool drain];
 	[super dealloc];
 }
 

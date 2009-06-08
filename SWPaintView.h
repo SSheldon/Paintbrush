@@ -24,8 +24,8 @@
 @class SWTool;
 
 @interface SWPaintView : NSView {
-	NSImage *mainImage;
-	NSImage *secondImage;
+	NSBitmapImageRep *mainImage;
+	NSBitmapImageRep *secondImage;
 	NSPoint currentPoint;
 	NSColor *frontColor;
 	NSColor *backColor;
@@ -49,7 +49,7 @@
 //- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
 - (void)setUpPaintView;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
-- (void)setImage:(NSImage *)newImage scale:(BOOL)scale;
+- (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale;
 - (void)setCurrentTool:(SWTool *)newTool;
 - (void)setBackgroundColor:(NSColor *)color;
 //- (void)undoImage:(NSData *)imageData;
@@ -58,8 +58,8 @@
 - (void)prepUndo:(id)sender;
 - (void)clearOverlay;
 - (BOOL)hasRun;
-- (NSImage *)mainImage;
-- (NSImage *)secondImage;
+- (NSBitmapImageRep *)mainImage;
+- (NSBitmapImageRep *)secondImage;
 
 
 // Grid related

@@ -41,15 +41,18 @@
 	
 	toolbox = [SWToolboxController sharedToolboxPanelController];
 	isPayingAttention = YES;
-	mainImage = [[NSImage alloc] initWithSize:frameRect.size];
+	//mainImage = [[NSBitmapImageRep alloc] initWithSize:frameRect.size];
+	SWImageRepWithSize(&mainImage, frameRect.size);
+
 	
 	// New document, not an opened image: gotta paint the background color
-	[mainImage lockFocus];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 	[[toolbox backgroundColor] setFill];
 	NSRectFill(frameRect);
-	[mainImage unlockFocus];
+	[NSGraphicsContext restoreGraphicsState];
 	
-	secondImage = [[NSImage alloc] initWithSize:frameRect.size];	
+	SWImageRepWithSize(&secondImage, frameRect.size);
 	
 	
 	// Tracking area
@@ -107,7 +110,7 @@
 {
 	if (rect.size.width != 0 && rect.size.height != 0) {
 		
-		NSRect drawRect = NSMakeRect(round(rect.origin.x), round(rect.origin.y), round(rect.size.width), round(rect.size.height));
+		//NSRect drawRect = NSMakeRect(round(rect.origin.x), round(rect.origin.y), round(rect.size.width), round(rect.size.height));
 		
 		// If you don't do this, the image looks blurry when zoomed in
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
@@ -125,21 +128,15 @@
 		//[NSGraphicsContext saveGraphicsState];
 		
 		
-		// Draw the NSImage to the view
+		// Draw the NSBitmapImageRep to the view
 		if (mainImage) {
-			[mainImage drawInRect:drawRect
-						 fromRect:drawRect
-						operation:NSCompositeSourceOver
-						 fraction:1.0];
+			[mainImage drawAtPoint:NSZeroPoint];
 		}
 		
 		// If there's an overlay image being used at the moment, draw it
-		if (secondImage) {
-			[secondImage drawInRect:drawRect
-						   fromRect:drawRect
-						  operation:NSCompositeSourceOver
-						   fraction:1.0];
-		}
+//		if (secondImage) {
+//			[secondImage drawAtPoint:NSZeroPoint];
+//		}
 		
 		// If the grid is turned on, draw that too
 		if (showsGrid && [(SWScalingScrollView *)[[self superview] superview] scaleFactor] > 2.0) {
@@ -366,27 +363,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-- (void)setImage:(NSImage *)newImage scale:(BOOL)scale
+- (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale
 {	
 	SWClearImage(mainImage);
-	[mainImage lockFocus];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 	if (scale) {
 		// Stretch the image to the correct size
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-		[newImage drawInRect:[self bounds]
-					fromRect:NSZeroRect
-				   operation:NSCompositeCopy
-					fraction:1.0];
+		[newImage drawInRect:[self bounds]];
 	} else {
 		[[toolbox backgroundColor] setFill];
 		NSRectFill([self bounds]);
-		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)
-					 fromRect:NSZeroRect
-					operation:NSCompositeCopy
-					 fraction:1.0];
+		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)];
 	}
-	[mainImage unlockFocus];
-	
+	[NSGraphicsContext restoreGraphicsState];
 	[self setNeedsDisplay:YES];
 }
 
@@ -481,10 +472,11 @@
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
 	
-	[mainImage lockFocus];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 	[imageRep drawAtPoint:NSMakePoint(0, [self bounds].size.height - [imageRep pixelsHigh])];
 	[imageRep release];
-	[mainImage unlockFocus];
+	[NSGraphicsContext restoreGraphicsState];
 	[self clearOverlay];
 }
 
@@ -590,7 +582,7 @@
 	[toolbox switchToScissors:nil];
 	currentTool = [toolbox currentTool];
 	[self cursorUpdate:nil];
-	NSImage *temp = [[NSImage alloc] initWithData:data];
+	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 	
 	//NSLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
 	//	  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
@@ -613,12 +605,10 @@
 	
 	SWClearImage(secondImage);
 	
-	[secondImage lockFocus];
-	[temp drawAtPoint:rect.origin
-			 fromRect:NSZeroRect
-			operation:NSCompositeSourceOver
-			 fraction:1.0];
-	[secondImage unlockFocus];
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:secondImage]];
+	[temp drawAtPoint:rect.origin];
+	[NSGraphicsContext restoreGraphicsState];
 	
 	[(SWSelectionTool *)currentTool setClippingRect:rect
 										   forImage:secondImage];
@@ -627,13 +617,13 @@
 }
 
 // Returns the mainImage
-- (NSImage *)mainImage
+- (NSBitmapImageRep *)mainImage
 {
 	return mainImage;
 }
 
 // Returns the overlay
-- (NSImage *)secondImage
+- (NSBitmapImageRep *)secondImage
 {
 	return secondImage;
 }

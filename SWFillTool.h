@@ -25,7 +25,7 @@
 
 @interface SWFillTool : SWTool {
 	NSBitmapImageRep *aRep, *imageRep;
-	NSImage *image;
+	NSBitmapImageRep *image;
 	NSInteger h;
 	NSInteger w;
 	NSColor *fillColor;
