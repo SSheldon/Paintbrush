@@ -409,6 +409,7 @@
 
 - (void)dealloc
 {
+	[toolboxController removeObserver:self forKeyPath:@"selectionTransparency"];
 	[imageRep release];
 	[backedImage release];
 	[super dealloc];

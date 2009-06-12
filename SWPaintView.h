@@ -21,6 +21,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class SWToolboxController;
+@class SWToolbox;
 @class SWTool;
 
 @interface SWPaintView : NSView {
@@ -32,7 +33,8 @@
 	NSBitmapImageRep *imageRep;
 	NSData *undoData;
 	NSBezierPath *expPath;
-	SWToolboxController *toolbox;
+	SWToolboxController *toolboxController;
+	SWToolbox *toolbox;
 	SWTool *currentTool;
 
 	BOOL isPayingAttention;
@@ -49,6 +51,7 @@
 //- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
 - (void)setUpPaintView;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
+- (void)setToolbox:(SWToolbox *)tb;
 - (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale;
 - (void)setCurrentTool:(SWTool *)newTool;
 - (void)setBackgroundColor:(NSColor *)color;

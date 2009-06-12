@@ -12,23 +12,30 @@
 
 @implementation SWToolbox
 
+@synthesize currentTool;
 
 - (id)init
 {
+	NSLog(@"Toolbox has been created");
 	self = [super init];
 	
 	sharedController = [SWToolboxController sharedToolboxPanelController];
 	
 	// Create the dictionary
 	toolList = [[NSMutableDictionary alloc] initWithCapacity:14];
-	for (SWTool *tool in [sharedController toolListArray]) {
+	for (Class c in [SWToolbox toolClassList]) {
+		SWTool *tool = [[c alloc] initWithController:sharedController];
 		[toolList setObject:tool forKey:[tool description]];
+		NSLog(@"%@", tool);
 	}
 	
 	[sharedController addObserver:self 
 					   forKeyPath:@"currentTool" 
 						  options:NSKeyValueObservingOptionNew 
 						  context:NULL];
+	
+	// Set the initial tool info
+	[sharedController updateInfo];
 	
 	return self;
 }
@@ -43,9 +50,21 @@
 	id thing = [change objectForKey:NSKeyValueChangeNewKey];
 	
 	if ([keyPath isEqualToString:@"currentTool"]) {
-		NSLog(@"New tool change - %@!", thing);
+		SWTool *tool = [self toolForLabel:thing];
+		if (tool) {
+			[self setCurrentTool:tool];
+			NSLog(@"Toolbox: new tool is %@", tool);
+		}
 	}
 }
+
+
+// Which tool comes from which label?
+- (SWTool *)toolForLabel:(NSString *)label
+{
+	return [toolList objectForKey:[NSString stringWithString:label]];
+}
+
 
 + (NSArray *)toolClassList
 {
@@ -60,6 +79,10 @@
 - (void)dealloc
 {
 	[sharedController removeObserver:self forKeyPath:@"currentTool"];
+	for (id key in toolList) {
+		[[toolList objectForKey:key] release];
+	}
+	[toolList release];
 	[super dealloc];
 }
 

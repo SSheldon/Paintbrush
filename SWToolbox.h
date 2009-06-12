@@ -9,13 +9,19 @@
 #import <Cocoa/Cocoa.h>
 
 @class SWToolboxController;
-
+@class SWTool;
 
 @interface SWToolbox : NSObject {
 	NSMutableDictionary *toolList;
 	SWToolboxController *sharedController;
+	
+	// The currently-selected tool
+	SWTool *currentTool;
 }
 
 + (NSArray *)toolClassList;
+- (SWTool *)toolForLabel:(NSString *)label;
+
+@property (retain) SWTool *currentTool;
 
 @end

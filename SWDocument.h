@@ -47,9 +47,6 @@
 	SWTool *currentTool;
 	NSNotificationCenter *nc;
 	NSRect openingRect;
-	
-	// Let's keep an NSAutoreleasePool that drains every time the document closes
-	NSAutoreleasePool *pool;
 }
 
 // Methods called by menu items

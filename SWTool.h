@@ -44,7 +44,7 @@ typedef enum {
 	NSUInteger flags;
 	NSPoint savedPoint;
 	NSRect redrawRect, savedRect;
-	SWToolboxController *toolbox;
+	SWToolboxController *toolboxController;
 	
 	NSBitmapImageRep *iconImage;
 	

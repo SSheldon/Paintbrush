@@ -38,16 +38,13 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
     if (self = [super init]) {
 		NSLog(@"New document");
-		
-		pool = [[NSAutoreleasePool alloc] init];
-		
+				
 		// Observers for the toolbox
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
 			   selector:@selector(showTextSheet:)
 				   name:@"SWText"
 				 object:nil];
-		
 		[nc addObserver:self 
 			   selector:@selector(undoLevelChanged:) 
 				   name:kSWUndoKey 
@@ -88,6 +85,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		
 	// If the user opened an image
 	if (openedImage) {
+		openingRect.origin = NSZeroPoint;
+		openingRect.size = [openedImage size];
 		[self setUpPaintView];
 	} else {
 		// When we create a new document
@@ -96,7 +95,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			[self raiseSizeSheet:aController];
 		} else {
 			[SWDocument setWillShowSheet:YES];
-			openedImage = [[NSBitmapImageRep alloc] initWithData:[SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]]];
+//			openedImage = [[NSBitmapImageRep alloc] initWithData:[SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]]];
+			openedImage = [NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]];
+			openingRect.origin = NSZeroPoint;
+			openingRect.size = [openedImage size];
 			[self setUpPaintView];
 		}
 	}
@@ -106,16 +108,15 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (void)setUpPaintView
 {
-	openingRect.origin = NSZeroPoint;
-	openingRect.size = [openedImage size];
 	[paintView setFrame:openingRect];
 	[paintView setUpPaintView];
+	[paintView setToolbox:toolbox];
 	
 	// Use external method to determine the window bounds
 	NSRect tempRect = [paintView calculateWindowBounds:openingRect];
 	
 	// Apply the changes to the new document
-	[[paintView window] setFrame:tempRect display:YES];
+	[[paintView window] setFrame:tempRect display:YES animate:YES];
 	
 	[paintView setImage:openedImage scale:NO];	
 }
@@ -186,11 +187,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		} else {
 			// Initial creation
 			[paintView setFrame:openingRect];
-			[paintView setUpPaintView];
+			[self setUpPaintView];
 			
 			// Use external method to determine the window bounds
 			NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-			[[[paintView window] animator] setFrame:tempRect display:YES];
+			[window setFrame:tempRect display:YES animate:YES];
 		}
 	} else if (returnCode == NSCancelButton) {
 		// Close the document - they obviously don't want to play
@@ -386,7 +387,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)selectAll:(id)sender
 {
 	[toolboxController switchToScissors:nil];
-	currentTool = [toolboxController currentTool];
+	currentTool = [toolbox currentTool];
 	
 	[currentTool setSavedPoint:NSZeroPoint];
 	[currentTool performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
@@ -394,7 +395,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 						secondImage:[paintView secondImage] 
 						 mouseEvent:MOUSE_UP];
 	
-	[paintView setCurrentTool:[toolboxController currentTool]];
+	[paintView setCurrentTool:[toolbox currentTool]];
 	[paintView cursorUpdate:nil];
 	[paintView setNeedsDisplay:YES];
 }
@@ -426,7 +427,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	SEL action = [anItem action];
 //	NSLog(@"%@", anItem);
-	currentTool = [toolboxController currentTool];
+	currentTool = [toolbox currentTool];
 	if ((action == @selector(copy:)) || 
 		(action == @selector(cut:)) || 
 		(action == @selector(crop:))) {
@@ -569,10 +570,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[sizeController release];
 	[clipView release];
-	[openedImage release];
+	//[openedImage release];
 	[textController release];
 	[toolbox release];
-	[pool drain];
 	[super dealloc];
 }
 

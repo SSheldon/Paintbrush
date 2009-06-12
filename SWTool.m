@@ -29,7 +29,7 @@
 {
 	if(self = [super init]) {
 		[self resetRedrawRect];
-		toolbox = controller;
+		toolboxController = controller;
 		[controller addObserver:self 
 					 forKeyPath:@"lineWidth" 
 						options:NSKeyValueObservingOptionNew 
@@ -219,10 +219,10 @@
 - (void)dealloc
 {
 	[customCursor release];
-	[toolbox removeObserver:self forKeyPath:@"lineWidth"];
-	[toolbox removeObserver:self forKeyPath:@"foregroundColor"];
-	[toolbox removeObserver:self forKeyPath:@"backgroundColor"];
-	[toolbox removeObserver:self forKeyPath:@"fillStyle"];
+	[toolboxController removeObserver:self forKeyPath:@"lineWidth"];
+	[toolboxController removeObserver:self forKeyPath:@"foregroundColor"];
+	[toolboxController removeObserver:self forKeyPath:@"backgroundColor"];
+	[toolboxController removeObserver:self forKeyPath:@"fillStyle"];
 	[super dealloc];
 }
 

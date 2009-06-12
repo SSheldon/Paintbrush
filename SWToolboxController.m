@@ -22,6 +22,7 @@
 #import "SWToolbox.h"
 #import "SWToolList.h"
 #import "SWColorSelector.h"
+#import "SWDocument.h"
 
 // Heights for the panel, based on what is shown
 #define LARGE_HEIGHT 467
@@ -35,7 +36,21 @@
 @synthesize fillStyle;
 @synthesize foregroundColor;
 @synthesize backgroundColor;
-@synthesize toolListArray;
+//@synthesize toolListArray;
+
+
+// Curiosity...!
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	NSWindow *window = [notification object];
+
+	NSDocumentController *controller = [NSDocumentController sharedDocumentController];
+	id document = [controller documentForWindow:window];
+	if (document && [document class] == [SWDocument class]) {
+		NSLog(@"Key window is %@", document);		
+	}
+}
+
 
 + (id)sharedToolboxPanelController
 {
@@ -49,36 +64,17 @@
 	return sharedController;
 }
 
+
 // Override the initializer
 - (id)initWithWindowNibName:(NSString *)windowNibName
 {
 	if (self = [super initWithWindowNibName:windowNibName]) {		
-		// Lots o' tools
+		// Curiosity...
+		[[NSNotificationCenter defaultCenter] addObserver:self
+			   selector:@selector(windowDidBecomeKey:)
+				   name:NSWindowDidBecomeKeyNotification
+				 object:nil];
 		
-		// Let's create a few shared objects
-		toolListArray = [[NSMutableArray alloc] initWithCapacity:14];
-//		SWBrushTool *t = [[SWBrushTool alloc] initWithController:self];
-//		[toolListArray addObject:[[[t class] alloc] initWithController:self]];
-
-//		[toolListArray addObject:[[SWBrushTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWEraserTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWSelectionTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWAirbrushTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWFillTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWBombTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWLineTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWCurveTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWRectangleTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWEllipseTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWRoundedRectangleTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWTextTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWEyeDropperTool alloc] initWithController:self]];
-//		[toolListArray addObject:[[SWZoomTool alloc] initWithController:self]];
-		
-		for (Class c in [SWToolbox toolClassList]) {
-			NSLog(@"%@", c);
-			[toolListArray addObject:[[c alloc] initWithController:self]];
-		}		
 	
 		// Do some other initialization stuff
 		[NSBezierPath setDefaultLineCapStyle:NSRoundLineCapStyle];
@@ -89,17 +85,34 @@
 	return self;
 }
 
+
 // Alert the observers that something's going on
 - (void)awakeFromNib
-{
-	[self setCurrentTool:[toolList objectForKey:@"Brush"]];
+{	
+	// Mah toolbox!  MINE!
+	toolbox = [[SWToolbox alloc] init];
 	
+	// Set the starting toolbox info
 	[self setLineWidthDisplay:3];
 	[self setForegroundColor:[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
 	[self setBackgroundColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
 	[self setFillStyle:STROKE_ONLY];
 	[self setSelectionTransparency:NO];
+	[self changeCurrentTool:toolMatrix];	
 }
+
+
+// Called externally at times
+- (void)updateInfo
+{
+	[self setLineWidthDisplay:[self lineWidthDisplay]];
+	[self setForegroundColor:[self foregroundColor]];
+	[self setBackgroundColor:[self backgroundColor]];
+	[self setFillStyle:[self fillStyle]];
+	[self setSelectionTransparency:[self selectionTransparency]];
+	[self changeCurrentTool:toolMatrix];	
+}
+
 
 // The slider moved, meaning the line width should change
 - (void)setLineWidth:(NSInteger)width
@@ -107,28 +120,41 @@
 	// Allows for more line widths with less tick marks
 	lineWidth = 2*width - 1;
 
-	[currentTool setLineWidth:lineWidth];
+	//[currentTool setLineWidth:lineWidth];
 }
+
 
 - (void)setLineWidthDisplay:(NSInteger)width
 {
 	[self setLineWidth:width];
 }
 
+
 - (NSInteger)lineWidthDisplay
 {
 	return (1+lineWidth) / 2;
 }
 
+
 // Override the default to make some additions
-- (void)setCurrentTool:(SWTool *)tool
+- (void)setCurrentTool:(NSString *)tool
 {
-	[currentTool tieUpLooseEnds];
+	// Don't tie up loose ends if there's no tool!
+	if (currentTool) {
+		[[toolbox toolForLabel:currentTool] tieUpLooseEnds];
+	}
 	currentTool = tool;
+	
+	SWTool *tempTool = [toolbox toolForLabel:currentTool];
+	
+	//assert(tempTool != nil);
+	
+	[fillMatrix setHidden:(![tempTool shouldShowFillOptions])];
+	[transparencyMatrix setHidden:(![tempTool shouldShowTransparencyOptions])];
 	
 	// Handle resizing of tool palette, based on which tool is selected
 	NSRect aRect = [[super window] frame];
-	if ([currentTool shouldShowFillOptions] || [currentTool shouldShowTransparencyOptions]) {
+	if ([tempTool shouldShowFillOptions] || [tempTool shouldShowTransparencyOptions]) {
 		aRect.origin.y += (aRect.size.height - LARGE_HEIGHT);
 		aRect.size.height = LARGE_HEIGHT;
 	} else {
@@ -137,6 +163,7 @@
 	}
 	[[super window] setFrame:aRect display:YES animate:YES];
 }
+
 
 - (void)keyDown:(NSEvent *)event
 {
@@ -174,37 +201,43 @@
 	[self setBackgroundColor:tempColor];
 }
 
+
+// We use the title of the cell to indicate which tool to use
 - (IBAction)changeCurrentTool:(id)sender
 {
 	NSString *string = [[sender selectedCell] title];
-	SWTool *theTool = [toolList objectForKey:string];
-	[self setCurrentTool:theTool];
+	if (string && ![string isEqualToString:@""]) {
+		NSLog(@"Window Controller is changing the tool...");
+		[self setCurrentTool:string];
+	}
+	//SWTool *theTool = [toolList objectForKey:string];
 }
+
 
 - (IBAction)changeFillStyle:(id)sender
 {
 	[self setFillStyle:[sender selectedTag]];
 }
 
+
 - (IBAction)changeSelectionTransparency:(id)sender
 {
 	[self setSelectionTransparency:[sender selectedTag]];
 }
 
+
 // If "Paste" or "Select All" is chosen, we should switch to the scissors tool
 - (void)switchToScissors:(id)sender
 {
-	[self setCurrentTool:[toolList objectForKey:@"Selection"]];
+	//[self setCurrentTool:[toolList objectForKey:@"Selection"]];
+	NSLog(@"Broken! Fix me!");
 }
+
 
 - (void)dealloc
 {
-	for (id i in toolListArray) {
-		[i release];
-	}
-	[toolList release];
-	[toolListArray release];
-	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[toolbox release];
 	[super dealloc];
 }
 

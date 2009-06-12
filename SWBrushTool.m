@@ -27,19 +27,23 @@
 {
 	if (!path) {
 		path = [NSBezierPath new];
-		[path setLineWidth:2];
+		NSLog(@"Line width is %lf", lineWidth);
+		[path setLineWidth:lineWidth];		
 	}
-	if (lineWidth == 1) {
+	//if (lineWidth == 1) {
+	// Off-by-half: Cocoa drawing is done based on gridlines AROUND pixels.  
+	// We want to actually fill the pixels themselves!
 		begin.x += 0.5;
 		begin.y += 0.5;
 		end.x += 0.5;
 		end.y += 0.5;
-	}
+	//}
 	[path moveToPoint:begin];
 	[path lineToPoint:end];
 
 	return path;
 }
+
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
 					   withMainImage:(NSBitmapImageRep *)anImage 

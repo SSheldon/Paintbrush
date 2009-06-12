@@ -27,19 +27,23 @@ typedef enum {
 } SWFillStyle;
 
 @class SWColorSelector;
-@class SWTool;
+@class SWMatrix;
+@class SWToolbox;
 
 @interface SWToolboxController : NSWindowController {	
 	NSColor *foregroundColor;
 	NSColor *backgroundColor;
-	SWTool *currentTool;
+	NSString *currentTool;
 	NSInteger lineWidth;
 	SWFillStyle fillStyle;
 	BOOL selectionTransparency;
-	NSMutableDictionary *toolList;
-	NSMutableArray *toolListArray;
 	
-	//IBOutlet SWColorSelector *colorSel;
+	IBOutlet SWMatrix *toolMatrix;
+	IBOutlet SWMatrix *transparencyMatrix;
+	IBOutlet SWMatrix *fillMatrix;	
+	
+	// My toolbox -- used when there's no active document
+	SWToolbox *toolbox;
 }
 
 // Accessors
@@ -51,16 +55,17 @@ typedef enum {
 - (IBAction)changeSelectionTransparency:(id)sender;
 
 // Other stuff
+- (void)updateInfo;
 - (void)switchToScissors:(id)sender;
 - (IBAction)flipColors:(id)sender;
 
 @property (assign) NSInteger lineWidthDisplay;
 @property (assign) NSInteger lineWidth;
 @property (assign) BOOL selectionTransparency;
-@property (assign) SWTool *currentTool;
+@property (assign) NSString *currentTool;
 @property (assign) SWFillStyle fillStyle;
 @property (retain) NSColor *foregroundColor;
 @property (retain) NSColor *backgroundColor;
-@property (readonly) NSMutableArray *toolListArray;
+//@property (readonly) NSMutableArray *toolListArray;
 
 @end

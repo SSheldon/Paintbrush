@@ -22,24 +22,17 @@
 #import "SWCenteringClipView.h"
 #import "SWScalingScrollView.h"
 #import "SWToolList.h"
+#import "SWToolbox.h"
 #import "SWToolboxController.h"
 #import "SWAppController.h"
 
 @implementation SWPaintView
 
-- (id)initWithFrame:(NSRect)frameRect
-{	
-	if ((self = [super initWithFrame:frameRect]) && !NSEqualRects(frameRect, NSZeroRect)) {
-		[self setUpPaintView];
-	}
-	return self;
-}
-
 - (void)setUpPaintView
 {
 	NSRect frameRect = [self frame];
 	
-	toolbox = [SWToolboxController sharedToolboxPanelController];
+	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	isPayingAttention = YES;
 	//mainImage = [[NSBitmapImageRep alloc] initWithSize:frameRect.size];
 	SWImageRepWithSize(&mainImage, frameRect.size);
@@ -48,7 +41,7 @@
 	// New document, not an opened image: gotta paint the background color
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
-	[[toolbox backgroundColor] setFill];
+	[[toolboxController backgroundColor] setFill];
 	NSRectFill(frameRect);
 	[NSGraphicsContext restoreGraphicsState];
 	
@@ -62,11 +55,7 @@
 														  owner:self
 													   userInfo:nil] autorelease]];
 	[[self window] setAcceptsMouseMovedEvents:YES];
-	
-	
-	// Set the initial cursor
-	[(NSClipView *)[self superview] setDocumentCursor:[[toolbox currentTool] cursor]];
-	
+		
 	// Grid related
 	showsGrid = NO;
 	gridSpacing = 1;
@@ -77,6 +66,7 @@
 	
 	[self setNeedsDisplay:YES];	
 }
+
 
 - (NSRect)calculateWindowBounds:(NSRect)frameRect {
 	// Set the window's maximum size to the size of the screen
@@ -105,6 +95,7 @@
 	
 	return tempRect;
 }
+
 
 - (void)drawRect:(NSRect)rect
 {
@@ -174,8 +165,23 @@
     return theMenu;
 }
 
+
+// Used to assign the toolbox
+- (void)setToolbox:(SWToolbox *)tb
+{
+	[tb retain];
+	[toolbox release];
+	toolbox = tb;
+	
+	// Update the cursor
+	[self cursorUpdate:nil];
+}
+
+
 - (void)updateCurrentTool {
 	//[currentTool resetRedrawRect];
+	NSLog(@"Toolbox is %@", toolbox);
+	NSLog(@"%@ versus %@", currentTool, [toolbox currentTool]);
 	if (currentTool != [toolbox currentTool]) {
 		currentTool = [toolbox currentTool];
 		[self clearOverlay];
@@ -329,14 +335,18 @@
 	//[self setNeedsDisplay:YES];
 }
 
+
 // Overridden to set the correct cursor
 - (void)cursorUpdate:(NSEvent *)event
 {
-	NSCursor *cursor = [[toolbox currentTool] cursor];
-	if (cursor != [(NSClipView *)[self superview] documentCursor]) {
-		[(NSClipView *)[self superview] setDocumentCursor:cursor];
+	if (toolbox && [toolbox currentTool]) {
+		NSCursor *cursor = [[toolbox currentTool] cursor];
+		if (cursor != [(NSClipView *)[self superview] documentCursor]) {
+			[(NSClipView *)[self superview] setDocumentCursor:cursor];
+		}		
 	}
 }
+
 
 // Handles keyboard events
 - (void)keyDown:(NSEvent *)event
@@ -352,7 +362,7 @@
 		// Delete keys (back and forward)
 		[self clearOverlay];
 	} else {
-		[[[toolbox window] contentView] keyDown:event];
+		[[[toolboxController window] contentView] keyDown:event];
 	}
 }
 
@@ -373,7 +383,7 @@
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		[newImage drawInRect:[self bounds]];
 	} else {
-		[[toolbox backgroundColor] setFill];
+		[[toolboxController backgroundColor] setFill];
 		NSRectFill([self bounds]);
 		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)];
 	}
@@ -579,7 +589,7 @@
 - (void)pasteData:(NSData *)data
 {
 	[currentTool tieUpLooseEnds];
-	[toolbox switchToScissors:nil];
+	[toolboxController switchToScissors:nil];
 	currentTool = [toolbox currentTool];
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
@@ -666,6 +676,7 @@
 	[backColor release];
 	[mainImage release];
 	[imageRep release];
+	[toolbox release];
 	[[self undoManager] removeAllActions]; 
 	// Note: do NOT release the current tool, as it is just a pointer to the
 	// object inherited from ToolboxController
