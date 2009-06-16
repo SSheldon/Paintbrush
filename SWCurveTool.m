@@ -75,8 +75,8 @@
 
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
@@ -84,11 +84,11 @@
 		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	}
 	
-	SWClearImage(secondImage);
-	drawToMe = secondImage;
+	SWClearImage(bufferImage);
+	drawToMe = bufferImage;
 	
-	_secondImage = secondImage;
-	_anImage = anImage;
+	_bufferImage = bufferImage;
+	_mainImage = mainImage;
 	
 	// Different meaning for different clicks
 	switch(numberOfClicks) {
@@ -106,7 +106,7 @@
 				[NSApp sendAction:@selector(prepUndo:)
 							   to:nil
 							 from:nil];				
-				drawToMe = anImage;
+				drawToMe = mainImage;
 				numberOfClicks = 0;
 			}
 			break;
@@ -148,18 +148,18 @@
 	[super tieUpLooseEnds];
 	
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
-	if (_secondImage && _anImage && numberOfClicks > 0) {
+	if (_bufferImage && _mainImage && numberOfClicks > 0) {
 		
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:nil];	
 		
-		[_anImage lockFocus];
-		[_secondImage drawAtPoint:NSZeroPoint
+		[_mainImage lockFocus];
+		[_bufferImage drawAtPoint:NSZeroPoint
 						 fromRect:NSZeroRect
 						operation:NSCompositeSourceOver
 						 fraction:1.0];
-		[_anImage unlockFocus];
+		[_mainImage unlockFocus];
 	}
 	
 	numberOfClicks = 0;

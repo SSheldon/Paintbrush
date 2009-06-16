@@ -46,22 +46,22 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
-	SWClearImage(secondImage);
+	SWClearImage(bufferImage);
 	
 	if (event == MOUSE_UP) {
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:nil];		
-		drawToMe = anImage;
+		drawToMe = mainImage;
 	} else {
-		drawToMe = secondImage;
+		drawToMe = bufferImage;
 	}
 	
 	[drawToMe lockFocus]; 

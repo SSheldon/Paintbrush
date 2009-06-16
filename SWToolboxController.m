@@ -118,7 +118,7 @@
 - (void)setLineWidth:(NSInteger)width
 {
 	// Allows for more line widths with less tick marks
-	lineWidth = 2*width - 1;
+	lineWidth = 2*width - 2;
 
 	//[currentTool setLineWidth:lineWidth];
 }
@@ -132,7 +132,7 @@
 
 - (NSInteger)lineWidthDisplay
 {
-	return (1+lineWidth) / 2;
+	return (1+lineWidth) / 2 + 1;
 }
 
 

@@ -33,8 +33,8 @@ typedef enum {
 	NSColor *frontColor;
 	NSColor *backColor;
 	NSBitmapImageRep *drawToMe;
-	NSBitmapImageRep *_anImage;
-	NSBitmapImageRep *_secondImage;
+	NSBitmapImageRep *_mainImage;
+	NSBitmapImageRep *_bufferImage;
 	NSBezierPath *path;
 	CGFloat lineWidth;
 	BOOL shouldFill;
@@ -95,8 +95,8 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end;
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event;
 - (NSCursor *)cursor;
 

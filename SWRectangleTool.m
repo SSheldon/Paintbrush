@@ -47,52 +47,58 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
-	SWClearImage(secondImage);
+	//SWClearImage(bufferImage);
 	
 	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];		
-		drawToMe = anImage;
+		// No need to redraw
+		[super resetRedrawRect];
+		[path release];
+		path = nil;
 	} else {
-		drawToMe = secondImage;
-	}
-	
-	[drawToMe lockFocus]; 
-	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-	
-	// Which colors should we draw with?
-	if (event == MOUSE_DOWN) {
-		if (flags & NSAlternateKeyMask) {
-			primaryColor = backColor;
-			secondaryColor = frontColor;
-		} else {
-			primaryColor = frontColor;
-			secondaryColor = backColor;
+		if (event == MOUSE_DOWN) {
+			[NSApp sendAction:@selector(prepUndo:)
+						   to:nil
+						 from:nil];
+			SWCopyImage(bufferImage, mainImage);
+			
+			// Which colors should we draw with?
+			if (flags & NSAlternateKeyMask) {
+				primaryColor = backColor;
+				secondaryColor = frontColor;
+			} else {
+				primaryColor = frontColor;
+				secondaryColor = backColor;
+			}
 		}
-	}
+		
+		SWCopyImage(mainImage, bufferImage);
+		
+		SWLockFocus(mainImage); 
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];		
 	
-	if (shouldFill && shouldStroke) {
-		[primaryColor setStroke];
-		[secondaryColor setFill];
-		[[self pathFromPoint:savedPoint toPoint:point] fill];
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
-	} else if (shouldFill) {
-		[primaryColor setFill];
-		[[self pathFromPoint:savedPoint toPoint:point] fill];
-	} else if (shouldStroke) {
-		[primaryColor setStroke];
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		
+		if (shouldFill && shouldStroke) {
+			[primaryColor setStroke];
+			[secondaryColor setFill];
+			[[self pathFromPoint:savedPoint toPoint:point] fill];
+			[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		} else if (shouldFill) {
+			[primaryColor setFill];
+			[[self pathFromPoint:savedPoint toPoint:point] fill];
+		} else if (shouldStroke) {
+			[primaryColor setStroke];
+			[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		}
+		
+		SWUnlockFocus(mainImage);
 	}
-	
-	[drawToMe unlockFocus];
 	return nil;
 }
 

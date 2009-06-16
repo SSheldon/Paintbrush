@@ -38,15 +38,15 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
 
 		// Get the width and height of the image
-		w = [anImage size].width;
-		h = [anImage size].height;
+		w = [mainImage size].width;
+		h = [mainImage size].height;
 		
 		NSUInteger rowBytes = ((NSInteger)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
 		
@@ -70,8 +70,8 @@
 		[NSGraphicsContext setCurrentContext:imageContext];
 		
 		// Draw the current image to the ImageRep
-		[anImage drawAtPoint:NSZeroPoint
-					fromRect:NSMakeRect(0, 0, [anImage size].width, [anImage size].height)
+		[mainImage drawAtPoint:NSZeroPoint
+					fromRect:NSMakeRect(0, 0, [mainImage size].width, [mainImage size].height)
 				   operation:NSCompositeSourceOver
 					fraction:1.0];
 		[NSGraphicsContext restoreGraphicsState];
@@ -94,9 +94,9 @@
 			// And then fill it!
 			[self fillMask:mask withColor:fillColor];
 			
-			[anImage lockFocus];
+			[mainImage lockFocus];
 			[imageRep drawAtPoint:NSZeroPoint];
-			[anImage unlockFocus];
+			[mainImage unlockFocus];
 			
 			[super addRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([imageRep pixelsWide], [imageRep pixelsHigh])];
 		}

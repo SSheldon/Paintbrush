@@ -28,7 +28,12 @@
 + (void)invertImage:(NSBitmapImageRep *)image;
 
 void SWClearImage(NSBitmapImageRep *image);
+void SWCopyImage(NSBitmapImageRep *dest, NSBitmapImageRep *src);
 void SWClearImageRect(NSBitmapImageRep *image, NSRect rect);
 void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size);
+
+// A few things I'd like to try
+void SWLockFocus(NSBitmapImageRep *image);
+void SWUnlockFocus(NSBitmapImageRep *image);
 
 @end

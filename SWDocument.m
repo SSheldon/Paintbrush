@@ -392,7 +392,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[currentTool setSavedPoint:NSZeroPoint];
 	[currentTool performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
 					  withMainImage:[paintView mainImage] 
-						secondImage:[paintView secondImage] 
+						bufferImage:[paintView bufferImage] 
 						 mouseEvent:MOUSE_UP];
 	
 	[paintView setCurrentTool:[toolbox currentTool]];

@@ -46,8 +46,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {
 	p = point;
@@ -57,8 +57,8 @@
 		// Seed a random number based on the time!
 		srandom(time(NULL));
 
-		_secondImage = secondImage;
-		_anImage = anImage;
+		_bufferImage = bufferImage;
+		_mainImage = mainImage;
 		airbrushTimer = [NSTimer scheduledTimerWithTimeInterval:0.002 // 1 ms
 														 target:self
 													   selector:@selector(spray:)
@@ -72,7 +72,7 @@
 
 - (void)spray:(NSTimer *)timer
 {
-	[_secondImage lockFocus]; 
+	[_bufferImage lockFocus]; 
 	
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	if (flags & NSAlternateKeyMask) {
@@ -83,7 +83,7 @@
 	[[self pathFromPoint:savedPoint toPoint:p] stroke];
 	savedPoint = p;
 	
-	[_secondImage unlockFocus];
+	[_bufferImage unlockFocus];
 	
 	// Get the view to perform a redraw to see the new spray
 	[NSApp sendAction:@selector(refreshImage:)
@@ -102,14 +102,14 @@
 	[NSApp sendAction:@selector(prepUndo:)
 				   to:nil
 				 from:nil];
-	[_anImage lockFocus];
-	[_secondImage drawAtPoint:NSZeroPoint
+	[_mainImage lockFocus];
+	[_bufferImage drawAtPoint:NSZeroPoint
 					fromRect:NSZeroRect
 				   operation:NSCompositeSourceOver 
 					fraction:1.0];
-	[_anImage unlockFocus];
+	[_mainImage unlockFocus];
 	
-	SWClearImage(_secondImage);
+	SWClearImage(_bufferImage);
 }
 
 - (NSCursor *)cursor

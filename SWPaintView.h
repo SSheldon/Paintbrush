@@ -26,11 +26,10 @@
 
 @interface SWPaintView : NSView {
 	NSBitmapImageRep *mainImage;
-	NSBitmapImageRep *secondImage;
+	NSBitmapImageRep *bufferImage;
 	NSPoint currentPoint;
 	NSColor *frontColor;
 	NSColor *backColor;
-	NSBitmapImageRep *imageRep;
 	NSData *undoData;
 	NSBezierPath *expPath;
 	SWToolboxController *toolboxController;
@@ -62,7 +61,7 @@
 - (void)clearOverlay;
 - (BOOL)hasRun;
 - (NSBitmapImageRep *)mainImage;
-- (NSBitmapImageRep *)secondImage;
+- (NSBitmapImageRep *)bufferImage;
 
 
 // Grid related

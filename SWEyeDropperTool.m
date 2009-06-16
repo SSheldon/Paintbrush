@@ -25,8 +25,8 @@
 @implementation SWEyeDropperTool
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {
 	// This only needs to happen once
@@ -34,7 +34,7 @@
 		if (imageRep) {
 			[imageRep release];
 		}
-		imageRep = [[NSBitmapImageRep alloc] initWithData:[anImage TIFFRepresentation]];
+		imageRep = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
 		[imageRep setColorSpaceName:NSDeviceRGBColorSpace];
 	}
 	

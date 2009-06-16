@@ -28,8 +28,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	if (event == MOUSE_DOWN) {
@@ -41,8 +41,8 @@
 		i = 0;
 		rect = NSZeroRect;
 		p = point;
-		image = secondImage;
-		mainImage = anImage;
+		image = bufferImage;
+		mainImage = mainImage;
 		
 		// We do this to make a copy of the color
 		bombColor = (flags & NSAlternateKeyMask) ? frontColor : backColor;
@@ -52,7 +52,7 @@
 		} else {
 			bombSpeed = 25;
 		}
-		max = sqrt([anImage size].width*[anImage size].width + [anImage size].height*[anImage size].height);
+		max = sqrt([mainImage size].width*[mainImage size].width + [mainImage size].height*[mainImage size].height);
 		bombTimer = [NSTimer scheduledTimerWithTimeInterval:0.000001 // 1 μs
 													 target:self
 												   selector:@selector(drawNewCircle:)

@@ -42,8 +42,8 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 	// Use the points clicked to build a redraw rectangle
@@ -53,7 +53,7 @@
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:nil];
-		[anImage lockFocus];
+		[mainImage lockFocus];
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		
 		[NSGraphicsContext saveGraphicsState];
@@ -67,14 +67,14 @@
 		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;
 		
-		[anImage unlockFocus];
+		[mainImage unlockFocus];
 		
 		path = nil;
 	} else {		
-		[secondImage lockFocus]; 
+		[bufferImage lockFocus]; 
 		
 		// The best way I can come up with to clear the image
-		SWClearImage(secondImage);
+		SWClearImage(bufferImage);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 
@@ -89,7 +89,7 @@
 		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;
 		
-		[secondImage unlockFocus];
+		[bufferImage unlockFocus];
 	}
 	return nil;
 }

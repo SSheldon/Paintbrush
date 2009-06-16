@@ -41,16 +41,16 @@
 }
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {
-	_anImage = anImage;
-	_secondImage = secondImage;
+	_mainImage = mainImage;
+	_bufferImage = bufferImage;
 	
 	if (canInsert && event == MOUSE_MOVED) {
-		SWClearImage(secondImage);
-		[secondImage lockFocus];
+		SWClearImage(bufferImage);
+		[bufferImage lockFocus];
 		
 		// Assign the redrawRect based on the string's size and the insertion point
 		NSRect rectA = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesDeviceMetrics];
@@ -68,7 +68,7 @@
 		rect.size.width += xOffset;
 		
 		[stringToInsert drawInRect:rect];
-		[secondImage unlockFocus];
+		[bufferImage unlockFocus];
 
 		[NSApp sendAction:@selector(refreshImage:)
 					   to:nil
@@ -78,16 +78,16 @@
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil
 						 from:nil];
-			[anImage lockFocus];
-			[secondImage drawAtPoint:NSZeroPoint 
+			[mainImage lockFocus];
+			[bufferImage drawAtPoint:NSZeroPoint 
 							fromRect:NSZeroRect 
 						   operation:NSCompositeSourceOver 
 							fraction:1.0];
-			[anImage unlockFocus];
+			[mainImage unlockFocus];
 			canInsert = NO;
 			stringToInsert = nil;
 			
-			SWClearImage(secondImage);
+			SWClearImage(bufferImage);
 
 			[NSApp sendAction:@selector(refreshImage:)
 						   to:nil
@@ -114,7 +114,7 @@
 - (void)mouseHasMoved:(NSPoint)point
 {
 	if (stringToInsert) {
-		[self performDrawAtPoint:point withMainImage:_anImage secondImage:_secondImage mouseEvent:MOUSE_MOVED];		
+		[self performDrawAtPoint:point withMainImage:_mainImage bufferImage:_bufferImage mouseEvent:MOUSE_MOVED];		
 	}
 }
 

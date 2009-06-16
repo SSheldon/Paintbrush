@@ -26,7 +26,7 @@
 	for (Class c in [SWToolbox toolClassList]) {
 		SWTool *tool = [[c alloc] initWithController:sharedController];
 		[toolList setObject:tool forKey:[tool description]];
-		NSLog(@"%@", tool);
+		//NSLog(@"%@", tool);
 	}
 	
 	[sharedController addObserver:self 

@@ -34,8 +34,10 @@
 	
 	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	isPayingAttention = YES;
-	//mainImage = [[NSBitmapImageRep alloc] initWithSize:frameRect.size];
+
+	// Create the two images we'll be using
 	SWImageRepWithSize(&mainImage, frameRect.size);
+	SWImageRepWithSize(&bufferImage, frameRect.size);
 
 	
 	// New document, not an opened image: gotta paint the background color
@@ -45,8 +47,7 @@
 	NSRectFill(frameRect);
 	[NSGraphicsContext restoreGraphicsState];
 	
-	SWImageRepWithSize(&secondImage, frameRect.size);
-	
+	SWCopyImage(bufferImage, mainImage);
 	
 	// Tracking area
 	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
@@ -121,12 +122,12 @@
 		
 		// Draw the NSBitmapImageRep to the view
 		if (mainImage) {
-			[mainImage drawAtPoint:NSZeroPoint];
+			[mainImage draw];
 		}
 		
 		// If there's an overlay image being used at the moment, draw it
-//		if (secondImage) {
-//			[secondImage drawAtPoint:NSZeroPoint];
+//		if (bufferImage) {
+//			[bufferImage drawAtPoint:NSZeroPoint];
 //		}
 		
 		// If the grid is turned on, draw that too
@@ -180,7 +181,7 @@
 
 - (void)updateCurrentTool {
 	//[currentTool resetRedrawRect];
-	NSLog(@"Toolbox is %@", toolbox);
+	//NSLog(@"Toolbox is %@", toolbox);
 	NSLog(@"%@ versus %@", currentTool, [toolbox currentTool]);
 	if (currentTool != [toolbox currentTool]) {
 		currentTool = [toolbox currentTool];
@@ -215,7 +216,7 @@
 		[currentTool setFlags:[event modifierFlags]];
 		[currentTool performDrawAtPoint:currentPoint 
 						  withMainImage:mainImage 
-							secondImage:secondImage 
+							bufferImage:bufferImage 
 							 mouseEvent:MOUSE_DOWN];
 		
 		[self setNeedsDisplayInRect:[currentTool invalidRect]];
@@ -237,7 +238,7 @@
 		[currentTool setFlags:[event modifierFlags]];
 		[currentTool performDrawAtPoint:currentPoint 
 						  withMainImage:mainImage 
-							secondImage:secondImage 
+							bufferImage:bufferImage 
 							 mouseEvent:MOUSE_DRAGGED];
 		
 		[self setNeedsDisplayInRect:[currentTool invalidRect]];
@@ -257,7 +258,7 @@
 		[currentTool setFlags:[event modifierFlags]];
 		NSBezierPath *path = [currentTool performDrawAtPoint:currentPoint 
 											   withMainImage:mainImage 
-												 secondImage:secondImage 
+												 bufferImage:bufferImage 
 												  mouseEvent:MOUSE_UP];
 		
 		if (path) {
@@ -355,7 +356,7 @@
 	if ([event keyCode] == 53) {
 		isPayingAttention = NO;
 		[currentTool tieUpLooseEnds];
-		SWClearImage(secondImage);
+		SWClearImage(bufferImage);
 		[self setNeedsDisplay:YES];
 		
 	} else if ([event keyCode] == 51 || [event keyCode] == 117) {
@@ -437,7 +438,7 @@
 		[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
 		if (![undo isUndoing]) {
 			[undo setActionName:@"Drawing"];
-		}		
+		}
 	}
 }
 
@@ -480,7 +481,7 @@
 		//[[self window] setFrame:tempRect display:YES];
 	}
 	
-	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
+	NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
 	
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
@@ -579,7 +580,7 @@
 // Releases the overlay image, then tells the tool about it
 - (void)clearOverlay
 {
-	SWClearImage(secondImage);
+	SWClearImage(bufferImage);
 	[currentTool deleteKey];
 	[currentTool tieUpLooseEnds];
 	[self setNeedsDisplay:YES];
@@ -613,15 +614,15 @@
 	// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
 	rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
 	
-	SWClearImage(secondImage);
+	SWClearImage(bufferImage);
 	
 	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:secondImage]];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bufferImage]];
 	[temp drawAtPoint:rect.origin];
 	[NSGraphicsContext restoreGraphicsState];
 	
 	[(SWSelectionTool *)currentTool setClippingRect:rect
-										   forImage:secondImage];
+										   forImage:bufferImage];
 	[temp release];
 	[self setNeedsDisplay:YES];
 }
@@ -633,9 +634,9 @@
 }
 
 // Returns the overlay
-- (NSBitmapImageRep *)secondImage
+- (NSBitmapImageRep *)bufferImage
 {
-	return secondImage;
+	return bufferImage;
 }
 
 
@@ -675,7 +676,7 @@
 	[frontColor release];
 	[backColor release];
 	[mainImage release];
-	[imageRep release];
+	//[imageRep release];
 	[toolbox release];
 	[[self undoManager] removeAllActions]; 
 	// Note: do NOT release the current tool, as it is just a pointer to the

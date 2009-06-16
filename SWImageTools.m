@@ -83,6 +83,7 @@ void SWClearImage(NSBitmapImageRep *image)
 	SWClearImageRect(image,rect);
 }
 
+
 void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 {
 	[NSGraphicsContext saveGraphicsState];
@@ -91,6 +92,17 @@ void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 	NSRectFill(rect);
 	[NSGraphicsContext restoreGraphicsState];
 }
+
+
+// Assume both images are allocated, same size
+void SWCopyImage(NSBitmapImageRep *dest, NSBitmapImageRep *src)
+{
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:dest]];
+	[src draw];
+	[NSGraphicsContext restoreGraphicsState];
+}
+
 
 void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
 {
@@ -111,5 +123,19 @@ void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
 													  bitsPerPixel:32];
 	
 }
+
+
+void SWLockFocus(NSBitmapImageRep *image)
+{
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
+}
+
+
+void SWUnlockFocus(NSBitmapImageRep *image)
+{
+	[NSGraphicsContext restoreGraphicsState];
+}
+
 
 @end

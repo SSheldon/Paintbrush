@@ -33,10 +33,10 @@
 	//if (lineWidth == 1) {
 	// Off-by-half: Cocoa drawing is done based on gridlines AROUND pixels.  
 	// We want to actually fill the pixels themselves!
-		begin.x += 0.5;
-		begin.y += 0.5;
-		end.x += 0.5;
-		end.y += 0.5;
+	begin.x += 0.5;
+	begin.y += 0.5;
+	end.x += 0.5;
+	end.y += 0.5;
 	//}
 	[path moveToPoint:begin];
 	[path lineToPoint:end];
@@ -46,42 +46,35 @@
 
 
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
-					   withMainImage:(NSBitmapImageRep *)anImage 
-						 secondImage:(NSBitmapImageRep *)secondImage 
+					   withMainImage:(NSBitmapImageRep *)mainImage 
+						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
 
 	if (event == MOUSE_UP) {
 		// No need to redraw
 		[super resetRedrawRect];
-
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];
-		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:anImage]];
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-		if (flags & NSAlternateKeyMask) {
-			[backColor setStroke];
-		} else {
-			[frontColor setStroke];
-		}
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
-		[[NSColor redColor] setFill];
-		[path closePath];
-		[path fill];
-		[NSGraphicsContext restoreGraphicsState];
-
+		[path release];
 		path = nil;
 	} else {
+		if (event == MOUSE_DOWN) {
+			[NSApp sendAction:@selector(prepUndo:)
+						   to:nil
+						 from:nil];
+			SWCopyImage(bufferImage, mainImage);
+		}
+		
+		SWCopyImage(mainImage, bufferImage);
+	
 		// Use the points clicked to build a redraw rectangle
 		[super addRedrawRectFromPoint:point toPoint:savedPoint];
 
-		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:anImage]];
+//		[NSGraphicsContext saveGraphicsState];
+//		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
+		SWLockFocus(mainImage);
 		
 		// The best way I can come up with to clear the image
-		//SWClearImageRect(secondImage, redrawRect);
+		//SWClearImageRect(bufferImage, redrawRect);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {
@@ -92,7 +85,8 @@
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 		savedPoint = point;
 		
-		[NSGraphicsContext restoreGraphicsState];
+		//[NSGraphicsContext restoreGraphicsState];
+		SWUnlockFocus(mainImage);
 	}
 	return nil;
 }
