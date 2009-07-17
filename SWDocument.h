@@ -28,6 +28,7 @@
 @class SWToolbox;
 @class SWToolboxController;
 @class SWSizeWindowController;
+@class SWResizeWindowController;
 @class SWCenteringClipView;
 @class SWTextToolWindowController;
 
@@ -43,6 +44,7 @@
 	SWCenteringClipView *clipView;
 	SWTextToolWindowController *textController;
 	SWSizeWindowController *sizeController;
+	SWResizeWindowController *resizeController;
 	NSBitmapImageRep *openedImage;
 	SWTool *currentTool;
 	NSNotificationCenter *nc;
@@ -72,6 +74,7 @@
 			 returnCode:(NSInteger)returnCode
 			contextInfo:(void *)contextInfo;
 - (IBAction)raiseSizeSheet:(id)sender;
+- (IBAction)raiseResizeSheet:(id)sender;
 - (void)setUpPaintView;
 
 // For copy-and-paste

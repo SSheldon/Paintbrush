@@ -30,6 +30,8 @@
 		27389A1C0F2A9AD90062831A /* SizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A1B0F2A9AD90062831A /* SizeWindow.xib */; };
 		27389A1E0F2A9AE00062831A /* TextEntry.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A1D0F2A9AE00062831A /* TextEntry.xib */; };
 		27389A200F2A9AE60062831A /* Toolbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A1F0F2A9AE60062831A /* Toolbox.xib */; };
+		273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273BE3BC101135C800AA0B05 /* ResizePanel.xib */; };
+		273BE3C21011389E00AA0B05 /* SWResizeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273BE3C11011389E00AA0B05 /* SWResizeWindowController.m */; };
 		273E0B3B0E32F99D00D11815 /* SWImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageTools.m */; };
 		273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273E0B6D0E32FC2200D11815 /* QuartzCore.framework */; };
 		273E77980EBD71850094C630 /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 273E77970EBD71850094C630 /* selection.png */; };
@@ -164,6 +166,9 @@
 		2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWSelectionBuilder.h; sourceTree = "<group>"; };
 		273513490D8F83BB00F24379 /* SWAirbrushTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAirbrushTool.h; sourceTree = "<group>"; };
 		2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAirbrushTool.m; sourceTree = "<group>"; };
+		273BE3BA101135BF00AA0B05 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ResizePanel.xib; sourceTree = "<group>"; };
+		273BE3C01011389E00AA0B05 /* SWResizeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWResizeWindowController.h; sourceTree = "<group>"; };
+		273BE3C11011389E00AA0B05 /* SWResizeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWResizeWindowController.m; sourceTree = "<group>"; };
 		273E0B390E32F99D00D11815 /* SWImageTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWImageTools.m; sourceTree = "<group>"; };
 		273E0B3A0E32F99D00D11815 /* SWImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageTools.h; sourceTree = "<group>"; };
 		273E0B6D0E32FC2200D11815 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
@@ -383,6 +388,8 @@
 				27A60E260B879A6A0091A1B0 /* SWDocument.m */,
 				275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */,
 				275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */,
+				273BE3C01011389E00AA0B05 /* SWResizeWindowController.h */,
+				273BE3C11011389E00AA0B05 /* SWResizeWindowController.m */,
 				27A487280C57AEE00047DF3C /* SWSizeWindowController.h */,
 				27A487290C57AEE00047DF3C /* SWSizeWindowController.m */,
 				270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */,
@@ -450,6 +457,7 @@
 				27F7B8900DE3671D0038ED41 /* MainMenu.xib */,
 				27389A160F2A9AB50062831A /* MyDocument.xib */,
 				27389A180F2A9ABC0062831A /* Preferences.xib */,
+				273BE3BC101135C800AA0B05 /* ResizePanel.xib */,
 				27389A1B0F2A9AD90062831A /* SizeWindow.xib */,
 				27389A1D0F2A9AE00062831A /* TextEntry.xib */,
 				27389A1F0F2A9AE60062831A /* Toolbox.xib */,
@@ -696,6 +704,7 @@
 				27A4E17D0F1E9FF900A1F367 /* BMP.icns in Resources */,
 				27A4E2960F1FFF2E00A1F367 /* dsa_pub.pem in Resources */,
 				27A725BC0FCCBEC800731565 /* paint.icns in Resources */,
+				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +751,7 @@
 				27BE1F350ECB738000B0A0F1 /* SWColorSelector.m in Sources */,
 				2740C9150ED5F62B00DA6A98 /* SWFreeformSelectionTool.m in Sources */,
 				27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */,
+				273BE3C21011389E00AA0B05 /* SWResizeWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,6 +804,14 @@
 				27F7B8A00DE369080038ED41 /* English */,
 			);
 			name = Toolbox.xib;
+			sourceTree = "<group>";
+		};
+		273BE3BC101135C800AA0B05 /* ResizePanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				273BE3BA101135BF00AA0B05 /* English */,
+			);
+			name = ResizePanel.xib;
 			sourceTree = "<group>";
 		};
 		27F7B8900DE3671D0038ED41 /* MainMenu.xib */ = {

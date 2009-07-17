@@ -23,17 +23,6 @@
 
 @implementation SWSizeWindowController
 
-- (id)init
-{
-	self = [super initWithWindowNibName:@"SizeWindow"];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(textDidChange:)
-												 name:NSControlTextDidChangeNotification
-											   object:nil];
-	return self;
-}
-
-
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -41,8 +30,13 @@
 }
 
 
-- (void)awakeFromNib
+- (void)windowDidLoad
 {
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(textDidChange:)
+												 name:NSControlTextDidChangeNotification
+											   object:nil];
+	
 	// Read the defaults for width and height
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
@@ -114,7 +108,7 @@
 // After they click OK or Cancel
 - (IBAction)endSheet:(id)sender
 {
-	if ([[sender title] isEqualTo:@"OK"]){
+	if ([sender tag] == NSOKButton) {
 		if ([widthField integerValue] > 0 && [heightField integerValue] > 0) {
 			
 			// Save entered values as defaults

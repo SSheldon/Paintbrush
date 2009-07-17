@@ -26,6 +26,7 @@
 #import "SWToolboxController.h"
 #import "SWTextToolWindowController.h"
 #import "SWSizeWindowController.h"
+#import "SWResizeWindowController.h"
 #import "SWToolList.h"
 #import "SWAppController.h"
 
@@ -71,7 +72,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
     [super windowControllerDidLoadNib:aController];
 
 	if (!sizeController) {
-		sizeController = [[SWSizeWindowController alloc] init];
+		sizeController = [[SWSizeWindowController alloc] initWithWindowNibName:@"SizeWindow"];
+	}
+	if (!resizeController) {
+		resizeController = [[SWResizeWindowController alloc] initWithWindowNibName:@"ResizePanel"];
 	}
 	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	
@@ -144,13 +148,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// Called when a new document is made, and when the user resizes the canvas/image
+// Called when a new document is made
 - (IBAction)raiseSizeSheet:(id)sender
 {
-	// Sender tag: 1 == image, 0 == canvas
-	if ([[sender class] isEqualTo: [NSMenuItem class]]) {
-		[sizeController setScales:[sender tag]];
-	}
     [NSApp beginSheet:[sizeController window]
 	   modalForWindow:[super windowForSheet]
 		modalDelegate:self
@@ -200,6 +200,65 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		}
 	}
 }
+
+
+// Called when the user resizes the canvas/image
+- (IBAction)raiseResizeSheet:(id)sender
+{
+	// Sender tag: 1 == image, 0 == canvas
+	if ([[sender class] isEqualTo: [NSMenuItem class]]) {
+		[sizeController setScales:[sender tag]];
+	}
+    [NSApp beginSheet:[resizeController window]
+	   modalForWindow:[super windowForSheet]
+		modalDelegate:self
+	   didEndSelector:@selector(resizeSheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+}
+
+
+// After the sheet ends, this takes over. If the user clicked "OK", a new
+// PaintView is initialized. Otherwise, the window closes.
+- (void)resizeSheetDidEnd:(NSWindow *)sheet
+			   returnCode:(NSInteger)returnCode
+			  contextInfo:(void *)contextInfo
+{
+	if (returnCode == NSOKButton) {
+		openingRect.origin = NSZeroPoint;
+		openingRect.size.width = [sizeController width];
+		openingRect.size.height = [sizeController height];
+		if ([paintView hasRun]) {
+			// Trying to resize the image!
+			NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
+			
+			// Nothing to do if the size isn't changing!
+			if ([[paintView mainImage] size].width != openingRect.size.width || 
+				[[paintView mainImage] size].height != openingRect.size.height) {
+				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
+								   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
+								   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
+				[paintView prepUndo:d];
+				[paintView setFrame:openingRect];
+				[paintView setUpPaintView];
+				[paintView setImage:backupImage scale:[sizeController scales]];
+			}
+		} else {
+			// Initial creation
+			[paintView setFrame:openingRect];
+			[self setUpPaintView];
+			
+			// Use external method to determine the window bounds
+			NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+			[window setFrame:tempRect display:YES animate:YES];
+		}
+	} else if (returnCode == NSCancelButton) {
+		// Close the document - they obviously don't want to play
+		if (![paintView hasRun]) {
+			[[super windowForSheet] close];
+		}
+	}
+}
+
 
 // Keep the current document's undo manager up to date
 - (void)undoLevelChanged:(NSNotification *)n
