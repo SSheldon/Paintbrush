@@ -37,7 +37,6 @@
 	SWTool *currentTool;
 
 	BOOL isPayingAttention;
-	BOOL hasRun;
 	
 	NSColor *backgroundColor;
 	
@@ -59,7 +58,6 @@
 - (void)pasteData:(NSData *)data;
 - (void)prepUndo:(id)sender;
 - (void)clearOverlay;
-- (BOOL)hasRun;
 - (NSBitmapImageRep *)mainImage;
 - (NSBitmapImageRep *)bufferImage;
 

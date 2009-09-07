@@ -23,30 +23,20 @@
 
 @implementation SWResizeWindowController
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
-}
+@synthesize selectedUnit;
 
 
-- (void)windowDidLoad
-{
-	NSLog(@"Ding");
-	// Read the defaults for width and height
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	NSNumber *width = [defaults objectForKey:@"HorizontalSize"];
-	NSNumber *height = [defaults objectForKey:@"VerticalSize"];
-	[widthFieldOriginal setIntValue:[width integerValue]];
-	[heightFieldOriginal setIntValue:[height integerValue]];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:NSControlTextDidChangeNotification 
-														object:nil];
-}
-
+//- (void)dealloc
+//{
+//	[[NSNotificationCenter defaultCenter] removeObserver:self];
+//	[super dealloc];
+//}
+//
+//
 // If the user changes the size of the image using the NSPopUpButton,
 // change the two text fields to stay synchronized with it
+//
+//
 //- (IBAction)changeSizeButton:(id)sender
 //{
 //	if ([sender selectedItem] == clipboard) {
@@ -101,6 +91,14 @@
 //	}
 //}
 
+
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	[heightFieldOriginal setIntegerValue:originalSize.height];
+	[widthFieldOriginal setIntegerValue:originalSize.width];
+}
+
+
 // After they click OK or Cancel
 - (IBAction)endSheet:(id)sender
 {
@@ -108,11 +106,11 @@
 		if ([widthFieldNew integerValue] > 0 && [heightFieldNew integerValue] > 0) {
 			
 			// Save entered values as defaults
-			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			NSNumber *width = [NSNumber numberWithInt:[widthFieldNew integerValue]];
-			NSNumber *height = [NSNumber numberWithInt:[heightFieldNew integerValue]];
-			[defaults setObject:width forKey:@"HorizontalSize"];
-			[defaults setObject:height forKey:@"VerticalSize"];
+//			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//			NSNumber *width = [NSNumber numberWithInt:[widthFieldNew integerValue]];
+//			NSNumber *height = [NSNumber numberWithInt:[heightFieldNew integerValue]];
+//			[defaults setObject:width forKey:@"HorizontalSize"];
+//			[defaults setObject:height forKey:@"VerticalSize"];
 			
 			[[self window] orderOut:sender];
 			[NSApp endSheet:[self window] returnCode:NSOKButton];
@@ -144,6 +142,11 @@
 - (void)setHeight:(NSInteger)newHeight
 {
 	[heightFieldNew setIntegerValue:newHeight];
+}
+
+- (void)setCurrentSize:(NSSize)currSize
+{
+	originalSize = currSize;
 }
 
 - (BOOL)scales

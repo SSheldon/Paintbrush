@@ -169,35 +169,16 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		openingRect.origin = NSZeroPoint;
 		openingRect.size.width = [sizeController width];
 		openingRect.size.height = [sizeController height];
-		if ([paintView hasRun]) {
-			// Trying to resize the image!
-			NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
-
-			// Nothing to do if the size isn't changing!
-			if ([[paintView mainImage] size].width != openingRect.size.width || 
-				[[paintView mainImage] size].height != openingRect.size.height) {
-				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
-								   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
-								   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
-				[paintView prepUndo:d];
-				[paintView setFrame:openingRect];
-				[paintView setUpPaintView];
-				[paintView setImage:backupImage scale:[sizeController scales]];
-			}
-		} else {
-			// Initial creation
-			[paintView setFrame:openingRect];
-			[self setUpPaintView];
-			
-			// Use external method to determine the window bounds
-			NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-			[window setFrame:tempRect display:YES animate:YES];
-		}
+		// Initial creation
+		[paintView setFrame:openingRect];
+		[self setUpPaintView];
+		
+		// Use external method to determine the window bounds
+		NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+		[window setFrame:tempRect display:YES animate:YES];
 	} else if (returnCode == NSCancelButton) {
 		// Close the document - they obviously don't want to play
-		if (![paintView hasRun]) {
-			[[super windowForSheet] close];
-		}
+		[[super windowForSheet] close];
 	}
 }
 
@@ -207,8 +188,13 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	// Sender tag: 1 == image, 0 == canvas
 	if ([[sender class] isEqualTo: [NSMenuItem class]]) {
-		[sizeController setScales:[sender tag]];
+		[resizeController setScales:[sender tag]];
 	}
+	
+	// Get, and then set, the current document size
+	NSSize currSize = openingRect.size;
+	[resizeController setCurrentSize:currSize];
+	
     [NSApp beginSheet:[resizeController window]
 	   modalForWindow:[super windowForSheet]
 		modalDelegate:self
@@ -225,36 +211,20 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	if (returnCode == NSOKButton) {
 		openingRect.origin = NSZeroPoint;
-		openingRect.size.width = [sizeController width];
-		openingRect.size.height = [sizeController height];
-		if ([paintView hasRun]) {
-			// Trying to resize the image!
-			NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
-			
-			// Nothing to do if the size isn't changing!
-			if ([[paintView mainImage] size].width != openingRect.size.width || 
-				[[paintView mainImage] size].height != openingRect.size.height) {
-				NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
-								   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
-								   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
-				[paintView prepUndo:d];
-				[paintView setFrame:openingRect];
-				[paintView setUpPaintView];
-				[paintView setImage:backupImage scale:[sizeController scales]];
-			}
-		} else {
-			// Initial creation
+		openingRect.size.width = [resizeController width];
+		openingRect.size.height = [resizeController height];
+		NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
+		
+		// Nothing to do if the size isn't changing!
+		if ([[paintView mainImage] size].width != openingRect.size.width || 
+			[[paintView mainImage] size].height != openingRect.size.height) {
+			NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
+							   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
+							   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
+			[paintView prepUndo:d];
 			[paintView setFrame:openingRect];
-			[self setUpPaintView];
-			
-			// Use external method to determine the window bounds
-			NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-			[window setFrame:tempRect display:YES animate:YES];
-		}
-	} else if (returnCode == NSCancelButton) {
-		// Close the document - they obviously don't want to play
-		if (![paintView hasRun]) {
-			[[super windowForSheet] close];
+			[paintView setUpPaintView];
+			[paintView setImage:backupImage scale:[resizeController scales]];
 		}
 	}
 }
@@ -313,11 +283,12 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)saveDocument:(id)sender
 {
 	[self setFileType:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
+	[toolboxController tieUpLooseEnds];
 	[super saveDocument:sender];
 }
 
 // Saving data: returns the correctly-formatted image data
-- (NSData *)dataOfType:(NSString *)aType error:(NSError *)anError
+- (NSData *)dataOfType:(NSString *)aType error:(NSError **)anError
 {
 	NSData *data = [[paintView mainImage] TIFFRepresentation];
 	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithData:data] autorelease];
@@ -361,12 +332,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 }
 
 // Opening an image
-- (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError *)anError
+- (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError **)anError
 {
 	// A temporary image
 	openedImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
-//	openedImage = [[NSBitmapImageRep alloc] initWithSize:NSMakeSize([imageRep pixelsWide], [imageRep pixelsHigh])];
-	NSLog(@"Opening an image");
 	return (openedImage != nil);
 }
 
@@ -607,7 +576,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	// Tell the controller that they just changed the image size
 	[sizeController setWidth:rect.size.width];
 	[sizeController setHeight:rect.size.height];
-	[sizeController setScales:NO];
 	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:[paintView mainImage]];
 	
 	// Now we cheat and set the image

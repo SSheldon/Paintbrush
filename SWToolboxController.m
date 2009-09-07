@@ -165,6 +165,15 @@
 }
 
 
+- (void)tieUpLooseEnds
+{
+	if (currentTool) {
+		[[toolbox toolForLabel:currentTool] tieUpLooseEnds];
+	}	
+}
+
+
+
 - (void)keyDown:(NSEvent *)event
 {
 	// At the moment, most of the keyboard shortcuts are set in Interface Builder

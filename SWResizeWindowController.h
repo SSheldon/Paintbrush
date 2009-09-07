@@ -34,6 +34,15 @@ typedef enum {
 	IBOutlet NSTextField *heightFieldOriginal;
 	IBOutlet NSTextField *widthFieldOriginal;
 	
+	IBOutlet NSPopUpButton *heightUnits;
+	IBOutlet NSPopUpButton *widthUnits;
+	
+	// Store the original size for a moment
+	NSSize originalSize;
+	
+	// Percent or pixels?
+	SWUnit selectedUnit;
+	
 	BOOL scales;
 }
 
@@ -46,7 +55,10 @@ typedef enum {
 - (NSInteger)height;
 - (void)setWidth:(NSInteger)newWidth;
 - (void)setHeight:(NSInteger)newHeight;
+- (void)setCurrentSize:(NSSize)currSize;
 - (BOOL)scales;
 - (void)setScales:(BOOL)s;
+
+@property (assign) SWUnit selectedUnit;
 
 @end

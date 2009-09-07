@@ -62,9 +62,6 @@
 	gridSpacing = 1;
 	gridColor = [NSColor gridColor];
 	
-	// VERY important for resizing image/canvas!
-	hasRun = YES;
-	
 	[self setNeedsDisplay:YES];	
 }
 
@@ -656,10 +653,6 @@
 	return NO;
 }
 
-- (BOOL)hasRun
-{
-	return hasRun;
-}
 
 // Necessary to allow keyboard events and stuff
 - (BOOL)acceptsFirstResponder

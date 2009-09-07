@@ -150,15 +150,5 @@
 	[heightField setIntegerValue:newHeight];
 }
 
-- (BOOL)scales
-{
-	return scales;
-}
-
-- (void)setScales:(BOOL)s
-{
-	scales = s;
-}
-
 
 @end

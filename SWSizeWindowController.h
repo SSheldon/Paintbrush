@@ -27,8 +27,6 @@
 	
 	IBOutlet NSTextField *heightField;
 	IBOutlet NSTextField *widthField;
-	
-	BOOL scales;
 }
 
 // Called whenever the size is manually changed by the user
@@ -42,7 +40,5 @@
 - (NSInteger)height;
 - (void)setWidth:(NSInteger)newWidth;
 - (void)setHeight:(NSInteger)newHeight;
-- (BOOL)scales;
-- (void)setScales:(BOOL)s;
 
 @end
