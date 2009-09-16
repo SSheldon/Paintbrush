@@ -40,6 +40,9 @@ typedef enum {
 	// Store the original size for a moment
 	NSSize originalSize;
 	
+	// Don't forget about the new size!
+	NSSize newSize;
+	
 	// Percent or pixels?
 	SWUnit selectedUnit;
 	
@@ -50,11 +53,12 @@ typedef enum {
 // OK or Cancel
 - (IBAction)endSheet:(id)sender;
 
+// Changing the units of measurement
+- (IBAction)changeUnits:(id)sender;
+
 // A few accessors and mutators
 - (NSInteger)width;
 - (NSInteger)height;
-- (void)setWidth:(NSInteger)newWidth;
-- (void)setHeight:(NSInteger)newHeight;
 - (void)setCurrentSize:(NSSize)currSize;
 - (BOOL)scales;
 - (void)setScales:(BOOL)s;

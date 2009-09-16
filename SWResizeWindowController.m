@@ -26,76 +26,78 @@
 @synthesize selectedUnit;
 
 
-//- (void)dealloc
-//{
-//	[[NSNotificationCenter defaultCenter] removeObserver:self];
-//	[super dealloc];
-//}
-//
-//
-// If the user changes the size of the image using the NSPopUpButton,
-// change the two text fields to stay synchronized with it
-//
-//
-//- (IBAction)changeSizeButton:(id)sender
-//{
-//	if ([sender selectedItem] == clipboard) {
-//		NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
-//		if (data) {
-//			NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
-//			[widthInputField setIntValue:[temp size].width];
-//			[heightInputField setIntValue:[temp size].height];
-//			[temp release];
-//		}
-//	} else {
-//		NSString *newSize = [sizeButton titleOfSelectedItem];
-//		NSScanner *scanner = [NSScanner scannerWithString:newSize];
-//		NSInteger width, height;
-//		
-//		// Parse the string to decide on a width and height
-//		if ([scanner scanInteger:&width] && [scanner scanString:@"x" intoString:NULL] && [scanner scanInteger:&height]) {
-//			//NSLog(@"%d %d", width, height);
-//			[widthInputField setIntValue:width];
-//			[heightInputField setIntValue:height];
-//		}
-//	}
-//}
-//
-//- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-//{
-//	if (menuItem == clipboard) {
-//		return ([SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
-//	}
-//	return YES;
-//}
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
+}
+
 
 // Each time the user types in the width or height field, check to see if it's
 // one of the preset values in the popup button
-//- (void)textDidChange:(NSNotification *)aNotification
-//{
-//	NSInteger width = [widthInputField integerValue];
-//	NSInteger height = [heightInputField integerValue];
-//	BOOL isFound = NO;
+- (void)textDidChange:(NSNotification *)aNotification
+{
+	NSInteger width, height;
+	switch (selectedUnit) {
+		case PERCENT:
+			width = [widthFieldNew integerValue] * originalSize.width / 100;
+			height = [heightFieldNew integerValue] * originalSize.height / 100;
+			break;
+		case PIXELS:
+			width = [widthFieldNew integerValue];
+			height = [heightFieldNew integerValue];
+			break;
+		default:
+			NSLog(@"Error!  The selected units are wrong!");
+			return;
+	}
 	
-//	NSString *string = [NSString stringWithFormat:@"%d x %d", width, height];
-//	for (NSMenuItem *item in [sizeButton itemArray]) {
-//		if ([[item title] isEqualTo:string]) {
-//			[sizeButton selectItem:item];
-//			isFound = YES;
-//			break;
-//		}
-//	}
-//	
-//	if (!isFound) {
-//		[sizeButton selectItemWithTitle:@"Custom"];
-//	}
-//}
+	newSize = NSMakeSize(width, height);
+}
 
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(textDidChange:)
+												 name:NSControlTextDidChangeNotification
+											   object:nil];
+	
 	[heightFieldOriginal setIntegerValue:originalSize.height];
 	[widthFieldOriginal setIntegerValue:originalSize.width];
+	
+	newSize = originalSize;
+	
+	switch (selectedUnit) {
+		case PERCENT:
+			[widthFieldNew setIntegerValue:100];
+			[heightFieldNew setIntegerValue:100];
+			break;
+		case PIXELS:
+			[widthFieldNew setIntegerValue:newSize.width];
+			[heightFieldNew setIntegerValue:newSize.height];
+			break;
+		default:
+			break;
+	}
+}
+
+
+// Convert between percentage and pixels
+- (IBAction)changeUnits:(id)sender
+{
+	switch (selectedUnit) {
+		case PERCENT:
+			[widthFieldNew setIntegerValue:(100 * newSize.width / originalSize.width)];
+			[heightFieldNew setIntegerValue:(100 * newSize.height / originalSize.height)];
+			break;
+		case PIXELS:
+			[widthFieldNew setIntegerValue:newSize.width];
+			[heightFieldNew setIntegerValue:newSize.height];
+			break;
+		default:
+			break;
+	}
 }
 
 
@@ -126,22 +128,12 @@
 
 - (NSInteger)width
 {
-	return [widthFieldNew integerValue];
+	return newSize.width;
 }
 
 - (NSInteger)height
 {
-	return [heightFieldNew integerValue];
-}
-
-- (void)setWidth:(NSInteger)newWidth
-{
-	[widthFieldNew setIntegerValue:newWidth];
-}
-
-- (void)setHeight:(NSInteger)newHeight
-{
-	[heightFieldNew setIntegerValue:newHeight];
+	return newSize.height;
 }
 
 - (void)setCurrentSize:(NSSize)currSize
