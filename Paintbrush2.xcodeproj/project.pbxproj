@@ -41,9 +41,7 @@
 		2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2742CCA40DA58518004BF119 /* airbrush-cursor.png */; };
 		2744468F0C0E515C00D84CE1 /* SWBombTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2744468D0C0E515C00D84CE1 /* SWBombTool.h */; };
 		274446900C0E515C00D84CE1 /* SWBombTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744468E0C0E515C00D84CE1 /* SWBombTool.m */; };
-		2748ECA8107462AD00F7A836 /* .test3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2748ECA5107462AD00F7A836 /* .test3.txt */; };
-		2748ECA9107462AD00F7A836 /* test1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2748ECA6107462AD00F7A836 /* test1.txt */; };
-		2748ECAA107462AD00F7A836 /* test2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2748ECA7107462AD00F7A836 /* test2.txt */; };
+		2748ECCC1074646100F7A836 /* bob in Resources */ = {isa = PBXBuildFile; fileRef = 2748ECC81074646100F7A836 /* bob */; };
 		275110320F169A0800A67F22 /* COPYING.txt in Resources */ = {isa = PBXBuildFile; fileRef = 275110310F169A0800A67F22 /* COPYING.txt */; };
 		275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */; };
 		275C82DE0BAF98DC00F836FA /* SWPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */; };
@@ -183,9 +181,7 @@
 		2742CCA40DA58518004BF119 /* airbrush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor.png"; sourceTree = "<group>"; };
 		2744468D0C0E515C00D84CE1 /* SWBombTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWBombTool.h; sourceTree = "<group>"; };
 		2744468E0C0E515C00D84CE1 /* SWBombTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWBombTool.m; sourceTree = "<group>"; };
-		2748ECA5107462AD00F7A836 /* .test3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .test3.txt; sourceTree = "<group>"; };
-		2748ECA6107462AD00F7A836 /* test1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.txt; sourceTree = "<group>"; };
-		2748ECA7107462AD00F7A836 /* test2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test2.txt; sourceTree = "<group>"; };
+		2748ECC81074646100F7A836 /* bob */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bob; sourceTree = "<group>"; };
 		275110310F169A0800A67F22 /* COPYING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING.txt; sourceTree = "<group>"; };
 		275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPreferenceController.h; sourceTree = "<group>"; };
 		275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWPreferenceController.m; sourceTree = "<group>"; };
@@ -392,12 +388,12 @@
 				27AFFDF10D68C06800368E2B /* SWAppController.m */,
 				27A60E250B879A6A0091A1B0 /* SWDocument.h */,
 				27A60E260B879A6A0091A1B0 /* SWDocument.m */,
-				2748ECA4107462AD00F7A836 /* bob */,
 				275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */,
 				275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */,
 				273BE3C01011389E00AA0B05 /* SWResizeWindowController.h */,
 				273BE3C11011389E00AA0B05 /* SWResizeWindowController.m */,
 				27A487280C57AEE00047DF3C /* SWSizeWindowController.h */,
+				2748ECC81074646100F7A836 /* bob */,
 				27A487290C57AEE00047DF3C /* SWSizeWindowController.m */,
 				270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */,
 				270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */,
@@ -432,16 +428,6 @@
 				27A45C0F0E9A84B500AC15F0 /* SWSliderCell.m */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		2748ECA4107462AD00F7A836 /* bob */ = {
-			isa = PBXGroup;
-			children = (
-				2748ECA5107462AD00F7A836 /* .test3.txt */,
-				2748ECA6107462AD00F7A836 /* test1.txt */,
-				2748ECA7107462AD00F7A836 /* test2.txt */,
-			);
-			path = bob;
 			sourceTree = "<group>";
 		};
 		27A60E100B879A6A0091A1B0 /* Classes */ = {
@@ -722,9 +708,7 @@
 				27A4E2960F1FFF2E00A1F367 /* dsa_pub.pem in Resources */,
 				27A725BC0FCCBEC800731565 /* paint.icns in Resources */,
 				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
-				2748ECA8107462AD00F7A836 /* .test3.txt in Resources */,
-				2748ECA9107462AD00F7A836 /* test1.txt in Resources */,
-				2748ECAA107462AD00F7A836 /* test2.txt in Resources */,
+				2748ECCC1074646100F7A836 /* bob in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
