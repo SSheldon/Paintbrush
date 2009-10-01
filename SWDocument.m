@@ -62,15 +62,18 @@ static BOOL kSWDocumentWillShowSheet = YES;
     return self;
 }
 
+
 - (NSString *)windowNibName
 {
     return @"MyDocument";
 }
 
+
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
 
+	// We can make the app more responsive by loading these guys at launch
 	if (!sizeController) {
 		sizeController = [[SWSizeWindowController alloc] initWithWindowNibName:@"SizeWindow"];
 	}
@@ -110,10 +113,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[paintView setBackgroundColor:[NSColor colorWithPatternImage:[NSImage imageNamed:@"background.png"]]];
 }
 
+
 - (void)setUpPaintView
 {
 	[paintView setFrame:openingRect];
-	[paintView setUpPaintView];
+	[paintView preparePaintView];
 	[paintView setToolbox:toolbox];
 	
 	// Use external method to determine the window bounds
@@ -124,6 +128,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	
 	[paintView setImage:openedImage scale:NO];	
 }
+
 
 - (NSString *)pathForImageBackgrounds
 {
@@ -223,7 +228,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 							   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
 			[paintView prepUndo:d];
 			[paintView setFrame:openingRect];
-			[paintView setUpPaintView];
+			[paintView preparePaintView];
 			[paintView setImage:backupImage scale:[resizeController scales]];
 		}
 	}
@@ -236,6 +241,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	NSNumber *number = [n object];
 	[[self undoManager] setLevelsOfUndo:[number integerValue]];
 }
+
 
 - (void)showTextSheet:(NSNotification *)n
 {
@@ -260,12 +266,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	}
 }
 
+
 - (void)textSheetDidEnd:(NSWindow *)sheet
 				 string:(NSString *)string
 {
 	// Orders the font manager to exit
 	[[[NSFontManager sharedFontManager] fontPanel:NO] orderOut:self];
 }
+
 
 - (SWPaintView *)paintView {
 	return paintView;
@@ -286,6 +294,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[toolboxController tieUpLooseEnds];
 	[super saveDocument:sender];
 }
+
 
 // Saving data: returns the correctly-formatted image data
 - (NSData *)dataOfType:(NSString *)aType error:(NSError **)anError
@@ -311,8 +320,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	return data;
 }
 
+
 // By overwriting this, we can ask files saved by Paintbrush to open with Paintbrush
-// in the future when CGFloat-clicked
+// in the future when double-clicked
 - (NSDictionary *)fileAttributesToWriteToURL:(NSURL *)absoluteURL
 									  ofType:(NSString *)typeName
 							forSaveOperation:(NSSaveOperationType)saveOperation
@@ -331,6 +341,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
     return [fileAttributes autorelease];
 }
 
+
 // Opening an image
 - (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError **)anError
 {
@@ -338,6 +349,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	openedImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
 	return (openedImage != nil);
 }
+
 
 // Printing: Cocoa makes it easy!
 - (void)printDocument:(id)sender
@@ -350,6 +362,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 					didRunSelector:NULL
 					   contextInfo:NULL];
 }
+
 
 // Called whenever Copy or Cut are called (copies the overlay image to the pasteboard)
 // TODO: Relieve some of this method's dependencies on the Selection tool
@@ -376,6 +389,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[writeToMe release];
 }
 
+
 // Used by Paste to retrieve an image from the pasteboard
 + (NSData *)readImageFromPasteboard:(NSPasteboard *)pb
 {
@@ -389,6 +403,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	return data;
 }
 
+
 // Cut: same as copy, but clears the overlay
 - (IBAction)cut:(id)sender
 {
@@ -396,11 +411,13 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[paintView clearOverlay];
 }
 
+
 // Copy
 - (IBAction)copy:(id)sender
 {
 	[self writeImageToPasteboard:[NSPasteboard generalPasteboard]];
 }
+
 
 // Paste
 - (IBAction)paste:(id)sender
@@ -410,6 +427,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[paintView pasteData:data];		
 	}
 }
+
 
 // Select all
 - (IBAction)selectAll:(id)sender
@@ -428,26 +446,31 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[paintView setNeedsDisplay:YES];
 }
 
+
 - (IBAction)zoomIn:(id)sender
 {
 	[scrollView setScaleFactor:([scrollView scaleFactor] * 2) adjustPopup:YES];
 }
+
 
 - (IBAction)zoomOut:(id)sender
 {
 	[scrollView setScaleFactor:([scrollView scaleFactor] / 2) adjustPopup:YES];
 }
 
+
 - (IBAction)actualSize:(id)sender
 {
 	[scrollView setScaleFactor:1 adjustPopup:YES];
 }
+
 
 - (IBAction)showGrid:(id)sender
 {
 	[paintView setShowsGrid:![paintView showsGrid]];
 	[sender setState:[paintView showsGrid]];
 }
+
 
 // Decides which menu items to enable, and which to disable (and when)
 //- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
@@ -483,6 +506,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		return YES;
 	}
 }
+
 
 // TODO: Nasty nasty hack - fix it!
 + (void)setWillShowSheet:(BOOL)showSheet
@@ -526,6 +550,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	}
 }
 
+
 - (IBAction)flipVertical:(id)sender
 {
 	if ([[super windowForSheet] isKeyWindow]) {
@@ -553,6 +578,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[tempImage release];
 	}
 }
+
 
 // Used to shrink the image background while also isolating a specific
 // section of the image to save
@@ -583,6 +609,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[writeToMe release];
 }
 
+
 // We offload the heavy lifting to an external class
 // TODO: Turn this back on once we have NSBitmapImageReps
 //- (IBAction)invertColors:(id)sender
@@ -591,6 +618,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 //	[paintView prepUndo:nil];
 //	[paintView setNeedsDisplay:YES];
 //}
+
 
 - (void)dealloc
 {	

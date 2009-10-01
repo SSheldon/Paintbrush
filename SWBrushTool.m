@@ -69,12 +69,7 @@
 		// Use the points clicked to build a redraw rectangle
 		[super addRedrawRectFromPoint:point toPoint:savedPoint];
 
-//		[NSGraphicsContext saveGraphicsState];
-//		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 		SWLockFocus(mainImage);
-		
-		// The best way I can come up with to clear the image
-		//SWClearImageRect(bufferImage, redrawRect);
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		if (flags & NSAlternateKeyMask) {
@@ -85,7 +80,6 @@
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 		savedPoint = point;
 		
-		//[NSGraphicsContext restoreGraphicsState];
 		SWUnlockFocus(mainImage);
 	}
 	return nil;

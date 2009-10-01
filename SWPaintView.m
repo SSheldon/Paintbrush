@@ -28,7 +28,7 @@
 
 @implementation SWPaintView
 
-- (void)setUpPaintView
+- (void)preparePaintView
 {
 	NSRect frameRect = [self frame];
 	
@@ -473,7 +473,7 @@
 	
 	if (!NSEqualRects(frame, NSZeroRect)) {
 		[self setFrame:frame];
-		[self setUpPaintView];
+		[self preparePaintView];
 		//NSRect tempRect = [self calculateWindowBounds:frame];
 		//[[self window] setFrame:tempRect display:YES];
 	}

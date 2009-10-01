@@ -59,7 +59,7 @@
 													  samplesPerPixel:4 
 															 hasAlpha:YES 
 															 isPlanar:NO 
-													   colorSpaceName:NSDeviceRGBColorSpace 
+													   colorSpaceName:NSCalibratedRGBColorSpace 
 														 bitmapFormat:NSAlphaFirstBitmapFormat 
 														  bytesPerRow:rowBytes
 														 bitsPerPixel:32];
@@ -82,7 +82,7 @@
 		// Check to make sure if we should even bother trying to fill - 
 		// if it's the same color, there's nothing to do
 		if (!colorsAreEqual([imageRep colorAtX:point.x y:(h - point.y)], 
-							[fillColor colorUsingColorSpaceName:NSDeviceRGBColorSpace])) {			
+							[fillColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace])) {			
 			// Prep an undo - we're about to change things!
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil

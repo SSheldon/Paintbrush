@@ -31,10 +31,35 @@
 	}
 	//NSLog(@"%@", [NSValue valueWithRect:[self bounds]]);
 	[backgroundGradient drawInRect:[self bounds] angle:90.0];
+
+	NSRect docRect = [[self documentView] bounds];
+
+	[NSGraphicsContext saveGraphicsState];
 	
+	// Create the shadow below and to the right of the shape.
+	NSShadow* theShadow = [[NSShadow alloc] init];
+	[theShadow setShadowOffset:NSMakeSize(5.0, -5.0)];
+	[theShadow setShadowBlurRadius:15.0];
+	
+	// Use a partially transparent color for shapes that overlap.
+	[theShadow setShadowColor:[[NSColor blackColor]
+							   colorWithAlphaComponent:0.1]];
+	
+	[theShadow set];
+	
+	// Draw your custom content here. Anything you draw
+	// automatically has the shadow effect applied to it.
+	
+	[[NSColor whiteColor] setFill];
+	NSRectFill(docRect);
+	
+	[NSGraphicsContext restoreGraphicsState];
+	[theShadow release];
+
+
 //	for (NSView *view in [self subviews]) {
-//		NSLog(@"%@ %lf %lf %lf %lf", view, [view frame].size.width, [view frame].size.height, 
-//			  [view frame].origin.x, [view frame].origin.y);
+//		NSLog(@"%@ %lf %lf %lf %lf", view, [view bounds].size.width, [view bounds].size.height, 
+//			  [view bounds].origin.x, [view bounds].origin.y);
 //		NSShadow *shadow = [[NSShadow alloc] init];
 //		[shadow setShadowColor:[NSColor grayColor]];
 //		[shadow setShadowOffset:NSMakeSize(5,5)];

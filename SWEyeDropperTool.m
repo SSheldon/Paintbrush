@@ -35,7 +35,7 @@
 			[imageRep release];
 		}
 		imageRep = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
-		[imageRep setColorSpaceName:NSDeviceRGBColorSpace];
+		[imageRep setColorSpaceName:NSCalibratedRGBColorSpace];
 	}
 	
 	// This should happen regardless of the type of click

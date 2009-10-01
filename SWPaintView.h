@@ -47,7 +47,7 @@
 }
 
 //- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
-- (void)setUpPaintView;
+- (void)preparePaintView;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setToolbox:(SWToolbox *)tb;
 - (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale;
