@@ -89,6 +89,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[scrollView setContentView:(NSClipView *)clipView];
 	[clipView setDocumentView:paintView];
 	[scrollView setScaleFactor:1.0 adjustPopup:YES];
+	
+	// Get and set the background image of the clip view
+	NSImage *bgImage = [NSImage imageNamed:@"bgImage.png"];
+	if (bgImage)
+		[clipView setBgImage:bgImage];
 		
 	// If the user opened an image
 	if (openedImage) {
@@ -142,8 +147,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[fileManager createDirectoryAtPath: folder attributes: nil];
 	}
     
-	NSString *fileName = @"backgroundImage.png";
-	return [folder stringByAppendingPathComponent:fileName];;    
+	NSString *fileName = @"bgImage.png";
+	return [folder stringByAppendingPathComponent:fileName];   
 }
 
 #pragma mark Sheets - Size and Text
@@ -230,6 +235,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			[paintView setFrame:openingRect];
 			[paintView preparePaintView];
 			[paintView setImage:backupImage scale:[resizeController scales]];
+			
+			// We should also redraw the clip view
+			[[paintView superview] setNeedsDisplay:YES];
 		}
 	}
 }
@@ -299,8 +307,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Saving data: returns the correctly-formatted image data
 - (NSData *)dataOfType:(NSString *)aType error:(NSError **)anError
 {
-	NSData *data = [[paintView mainImage] TIFFRepresentation];
-	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithData:data] autorelease];
+//	NSData *data = [[paintView mainImage] TIFFRepresentation];
+//	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithData:data] autorelease];
+	NSBitmapImageRep *bitmap = [paintView mainImage];
+	SWFlipImageVertical(bitmap);
+	NSData *data = nil;
 	if ([aType isEqualToString:@"BMP"]) {
 		data = [bitmap representationUsingType: NSBMPFileType
 									properties: nil];
@@ -345,8 +356,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Opening an image
 - (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError **)anError
 {
-	// A temporary image
-	openedImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
+	// Temporary image
+	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
+	SWImageRepWithSize(&openedImage, NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh]));
+	// Copy the image to the openedImage
+	SWCopyImage(openedImage, tempImage);
+	
+	if (openedImage)
+		SWFlipImageVertical(openedImage);
 	return (openedImage != nil);
 }
 

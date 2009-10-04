@@ -22,8 +22,13 @@
 
 @interface SWCenteringClipView : NSClipView {
 	NSGradient *backgroundGradient;
+	NSShadow *shadow;
+	NSImage *bgImage;
+	NSColor *bgImageColor;
 }
 
 -(void)centerDocument;
+
+@property (retain) NSImage *bgImage;
 
 @end

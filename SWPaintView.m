@@ -660,6 +660,13 @@
 	return YES;
 }
 
+
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
+   
 - (void)dealloc
 {
 	if (undoData) {

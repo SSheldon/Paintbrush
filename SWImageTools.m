@@ -104,6 +104,27 @@ void SWCopyImage(NSBitmapImageRep *dest, NSBitmapImageRep *src)
 }
 
 
+void SWFlipImageVertical(NSBitmapImageRep *bitmap)
+{
+	// Make a copy of our image for using is a second
+	NSBitmapImageRep *tempImage;
+	SWImageRepWithSize(&tempImage, NSMakeSize([bitmap pixelsWide], [bitmap pixelsHigh]));
+	SWCopyImage(tempImage, bitmap);
+	NSAffineTransform *transform = [NSAffineTransform transform];
+	
+	// Create the transform
+	[transform scaleXBy:1.0 yBy:-1.0];
+	NSLog(@"%d", [bitmap pixelsHigh]);
+	[transform translateXBy:0 yBy:(0-[bitmap pixelsHigh])];
+	
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
+	[transform concat];
+	[tempImage draw];
+	[NSGraphicsContext restoreGraphicsState];
+}
+
+
 void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
 {
 	NSUInteger w = size.width;
@@ -118,7 +139,7 @@ void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
 														  hasAlpha:YES 
 														  isPlanar:NO 
 													colorSpaceName:NSDeviceRGBColorSpace 
-													  bitmapFormat:NSAlphaFirstBitmapFormat 
+													  bitmapFormat:0 
 													   bytesPerRow:rowBytes
 													  bitsPerPixel:32];
 	

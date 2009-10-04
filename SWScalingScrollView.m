@@ -222,6 +222,11 @@ static unsigned defaultIndex = 2;
 	}
 }
 
+- (BOOL)isFlipped
+{
+	return YES;
+}
+
 - (void)dealloc
 {
 	[scalePopUpButton release];

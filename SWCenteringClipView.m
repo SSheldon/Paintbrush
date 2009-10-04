@@ -23,50 +23,48 @@
 
 @implementation SWCenteringClipView
 
+@synthesize bgImage;
+
 - (void)drawRect:(NSRect)rect {
 	// Draw a dark gray gradient background, using the new NSGradient class that has been added in Leopard.
 	if (backgroundGradient == nil) {
         backgroundGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:0.88 alpha:1.0]
 															endingColor:[NSColor colorWithCalibratedWhite:0.78 alpha:1.0]];
 	}
-	//NSLog(@"%@", [NSValue valueWithRect:[self bounds]]);
 	[backgroundGradient drawInRect:[self bounds] angle:90.0];
 
 	NSRect docRect = [[self documentView] bounds];
+	
+	if (!bgImageColor && bgImage) {
+		bgImageColor = [[NSColor colorWithPatternImage:bgImage] retain];
+	}
+	
+	if (bgImageColor) {
+		[bgImageColor setFill];
+	} else {
+		// Fallback if we haven't received the bgImage
+		[[NSColor whiteColor] setFill];		
+	}
 
 	[NSGraphicsContext saveGraphicsState];
 	
 	// Create the shadow below and to the right of the shape.
-	NSShadow* theShadow = [[NSShadow alloc] init];
-	[theShadow setShadowOffset:NSMakeSize(5.0, -5.0)];
-	[theShadow setShadowBlurRadius:15.0];
+	if (shadow == nil) {
+		shadow = [[NSShadow alloc] init];
+		[shadow setShadowOffset:NSMakeSize(5.0, -5.0)];
+		[shadow setShadowBlurRadius:15.0];
+		
+		// Use a partially transparent color for shapes that overlap.
+		[shadow setShadowColor:[[NSColor lightGrayColor]
+								colorWithAlphaComponent:0.1]];		
+	}
 	
-	// Use a partially transparent color for shapes that overlap.
-	[theShadow setShadowColor:[[NSColor blackColor]
-							   colorWithAlphaComponent:0.1]];
+	[shadow set];
 	
-	[theShadow set];
-	
-	// Draw your custom content here. Anything you draw
-	// automatically has the shadow effect applied to it.
-	
-	[[NSColor whiteColor] setFill];
+	// Draw the background -- either an image pattern or a color
 	NSRectFill(docRect);
 	
 	[NSGraphicsContext restoreGraphicsState];
-	[theShadow release];
-
-
-//	for (NSView *view in [self subviews]) {
-//		NSLog(@"%@ %lf %lf %lf %lf", view, [view bounds].size.width, [view bounds].size.height, 
-//			  [view bounds].origin.x, [view bounds].origin.y);
-//		NSShadow *shadow = [[NSShadow alloc] init];
-//		[shadow setShadowColor:[NSColor grayColor]];
-//		[shadow setShadowOffset:NSMakeSize(5,5)];
-//		[shadow setShadowBlurRadius:5.0];
-//		[view setShadow:shadow];
-//		//[shadow set];
-//	}
 }
 
 - (void)centerDocument
@@ -175,6 +173,7 @@
 - (void)dealloc
 {
 	[backgroundGradient release];
+	[shadow release];
 	[super dealloc];
 }
 

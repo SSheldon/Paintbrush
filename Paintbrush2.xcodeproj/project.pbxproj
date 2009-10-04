@@ -41,6 +41,7 @@
 		2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2742CCA40DA58518004BF119 /* airbrush-cursor.png */; };
 		2744468F0C0E515C00D84CE1 /* SWBombTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2744468D0C0E515C00D84CE1 /* SWBombTool.h */; };
 		274446900C0E515C00D84CE1 /* SWBombTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744468E0C0E515C00D84CE1 /* SWBombTool.m */; };
+		2748ED811078167800F7A836 /* bgImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 2748ED801078167800F7A836 /* bgImage.png */; };
 		275110320F169A0800A67F22 /* COPYING.txt in Resources */ = {isa = PBXBuildFile; fileRef = 275110310F169A0800A67F22 /* COPYING.txt */; };
 		275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */; };
 		275C82DE0BAF98DC00F836FA /* SWPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */; };
@@ -180,6 +181,7 @@
 		2742CCA40DA58518004BF119 /* airbrush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor.png"; sourceTree = "<group>"; };
 		2744468D0C0E515C00D84CE1 /* SWBombTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWBombTool.h; sourceTree = "<group>"; };
 		2744468E0C0E515C00D84CE1 /* SWBombTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWBombTool.m; sourceTree = "<group>"; };
+		2748ED801078167800F7A836 /* bgImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgImage.png; sourceTree = "<group>"; };
 		275110310F169A0800A67F22 /* COPYING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING.txt; sourceTree = "<group>"; };
 		275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPreferenceController.h; sourceTree = "<group>"; };
 		275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWPreferenceController.m; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			children = (
 				272A86C40D74F9F500630D0B /* NewTools */,
 				27955D060CFDE7B900D5AF99 /* arrow.png */,
+				2748ED801078167800F7A836 /* bgImage.png */,
 				27BA9CFA0F1553E90053045D /* newicon.icns */,
 				27A725BB0FCCBEC800731565 /* paint.icns */,
 				27A4E1780F1E9FF900A1F367 /* BMP.icns */,
@@ -705,6 +708,7 @@
 				27A4E2960F1FFF2E00A1F367 /* dsa_pub.pem in Resources */,
 				27A725BC0FCCBEC800731565 /* paint.icns in Resources */,
 				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
+				2748ED811078167800F7A836 /* bgImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
