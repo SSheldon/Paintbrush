@@ -542,28 +542,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)flipHorizontal:(id)sender
 {
 	if ([[super windowForSheet] isKeyWindow]) {
-		NSRect aRect = NSZeroRect;
-		aRect.size = [[paintView mainImage] size];
-		NSAffineTransform *transform = [NSAffineTransform transform];
-		NSBitmapImageRep *tempImage;
-		SWImageRepWithSize(&tempImage, aRect.size);
-		
-		[transform scaleXBy:-1.0 yBy:1.0];
-		[transform translateXBy:-aRect.size.width yBy:0];	
-		
-		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:tempImage]];
-		[transform concat];
-		// TODO: Fix this
-		NSLog(@"No flipping yet");
-//		[[paintView mainImage] drawInRect:aRect
-//								 fromRect:NSZeroRect
-//								operation:NSCompositeSourceOver
-//								 fraction:1.0];
-		[NSGraphicsContext restoreGraphicsState];
+		NSBitmapImageRep *image = [paintView mainImage];
 		[paintView prepUndo:nil];
-		[paintView setImage:tempImage scale:NO];
-		[tempImage release];
+		SWFlipImageHorizontal(image);
+		[paintView setNeedsDisplay:YES];
 	}
 }
 
@@ -571,28 +553,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)flipVertical:(id)sender
 {
 	if ([[super windowForSheet] isKeyWindow]) {
-		NSRect aRect = NSZeroRect;
-		aRect.size = [[paintView mainImage] size];
-		NSAffineTransform *transform = [NSAffineTransform transform];
-		NSBitmapImageRep *tempImage;
-		SWImageRepWithSize(&tempImage, aRect.size);
-				
-		[transform scaleXBy:1.0 yBy:-1.0];
-		[transform translateXBy:0 yBy:-aRect.size.height];		
-		
-		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:tempImage]];
-		[transform concat];
-		// TODO: Fix this
-		NSLog(@"No flipping yet");
-		//		[[paintView mainImage] drawInRect:aRect
-		//								 fromRect:NSZeroRect
-		//								operation:NSCompositeSourceOver
-		//								 fraction:1.0];
-		[NSGraphicsContext restoreGraphicsState];
+		NSBitmapImageRep *image = [paintView mainImage];
 		[paintView prepUndo:nil];
-		[paintView setImage:tempImage scale:NO];
-		[tempImage release];
+		SWFlipImageVertical(image);
+		[paintView setNeedsDisplay:YES];
 	}
 }
 

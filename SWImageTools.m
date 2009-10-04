@@ -88,6 +88,7 @@ void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 {
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
 	[[NSColor clearColor] setFill];
 	NSRectFill(rect);
 	[NSGraphicsContext restoreGraphicsState];
@@ -104,6 +105,28 @@ void SWCopyImage(NSBitmapImageRep *dest, NSBitmapImageRep *src)
 }
 
 
+void SWFlipImageHorizontal(NSBitmapImageRep *bitmap)
+{
+	// Make a copy of our image for using is a second
+	NSBitmapImageRep *tempImage;
+	SWImageRepWithSize(&tempImage, NSMakeSize([bitmap pixelsWide], [bitmap pixelsHigh]));
+	SWCopyImage(tempImage, bitmap);
+	NSAffineTransform *transform = [NSAffineTransform transform];
+	
+	// Create the transform
+	[transform scaleXBy:-1.0 yBy:1.0];
+	[transform translateXBy:(0-[bitmap pixelsWide]) yBy:0];
+	
+	[NSGraphicsContext saveGraphicsState];
+	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
+	[transform concat];
+	[tempImage draw];
+	[NSGraphicsContext restoreGraphicsState];
+	
+	[tempImage release];
+}
+
+
 void SWFlipImageVertical(NSBitmapImageRep *bitmap)
 {
 	// Make a copy of our image for using is a second
@@ -114,7 +137,6 @@ void SWFlipImageVertical(NSBitmapImageRep *bitmap)
 	
 	// Create the transform
 	[transform scaleXBy:1.0 yBy:-1.0];
-	NSLog(@"%d", [bitmap pixelsHigh]);
 	[transform translateXBy:0 yBy:(0-[bitmap pixelsHigh])];
 	
 	[NSGraphicsContext saveGraphicsState];
@@ -122,6 +144,8 @@ void SWFlipImageVertical(NSBitmapImageRep *bitmap)
 	[transform concat];
 	[tempImage draw];
 	[NSGraphicsContext restoreGraphicsState];
+	
+	[tempImage release];
 }
 
 

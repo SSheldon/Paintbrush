@@ -103,6 +103,7 @@
 		
 		// If you don't do this, the image looks blurry when zoomed in
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
 		
 		// Fill the background, but maintain transparency of mainImage
 		//[[toolbox backgroundColor] set];
@@ -115,7 +116,6 @@
 //		}
 		
 		//[NSGraphicsContext saveGraphicsState];
-		
 		
 		// Draw the NSBitmapImageRep to the view
 		if (mainImage) {
@@ -647,7 +647,7 @@
 	}
 }
 
-// Optimizes speed a bit
+// We can't promise we're opaque!
 - (BOOL)isOpaque
 {
 	return NO;
