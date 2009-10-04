@@ -100,10 +100,11 @@
 	if (rect.size.width != 0 && rect.size.height != 0) {
 		
 		//NSRect drawRect = NSMakeRect(round(rect.origin.x), round(rect.origin.y), round(rect.size.width), round(rect.size.height));
-		
+		[NSGraphicsContext saveGraphicsState];
+
 		// If you don't do this, the image looks blurry when zoomed in
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
+//		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
 		
 		// Fill the background, but maintain transparency of mainImage
 		//[[toolbox backgroundColor] set];
@@ -111,15 +112,15 @@
 		
 //		if (backgroundColor) {
 //			[backgroundColor setFill];
-//			//NSLog(@"%@", [NSValue valueWithRect:[(NSScrollView *)[self superview] documentVisibleRect]]);
-//			NSRectFill(rect);
-//		}
-		
-		//[NSGraphicsContext saveGraphicsState];
+//			NSRectFillUsingOperation(rect, NSCompositeSourceOver);
+//			//NSRectFill(rect);
+//		}		
 		
 		// Draw the NSBitmapImageRep to the view
 		if (mainImage) {
-			[mainImage draw];
+			//[mainImage draw];
+			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
+							   NSRectToCGRect([self bounds]), [mainImage CGImage]);
 		}
 		
 		// If there's an overlay image being used at the moment, draw it
@@ -139,7 +140,7 @@
 //			[expPath stroke];
 //		}
 		
-		//[NSGraphicsContext restoreGraphicsState];
+		[NSGraphicsContext restoreGraphicsState];
 	}
 }
 

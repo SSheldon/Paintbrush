@@ -88,9 +88,7 @@ void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 {
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
-	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
-	[[NSColor clearColor] setFill];
-	NSRectFill(rect);
+	NSRectFillUsingOperation(rect, NSCompositeCopy);
 	[NSGraphicsContext restoreGraphicsState];
 }
 
@@ -120,6 +118,7 @@ void SWFlipImageHorizontal(NSBitmapImageRep *bitmap)
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
 	[transform concat];
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
 	[tempImage draw];
 	[NSGraphicsContext restoreGraphicsState];
 	
@@ -142,6 +141,7 @@ void SWFlipImageVertical(NSBitmapImageRep *bitmap)
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
 	[transform concat];
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
 	[tempImage draw];
 	[NSGraphicsContext restoreGraphicsState];
 	
@@ -163,9 +163,10 @@ void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
 														  hasAlpha:YES 
 														  isPlanar:NO 
 													colorSpaceName:NSDeviceRGBColorSpace 
-													  bitmapFormat:0 
 													   bytesPerRow:rowBytes
 													  bitsPerPixel:32];
+	// Initialize it to a completely transparent image
+	SWClearImage(*imageRep);
 	
 }
 

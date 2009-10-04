@@ -115,7 +115,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		}
 	}
 	
-	[paintView setBackgroundColor:[NSColor colorWithPatternImage:[NSImage imageNamed:@"background.png"]]];
+	[paintView setBackgroundColor:[NSColor clearColor]];
 }
 
 
