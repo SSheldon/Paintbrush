@@ -30,16 +30,16 @@
 						  mouseEvent:(SWMouseEvent)event
 {
 	// This only needs to happen once
-	if (event == MOUSE_DOWN) {
-		if (imageRep) {
-			[imageRep release];
-		}
-		imageRep = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
-		[imageRep setColorSpaceName:NSCalibratedRGBColorSpace];
-	}
+//	if (event == MOUSE_DOWN) {
+//		if (imageRep) {
+//			[imageRep release];
+//		}
+//		imageRep = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
+//		[imageRep setColorSpaceName:NSCalibratedRGBColorSpace];
+//	}
 	
 	// This should happen regardless of the type of click
-	NSColor *colorClicked = [imageRep colorAtX:point.x y:([imageRep pixelsHigh] - point.y - 1)];
+	NSColor *colorClicked = [mainImage colorAtX:point.x y:([mainImage pixelsHigh] - point.y - 1)];
 	
 	if (colorClicked != nil) {
 		colorClicked = [colorClicked colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];

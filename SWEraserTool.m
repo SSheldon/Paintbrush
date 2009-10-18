@@ -29,12 +29,14 @@
 		path = [NSBezierPath new];
 		[path setLineWidth:lineWidth];		
 	}
-	if (lineWidth == 1) {
-		begin.x += 0.5;
-		begin.y += 0.5;
-		end.x += 0.5;
-		end.y += 0.5;
-	}
+	//if (lineWidth == 1) {
+	// Off-by-half: Cocoa drawing is done based on gridlines AROUND pixels.  
+	// We want to actually fill the pixels themselves!
+	begin.x += 0.5;
+	begin.y += 0.5;
+	end.x += 0.5;
+	end.y += 0.5;
+	//}
 	[path moveToPoint:begin];
 	[path lineToPoint:end];
 	
@@ -45,7 +47,7 @@
 					   withMainImage:(NSBitmapImageRep *)mainImage 
 						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
-{	
+{
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:point toPoint:savedPoint];
 	
@@ -53,7 +55,7 @@
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:nil];
-		[mainImage lockFocus];
+		SWLockFocus(mainImage);
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		
 		[NSGraphicsContext saveGraphicsState];
@@ -67,11 +69,11 @@
 		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;
 		
-		[mainImage unlockFocus];
+		SWUnlockFocus(mainImage);
 		
 		path = nil;
 	} else {		
-		[bufferImage lockFocus]; 
+		SWLockFocus(bufferImage);
 		
 		// The best way I can come up with to clear the image
 		SWClearImage(bufferImage);
@@ -89,7 +91,7 @@
 		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;
 		
-		[bufferImage unlockFocus];
+		SWUnlockFocus(bufferImage);
 	}
 	return nil;
 }

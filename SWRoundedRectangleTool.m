@@ -108,7 +108,7 @@
 		drawToMe = bufferImage;
 	}
 	
-	[drawToMe lockFocus]; 
+	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
 	// Which colors should we draw with?
@@ -135,7 +135,7 @@
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 	}
 	
-	[drawToMe unlockFocus];
+	SWUnlockFocus(drawToMe);
 	return nil;
 }
 

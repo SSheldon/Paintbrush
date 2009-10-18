@@ -72,7 +72,7 @@
 
 - (void)spray:(NSTimer *)timer
 {
-	[_bufferImage lockFocus]; 
+	SWLockFocus(_bufferImage); 
 	
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	if (flags & NSAlternateKeyMask) {
@@ -83,7 +83,7 @@
 	[[self pathFromPoint:savedPoint toPoint:p] stroke];
 	savedPoint = p;
 	
-	[_bufferImage unlockFocus];
+	SWUnlockFocus(_bufferImage);
 	
 	// Get the view to perform a redraw to see the new spray
 	[NSApp sendAction:@selector(refreshImage:)
@@ -102,12 +102,13 @@
 	[NSApp sendAction:@selector(prepUndo:)
 				   to:nil
 				 from:nil];
-	[_mainImage lockFocus];
-	[_bufferImage drawAtPoint:NSZeroPoint
-					fromRect:NSZeroRect
-				   operation:NSCompositeSourceOver 
-					fraction:1.0];
-	[_mainImage unlockFocus];
+	SWCopyImage(_mainImage, _bufferImage);
+//	SWLockFocus(_mainImage);
+//	[_bufferImage drawAtPoint:NSZeroPoint
+//					fromRect:NSZeroRect
+//				   operation:NSCompositeSourceOver 
+//					fraction:1.0];
+//	SWUnlockFocus(_mainImage);
 	
 	SWClearImage(_bufferImage);
 }

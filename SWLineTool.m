@@ -89,13 +89,13 @@
 		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	}
 	
-	[drawToMe lockFocus]; 
+	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
 	[primaryColor setStroke];
 	[[self pathFromPoint:savedPoint toPoint:point] stroke];
 	
-	[drawToMe unlockFocus];
+	SWUnlockFocus(drawToMe);
 	return nil;
 	
 }

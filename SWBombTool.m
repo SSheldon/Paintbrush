@@ -41,8 +41,8 @@
 		i = 0;
 		rect = NSZeroRect;
 		p = point;
-		image = bufferImage;
-		mainImage = mainImage;
+		_bufferImage = bufferImage;
+		_mainImage = mainImage;
 		
 		// We do this to make a copy of the color
 		bombColor = (flags & NSAlternateKeyMask) ? frontColor : backColor;
@@ -50,10 +50,10 @@
 		if (flags & NSShiftKeyMask) {
 			bombSpeed = 2;
 		} else {
-			bombSpeed = 25;
+			bombSpeed = 50;
 		}
-		max = sqrt([mainImage size].width*[mainImage size].width + [mainImage size].height*[mainImage size].height);
-		bombTimer = [NSTimer scheduledTimerWithTimeInterval:0.000001 // 1 μs
+		max = sqrt([mainImage size].width*[mainImage size].width + [_mainImage size].height*[_mainImage size].height);
+		bombTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0/60.0) // 1 μs
 													 target:self
 												   selector:@selector(drawNewCircle:)
 												   userInfo:nil
@@ -75,7 +75,7 @@
 		rect.size.height = 2*i;
 		
 		// Perform the actual drawing
-		[mainImage lockFocus];
+		SWLockFocus(_mainImage);
 		
 		//SWClearImageRect(image, rect);
 		
@@ -86,7 +86,7 @@
 		[bombColor set];
 		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
 		[NSGraphicsContext restoreGraphicsState];
-		[mainImage unlockFocus];
+		SWUnlockFocus(_mainImage);
 		
 		// Change the redraw rect
 		redrawRect = rect;
@@ -111,12 +111,12 @@
 				   to:nil
 				 from:nil];
 	
-	[mainImage lockFocus];	
+	SWLockFocus(_mainImage);	
 	[bombColor set];
-	NSRectFill(NSMakeRect(0,0,[mainImage size].width, [mainImage size].height));
-	[mainImage unlockFocus];
+	NSRectFill(NSMakeRect(0,0,[_mainImage size].width, [_mainImage size].height));
+	SWUnlockFocus(_mainImage);
 
-	SWClearImage(image);
+	SWClearImage(_bufferImage);
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil
 				 from:nil];

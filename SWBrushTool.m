@@ -49,8 +49,54 @@
 					   withMainImage:(NSBitmapImageRep *)mainImage 
 						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
-{	
-
+{
+	// Use the points clicked to build a redraw rectangle
+	[super addRedrawRectFromPoint:point toPoint:savedPoint];
+	
+	if (event == MOUSE_UP) {
+		[NSApp sendAction:@selector(prepUndo:)
+					   to:nil
+					 from:nil];
+		SWLockFocus(mainImage);
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+		
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
+		if (flags & NSAlternateKeyMask) {
+			[backColor setStroke];	
+		} else {
+			[frontColor setStroke];
+		}
+		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		[NSGraphicsContext restoreGraphicsState];
+		savedPoint = point;
+		
+		SWUnlockFocus(mainImage);
+		
+		path = nil;
+	} else {		
+		SWLockFocus(bufferImage);
+		
+		// The best way I can come up with to clear the image
+		SWClearImage(bufferImage);
+		
+		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+		
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
+		if (flags & NSAlternateKeyMask) {
+			[backColor setStroke];	
+		} else {
+			[frontColor setStroke];
+		}
+		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		[NSGraphicsContext restoreGraphicsState];
+		savedPoint = point;
+		
+		SWUnlockFocus(bufferImage);
+	}
+	return nil;
+/*
 	if (event == MOUSE_UP) {
 		// No need to redraw
 		[super resetRedrawRect];
@@ -83,6 +129,7 @@
 		SWUnlockFocus(mainImage);
 	}
 	return nil;
+ */
 }
 
 - (NSCursor *)cursor

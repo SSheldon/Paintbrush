@@ -114,14 +114,14 @@
 			break;
 	}
 	
-	[drawToMe lockFocus]; 
+	SWLockFocus(drawToMe);
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
 	[primaryColor setStroke];
 	NSBezierPath *p = [self pathFromPoint:savedPoint toPoint:point];
 	[p stroke];
 	
-	[drawToMe unlockFocus];
+	SWUnlockFocus(drawToMe);
 	
 	// Use the points clicked to build a redraw rectangle
 	NSRect curveRect = [p bounds];
@@ -154,12 +154,13 @@
 					   to:nil
 					 from:nil];	
 		
-		[_mainImage lockFocus];
-		[_bufferImage drawAtPoint:NSZeroPoint
-						 fromRect:NSZeroRect
-						operation:NSCompositeSourceOver
-						 fraction:1.0];
-		[_mainImage unlockFocus];
+//		SWLockFocus(_mainImage);
+//		[_bufferImage drawAtPoint:NSZeroPoint
+//						 fromRect:NSZeroRect
+//						operation:NSCompositeSourceOver
+//						 fraction:1.0];
+//		SWUnlockFocus(_mainImage);
+		SWCopyImage(_mainImage, _bufferImage);
 	}
 	
 	numberOfClicks = 0;

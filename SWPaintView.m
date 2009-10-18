@@ -41,11 +41,13 @@
 
 	
 	// New document, not an opened image: gotta paint the background color
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
+//	[NSGraphicsContext saveGraphicsState];
+//	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
+	SWLockFocus(mainImage);
 	[[toolboxController backgroundColor] setFill];
 	NSRectFill(frameRect);
-	[NSGraphicsContext restoreGraphicsState];
+	SWUnlockFocus(mainImage);
+//	[NSGraphicsContext restoreGraphicsState];
 	
 	SWCopyImage(bufferImage, mainImage);
 	
@@ -124,9 +126,11 @@
 		}
 		
 		// If there's an overlay image being used at the moment, draw it
-//		if (bufferImage) {
-//			[bufferImage drawAtPoint:NSZeroPoint];
-//		}
+		if (bufferImage) {
+			//[bufferImage drawAtPoint:NSZeroPoint];
+			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
+							   NSRectToCGRect([self bounds]), [bufferImage CGImage]);
+		}
 		
 		// If the grid is turned on, draw that too
 		if (showsGrid && [(SWScalingScrollView *)[[self superview] superview] scaleFactor] > 2.0) {
@@ -375,6 +379,7 @@
 - (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale
 {	
 	SWClearImage(mainImage);
+	SWClearImage(bufferImage);
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 	if (scale) {

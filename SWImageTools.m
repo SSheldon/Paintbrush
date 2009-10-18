@@ -88,6 +88,7 @@ void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 {
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
+	[[NSColor clearColor] setFill];
 	NSRectFillUsingOperation(rect, NSCompositeCopy);
 	[NSGraphicsContext restoreGraphicsState];
 }

@@ -48,57 +48,27 @@
 		w = [mainImage size].width;
 		h = [mainImage size].height;
 		
-		NSUInteger rowBytes = ((NSInteger)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
+		_mainImage = mainImage;
 		
-		// Create a new NSBitmapImageRep for filling
-		// Note: this instantiation is only valid for Leopard - Tiger needs something different
-		imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil 
-														   pixelsWide:w
-														   pixelsHigh:h 
-														bitsPerSample:8 
-													  samplesPerPixel:4 
-															 hasAlpha:YES 
-															 isPlanar:NO 
-													   colorSpaceName:NSCalibratedRGBColorSpace 
-														 bitmapFormat:NSAlphaFirstBitmapFormat 
-														  bytesPerRow:rowBytes
-														 bitsPerPixel:32];
-		
-		// Get the graphics context associated with the new ImageRep so we can draw to it
-		NSGraphicsContext* imageContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
-		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:imageContext];
-		
-		// Draw the current image to the ImageRep
-		[mainImage drawAtPoint:NSZeroPoint
-					fromRect:NSMakeRect(0, 0, [mainImage size].width, [mainImage size].height)
-				   operation:NSCompositeSourceOver
-					fraction:1.0];
-		[NSGraphicsContext restoreGraphicsState];
-
 		// Which color are we using?
 		fillColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 		
 		// Check to make sure if we should even bother trying to fill - 
 		// if it's the same color, there's nothing to do
-		if (!colorsAreEqual([imageRep colorAtX:point.x y:(h - point.y)], 
+		if (!colorsAreEqual([mainImage colorAtX:point.x y:(h - point.y)], 
 							[fillColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace])) {			
 			// Prep an undo - we're about to change things!
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil
 						 from:nil];
 			
-			// Create the image mask we will be using to fill the selected region
+			// Create the image mask we will be using to fill the selecteds region
 			CGImageRef mask = [self floodFillSelect:NSMakePoint(point.x, point.y+1) tolerance:0.0];
 			
 			// And then fill it!
 			[self fillMask:mask withColor:fillColor];
 			
-			[mainImage lockFocus];
-			[imageRep drawAtPoint:NSZeroPoint];
-			[mainImage unlockFocus];
-			
-			[super addRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([imageRep pixelsWide], [imageRep pixelsHigh])];
+			[super addRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([_mainImage pixelsWide], [_mainImage pixelsHigh])];
 		}
 		
 		[imageRep release];
@@ -128,7 +98,7 @@
 {
 	// Building up a selection mask is pretty involved, so we're going to pass
 	//	the task to a helper class that can build up temporary state.
-	SWSelectionBuilder *builder = [[SWSelectionBuilder alloc] initWithBitmapImageRep:imageRep point:point tolerance:tolerance];
+	SWSelectionBuilder *builder = [[SWSelectionBuilder alloc] initWithBitmapImageRep:_mainImage point:point tolerance:tolerance];
 	CGImageRef ref = [builder mask];
 	[builder release];
 	return ref;
@@ -138,7 +108,7 @@
 {
 	// We want to render the image into our bitmap image rep, so create a
 	//	NSGraphicsContext from it.
-	NSGraphicsContext *imageContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
+	NSGraphicsContext *imageContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:_mainImage];
 	CGContextRef cgContext = [imageContext graphicsPort];
 	
 	// "Focus" our image rep so the NSBitmapImageRep will use it to draw into
@@ -146,7 +116,6 @@
 	[NSGraphicsContext setCurrentContext:imageContext];
 	
 	// Clip out everything that we don't want to fill with the new color
-	//NSLog(@"%f, %f", canvasSize.width, canvasSize.height);
 	CGContextClipToMask(cgContext, CGRectMake(0, 0, w, h), mask);
 	
 	// Set the color and fill
@@ -158,7 +127,8 @@
 }
 
 
-- (NSString *)description {
+- (NSString *)description
+{
 	return @"Fill";
 }
 

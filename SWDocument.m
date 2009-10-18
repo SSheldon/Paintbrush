@@ -93,7 +93,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	// Get and set the background image of the clip view
 	NSImage *bgImage = [NSImage imageNamed:@"bgImage.png"];
 	if (bgImage)
-		[clipView setBgImage:bgImage];
+		[clipView setBgImagePattern:bgImage];
 		
 	// If the user opened an image
 	if (openedImage) {

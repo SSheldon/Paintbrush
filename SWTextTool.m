@@ -48,54 +48,56 @@
 	_mainImage = mainImage;
 	_bufferImage = bufferImage;
 	
-	if (canInsert && event == MOUSE_MOVED) {
-		SWClearImage(bufferImage);
-		[bufferImage lockFocus];
+	SWClearImage(bufferImage);
+	if (canInsert) {
 		
 		// Assign the redrawRect based on the string's size and the insertion point
 		NSRect rectA = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesDeviceMetrics];
 		NSRect rectB = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesFontLeading];
-
+		
 		NSRect rect = NSUnionRect(rectA, rectB);
 		CGFloat xOffset = abs(rect.origin.x);
 		rect.size.width += xOffset;
 		rect.origin = point;
-		rect.origin.y -= (rectB.size.height - rectA.size.height);
-		
+		rect.origin.y -= (rectB.size.height - rectA.size.height + rect.size.height);
+				
 		[super addRectToRedrawRect:rect];
-		
+
+		// Fix the origin, since we're dealing with flipped stuff
+		rect.origin.y = [bufferImage pixelsHigh] - rect.origin.y - rect.size.height;
+
 		rect.origin.x += xOffset;
 		rect.size.width += xOffset;
 		
-		[stringToInsert drawInRect:rect];
-		[bufferImage unlockFocus];
-
+		if (event == MOUSE_MOVED) {
+			SWLockFocus(bufferImage);
+			NSAffineTransform *transform = [NSAffineTransform transform];			
+			// Create the transform
+			[transform scaleXBy:1.0 yBy:-1.0];
+			[transform translateXBy:0 yBy:(0-[bufferImage pixelsHigh])];
+			[transform concat];
+			[stringToInsert drawInRect:rect];
+			[NSGraphicsContext restoreGraphicsState];
+			SWUnlockFocus(bufferImage);
+		} else if (event == MOUSE_DOWN) {
+			SWLockFocus(mainImage);
+			NSAffineTransform *transform = [NSAffineTransform transform];			
+			// Create the transform
+			[transform scaleXBy:1.0 yBy:-1.0];
+			[transform translateXBy:0 yBy:(0-[bufferImage pixelsHigh])];
+			[transform concat];
+			[stringToInsert drawInRect:rect];
+			[NSGraphicsContext restoreGraphicsState];
+			SWUnlockFocus(mainImage);
+			canInsert = NO;
+		}
+		
 		[NSApp sendAction:@selector(refreshImage:)
 					   to:nil
 					 from:self];
 	} else if (event == MOUSE_DOWN) {
-		if (canInsert) {
-			[NSApp sendAction:@selector(prepUndo:)
-						   to:nil
-						 from:nil];
-			[mainImage lockFocus];
-			[bufferImage drawAtPoint:NSZeroPoint 
-							fromRect:NSZeroRect 
-						   operation:NSCompositeSourceOver 
-							fraction:1.0];
-			[mainImage unlockFocus];
-			canInsert = NO;
-			stringToInsert = nil;
-			
-			SWClearImage(bufferImage);
-
-			[NSApp sendAction:@selector(refreshImage:)
-						   to:nil
-						 from:nil];
-		} else {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"SWText" object:frontColor];
-			canInsert = YES;
-		} 
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"SWText" object:frontColor];
+		canInsert = YES;
 	}
 	return nil;
 }
