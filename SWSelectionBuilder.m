@@ -43,7 +43,7 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 - (BOOL) pixelEquality:(NSPoint)point;
 - (unsigned int) pixelDifference:(NSPoint)point;
 
-- (void) processSegment:(NSDictionary*)segment;
+- (void) processSegment:(SWSegment *)segment;
 - (CGImageRef) createMask;
 
 @end
@@ -73,6 +73,10 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 		
 		// Calloc marks them all as not visited
 		mVisited = calloc(mHeight * mWidth, sizeof(BOOL));
+		
+		// Calloc this guy too, just for fun
+		mSegments = calloc(mHeight * mWidth, sizeof(SWSegment));
+		mSegCt = 0;
 		
 		// If the user clicked on a non-integral value, make it an integral value.
 		//	We only deal with raw pixel data, not interpolated values. Also flip
@@ -107,6 +111,7 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 {
 	// Let go of our source image, free up our visited buffer, and our stack.
 	[mImageRep release];
+	free(mSegments);
 	free(mVisited);
 	[mStack release];
 	
@@ -124,7 +129,8 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	//	are on the stack.
 	while ( [mStack count] > 0 ) {
 		// Pop the top segment off the stack
-		NSDictionary* segment = [[[mStack lastObject] retain] autorelease];
+//		NSDictionary* segment = [[[mStack lastObject] retain] autorelease];
+		SWSegment *segment = [[mStack lastObject] pointerValue];
 		[mStack removeLastObject];
 		
 		// Process the segment, by looking both above and below it for pixels
@@ -187,12 +193,18 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	
 	// Push the segment we just found onto the stack, so we can look above
 	//	and below it later.
-	NSDictionary* segment = [NSDictionary dictionaryWithObjectsAndKeys:
-							 [NSNumber numberWithFloat:left], kSegment_Left,
-							 [NSNumber numberWithFloat:right], kSegment_Right,
-							 [NSNumber numberWithFloat:point.y], kSegment_Y,
-							 nil];
-	[mStack addObject:segment];	
+//	NSDictionary* segment = [NSDictionary dictionaryWithObjectsAndKeys:
+//							 [NSNumber numberWithFloat:left], kSegment_Left,
+//							 [NSNumber numberWithFloat:right], kSegment_Right,
+//							 [NSNumber numberWithFloat:point.y], kSegment_Y,
+//							 nil];
+//	[mStack addObject:segment];	
+	SWSegment *segment = &(mSegments[mSegCt]);
+	mSegCt += 1;
+	segment->left = left;
+	segment->right = right;
+	segment->y = point.y;
+	[mStack addObject:[NSValue valueWithPointer:segment]];
 }
 
 - (BOOL) markPointIfItMatches:(NSPoint) point
@@ -255,7 +267,10 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	
 	// Look for any difference between the pixels - if there is any variance,
 	// the pixels are not identical
-	int samplesPerPixel = [mImageRep samplesPerPixel];	
+	static int samplesPerPixel = -1;
+	if (samplesPerPixel == -1)
+		samplesPerPixel = [mImageRep samplesPerPixel];
+	
 	int i = 0;
 	for (i = 0; i < (samplesPerPixel - 1); ++i) {
 		if (mPickedPixel[i] != pixel[i]) {
@@ -295,23 +310,24 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	return maxDifference;
 }
 
-- (void) processSegment:(NSDictionary*)segment
+//- (void) processSegment:(NSDictionary*)segment
+- (void) processSegment:(SWSegment *)segment
 {
 	// Figure out where this segment actually lies, by pulling the line segment
 	//	information out of the dictionary
-	NSNumber* leftNumber = [segment objectForKey:kSegment_Left];
-	NSNumber* rightNumber = [segment objectForKey:kSegment_Right];
-	NSNumber* yNumber = [segment objectForKey:kSegment_Y];
-	CGFloat left = [leftNumber floatValue];
-	CGFloat right = [rightNumber floatValue];
-	CGFloat y = [yNumber floatValue];
+//	NSNumber* leftNumber = [segment objectForKey:kSegment_Left];
+//	NSNumber* rightNumber = [segment objectForKey:kSegment_Right];
+//	NSNumber* yNumber = [segment objectForKey:kSegment_Y];
+//	CGFloat left = [leftNumber floatValue];
+//	CGFloat right = [rightNumber floatValue];
+//	CGFloat y = [yNumber floatValue];
 	
 	// We're going to walk this segment, and test each integral point both
 	//	above and below it. Note that we're doing a four point connect.
 	CGFloat x = 0.0;
-	for ( x = left; x <= right; x = x + 1.0 ) {
-		[self searchLineAtPoint: NSMakePoint(x, y - 1.0)]; // check above
-		[self searchLineAtPoint: NSMakePoint(x, y + 1.0)]; // check below
+	for ( x = segment->left; x <= segment->right; x = x + 1.0 ) {
+		[self searchLineAtPoint: NSMakePoint(x, segment->y - 1.0)]; // check above
+		[self searchLineAtPoint: NSMakePoint(x, segment->y + 1.0)]; // check below
 	}
 }
 

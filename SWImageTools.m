@@ -32,37 +32,9 @@
 //	NSGraphicsContext *gc = [NSGraphicsContext currentContext];
 //	CIContext *context = [gc CIContext];
 	
-/*	// Get the width and height of the image
-	NSInteger w = [image size].width;
-	NSInteger h = [image size].height;
-	
-	NSUInteger rowBytes = ((NSInteger)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
-	
-	// Create a new NSBitmapImageRep for filling
-	// Note: this instantiation is only valid for Leopard - Tiger needs something different
-	NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil 
-													   pixelsWide:w
-													   pixelsHigh:h 
-													bitsPerSample:8 
-												  samplesPerPixel:4 
-														 hasAlpha:YES 
-														 isPlanar:NO 
-												   colorSpaceName:NSDeviceRGBColorSpace 
-													 bitmapFormat:NSAlphaFirstBitmapFormat 
-													  bytesPerRow:rowBytes
-													 bitsPerPixel:32];
-	
-	// Get the graphics context associated with the new ImageRep so we can draw to it
-	NSGraphicsContext* imageContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:imageContext];
-	
-	// Draw the current image to the ImageRep
-	[image drawAtPoint:NSZeroPoint
-				fromRect:NSMakeRect(0, 0, [image size].width, [image size].height)
-			   operation:NSCompositeSourceOver
-				fraction:1.0];
-	[NSGraphicsContext restoreGraphicsState];
+	NSBitmapImageRep *imageRep;
+	[SWImageTools initImageRep:&imageRep withSize:[image size]];
+	[SWImageTools drawToImage:imageRep fromImage:image withComposition:NO];
 	
 	CIFilter *colorInvert = [CIFilter filterWithName:@"CIColorInvert"];
 	[colorInvert setValue: [[CIImage alloc] initWithBitmapImageRep:imageRep] forKey: @"inputImage"];
@@ -71,20 +43,18 @@
 	
 	imageRep = [[NSBitmapImageRep alloc] initWithCIImage:result];
 	
-	[image lockFocus];
-	[imageRep drawAtPoint:NSZeroPoint];
-	[image unlockFocus];
+	[SWImageTools drawToImage:image fromImage:imageRep withComposition:NO];
 	[imageRep release];
-*/}
+}
 
-void SWClearImage(NSBitmapImageRep *image)
++ (void)clearImage:(NSBitmapImageRep *)image
 {
 	NSRect rect = NSMakeRect(0,0,[image pixelsWide],[image pixelsHigh]);
-	SWClearImageRect(image,rect);
+	[SWImageTools clearImage:image inRect:rect];
 }
 
 
-void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
++ (void)clearImage:(NSBitmapImageRep *)image inRect:(NSRect)rect
 {
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
@@ -94,22 +64,44 @@ void SWClearImageRect(NSBitmapImageRep *image, NSRect rect)
 }
 
 
+// Just calls the bigger one with a zeroed-out origin
++ (void)drawToImage:(NSBitmapImageRep *)dest 
+		  fromImage:(NSBitmapImageRep *)src 
+	withComposition:(BOOL)shouldCompositeOver
+{
+	[SWImageTools drawToImage:dest
+					fromImage:src
+					  atPoint:NSZeroPoint
+			  withComposition:shouldCompositeOver];
+}
+
+
 // Assume both images are allocated, same size
-void SWCopyImage(NSBitmapImageRep *dest, NSBitmapImageRep *src)
++ (void)drawToImage:(NSBitmapImageRep *)dest 
+		  fromImage:(NSBitmapImageRep *)src 
+			atPoint:(NSPoint)point 
+	withComposition:(BOOL)shouldCompositeOver
 {
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:dest]];
-	[src draw];
+	if (shouldCompositeOver)
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
+	else
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];		
+//	[src draw];
+	CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
+					   CGRectMake(point.x, point.y, [src pixelsWide], [src pixelsHigh]), [src CGImage]);
 	[NSGraphicsContext restoreGraphicsState];
 }
 
 
-void SWFlipImageHorizontal(NSBitmapImageRep *bitmap)
++ (void)flipImageHorizontal:(NSBitmapImageRep *)bitmap
 {
 	// Make a copy of our image for using is a second
 	NSBitmapImageRep *tempImage;
-	SWImageRepWithSize(&tempImage, NSMakeSize([bitmap pixelsWide], [bitmap pixelsHigh]));
-	SWCopyImage(tempImage, bitmap);
+	[SWImageTools initImageRep:&tempImage withSize:[bitmap size]];
+	[SWImageTools drawToImage:tempImage fromImage:bitmap withComposition:NO];
+	[SWImageTools clearImage:bitmap];
 	NSAffineTransform *transform = [NSAffineTransform transform];
 	
 	// Create the transform
@@ -127,12 +119,13 @@ void SWFlipImageHorizontal(NSBitmapImageRep *bitmap)
 }
 
 
-void SWFlipImageVertical(NSBitmapImageRep *bitmap)
++ (void)flipImageVertical:(NSBitmapImageRep *)bitmap
 {
 	// Make a copy of our image for using is a second
 	NSBitmapImageRep *tempImage;
-	SWImageRepWithSize(&tempImage, NSMakeSize([bitmap pixelsWide], [bitmap pixelsHigh]));
-	SWCopyImage(tempImage, bitmap);
+	[SWImageTools initImageRep:&tempImage withSize:[bitmap size]];
+	[SWImageTools drawToImage:tempImage fromImage:bitmap withComposition:NO];
+	[SWImageTools clearImage:bitmap];
 	NSAffineTransform *transform = [NSAffineTransform transform];
 	
 	// Create the transform
@@ -150,7 +143,7 @@ void SWFlipImageVertical(NSBitmapImageRep *bitmap)
 }
 
 
-void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
++ (void)initImageRep:(NSBitmapImageRep **)imageRep withSize:(NSSize)size
 {
 	NSUInteger w = size.width;
 	NSUInteger h = size.height;
@@ -163,11 +156,11 @@ void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size)
 												   samplesPerPixel:4 
 														  hasAlpha:YES 
 														  isPlanar:NO 
-													colorSpaceName:NSDeviceRGBColorSpace 
+													colorSpaceName:NSCalibratedRGBColorSpace 
 													   bytesPerRow:rowBytes
 													  bitsPerPixel:32];
 	// Initialize it to a completely transparent image
-	SWClearImage(*imageRep);
+	[SWImageTools clearImage:*imageRep];
 	
 }
 

@@ -48,7 +48,7 @@
 	_mainImage = mainImage;
 	_bufferImage = bufferImage;
 	
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:bufferImage];
 	if (canInsert) {
 		
 		// Assign the redrawRect based on the string's size and the insertion point

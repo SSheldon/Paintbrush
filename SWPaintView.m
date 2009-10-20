@@ -36,8 +36,8 @@
 	isPayingAttention = YES;
 
 	// Create the two images we'll be using
-	SWImageRepWithSize(&mainImage, frameRect.size);
-	SWImageRepWithSize(&bufferImage, frameRect.size);
+	[SWImageTools initImageRep:&mainImage withSize:frameRect.size];
+	[SWImageTools initImageRep:&bufferImage withSize:frameRect.size];
 
 	
 	// New document, not an opened image: gotta paint the background color
@@ -49,7 +49,7 @@
 	SWUnlockFocus(mainImage);
 //	[NSGraphicsContext restoreGraphicsState];
 	
-	SWCopyImage(bufferImage, mainImage);
+	[SWImageTools drawToImage:bufferImage fromImage:mainImage withComposition:NO];
 	
 	// Tracking area
 	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
@@ -184,7 +184,7 @@
 - (void)updateCurrentTool {
 	//[currentTool resetRedrawRect];
 	//NSLog(@"Toolbox is %@", toolbox);
-	NSLog(@"%@ versus %@", currentTool, [toolbox currentTool]);
+	//NSLog(@"%@ versus %@", currentTool, [toolbox currentTool]);
 	if (currentTool != [toolbox currentTool]) {
 		currentTool = [toolbox currentTool];
 		[self clearOverlay];
@@ -358,7 +358,7 @@
 	if ([event keyCode] == 53) {
 		isPayingAttention = NO;
 		[currentTool tieUpLooseEnds];
-		SWClearImage(bufferImage);
+		[SWImageTools clearImage:bufferImage];
 		[self setNeedsDisplay:YES];
 		
 	} else if ([event keyCode] == 51 || [event keyCode] == 117) {
@@ -378,8 +378,8 @@
 
 - (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale
 {	
-	SWClearImage(mainImage);
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:mainImage];
+	[SWImageTools clearImage:bufferImage];
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 	if (scale) {
@@ -583,7 +583,7 @@
 // Releases the overlay image, then tells the tool about it
 - (void)clearOverlay
 {
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:bufferImage];
 	[currentTool deleteKey];
 	[currentTool tieUpLooseEnds];
 	[self setNeedsDisplay:YES];
@@ -617,7 +617,7 @@
 	// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
 	rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
 	
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:bufferImage];
 	
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bufferImage]];

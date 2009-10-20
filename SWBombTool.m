@@ -116,7 +116,7 @@
 	NSRectFill(NSMakeRect(0,0,[_mainImage size].width, [_mainImage size].height));
 	SWUnlockFocus(_mainImage);
 
-	SWClearImage(_bufferImage);
+	[SWImageTools clearImage:_bufferImage];
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil
 				 from:nil];

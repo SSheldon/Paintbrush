@@ -62,7 +62,7 @@
 - (IBAction)actualSize:(id)sender;
 //- (IBAction)fullScreen:(id)sender;
 - (IBAction)crop:(id)sender;
-//- (IBAction)invertColors:(id)sender;
+- (IBAction)invertColors:(id)sender;
 - (void)showTextSheet:(NSNotification *)n;
 - (void)undoLevelChanged:(NSNotification *)n;
 

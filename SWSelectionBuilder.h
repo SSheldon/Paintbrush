@@ -23,6 +23,13 @@
 // Max would be CYMKA, but we only use RGBA
 #define kMaxSamples	4
 
+// Custom struct: this'll be easier to malloc/free than whole NSDictionaries
+typedef struct SWSegment {
+	NSInteger left;
+	NSInteger right;
+	NSInteger y;
+} SWSegment;
+
 @interface SWSelectionBuilder : NSObject {
 	// The source image that we're using to build up a mask from
 	NSBitmapImageRep	*mImageRep;
@@ -40,6 +47,11 @@
 	//	if we have visited a specific pixel location. It is mWidth by mHeight
 	//	in size.
 	BOOL			*mVisited;
+	
+	// Handly little guy -- he's a collection of segments so we don't have to keep 
+	//  creating and destroying them
+	SWSegment		*mSegments;
+	NSInteger		mSegCt;
 
 	// Information about the pixel the user clicked on, including its coordinates
 	//	and its pixel components.

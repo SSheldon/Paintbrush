@@ -53,13 +53,17 @@
 	p = point;
 	if (event == MOUSE_UP) {
 		[self endSpray:airbrushTimer];
-	} else if (event == MOUSE_DOWN) {
+	} else if (event == MOUSE_DOWN) {		
 		// Seed a random number based on the time!
 		srandom(time(NULL));
 
 		_bufferImage = bufferImage;
 		_mainImage = mainImage;
-		airbrushTimer = [NSTimer scheduledTimerWithTimeInterval:0.002 // 1 ms
+
+		// Prep the images
+		[SWImageTools drawToImage:_bufferImage fromImage:_mainImage withComposition:NO];
+
+		airbrushTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 // 20 ms
 														 target:self
 													   selector:@selector(spray:)
 													   userInfo:nil
@@ -102,15 +106,8 @@
 	[NSApp sendAction:@selector(prepUndo:)
 				   to:nil
 				 from:nil];
-	SWCopyImage(_mainImage, _bufferImage);
-//	SWLockFocus(_mainImage);
-//	[_bufferImage drawAtPoint:NSZeroPoint
-//					fromRect:NSZeroRect
-//				   operation:NSCompositeSourceOver 
-//					fraction:1.0];
-//	SWUnlockFocus(_mainImage);
-	
-	SWClearImage(_bufferImage);
+	[SWImageTools drawToImage:_mainImage fromImage:_bufferImage withComposition:NO];
+	[SWImageTools clearImage:_bufferImage];
 }
 
 - (NSCursor *)cursor

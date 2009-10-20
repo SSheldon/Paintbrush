@@ -54,7 +54,7 @@
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:bufferImage];
 	
 	if (event == MOUSE_UP) {
 		[NSApp sendAction:@selector(prepUndo:)
@@ -97,7 +97,7 @@
 /*	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
-	//SWClearImage(bufferImage);
+	//[SWImageTools clearImage:bufferImage];
 	
 	if (event == MOUSE_UP) {
 		// No need to redraw
@@ -109,7 +109,7 @@
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil
 						 from:nil];
-			SWCopyImage(bufferImage, mainImage);
+			SWCompositeImage(bufferImage, mainImage);
 			
 			// Which colors should we draw with?
 			if (flags & NSAlternateKeyMask) {
@@ -121,7 +121,7 @@
 			}
 		}
 		
-		SWCopyImage(mainImage, bufferImage);
+		SWCompositeImage(mainImage, bufferImage);
 		
 		SWLockFocus(mainImage); 
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];		

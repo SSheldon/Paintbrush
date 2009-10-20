@@ -42,11 +42,11 @@
 	NSColor *colorClicked = [mainImage colorAtX:point.x y:([mainImage pixelsHigh] - point.y - 1)];
 	
 	if (colorClicked != nil) {
-		colorClicked = [colorClicked colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+		NSColor *colorClickedConverted = [colorClicked colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
 		if (flags & NSAlternateKeyMask) {
-			[[SWToolboxController sharedToolboxPanelController] setBackgroundColor:colorClicked];
+			[[SWToolboxController sharedToolboxPanelController] setBackgroundColor:colorClickedConverted];
 		} else {
-			[[SWToolboxController sharedToolboxPanelController] setForegroundColor:colorClicked];
+			[[SWToolboxController sharedToolboxPanelController] setForegroundColor:colorClickedConverted];
 		}
 	}
 

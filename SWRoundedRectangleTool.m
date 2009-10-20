@@ -97,7 +97,7 @@
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:bufferImage];
 	
 	if (event == MOUSE_UP) {
 		[NSApp sendAction:@selector(prepUndo:)

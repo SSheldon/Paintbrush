@@ -84,7 +84,7 @@
 		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	}
 	
-	SWClearImage(bufferImage);
+	[SWImageTools clearImage:bufferImage];
 	drawToMe = bufferImage;
 	
 	_bufferImage = bufferImage;
@@ -160,7 +160,7 @@
 //						operation:NSCompositeSourceOver
 //						 fraction:1.0];
 //		SWUnlockFocus(_mainImage);
-		SWCopyImage(_mainImage, _bufferImage);
+		[SWImageTools drawToImage:_mainImage fromImage:_bufferImage withComposition:YES];
 	}
 	
 	numberOfClicks = 0;

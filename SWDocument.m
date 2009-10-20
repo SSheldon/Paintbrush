@@ -310,7 +310,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 //	NSData *data = [[paintView mainImage] TIFFRepresentation];
 //	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithData:data] autorelease];
 	NSBitmapImageRep *bitmap = [paintView mainImage];
-	SWFlipImageVertical(bitmap);
+	[SWImageTools flipImageVertical:bitmap];
 	NSData *data = nil;
 	if ([aType isEqualToString:@"BMP"]) {
 		data = [bitmap representationUsingType: NSBMPFileType
@@ -358,12 +358,12 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	// Temporary image
 	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
-	SWImageRepWithSize(&openedImage, NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh]));
+	[SWImageTools initImageRep:&openedImage withSize:[tempImage size]];
 	// Copy the image to the openedImage
-	SWCopyImage(openedImage, tempImage);
+	[SWImageTools drawToImage:openedImage fromImage:tempImage withComposition:NO];
 	
 	if (openedImage)
-		SWFlipImageVertical(openedImage);
+		[SWImageTools flipImageVertical:openedImage];
 	return (openedImage != nil);
 }
 
@@ -387,7 +387,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
 	NSBitmapImageRep *writeToMe;
-	SWImageRepWithSize(&writeToMe, rect.size);
+	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
 	
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:writeToMe]];
@@ -544,7 +544,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	if ([[super windowForSheet] isKeyWindow]) {
 		NSBitmapImageRep *image = [paintView mainImage];
 		[paintView prepUndo:nil];
-		SWFlipImageHorizontal(image);
+		[SWImageTools flipImageHorizontal:image];
 		[paintView setNeedsDisplay:YES];
 	}
 }
@@ -555,7 +555,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	if ([[super windowForSheet] isKeyWindow]) {
 		NSBitmapImageRep *image = [paintView mainImage];
 		[paintView prepUndo:nil];
-		SWFlipImageVertical(image);
+		[SWImageTools flipImageVertical:image];
 		[paintView setNeedsDisplay:YES];
 	}
 }
@@ -571,7 +571,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	// First we need to make a temporary copy of what's selected by the selection tool
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
 	NSBitmapImageRep *writeToMe;
-	SWImageRepWithSize(&writeToMe, rect.size);
+	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
 //	[writeToMe lockFocus];
 //	[[(SWSelectionTool *)currentTool backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
 //													fromRect:rect
@@ -592,13 +592,12 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 
 // We offload the heavy lifting to an external class
-// TODO: Turn this back on once we have NSBitmapImageReps
-//- (IBAction)invertColors:(id)sender
-//{
-//	[SWImageManipulator invertImage:[paintView mainImage]];
-//	[paintView prepUndo:nil];
-//	[paintView setNeedsDisplay:YES];
-//}
+- (IBAction)invertColors:(id)sender
+{
+	[paintView prepUndo:nil];
+	[SWImageTools invertImage:[paintView mainImage]];
+	[paintView setNeedsDisplay:YES];
+}
 
 
 - (void)dealloc

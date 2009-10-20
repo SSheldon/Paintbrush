@@ -78,7 +78,7 @@
 		SWLockFocus(bufferImage);
 		
 		// The best way I can come up with to clear the image
-		SWClearImage(bufferImage);
+		[SWImageTools clearImage:bufferImage];
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		
@@ -107,10 +107,10 @@
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil
 						 from:nil];
-			SWCopyImage(bufferImage, mainImage);
+			SWCompositeImage(bufferImage, mainImage);
 		}
 		
-		SWCopyImage(mainImage, bufferImage);
+		SWCompositeImage(mainImage, bufferImage);
 	
 		// Use the points clicked to build a redraw rectangle
 		[super addRedrawRectFromPoint:point toPoint:savedPoint];

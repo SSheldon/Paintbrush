@@ -138,7 +138,7 @@
 			previousPoint = point;
 			
 			// Do the moving thing
-			SWClearImage(bufferImage);
+			[SWImageTools clearImage:bufferImage];
 			
 			clippingRect.origin.x = oldOrigin.x + deltax;
 			clippingRect.origin.y = oldOrigin.y + deltay;
@@ -156,7 +156,7 @@
 		// Still drawing the dotted line
 		deltax = deltay = 0;
 
-		SWClearImage(bufferImage);
+		[SWImageTools clearImage:bufferImage];
 		
 		// Taking care of the outer bounds of the image
 		if (point.x < 0)
@@ -175,25 +175,26 @@
 			[super addRedrawRectFromPoint:savedPoint toPoint:point];
 			
 			// Draw the dotted line
-			[bufferImage lockFocus]; 
+			SWLockFocus(bufferImage); 
 			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 			[[NSColor darkGrayColor] setStroke];
 			[[self pathFromPoint:savedPoint toPoint:point] stroke];
-			[bufferImage unlockFocus];
+			SWUnlockFocus(bufferImage);
 				
 			if (event == MOUSE_UP) {
 				// Copy the rectangle's contents to the second image
 				
 				imageRep = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
 				
-				SWClearImage(bufferImage);
+				[SWImageTools clearImage:bufferImage];
 				
-				backedImage = [[NSBitmapImageRep alloc] initWithSize:[mainImage size]];
-				[backedImage lockFocus];
+//				backedImage = [[NSBitmapImageRep alloc] initWithSize:[mainImage size]];
+				[SWImageTools initImageRep:&backedImage withSize:[mainImage size]];
+				SWLockFocus(backedImage);
 
 				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 
-				if (shouldOmitBackground) {
+//				if (shouldOmitBackground) {
 					// EXPERIMENTAL: Transparency
 					// TODO: Faster, and possibly somewhere else?
 					NSInteger x, y;
@@ -201,33 +202,33 @@
 					for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
 						for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
 							 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
-							if (!colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
+							if (!shouldOmitBackground || !colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
 								[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
 							}
 						}
 					}
 					[secondRep drawAtPoint:NSZeroPoint];
 					
-				} else {
-					// This is without transparency, and is much faster
-					[mainImage drawInRect:clippingRect
-							   fromRect:clippingRect
-							  operation:NSCompositeSourceOver 
-							   fraction:1.0];				
-				}
+//				} else {
+//					// This is without transparency, and is much faster
+//					[mainImage drawInRect:clippingRect
+//							   fromRect:clippingRect
+//							  operation:NSCompositeSourceOver 
+//							   fraction:1.0];				
+//				}
 
-				[backedImage unlockFocus];
+				SWUnlockFocus(backedImage);
 				
 				[self drawNewBorder:nil];
 
 				// Delete it from the main image
-				[mainImage lockFocus];
+				SWLockFocus(mainImage);
 				
 				[backColor set];
 				
 				// Note: don't use a bezierpath! It'll fail with clear-ish colors
 				NSRectFill(clippingRect);
-				[mainImage unlockFocus];
+				SWUnlockFocus(mainImage);
 				
 				oldOrigin = clippingRect.origin;
 				
@@ -248,13 +249,10 @@
 	
 	// Draw the backed image to the overlay
 	if (_bufferImage) {
-		SWClearImage(_bufferImage);
-		[_bufferImage lockFocus];
+		[SWImageTools clearImage:_bufferImage];
+		SWLockFocus(_bufferImage);
 		if (backedImage) {
-			[backedImage drawAtPoint:NSMakePoint(deltax, deltay)
-							fromRect:NSZeroRect
-						   operation:NSCompositeSourceOver
-							fraction:1.0];			
+			[backedImage drawAtPoint:NSMakePoint(deltax, deltay)];			
 		}
 		
 		// Next, stroke it
@@ -263,7 +261,7 @@
 		[[self pathFromPoint:clippingRect.origin 
 					 toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
 										 clippingRect.origin.y + clippingRect.size.height)] stroke];			
-		[_bufferImage unlockFocus];		
+		SWUnlockFocus(_bufferImage);		
 	}
 	
 	// Get the view to perform a redraw to see the new border
@@ -296,27 +294,34 @@
 
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_bufferImage && _mainImage) {
-		SWClearImage(_bufferImage);
+		[SWImageTools clearImage:_bufferImage];
 
-		[_mainImage lockFocus];
-		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-		
-		NSRect selectedRect = {
-			oldOrigin,
-			clippingRect.size
-		};
-		//NSMakeRect(oldOrigin.x, oldOrigin.y, clippingRect.size.width, clippingRect.size.height);
-		
-		[backedImage drawInRect:clippingRect
-						fromRect:selectedRect
-					   operation:NSCompositeSourceOver
-						fraction:1.0];
-		
-		[backedImage release];
-		backedImage = nil;
-		
-		[_mainImage unlockFocus];
+//		SWLockFocus(_mainImage);
+//		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+//		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
+//		
+////		NSRect selectedRect = {
+////			oldOrigin,
+////			clippingRect.size
+////		};
+//		//NSMakeRect(oldOrigin.x, oldOrigin.y, clippingRect.size.width, clippingRect.size.height);
+//		
+////		[backedImage drawInRect:clippingRect
+////						fromRect:selectedRect
+////					   operation:NSCompositeSourceOver
+////						fraction:1.0];
+//		[backedImage drawAtPoint:NSMakePoint(deltax, deltay)];
+//		
+//		[backedImage release];
+//		backedImage = nil;
+//		
+//		SWUnlockFocus(_mainImage);
+		[SWImageTools drawToImage:_mainImage
+						fromImage:backedImage 
+						  atPoint:NSMakePoint(deltax, deltay)
+				  withComposition:YES];
 
+		// Redraw the entire image
 		[super addRectToRedrawRect:NSMakeRect(0,0,[_mainImage size].width,[_mainImage size].height)];
 	} else {
 		[super resetRedrawRect];
@@ -338,22 +343,23 @@
 	isSelected = YES;
 	
 	// Create the image to paste
-	backedImage = [[NSBitmapImageRep alloc] initWithSize:[image size]];
-	[backedImage lockFocus];
+//	backedImage = [[NSBitmapImageRep alloc] initWithSize:[image size]];
+	[SWImageTools initImageRep:&backedImage withSize:[image size]];
+	SWLockFocus(backedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-	[image drawInRect:clippingRect
-			   fromRect:clippingRect
-			  operation:NSCompositeSourceOver 
-			   fraction:1.0];
-	[backedImage unlockFocus];
+//	[image drawInRect:clippingRect
+//			   fromRect:clippingRect
+//			  operation:NSCompositeSourceOver 
+//			   fraction:1.0];
+	SWUnlockFocus(backedImage);
 	
 	// Draw the dotted line around the selected region
-	[image lockFocus];
+	SWLockFocus(image);
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	[[NSColor darkGrayColor] setStroke];
 	[[self pathFromPoint:rect.origin
 				 toPoint:NSMakePoint(rect.size.width+rect.origin.x,rect.size.height+rect.origin.y)] stroke];
-	[image unlockFocus];
+	SWUnlockFocus(image);
 	
 	// Set the redraw rect!
 	[super addRectToRedrawRect:clippingRect];
@@ -389,11 +395,10 @@
 	return customCursor;
 }
 
-// Once we get better color accuracy (hopefully in 2.1), we'll flip this back on
+// We got better color accuracy in 2.1, so we flipped this back on
 - (BOOL)shouldShowTransparencyOptions
 {
-	//return YES;
-	return NO;
+	return YES;
 }
 
 // Overridden for right-click

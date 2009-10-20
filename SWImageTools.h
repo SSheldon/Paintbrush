@@ -21,18 +21,16 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SWImageTools : NSObject {
-
-}
+@interface SWImageTools : NSObject
 
 + (void)invertImage:(NSBitmapImageRep *)image;
-
-void SWClearImage(NSBitmapImageRep *image);
-void SWCopyImage(NSBitmapImageRep *dest, NSBitmapImageRep *src);
-void SWClearImageRect(NSBitmapImageRep *image, NSRect rect);
-void SWImageRepWithSize(NSBitmapImageRep **imageRep, NSSize size);
-void SWFlipImageHorizontal(NSBitmapImageRep *bitmap);
-void SWFlipImageVertical(NSBitmapImageRep *bitmap);
++ (void)clearImage:(NSBitmapImageRep *)image;
++ (void)clearImage:(NSBitmapImageRep *)image inRect:(NSRect)rect;
++ (void)drawToImage:(NSBitmapImageRep *)dest fromImage:(NSBitmapImageRep *)src withComposition:(BOOL)shouldCompositeOver;
++ (void)drawToImage:(NSBitmapImageRep *)dest fromImage:(NSBitmapImageRep *)src atPoint:(NSPoint)point withComposition:(BOOL)shouldCompositeOver;
++ (void)initImageRep:(NSBitmapImageRep **)imageRep withSize:(NSSize)size;
++ (void)flipImageHorizontal:(NSBitmapImageRep *)bitmap;
++ (void)flipImageVertical:(NSBitmapImageRep *)bitmap;
 
 // A few things I'd like to try
 void SWLockFocus(NSBitmapImageRep *image);
