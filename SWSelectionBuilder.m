@@ -58,6 +58,7 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 		// Just retain the source image. We don't want to make a heavy copy of it
 		//	(too expensive) but we don't want it going away on us
 		mImageRep = [imageRep retain];
+		[mImageRep getBitmapDataPlanes:&mBitmapData];
 		
 		// Record the width and height of the source image. We'll use it to
 		//	figure out how big to make our mask.
@@ -260,25 +261,19 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	// simple flood fill, which is what Paintbrush needs. Use pixelDifference
 	// if you have the possibility of a non-zero tolerance.
 	
+	// First calculate the offset for the point passed in
+	int offset = (int)point.x + (mWidth * (int)point.y);
+	offset *= [mImageRep samplesPerPixel];
 	
-	// First get the components for the point passed in
-	NSUInteger pixel[kMaxSamples];
-	[mImageRep getPixel:pixel atX:(int)point.x y:(int)point.y];
+	// Next get the components at that offset
+	int red = mBitmapData[offset + 0];
+	int green = mBitmapData[offset + 1];
+	int blue = mBitmapData[offset + 2];
+	int alpha = mBitmapData[offset + 3];
 	
 	// Look for any difference between the pixels - if there is any variance,
 	// the pixels are not identical
-	static int samplesPerPixel = -1;
-	if (samplesPerPixel == -1)
-		samplesPerPixel = [mImageRep samplesPerPixel];
-	
-	int i = 0;
-	for (i = 0; i < (samplesPerPixel - 1); ++i) {
-		if (mPickedPixel[i] != pixel[i]) {
-			return NO;
-		}
-	}
-	
-	return YES;
+	return (red == mPickedPixel[0] && green == mPickedPixel[1] && blue == mPickedPixel[2] && alpha == mPickedPixel[3]);
 }
 
 - (unsigned int) pixelDifference:(NSPoint)point

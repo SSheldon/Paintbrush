@@ -34,6 +34,9 @@ typedef struct SWSegment {
 	// The source image that we're using to build up a mask from
 	NSBitmapImageRep	*mImageRep;
 	
+	// The bitmap data associated with the source image
+	unsigned char		*mBitmapData;
+	
 	// The width and height of the source image, the resulting image mask,
 	//	and the intermediate mVisited table
 	size_t			mWidth;
