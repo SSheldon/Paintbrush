@@ -358,7 +358,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	// Temporary image
 	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
-	[SWImageTools initImageRep:&openedImage withSize:[tempImage size]];
+	[SWImageTools initImageRep:&openedImage withSize:NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh])];
 	// Copy the image to the openedImage
 	[SWImageTools drawToImage:openedImage fromImage:tempImage withComposition:NO];
 	

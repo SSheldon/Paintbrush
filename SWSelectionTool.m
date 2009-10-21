@@ -63,12 +63,7 @@
 	[path setLineDash:dottedLineArray count:2 phase:dottedLineOffset];
 	[path setLineCapStyle:NSSquareLineCapStyle];	
 
-	//if (flags & NSShiftKeyMask) {
-		// CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
-		// We need something here! It's trickier than it looks.
-	//} else {
-		clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
-	//}
+	clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
 	
 	// The 0.5s help because the width is 1, and that does weird stuff
 	[path appendBezierPathWithRect:
@@ -105,43 +100,28 @@
 			if (event == MOUSE_DOWN) {
 				previousPoint = point;
 			}
-			
-			if (flags & NSShiftKeyMask) {				
-				// Are we already moving horizontally/vertically?
-				if (!isAlreadyShifting) {
-					isAlreadyShifting = YES;
-					NSUInteger dx = abs(point.x - previousPoint.x);
-					NSUInteger dy = abs(point.y - previousPoint.y);
-					
-					if (dx > dy) {
-						direction = 'X';
-					} else {
-						direction = 'Y';
-					}
-				} else {
-					if (direction == 'X') {
-						deltay = 0;
-						deltax += point.x - previousPoint.x;
-					} else if (direction == 'Y') {
-						deltax = 0;
-						deltay += point.y - previousPoint.y;
-					} else {
-						NSLog(@"Houston, we have a problem");
-					}
-				}			
-			} else {
-				isAlreadyShifting = NO;
-				deltax += point.x - previousPoint.x;
-				deltay += point.y - previousPoint.y;
-			}
+
+			deltax += point.x - previousPoint.x;
+			deltay += point.y - previousPoint.y;
 			
 			previousPoint = point;
 			
 			// Do the moving thing
 			[SWImageTools clearImage:bufferImage];
-			
 			clippingRect.origin.x = oldOrigin.x + deltax;
 			clippingRect.origin.y = oldOrigin.y + deltay;
+			
+			// Check for the shift key
+//			if (flags & NSShiftKeyMask) {				
+//				NSUInteger dx = abs(point.x - previousPoint.x);
+//				NSUInteger dy = abs(point.y - previousPoint.y);
+//				
+//				if (dx > dy) {
+//					clippingRect.origin.x -= deltax;
+//				} else {
+//					clippingRect.origin.y -= deltay;
+//				}		
+//			}
 			
 			// The clipping rect is the new redraw rect
 			[super addRectToRedrawRect:clippingRect];
@@ -188,35 +168,25 @@
 				
 				[SWImageTools clearImage:bufferImage];
 				
-//				backedImage = [[NSBitmapImageRep alloc] initWithSize:[mainImage size]];
 				[SWImageTools initImageRep:&backedImage withSize:[mainImage size]];
 				SWLockFocus(backedImage);
 
 				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 
-//				if (shouldOmitBackground) {
-					// EXPERIMENTAL: Transparency
-					// TODO: Faster, and possibly somewhere else?
-					NSInteger x, y;
-					NSBitmapImageRep *secondRep = [NSBitmapImageRep imageRepWithData:[bufferImage TIFFRepresentation]];
-					for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
-						for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
-							 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
-							if (!shouldOmitBackground || !colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
-								[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
-							}
+				// EXPERIMENTAL: Transparency
+				// TODO: Faster, and possibly somewhere else?
+				NSInteger x, y;
+				NSBitmapImageRep *secondRep = [NSBitmapImageRep imageRepWithData:[bufferImage TIFFRepresentation]];
+				for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
+					for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
+						 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
+						if (!shouldOmitBackground || !colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
+							[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
 						}
 					}
-					[secondRep drawAtPoint:NSZeroPoint];
+				}
+				[secondRep drawAtPoint:NSZeroPoint];
 					
-//				} else {
-//					// This is without transparency, and is much faster
-//					[mainImage drawInRect:clippingRect
-//							   fromRect:clippingRect
-//							  operation:NSCompositeSourceOver 
-//							   fraction:1.0];				
-//				}
-
 				SWUnlockFocus(backedImage);
 				
 				[self drawNewBorder:nil];
@@ -236,9 +206,6 @@
 			}
 		}
 	}
-//	return [self pathFromPoint:clippingRect.origin 
-//					   toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
-//										   clippingRect.origin.y + clippingRect.size.height)];
 	return nil;
 }
 
@@ -296,26 +263,6 @@
 	if (_bufferImage && _mainImage) {
 		[SWImageTools clearImage:_bufferImage];
 
-//		SWLockFocus(_mainImage);
-//		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-//		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
-//		
-////		NSRect selectedRect = {
-////			oldOrigin,
-////			clippingRect.size
-////		};
-//		//NSMakeRect(oldOrigin.x, oldOrigin.y, clippingRect.size.width, clippingRect.size.height);
-//		
-////		[backedImage drawInRect:clippingRect
-////						fromRect:selectedRect
-////					   operation:NSCompositeSourceOver
-////						fraction:1.0];
-//		[backedImage drawAtPoint:NSMakePoint(deltax, deltay)];
-//		
-//		[backedImage release];
-//		backedImage = nil;
-//		
-//		SWUnlockFocus(_mainImage);
 		[SWImageTools drawToImage:_mainImage
 						fromImage:backedImage 
 						  atPoint:NSMakePoint(deltax, deltay)
@@ -343,14 +290,9 @@
 	isSelected = YES;
 	
 	// Create the image to paste
-//	backedImage = [[NSBitmapImageRep alloc] initWithSize:[image size]];
 	[SWImageTools initImageRep:&backedImage withSize:[image size]];
 	SWLockFocus(backedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-//	[image drawInRect:clippingRect
-//			   fromRect:clippingRect
-//			  operation:NSCompositeSourceOver 
-//			   fraction:1.0];
 	SWUnlockFocus(backedImage);
 	
 	// Draw the dotted line around the selected region
