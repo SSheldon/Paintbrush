@@ -24,7 +24,6 @@
 	NSGradient *backgroundGradient;
 	NSShadow *shadow;
 	NSImage *bgImagePattern;
-	NSColor *bgImageColor;
 	NSBitmapImageRep *bgImage;
 }
 

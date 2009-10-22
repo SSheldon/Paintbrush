@@ -35,17 +35,6 @@
 
 	NSRect docRect = [[self documentView] bounds];
 	
-	if (!bgImageColor && bgImagePattern) {
-		bgImageColor = [[NSColor colorWithPatternImage:bgImagePattern] retain];
-	}
-	
-	if (bgImageColor) {
-		[bgImageColor setFill];
-	} else {
-		// Fallback if we haven't received the bgImage
-		[[NSColor whiteColor] setFill];		
-	}
-
 	[NSGraphicsContext saveGraphicsState];
 	
 	// Create the shadow below and to the right of the shape.
@@ -62,7 +51,12 @@
 	[shadow set];
 	
 	// Draw the background -- either an image pattern or a color
-	NSRectFill(docRect);
+	if (bgImage) {
+		[bgImage drawInRect:[[self documentView] bounds]];
+	} else {
+		[[NSColor orangeColor] setFill];		
+		NSRectFill(docRect);
+	}
 	
 	[NSGraphicsContext restoreGraphicsState];
 }
@@ -79,6 +73,25 @@
 	
 	if ( docRect.size.height < clipRect.size.height ) {
 		clipRect.origin.y = roundf((docRect.size.height - clipRect.size.height) / 2.0);
+	}
+	
+	// Potentially regenerate the background image
+	if (bgImagePattern) {
+		if (bgImage && !NSEqualSizes([bgImage size], docRect.size)) {
+			[bgImage release];
+			bgImage = nil;
+		}
+		if (!bgImage) {
+			[SWImageTools initImageRep:&bgImage withSize:docRect.size];
+			[SWImageTools clearImage:bgImage];
+		}
+		if (bgImage) {
+			SWLockFocus(bgImage);
+			CGContextDrawTiledImage([[NSGraphicsContext currentContext] graphicsPort], 
+									CGRectMake(0, 0, [bgImagePattern size].width, [bgImagePattern size].height), 
+									[[NSBitmapImageRep imageRepWithData:[bgImagePattern TIFFRepresentation]] CGImage]);
+			SWUnlockFocus(bgImage);
+		}
 	}
 	
 	// Probably the most efficient way to move the bounds origin.
@@ -174,6 +187,8 @@
 {
 	[backgroundGradient release];
 	[shadow release];
+	[bgImage release];
+	[bgImagePattern release];
 	[super dealloc];
 }
 

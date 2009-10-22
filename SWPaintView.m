@@ -118,6 +118,23 @@
 //			//NSRectFill(rect);
 //		}		
 		
+		// Draw the pattern first
+//		if (bgImagePattern) {
+//			NSColor *bgImageColor = [[NSColor colorWithPatternImage:bgImagePattern] retain];
+//			[bgImageColor setFill];
+//			NSBitmapImageRep *rep;
+//			[SWImageTools initImageRep:&rep withSize:[self frame].size];
+//			[SWImageTools clearImage:rep];
+//			if ([rep size].width != 0 && [rep size].height != 0) {
+//				SWLockFocus(mainImage);
+//				CGContextDrawTiledImage([[NSGraphicsContext currentContext] graphicsPort], CGRectMake(0, 0, [bgImagePattern size].width, [bgImagePattern size].height), [[NSBitmapImageRep imageRepWithData:[bgImagePattern TIFFRepresentation]] CGImage]);
+//				SWUnlockFocus(mainImage);
+//			}
+////			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
+////							   NSRectToCGRect([self bounds]), [rep CGImage]);
+//
+//		}
+		
 		// Draw the NSBitmapImageRep to the view
 		if (mainImage) {
 			//[mainImage draw];
@@ -147,6 +164,7 @@
 		[NSGraphicsContext restoreGraphicsState];
 	}
 }
+
 
 //- (NSMenu *)menuForEvent:(NSEvent *)theEvent
 //{
