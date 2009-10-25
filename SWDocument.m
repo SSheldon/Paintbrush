@@ -37,9 +37,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (id)init
 {
-    if (self = [super init]) {
-		NSLog(@"New document");
-				
+    if (self = [super init]) {				
 		// Observers for the toolbox
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
@@ -107,7 +105,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			[self raiseSizeSheet:aController];
 		} else {
 			[SWDocument setWillShowSheet:YES];
-//			openedImage = [[NSBitmapImageRep alloc] initWithData:[SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]]];
 			openedImage = [NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]];
 			openingRect.origin = NSZeroPoint;
 			openingRect.size = [openedImage size];
@@ -395,6 +392,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	//NSPoint oldOrigin = [(SWSelectionTool *)currentTool oldOrigin];
 	// TODO: Make this work
 	NSLog(@"Copying is not currently supported in this build");
+	NSRunAlertPanel(@"ÁPeligro!", @"Copying is not currently supported in this build", @"Oh...", nil, nil);
 //	[backedImage drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
 //							   fromRect:NSMakeRect(oldOrigin.x,oldOrigin.y,rect.size.width, rect.size.height)
 //							  operation:NSCompositeSourceOver
@@ -494,7 +492,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem
 {
 	SEL action = [anItem action];
-//	NSLog(@"%@", anItem);
 	currentTool = [toolbox currentTool];
 	if ((action == @selector(copy:)) || 
 		(action == @selector(cut:)) || 
@@ -566,7 +563,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)crop:(id)sender
 {
 	// TODO: Make this work again
-	NSLog(@"Cropping doesn't work yet either");
+	NSLog(@"Cropping doesn't work yet");
+	NSRunAlertPanel(@"ÁPeligro!", @"Cropping doesn't work yet", @"Oh...", nil, nil);
 	
 	// First we need to make a temporary copy of what's selected by the selection tool
 	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];

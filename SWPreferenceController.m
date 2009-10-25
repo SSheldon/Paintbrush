@@ -44,7 +44,7 @@
 	// Set the initial preference view
 	[[self window] setContentSize:[generalPrefsView frame].size];
 	[[[self window] contentView] addSubview:generalPrefsView];
-	[[self window] setTitle:@"General"];
+	[[self window] setTitle:NSLocalizedString(@"General", @"Preferences window: general prefs")];
 	currentViewTag = 0;
 	//[[[self window] contentView] setWantsLayer:YES];
 }
@@ -83,7 +83,6 @@
 	// Post a notification that the level has changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:kSWUndoKey 
 														object:[NSNumber numberWithInteger:[sender integerValue]]];
-//	NSLog(@"Spin the spinner! %d", [sender integerValue]);
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
@@ -104,11 +103,11 @@
 	switch (tag) {
 		case 0:
 			*view = generalPrefsView;
-			*title = @"General";
+			*title = NSLocalizedString(@"General", @"Preferences window: general prefs");
 			break;
 		case 1:
 			*view = advancedPrefsView;
-			*title = @"Advanced";
+			*title = NSLocalizedString(@"Advanced", @"Preferences window: advanced prefs");
 			break;
 		default:
 			break;

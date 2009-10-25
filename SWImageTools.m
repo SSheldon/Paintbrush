@@ -27,11 +27,6 @@
 // Uses Core Image filters to invert the colors of the image
 + (void)invertImage:(NSBitmapImageRep *)image
 {
-	NSLog(@"Working on it!");
-//	[image lockFocus];
-//	NSGraphicsContext *gc = [NSGraphicsContext currentContext];
-//	CIContext *context = [gc CIContext];
-	
 	NSBitmapImageRep *imageRep;
 	[SWImageTools initImageRep:&imageRep withSize:[image size]];
 	[SWImageTools drawToImage:imageRep fromImage:image withComposition:NO];

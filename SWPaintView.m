@@ -41,13 +41,10 @@
 
 	
 	// New document, not an opened image: gotta paint the background color
-//	[NSGraphicsContext saveGraphicsState];
-//	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
 	SWLockFocus(mainImage);
 	[[toolboxController backgroundColor] setFill];
 	NSRectFill(frameRect);
 	SWUnlockFocus(mainImage);
-//	[NSGraphicsContext restoreGraphicsState];
 	
 	[SWImageTools drawToImage:bufferImage fromImage:mainImage withComposition:NO];
 	
@@ -101,39 +98,10 @@
 {
 	if (rect.size.width != 0 && rect.size.height != 0) {
 		
-		//NSRect drawRect = NSMakeRect(round(rect.origin.x), round(rect.origin.y), round(rect.size.width), round(rect.size.height));
 		[NSGraphicsContext saveGraphicsState];
 
 		// If you don't do this, the image looks blurry when zoomed in
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-//		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
-		
-		// Fill the background, but maintain transparency of mainImage
-		//[[toolbox backgroundColor] set];
-		//[NSBezierPath fillRect:[self bounds]];
-		
-//		if (backgroundColor) {
-//			[backgroundColor setFill];
-//			NSRectFillUsingOperation(rect, NSCompositeSourceOver);
-//			//NSRectFill(rect);
-//		}		
-		
-		// Draw the pattern first
-//		if (bgImagePattern) {
-//			NSColor *bgImageColor = [[NSColor colorWithPatternImage:bgImagePattern] retain];
-//			[bgImageColor setFill];
-//			NSBitmapImageRep *rep;
-//			[SWImageTools initImageRep:&rep withSize:[self frame].size];
-//			[SWImageTools clearImage:rep];
-//			if ([rep size].width != 0 && [rep size].height != 0) {
-//				SWLockFocus(mainImage);
-//				CGContextDrawTiledImage([[NSGraphicsContext currentContext] graphicsPort], CGRectMake(0, 0, [bgImagePattern size].width, [bgImagePattern size].height), [[NSBitmapImageRep imageRepWithData:[bgImagePattern TIFFRepresentation]] CGImage]);
-//				SWUnlockFocus(mainImage);
-//			}
-////			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
-////							   NSRectToCGRect([self bounds]), [rep CGImage]);
-//
-//		}
 		
 		// Draw the NSBitmapImageRep to the view
 		if (mainImage) {
@@ -156,33 +124,40 @@
 			[[self gridInRect:[self frame]] stroke];
 		}
 		
-//		if (expPath) {
-//			[[NSColor blueColor] set];
-//			[expPath stroke];
-//		}
-		
 		[NSGraphicsContext restoreGraphicsState];
 	}
 }
 
 
-//- (NSMenu *)menuForEvent:(NSEvent *)theEvent
-//{
-//	NSLog(@"Wow!");
-//	NSLog(@"%d", [theEvent type]);
-//	return [SWPaintView defaultMenu];
-//}
-
 + (NSMenu *)defaultMenu {
 	//NSMenu *theMenu = [super initWithWindowNibName:@"Preferences"];
-    NSMenu *theMenu = [[[NSMenu alloc] initWithTitle:@"Contextual Menu"] autorelease];
-    [theMenu insertItemWithTitle:@"Cut" action:@selector(cut:) keyEquivalent:@"" atIndex:0];
-    [theMenu insertItemWithTitle:@"Copy" action:@selector(copy:) keyEquivalent:@"" atIndex:1];
-    [theMenu insertItemWithTitle:@"Paste" action:@selector(paste:) keyEquivalent:@"" atIndex:2];
-	[theMenu insertItem:[NSMenuItem separatorItem] atIndex:3];
-    [theMenu insertItemWithTitle:@"Zoom In" action:@selector(zoomIn:) keyEquivalent:@"" atIndex:4];
-    [theMenu insertItemWithTitle:@"Zoom Out" action:@selector(zoomOut:) keyEquivalent:@"" atIndex:5];
-    [theMenu insertItemWithTitle:@"Actual Size" action:@selector(actualSize:) keyEquivalent:@"" atIndex:6];
+    NSMenu *theMenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
+    [theMenu insertItemWithTitle:NSLocalizedString(@"Cut", @"Cut the selection") 
+						  action:@selector(cut:) 
+				   keyEquivalent:@"" 
+						 atIndex:0];
+    [theMenu insertItemWithTitle:NSLocalizedString(@"Copy", @"Copy the selection") 
+						  action:@selector(copy:) 
+				   keyEquivalent:@"" 
+						 atIndex:1];
+    [theMenu insertItemWithTitle:NSLocalizedString(@"Paste", @"Paste the contents of the clipboard") 
+						  action:@selector(paste:) 
+				   keyEquivalent:@"" 
+						 atIndex:2];
+	[theMenu insertItem:[NSMenuItem separatorItem] 
+				atIndex:3];
+    [theMenu insertItemWithTitle:NSLocalizedString(@"Zoom In", @"Increase the zoom level")
+						  action:@selector(zoomIn:) 
+				   keyEquivalent:@"" 
+						 atIndex:4];
+    [theMenu insertItemWithTitle:NSLocalizedString(@"Zoom Out", @"Decrese the zoom level")
+						  action:@selector(zoomOut:)
+				   keyEquivalent:@"" 
+						 atIndex:5];
+    [theMenu insertItemWithTitle:NSLocalizedString(@"Actual Size", @"Restore the zoom level to 100%")
+						  action:@selector(actualSize:) 
+				   keyEquivalent:@"" 
+						 atIndex:6];
     return theMenu;
 }
 
@@ -200,9 +175,6 @@
 
 
 - (void)updateCurrentTool {
-	//[currentTool resetRedrawRect];
-	//NSLog(@"Toolbox is %@", toolbox);
-	//NSLog(@"%@ versus %@", currentTool, [toolbox currentTool]);
 	if (currentTool != [toolbox currentTool]) {
 		currentTool = [toolbox currentTool];
 		[self clearOverlay];
@@ -246,7 +218,6 @@
 
 - (void)mouseDragged:(NSEvent *)event
 {
-//	NSLog(@"Dragged, control = %d", ([event modifierFlags] & NSControlKeyMask));
 	if (isPayingAttention) {
 		NSPoint p = [event locationInWindow];
 		NSPoint dragPoint = [self convertPoint:p fromView:nil];
@@ -267,7 +238,6 @@
 
 - (void)mouseUp:(NSEvent *)event
 {
-//	NSLog(@"Up, control = %d", ([currentTool flags] & NSControlKeyMask));
 	if (isPayingAttention) {
 		NSPoint p = [event locationInWindow];
 		NSPoint upPoint = [self convertPoint:p fromView:nil];
@@ -344,7 +314,6 @@
 // Currently only necessary for the text tool, but we'll see where we go with it
 - (void)mouseMoved:(NSEvent *)event
 {
-	//NSLog(@"Moved");
 	NSPoint p = [event locationInWindow];
 	NSPoint motionPoint = [self convertPoint:p fromView:nil];
 	
@@ -610,6 +579,9 @@
 // Pastes data as an image
 - (void)pasteData:(NSData *)data
 {
+	NSRunAlertPanel(@"ÁPeligro!", @"Pasting doesn't really work...", @"Oh...", nil, nil);
+	NSLog(@"Pasting doesn't really work...");
+
 	[currentTool tieUpLooseEnds];
 	[toolboxController switchToScissors:nil];
 	currentTool = [toolbox currentTool];

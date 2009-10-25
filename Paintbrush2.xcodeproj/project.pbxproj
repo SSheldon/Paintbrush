@@ -114,6 +114,7 @@
 		27F5364E0E8C2A67001FA420 /* SWMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5364D0E8C2A67001FA420 /* SWMatrix.m */; };
 		27F537D00E917CA4001FA420 /* hoveredsmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F537CF0E917CA4001FA420 /* hoveredsmall.png */; };
 		27F7B8920DE3671D0038ED41 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F7B8900DE3671D0038ED41 /* MainMenu.xib */; };
+		27FB972C1093718300147DDF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27FB972B1093718300147DDF /* Localizable.strings */; };
 		27FFFE970ECCC78E0036CFE6 /* pressedwell.png in Resources */ = {isa = PBXBuildFile; fileRef = 27FFFE960ECCC78E0036CFE6 /* pressedwell.png */; };
 		27FFFEA30ECCE40E0036CFE6 /* hoveredwell.png in Resources */ = {isa = PBXBuildFile; fileRef = 27FFFEA20ECCE40E0036CFE6 /* hoveredwell.png */; };
 		594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D309E0DFF939E0095E075 /* Cocoa.framework */; };
@@ -282,6 +283,7 @@
 		27F7B89A0DE368CC0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SizeWindow.xib; sourceTree = "<group>"; };
 		27F7B89D0DE368FA0038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TextEntry.xib; sourceTree = "<group>"; };
 		27F7B8A00DE369080038ED41 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Toolbox.xib; sourceTree = "<group>"; };
+		27FB97291093717400147DDF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		27FFFE960ECCC78E0036CFE6 /* pressedwell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pressedwell.png; sourceTree = "<group>"; };
 		27FFFEA20ECCE40E0036CFE6 /* hoveredwell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hoveredwell.png; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 				2704064A0BFE3F3600C308C8 /* ToDo.rtf */,
 				275110310F169A0800A67F22 /* COPYING.txt */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
+				27FB972B1093718300147DDF /* Localizable.strings */,
 				27A4E2950F1FFF2E00A1F367 /* dsa_pub.pem */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 			);
@@ -709,6 +712,7 @@
 				27A725BC0FCCBEC800731565 /* paint.icns in Resources */,
 				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
 				2748ED811078167800F7A836 /* bgImage.png in Resources */,
+				27FB972C1093718300147DDF /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,6 +828,14 @@
 				27F7B8910DE3671D0038ED41 /* English */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		27FB972B1093718300147DDF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27FB97291093717400147DDF /* English */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

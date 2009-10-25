@@ -27,7 +27,6 @@
 {
 	if (!path) {
 		path = [NSBezierPath new];
-		NSLog(@"Line width is %lf", lineWidth);
 		[path setLineWidth:lineWidth];		
 	}
 	//if (lineWidth == 1) {

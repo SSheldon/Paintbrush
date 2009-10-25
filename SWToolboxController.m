@@ -191,7 +191,6 @@
 	} else {
 		// Check the letter pressed
 		NSString *string = [[event characters] lowercaseString];
-		NSLog(@"%@", string);
 		
 		switch([string characterAtIndex:0]) {
 			case 'a':
@@ -212,14 +211,13 @@
 
 
 // We use the title of the cell to indicate which tool to use
+//TODO: Make this localization-friendly
 - (IBAction)changeCurrentTool:(id)sender
 {
 	NSString *string = [[sender selectedCell] title];
 	if (string && ![string isEqualToString:@""]) {
-		NSLog(@"Window Controller is changing the tool...");
 		[self setCurrentTool:string];
 	}
-	//SWTool *theTool = [toolList objectForKey:string];
 }
 
 
@@ -239,7 +237,8 @@
 - (void)switchToScissors:(id)sender
 {
 	//[self setCurrentTool:[toolList objectForKey:@"Selection"]];
-	NSLog(@"Broken! Fix me!");
+	NSLog(@"We can't switch to scissors yet");
+	NSRunAlertPanel(@"ÁPeligro!", @"We can't switch to scissors yet", @"Oh...", nil, nil);
 }
 
 

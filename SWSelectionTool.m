@@ -253,7 +253,6 @@
 	}
 	isSelected = NO;
 	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ ) {
-		//NSLog(@"%@", imageRep);
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:[NSDictionary dictionaryWithObject:[imageRep TIFFRepresentation] forKey:@"Image"]];
@@ -346,7 +345,7 @@
 // Overridden for right-click
 - (BOOL)shouldShowContextualMenu
 {
-	return NO;
+	return YES;
 }
 
 - (NSString *)description

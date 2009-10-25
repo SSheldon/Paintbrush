@@ -238,7 +238,6 @@ BOOL colorsAreEqual(NSColor *clicked, NSColor *painting)
 	g2 = roundf(255*g2);
 	b1 = roundf(255*b1);
 	b2 = roundf(255*b2);
-	//NSLog(@"%d = %d, %d = %d, %d = %d", r1, r2, g1, g2, b1, b2);
 	return (r1==r2) && (g1==g2) && (b1==b2);
 }
 

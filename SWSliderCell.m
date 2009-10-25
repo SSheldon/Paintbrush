@@ -23,19 +23,29 @@
 
 @implementation SWSliderCell
 
+// -----------------------------------------------------------------------------
+//   Not currently being used!!!
+// -----------------------------------------------------------------------------
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	[super initWithCoder:aDecoder];
 	knobImage = [NSImage imageNamed:@"knob"];
-	NSLog(@"Made the slider");
 	return self;
 }
 
+// -----------------------------------------------------------------------------
+//   Not currently being used!!!
+// -----------------------------------------------------------------------------
+
 // Overridden to 
 - (void)drawKnob:(NSRect)knobRect {
-	NSLog(@"%@", [NSValue valueWithRect:knobRect]);
 	[knobImage compositeToPoint:NSMakePoint(knobRect.origin.x,knobRect.origin.y+knobRect.size.height) 
 					  operation:NSCompositeSourceOver];
 }
+
+// -----------------------------------------------------------------------------
+//   Not currently being used!!!
+// -----------------------------------------------------------------------------
 
 @end

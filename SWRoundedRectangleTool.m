@@ -72,15 +72,10 @@
 			begin.y -= size - abs(end.y - begin.y);
 		}
 		
-		NSLog(@"Size is %lf, (end.x - begin.x) is %lf, (end.y - begin.y) is %lf", size, (end.x - begin.x), (end.y - begin.y));
-		
-		
-		
 		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, size, size) 
 									  xRadius:30
 									  yRadius:30];
 	} else {
-		//NSLog(@"Width is %lf, height is %lf)", (end.x - begin.x), (end.y - begin.y));
 		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, (end.x - begin.x), (end.y - begin.y)) 
 									  xRadius:30 
 									  yRadius:30];

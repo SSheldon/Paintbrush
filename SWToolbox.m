@@ -16,7 +16,6 @@
 
 - (id)init
 {
-	NSLog(@"Toolbox has been created");
 	self = [super init];
 	
 	sharedController = [SWToolboxController sharedToolboxPanelController];
@@ -26,7 +25,6 @@
 	for (Class c in [SWToolbox toolClassList]) {
 		SWTool *tool = [[c alloc] initWithController:sharedController];
 		[toolList setObject:tool forKey:[tool description]];
-		//NSLog(@"%@", tool);
 	}
 	
 	[sharedController addObserver:self 
@@ -53,7 +51,6 @@
 		SWTool *tool = [self toolForLabel:thing];
 		if (tool) {
 			[self setCurrentTool:tool];
-			NSLog(@"Toolbox: new tool is %@", tool);
 		}
 	}
 }

@@ -1,0 +1,44 @@
+/* Restore the zoom level to 100% */
+"Actual Size" = "Actual Size";
+
+/* Copy the selection */
+"Copy" = "Copy";
+
+/* Cut the selection */
+"Cut" = "Cut";
+
+/* Paste the contents of the clipboard */
+"Paste" = "Paste";
+
+/* Increase the zoom level */
+"Zoom In" = "Zoom In";
+
+/* Decrese the zoom level */
+"Zoom Out" = "Zoom Out";
+
+/* Preferences window: advanced prefs */
+"Advanced" = "Advanced";
+
+/* Preferences window: general prefs */
+"General" = "General";
+
+/* The zoom levels for the scaling scroll view */
+"25%" = "25%";
+"50%" = "50%";
+"100%" = "100%";
+"200%" = "200%";
+"400%" = "400%";
+"800%" = "800%";
+"1600%" = "1600%";
+
+/* Custom size */
+"Custom" = "Custom";
+
+/* Size of the image copied to the clipboard */
+"From Clipboard" = "From Clipboard";
+
+/* Image size presets */
+"640_480" = "640 x 480";
+"800_600" = "800 x 600";
+"1024_768" = "1024 x 768";
+"1280_1024" = "1280 x 1024";

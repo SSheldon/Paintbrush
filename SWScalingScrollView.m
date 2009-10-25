@@ -25,31 +25,20 @@
 static NSString *scaleMenuLabels[] = { @"25%", @"50%", @"100%", @"200%", @"400%", @"800%", @"1600%"};
 static CGFloat scaleMenuFactors[] = { 0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0};
 static unsigned defaultIndex = 2;
-//static CGFloat _NSScaleMenuFontSize = 12.0;
 
 @implementation SWScalingScrollView
 
-- (id)initWithFrame:(NSRect)rect {
+- (id)initWithFrame:(NSRect)rect 
+{
     if ((self = [super initWithFrame:rect])) {
         scaleFactor = 1.0;
     }
     return self;
 }
 
-//- (void)drawRect:(NSRect)rect
-//{
-//	NSLog(@"%@", [NSValue valueWithRect:rect]);
-//	for (NSView *view in [self subviews]) {
-//		NSLog(@"%@ %lf %lf %lf %lf", view, [view frame].size.width, [view frame].size.height, [view frame].origin.x, [view frame].origin.y);
-//		NSShadow *shadow = [[NSShadow alloc] init];
-//		[shadow setShadowColor:[NSColor grayColor]];
-//		[shadow setShadowOffset:NSMakeSize(5,5)];
-//		[shadow setShadowBlurRadius:5.0];
-//		[view setShadow:shadow];
-//	}
-//}
 
-- (void)makeScalePopUpButton {
+- (void)makeScalePopUpButton 
+{
     if (scalePopUpButton == nil) {
         unsigned cnt, numberOfDefaultItems = (sizeof(scaleMenuLabels) / sizeof(NSString *));
         id curItem;
@@ -62,7 +51,7 @@ static unsigned defaultIndex = 2;
         
         // fill it
         for (cnt = 0; cnt < numberOfDefaultItems; cnt++) {
-            [scalePopUpButton addItemWithTitle:NSLocalizedStringFromTable(scaleMenuLabels[cnt], @"ZoomValues", nil)];
+            [scalePopUpButton addItemWithTitle:NSLocalizedString(scaleMenuLabels[cnt], nil)];
             curItem = [scalePopUpButton itemAtIndex:cnt];
             if (scaleMenuFactors[cnt] != 0.0) {
                 [curItem setRepresentedObject:[NSNumber numberWithFloat:scaleMenuFactors[cnt]]];
@@ -88,7 +77,8 @@ static unsigned defaultIndex = 2;
     }
 }
 
-- (void)tile {
+- (void)tile 
+{
     // Let the superclass do most of the work.
     [super tile];
 	
@@ -120,7 +110,8 @@ static unsigned defaultIndex = 2;
 	}
 }
 
-- (void)scalePopUpAction:(id)sender {
+- (void)scalePopUpAction:(id)sender 
+{
     NSNumber *selectedFactorObject = [[sender selectedCell] representedObject];
     
     if (selectedFactorObject == nil) {
@@ -131,7 +122,8 @@ static unsigned defaultIndex = 2;
     }
 }
 
-- (CGFloat)scaleFactor {
+- (CGFloat)scaleFactor 
+{
     return scaleFactor;
 }
 
@@ -139,7 +131,6 @@ static unsigned defaultIndex = 2;
 - (void)setScaleFactor:(CGFloat)factor atPoint:(NSPoint)point adjustPopup:(BOOL)flag
 {
 	[self setScaleFactor:factor adjustPopup:flag];
-	NSLog(@"Zooming in on %f, %f", point.x, point.y);
 	SWCenteringClipView *clipView = (SWCenteringClipView *)[[self documentView] superview];
 	NSSize size = [clipView bounds].size;
 
@@ -153,7 +144,8 @@ static unsigned defaultIndex = 2;
 }
 
 
-- (void)setScaleFactor:(CGFloat)newScaleFactor adjustPopup:(BOOL)flag {
+- (void)setScaleFactor:(CGFloat)newScaleFactor adjustPopup:(BOOL)flag 
+{
     if (scaleFactor != newScaleFactor) {
 		NSSize curDocFrameSize, newDocBoundsSize, curDocBoundsSize;
 		NSPoint newDocBoundsOrigin;
