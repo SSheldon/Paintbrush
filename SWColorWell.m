@@ -42,7 +42,10 @@
 //  closed, reinforcing the fact that it has been deselected, as well as
 //  eliminating the possibility of CGFloat-clicking and unknowingly
 //  deactivating the well.
-- (void)deactivate {
+- (void)deactivate 
+{
+	// While we're at it, redraw everything
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"SWColorSet" object:nil];
 	[super deactivate];
 	[[NSColorPanel sharedColorPanel] close];
 }
