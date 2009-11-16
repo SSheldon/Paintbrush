@@ -160,6 +160,13 @@
 }
 
 
+// A global list of file types -- autoreleased for your convenience!
++ (NSArray *)imageFileTypes
+{
+	return [NSArray arrayWithObjects:@"PNG", @"JPEG", @"GIF", @"BMP", @"TIFF", nil];
+}
+
+
 void SWLockFocus(NSBitmapImageRep *image)
 {
 	[NSGraphicsContext saveGraphicsState];

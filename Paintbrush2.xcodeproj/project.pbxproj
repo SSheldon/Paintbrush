@@ -58,6 +58,8 @@
 		278FC2BA0E4A3E21006065E6 /* SWToolboxPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FC2B90E4A3E21006065E6 /* SWToolboxPanel.m */; };
 		27955CC00CFDE0C800D5AF99 /* SWColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */; };
 		27955D070CFDE7B900D5AF99 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
+		27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */; };
+		27A1CD6810A650D4005D2D84 /* SavePanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27A1CD6710A650D4005D2D84 /* SavePanelAccessoryView.xib */; };
 		27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2E3AC0F31051500BD41AC /* SWToolbox.m */; };
 		27A45BC30E99E5D000AC15F0 /* rounded rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BBF0E99E5D000AC15F0 /* rounded rectangle.png */; };
 		27A45BC40E99E5D000AC15F0 /* selection_old.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BC00E99E5D000AC15F0 /* selection_old.png */; };
@@ -205,6 +207,9 @@
 		27955CBE0CFDE0C800D5AF99 /* SWColorWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWColorWell.h; sourceTree = "<group>"; };
 		27955CBF0CFDE0C800D5AF99 /* SWColorWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWColorWell.m; sourceTree = "<group>"; };
 		27955D060CFDE7B900D5AF99 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		27A1CD2C10A64F02005D2D84 /* SWSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
+		27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
+		27A1CD6510A650BB005D2D84 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SavePanelAccessoryView.xib; sourceTree = "<group>"; };
 		27A2E3AB0F31051500BD41AC /* SWToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWToolbox.h; sourceTree = "<group>"; };
 		27A2E3AC0F31051500BD41AC /* SWToolbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWToolbox.m; sourceTree = "<group>"; };
 		27A45BBF0E99E5D000AC15F0 /* rounded rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded rectangle.png"; sourceTree = "<group>"; };
@@ -395,6 +400,8 @@
 				275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */,
 				273BE3C01011389E00AA0B05 /* SWResizeWindowController.h */,
 				273BE3C11011389E00AA0B05 /* SWResizeWindowController.m */,
+				27A1CD2C10A64F02005D2D84 /* SWSavePanelAccessoryViewController.h */,
+				27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */,
 				27A487280C57AEE00047DF3C /* SWSizeWindowController.h */,
 				27A487290C57AEE00047DF3C /* SWSizeWindowController.m */,
 				270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */,
@@ -463,6 +470,7 @@
 				27389A160F2A9AB50062831A /* MyDocument.xib */,
 				27389A180F2A9ABC0062831A /* Preferences.xib */,
 				273BE3BC101135C800AA0B05 /* ResizePanel.xib */,
+				27A1CD6710A650D4005D2D84 /* SavePanelAccessoryView.xib */,
 				27389A1B0F2A9AD90062831A /* SizeWindow.xib */,
 				27389A1D0F2A9AE00062831A /* TextEntry.xib */,
 				27389A1F0F2A9AE60062831A /* Toolbox.xib */,
@@ -713,6 +721,7 @@
 				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
 				2748ED811078167800F7A836 /* bgImage.png in Resources */,
 				27FB972C1093718300147DDF /* Localizable.strings in Resources */,
+				27A1CD6810A650D4005D2D84 /* SavePanelAccessoryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,6 +769,7 @@
 				2740C9150ED5F62B00DA6A98 /* SWFreeformSelectionTool.m in Sources */,
 				27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */,
 				273BE3C21011389E00AA0B05 /* SWResizeWindowController.m in Sources */,
+				27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +830,14 @@
 				273BE3BA101135BF00AA0B05 /* English */,
 			);
 			name = ResizePanel.xib;
+			sourceTree = "<group>";
+		};
+		27A1CD6710A650D4005D2D84 /* SavePanelAccessoryView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27A1CD6510A650BB005D2D84 /* English */,
+			);
+			name = SavePanelAccessoryView.xib;
 			sourceTree = "<group>";
 		};
 		27F7B8900DE3671D0038ED41 /* MainMenu.xib */ = {

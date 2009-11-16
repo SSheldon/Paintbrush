@@ -32,11 +32,9 @@
 
 - (void)awakeFromNib
 {
-	[fileTypeButton addItemWithTitle:@"PNG"];
-	[fileTypeButton addItemWithTitle:@"JPEG"];
-	[fileTypeButton addItemWithTitle:@"GIF"];
-	[fileTypeButton addItemWithTitle:@"BMP"];
-	[fileTypeButton addItemWithTitle:@"TIFF"];
+	NSArray *fileTypes = [SWImageTools imageFileTypes];
+	for (NSString *type in fileTypes)
+		[fileTypeButton addItemWithTitle:type];
 	
 	NSToolbar *toolbar = [[self window] toolbar];
 	[toolbar setSelectedItemIdentifier:[[[toolbar items] objectAtIndex:0] itemIdentifier]];
@@ -57,7 +55,7 @@
 	[fileTypeButton selectItemWithTitle:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
 }
 
-// Sets the default filetype for new documents (can always be set in the save dialog, however)
+// Sets the default fileType for new documents (can always be set in the save dialog, however)
 - (IBAction)changeFileType:(id)sender {
 	[[NSUserDefaults standardUserDefaults] setValue:[sender titleOfSelectedItem]
 											 forKey:@"FileType"];

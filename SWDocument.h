@@ -31,6 +31,7 @@
 @class SWResizeWindowController;
 @class SWCenteringClipView;
 @class SWTextToolWindowController;
+@class SWSavePanelAccessoryViewController;
 
 @interface SWDocument : NSDocument
 {
@@ -45,10 +46,14 @@
 	SWTextToolWindowController *textController;
 	SWSizeWindowController *sizeController;
 	SWResizeWindowController *resizeController;
+	SWSavePanelAccessoryViewController *savePanelAccessoryViewController;
 	NSBitmapImageRep *openedImage;
 	SWTool *currentTool;
 	NSNotificationCenter *nc;
 	NSRect openingRect;
+	
+	// Caching the save panel
+	NSSavePanel *cachedSavePanel;
 }
 
 // Methods called by menu items

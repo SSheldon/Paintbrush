@@ -29,6 +29,7 @@
 #import "SWResizeWindowController.h"
 #import "SWToolList.h"
 #import "SWAppController.h"
+#import "SWSavePanelAccessoryViewController.h"
 
 @implementation SWDocument
 
@@ -58,6 +59,21 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		
 	}
     return self;
+}
+
+
+// Housekeeping
+- (void)dealloc
+{	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[sizeController release];
+	[clipView release];
+	//[openedImage release];
+	[textController release];
+	[savePanelAccessoryViewController removeObserver:self forKeyPath:kSWCurrentFileType];
+	[savePanelAccessoryViewController release];
+	[toolbox release];
+	[super dealloc];
 }
 
 
@@ -295,7 +311,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Override to ensure that the user's file type is set
 - (IBAction)saveDocument:(id)sender
 {
-	[self setFileType:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
+	[super setFileType:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
 	[toolboxController tieUpLooseEnds];
 	[super saveDocument:sender];
 }
@@ -325,6 +341,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		data = [bitmap representationUsingType: NSTIFFFileType
 									properties: nil];
 	}
+	
+	// Remember to re-flip the image after it's been saved!
+	[SWImageTools flipImageVertical:bitmap];
+
 	return data;
 }
 
@@ -347,6 +367,46 @@ static BOOL kSWDocumentWillShowSheet = YES;
     [fileAttributes setObject:[NSNumber numberWithUnsignedInt:'Pbsh']
 					   forKey:NSFileHFSCreatorCode];
     return [fileAttributes autorelease];
+}
+
+
+// Customizing our save panel to provide a few more options for the user
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
+{
+	if (!savePanelAccessoryViewController) {
+		savePanelAccessoryViewController = [[SWSavePanelAccessoryViewController alloc] initWithNibName:@"SavePanelAccessoryView"
+																								bundle:nil];
+//		[savePanelAccessoryViewController setFileTypes:[SWImageTools imageFileTypes] /*[savePanel allowedFileTypes]*/];
+		[savePanelAccessoryViewController addObserver:self 
+										   forKeyPath:kSWCurrentFileType 
+											  options:NSKeyValueObservingOptionNew 
+											  context:NULL];
+	}
+	
+	// Make sure that it's loaded its view
+	[savePanelAccessoryViewController loadView];
+	NSView *accessoryView = [savePanelAccessoryViewController viewForFileType:[self fileType]];
+	if (accessoryView) {
+		[savePanel setAccessoryView:accessoryView];
+		
+		// Temporarily cache the save panel
+		cachedSavePanel = savePanel;
+	}
+	
+	return YES;
+}
+
+
+// Whenever the currently-selected filetype changes, this will trigger
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+					  ofObject:(id)object 
+						change:(NSDictionary *)change 
+					   context:(void *)context
+{
+	NSString *newFileType = [change valueForKey:NSKeyValueChangeNewKey];
+	if (newFileType) {
+		[cachedSavePanel setRequiredFileType:newFileType];
+	}
 }
 
 
@@ -597,16 +657,5 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[paintView setNeedsDisplay:YES];
 }
 
-
-- (void)dealloc
-{	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[sizeController release];
-	[clipView release];
-	//[openedImage release];
-	[textController release];
-	[toolbox release];
-	[super dealloc];
-}
 
 @end
