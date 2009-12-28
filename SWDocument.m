@@ -68,6 +68,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[sizeController release];
 	[clipView release];
+	[currentFileType release];
 	//[openedImage release];
 	[textController release];
 	[savePanelAccessoryViewController removeObserver:self forKeyPath:kSWCurrentFileType];
@@ -105,7 +106,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[scrollView setScaleFactor:1.0 adjustPopup:YES];
 	
 	// Get and set the background image of the clip view
-	NSImage *bgImage = [NSImage imageNamed:@"bgImage.png"];
+	NSImage *bgImage = [NSImage imageNamed:@"bgImage"];
 	if (bgImage)
 		[clipView setBgImagePattern:bgImage];
 		
@@ -296,7 +297,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 }
 
 
-- (SWPaintView *)paintView {
+- (SWPaintView *)paintView 
+{
 	return paintView;
 }
 
@@ -311,36 +313,76 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Override to ensure that the user's file type is set
 - (IBAction)saveDocument:(id)sender
 {
-	[super setFileType:[[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"]];
 	[toolboxController tieUpLooseEnds];
 	[super saveDocument:sender];
+}
+
+
+// Overridden so that we can reload the image after saving
+- (BOOL) saveToURL:(NSURL *)absURL 
+			ofType:(NSString *)type 
+  forSaveOperation:(NSSaveOperationType)saveOp 
+			 error:(NSError **)outError
+{
+    BOOL status = [super saveToURL:absURL ofType:type forSaveOperation:saveOp error:outError];
+	
+    if (status==YES && (saveOp==NSSaveOperation || saveOp==NSSaveAsOperation))
+    {
+		//TODO: Make this work
+		/*
+        NSURL* url = [self fileURL];
+		
+        // reload the image (this could faile)
+        status = [self readFromURL:url ofType:type error:outError];
+		
+        // re-initialize the UI
+        [self setupAll];
+		
+        // Tell the info panel that the url changed
+        [ImageInfoPanel setURL:url];
+		*/
+    }
+	
+	return status;
 }
 
 
 // Saving data: returns the correctly-formatted image data
 - (NSData *)dataOfType:(NSString *)aType error:(NSError **)anError
 {
-//	NSData *data = [[paintView mainImage] TIFFRepresentation];
-//	NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithData:data] autorelease];
 	NSBitmapImageRep *bitmap = [paintView mainImage];
+//	NSBitmapImageRep *bitmap = [SWImageTools createMonochromeImage:[paintView mainImage]];
+
 	[SWImageTools flipImageVertical:bitmap];
+		
 	NSData *data = nil;
-	if ([aType isEqualToString:@"BMP"]) {
-		data = [bitmap representationUsingType: NSBMPFileType
-									properties: nil];
-	} else if ([aType isEqualToString:@"PNG"]) {
-		data = [bitmap representationUsingType: NSPNGFileType
-									properties: nil];
-	} else if ([aType isEqualToString:@"JPEG"]) {
-		data = [bitmap representationUsingType: NSJPEGFileType
-									properties: nil];
-	} else if ([aType isEqualToString:@"GIF"]) {
-		data = [bitmap representationUsingType: NSGIFFileType
-									properties: nil];
-	} else if ([aType isEqualToString:@"TIFF"]) {
-		data = [bitmap representationUsingType: NSTIFFFileType
-									properties: nil];
-	}
+	NSBitmapImageFileType fileType = nil;
+	
+	if ([aType isEqualToString:@"bmp"])
+		fileType = NSBMPFileType;
+	else if ([aType isEqualToString:@"png"])
+		fileType = NSPNGFileType;
+	else if ([aType isEqualToString:@"jpg"])
+		fileType = NSJPEGFileType;
+	else if ([aType isEqualToString:@"gif"])
+		fileType = NSGIFFileType;
+	else if ([aType isEqualToString:@"tif"])
+		fileType = NSTIFFFileType;
+	else
+		NSLog(@"Error: unknown filetype!");
+	
+	// We need to retrieve the data stored in the save panel, and pack them into a dictionary
+	NSTIFFCompression tiffCompression = (fileType == NSJPEGFileType ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
+	CGFloat compressionFactor = [savePanelAccessoryViewController imageQuality];
+	BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
+	NSDictionary *propDict = [NSDictionary dictionaryWithObjectsAndKeys:
+							  [NSNumber numberWithInteger:tiffCompression], NSImageCompressionMethod,
+							  [NSNumber numberWithFloat:compressionFactor], NSImageCompressionFactor, 
+							  nil];
+	
+	// Convert the image into the data that we need to return
+	data = [bitmap representationUsingType:fileType 
+								properties:propDict];
 	
 	// Remember to re-flip the image after it's been saved!
 	[SWImageTools flipImageVertical:bitmap];
@@ -376,24 +418,35 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	if (!savePanelAccessoryViewController) {
 		savePanelAccessoryViewController = [[SWSavePanelAccessoryViewController alloc] initWithNibName:@"SavePanelAccessoryView"
 																								bundle:nil];
-//		[savePanelAccessoryViewController setFileTypes:[SWImageTools imageFileTypes] /*[savePanel allowedFileTypes]*/];
 		[savePanelAccessoryViewController addObserver:self 
 										   forKeyPath:kSWCurrentFileType 
 											  options:NSKeyValueObservingOptionNew 
 											  context:NULL];
 	}
+
+	// Update the filetype based on the user defaults (after converting from human readable form)
+	NSString *savedValue = [[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"];
+	[currentFileType release];
+	currentFileType = [[SWImageTools convertFileType:savedValue] retain];
 	
 	// Make sure that it's loaded its view
 	[savePanelAccessoryViewController loadView];
-	NSView *accessoryView = [savePanelAccessoryViewController viewForFileType:[self fileType]];
+	NSView *accessoryView = [savePanelAccessoryViewController viewForFileType:savedValue];
 	if (accessoryView) {
 		[savePanel setAccessoryView:accessoryView];
-		
-		// Temporarily cache the save panel
-		cachedSavePanel = savePanel;
 	}
 	
+	// Make sure the correct file extension is being used
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
+	
 	return YES;
+}
+
+
+// We need to override this because our save panel has its own format popup
+- (NSString *)fileTypeFromLastRunSavePanel
+{
+    return currentFileType;
 }
 
 
@@ -405,7 +458,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	NSString *newFileType = [change valueForKey:NSKeyValueChangeNewKey];
 	if (newFileType) {
-		[cachedSavePanel setRequiredFileType:newFileType];
+		[currentFileType release];
+		currentFileType = [newFileType retain];
+		NSSavePanel *savePanel = (NSSavePanel *)[[savePanelAccessoryViewController view] window];
+		[savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
 	}
 }
 

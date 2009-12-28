@@ -19,6 +19,7 @@
 
 
 #import "SWImageTools.h"
+#import "SWDocument.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -142,28 +143,101 @@
 {
 	NSUInteger w = size.width;
 	NSUInteger h = size.height;
-	NSUInteger rowBytes = ((NSInteger)(ceil(w)) * 4 + 0x0000000F) & ~0x0000000F; // 16-byte aligned is good
 
-	*imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:nil 
-														pixelsWide:w
-														pixelsHigh:h
-													 bitsPerSample:8 
-												   samplesPerPixel:4 
-														  hasAlpha:YES 
-														  isPlanar:NO 
-													colorSpaceName:NSCalibratedRGBColorSpace 
-													   bytesPerRow:rowBytes
-													  bitsPerPixel:32];
+	*imageRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes: nil 
+														pixelsWide: w
+														pixelsHigh: h
+													 bitsPerSample: 8 
+												   samplesPerPixel: 4 
+														  hasAlpha: YES 
+														  isPlanar: NO 
+													colorSpaceName: NSCalibratedRGBColorSpace 
+													   bytesPerRow: 0	// "you figure it out"
+													  bitsPerPixel: 32];
 	// Initialize it to a completely transparent image
 	[SWImageTools clearImage:*imageRep];
 	
 }
 
 
-// A global list of file types -- autoreleased for your convenience!
-+ (NSArray *)imageFileTypes
+// Requested by a user -- converts an image to a monochrome bitmap
++ (NSBitmapImageRep *)createMonochromeImage:(NSBitmapImageRep *)baseImage
 {
-	return [NSArray arrayWithObjects:@"PNG", @"JPEG", @"GIF", @"BMP", @"TIFF", nil];
+	NSUInteger w = [baseImage pixelsWide];
+	NSUInteger h = [baseImage pixelsHigh];
+	
+	// Need a place to put the monochrome pixels.
+	NSBitmapImageRep *bwRep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes: nil  // Nil pointer tells the kit to allocate the pixel buffer for us.
+																	  pixelsWide: w 
+																	  pixelsHigh: h
+																   bitsPerSample: 1
+																 samplesPerPixel: 1  
+																		hasAlpha: NO
+																		isPlanar: NO 
+																  colorSpaceName: NSCalibratedWhiteColorSpace // 0 = black, 1 = white in this color space.
+																	 bytesPerRow: 0     // Passing zero means "you figure it out."
+																	bitsPerPixel: 0];  // This must agree with bitsPerSample and samplesPerPixel.
+	
+	// Get a pointer to the pixel data -- both the new one and the old one
+	unsigned char *colorData = [baseImage bitmapData];
+	unsigned char *bwData = [bwRep bitmapData];
+	unsigned char *thisPixel = bwData[0];
+	
+	CGFloat maxColorValue = pow(2, [baseImage bitsPerSample]);
+	
+	NSUInteger row, col;
+	NSUInteger bitInByte = 0;
+	unsigned char currByte = 0;
+	for (row = 0; row < h; row++) {
+		for (col = 0; col < w; col++) {
+			
+			// First calculate the offset for the point passed in
+			NSUInteger offset = (w * row) + col;
+			offset *= [baseImage samplesPerPixel];
+			
+			// Next get the components at that offset
+			NSUInteger red = colorData[offset + 0];
+			NSUInteger green = colorData[offset + 1];
+			NSUInteger blue = colorData[offset + 2];
+			
+			// NTSC color weighting formula
+			NSUInteger value = (unsigned char)rint(((0.299 * red) + (0.587 * green) + (0.114 * blue)) / maxColorValue);
+			
+			// Add it to our byte
+			currByte |= value << bitInByte++;
+			if (bitInByte == 8) {
+				// We've reached a full byte -- add it to the data
+				*thisPixel = currByte;
+				currByte = 0;
+				bitInByte = 0;
+				
+				// Increment the pointer
+				thisPixel++;
+			}
+		}		
+	}
+	
+	return [bwRep autorelease];
+}
+
+
+// This method converts human-readable strings (PNG, TIFF, etc) to system-happy extensions
++ (NSString *)convertFileType:(NSString *)fileType
+{
+	NSString *finalString = nil;
+	NSString *lowerCaseFileType = [fileType lowercaseString];
+	if ([lowerCaseFileType length] == 3) {
+		finalString = lowerCaseFileType;		
+	} else {
+		// Two special cases at the moment
+		if ([lowerCaseFileType isEqualToString:@"tiff"])
+			finalString = @"tif";
+		else if ([lowerCaseFileType isEqualToString:@"jpeg"])
+			finalString = @"jpg";
+		else
+			finalString = @"";
+	}
+	return finalString;
 }
 
 

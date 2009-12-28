@@ -18,7 +18,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
-			<true/>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>SWDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
@@ -37,7 +37,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
-			<true/>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>SWDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
@@ -55,7 +55,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
-			<true/>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>SWDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
@@ -73,7 +73,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
-			<true/>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>SWDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
@@ -92,7 +92,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSTypeIsPackage</key>
-			<true/>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>SWDocument</string>
 			<key>NSPersistentStoreTypeKey</key>

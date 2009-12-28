@@ -26,10 +26,13 @@ extern NSString * const kSWCurrentFileType;
 }
 
 - (void)updateViewForFileType:(NSString *)fileType;
-- (void)setFileTypes:(NSArray *)fileTypes;
 - (NSView *)viewForFileType:(NSString *)fileType;
 - (IBAction)fileTypeDidChange:(id)sender;
 
 @property (retain) NSString *currentFileType;
+
+// These values are bound (binded?) to the controls in the various subviews
+@property (assign) BOOL isAlphaEnabled;
+@property (assign) CGFloat imageQuality;
 
 @end

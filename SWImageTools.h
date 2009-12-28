@@ -31,7 +31,10 @@
 + (void)initImageRep:(NSBitmapImageRep **)imageRep withSize:(NSSize)size;
 + (void)flipImageHorizontal:(NSBitmapImageRep *)bitmap;
 + (void)flipImageVertical:(NSBitmapImageRep *)bitmap;
-+ (NSArray *)imageFileTypes;
++ (NSString *)convertFileType:(NSString *)fileType;
+
+// User requested feature!
++ (NSBitmapImageRep *)createMonochromeImage:(NSBitmapImageRep *)baseImage;
 
 // A few things I'd like to try
 void SWLockFocus(NSBitmapImageRep *image);

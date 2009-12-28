@@ -20,6 +20,7 @@
 
 #import "SWPreferenceController.h"
 #import "SWAppController.h"
+#import "SWDocument.h"
 
 @implementation SWPreferenceController
 
@@ -32,7 +33,7 @@
 
 - (void)awakeFromNib
 {
-	NSArray *fileTypes = [SWImageTools imageFileTypes];
+	NSArray *fileTypes = [SWDocument writableTypes];
 	for (NSString *type in fileTypes)
 		[fileTypeButton addItemWithTitle:type];
 	

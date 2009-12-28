@@ -7,6 +7,7 @@
 //
 
 #import "SWSavePanelAccessoryViewController.h"
+#import "SWDocument.h"
 
 
 NSString * const kSWCurrentFileType = @"currentFileType";
@@ -15,6 +16,8 @@ NSString * const kSWCurrentFileType = @"currentFileType";
 
 
 @synthesize currentFileType;
+@synthesize isAlphaEnabled;
+@synthesize imageQuality;
 
 
 // Overridden to initially populate the popup button
@@ -23,9 +26,13 @@ NSString * const kSWCurrentFileType = @"currentFileType";
 	[super loadView];
 	
 	// Use the file types
-	NSArray *fileTypes = [SWImageTools imageFileTypes];
+	NSArray *fileTypes = [SWDocument writableTypes];
 	for (NSString *type in fileTypes)
-		[fileTypeButton addItemWithTitle:type];	
+		[fileTypeButton addItemWithTitle:type];
+	
+	// Initialize the values for the controls in the subviews
+	[self setImageQuality:0.8];
+	[self setIsAlphaEnabled:YES];
 }
 
 
@@ -51,20 +58,11 @@ NSString * const kSWCurrentFileType = @"currentFileType";
 	// Now we can add the correct subview
 	if ([fileType isEqualToString:@"JPEG"]) {
 		[containerView addSubview:jpegView];
-	} else {
+	}/* else {
 		// In all other cases, just use this view
 		[containerView addSubview:defaultView];
-	}
+	}*/
 	
-}
-
-
-- (void)setFileTypes:(NSArray *)fileTypes
-{
-	if (fileTypes) {
-		for (NSString *type in fileTypes)
-			[fileTypeButton addItemWithTitle:type];	
-	}
 }
 
 
@@ -73,19 +71,7 @@ NSString * const kSWCurrentFileType = @"currentFileType";
 {
 	// Convert the filetype for use as a file extension
 	NSString *buttonSelection = [sender titleOfSelectedItem];
-	NSString *lowerCaseFileType = [buttonSelection lowercaseString];
-	NSString *finalString = nil;
-	if ([lowerCaseFileType length] == 3) {
-		finalString = lowerCaseFileType;		
-	} else {
-		// Two special cases at the moment
-		if ([lowerCaseFileType isEqualToString:@"tiff"])
-			finalString = @"tif";
-		else if ([lowerCaseFileType isEqualToString:@"jpeg"])
-			finalString = @"jpg";
-		else
-			finalString = @"";
-	}
+	NSString *finalString = [SWImageTools convertFileType:buttonSelection];
 	
 	// Use the explicit mutator, to trigger KVO
 	[self setCurrentFileType:finalString];

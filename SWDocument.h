@@ -47,13 +47,13 @@
 	SWSizeWindowController *sizeController;
 	SWResizeWindowController *resizeController;
 	SWSavePanelAccessoryViewController *savePanelAccessoryViewController;
+	
+	// Misc other member variables
 	NSBitmapImageRep *openedImage;
 	SWTool *currentTool;
 	NSNotificationCenter *nc;
 	NSRect openingRect;
-	
-	// Caching the save panel
-	NSSavePanel *cachedSavePanel;
+	NSString *currentFileType;
 }
 
 // Methods called by menu items
