@@ -69,7 +69,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[sizeController release];
 	[clipView release];
 	[currentFileType release];
-	//[openedImage release];
+	[openedImage release];
 	[textController release];
 	[savePanelAccessoryViewController removeObserver:self forKeyPath:kSWCurrentFileType];
 	[savePanelAccessoryViewController release];
@@ -199,7 +199,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		
 		// Use external method to determine the window bounds
 		NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-		[window setFrame:tempRect display:YES animate:YES];
+		[[paintView window] setFrame:tempRect display:YES animate:YES];
 	} else if (returnCode == NSCancelButton) {
 		// Close the document - they obviously don't want to play
 		[[super windowForSheet] close];
@@ -553,6 +553,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Paste
 - (IBAction)paste:(id)sender
 {
+	[toolboxController switchToScissors:nil];
+	
 	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
 	if (data) {
 		[paintView pasteData:data];		

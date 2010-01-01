@@ -573,7 +573,6 @@
 	NSRunAlertPanel(@"ÁPeligro!", @"Pasting doesn't really work...", @"Oh...", nil, nil);
 	DebugLog(@"Pasting doesn't really work...");
 
-	[toolboxController switchToScissors:nil];
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 	

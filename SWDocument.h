@@ -36,7 +36,6 @@
 @interface SWDocument : NSDocument
 {
 	IBOutlet SWPaintView *paintView;
-	IBOutlet NSWindow *window;
 	IBOutlet SWScalingScrollView *scrollView;	/* ScrollView containing document */
 	
 	// A bunch of controllers and one view
