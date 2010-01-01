@@ -80,14 +80,10 @@ typedef enum {
 //- (BOOL)shouldShowFillOptions;
 //- (BOOL)shouldShowTransparencyOptions;
 - (NSBezierPath *)path;
-- (NSString *)emptyString;
 
 @property (readonly) BOOL shouldShowFillOptions;
 @property (readonly) BOOL shouldShowTransparencyOptions;
 @property (assign) NSUInteger flags;
-
-// A few useful C functions
-BOOL colorsAreEqual(NSColor *clicked, NSColor *painting);
 
 @end
 

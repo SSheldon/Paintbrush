@@ -190,7 +190,7 @@
 
 - (void)mouseDown:(NSEvent *)event
 {
-//	NSLog(@"Down, control = %d", ([event modifierFlags] & NSControlKeyMask));
+//	DebugLog(@"Down, control = %d", ([event modifierFlags] & NSControlKeyMask));
 //	if (!([event modifierFlags] & NSControlKeyMask)) {
 		isPayingAttention = YES;
 		NSPoint p = [event locationInWindow];
@@ -256,6 +256,7 @@
 		}
 		
 		[self setNeedsDisplayInRect:[currentTool invalidRect]];
+		
 		//[self setNeedsDisplay:YES];
 	}
 }
@@ -580,7 +581,7 @@
 - (void)pasteData:(NSData *)data
 {
 	NSRunAlertPanel(@"ÁPeligro!", @"Pasting doesn't really work...", @"Oh...", nil, nil);
-	NSLog(@"Pasting doesn't really work...");
+	DebugLog(@"Pasting doesn't really work...");
 
 	[currentTool tieUpLooseEnds];
 	[toolboxController switchToScissors:nil];
@@ -588,7 +589,7 @@
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 	
-	//NSLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
+	//DebugLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
 	//	  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
 	//	  [[self superview] bounds].size.width, [[self superview] bounds].size.height);
 		  //[self bounds].origin.x, [self bounds].origin.y, 

@@ -369,7 +369,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	else if ([aType isEqualToString:@"tif"])
 		fileType = NSTIFFFileType;
 	else
-		NSLog(@"Error: unknown filetype!");
+		DebugLog(@"Error: unknown filetype!");
 	
 	// We need to retrieve the data stored in the save panel, and pack them into a dictionary
 	NSTIFFCompression tiffCompression = (fileType == NSJPEGFileType ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
@@ -507,7 +507,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	//NSBitmapImageRep *backedImage = [(SWSelectionTool *)currentTool backedImage];
 	//NSPoint oldOrigin = [(SWSelectionTool *)currentTool oldOrigin];
 	// TODO: Make this work
-	NSLog(@"Copying is not currently supported in this build");
+	DebugLog(@"Copying is not currently supported in this build");
 	NSRunAlertPanel(@"ÁPeligro!", @"Copying is not currently supported in this build", @"Oh...", nil, nil);
 //	[backedImage drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
 //							   fromRect:NSMakeRect(oldOrigin.x,oldOrigin.y,rect.size.width, rect.size.height)
@@ -679,7 +679,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)crop:(id)sender
 {
 	// TODO: Make this work again
-	NSLog(@"Cropping doesn't work yet");
+	DebugLog(@"Cropping doesn't work yet");
 	NSRunAlertPanel(@"ÁPeligro!", @"Cropping doesn't work yet", @"Oh...", nil, nil);
 	
 	// First we need to make a temporary copy of what's selected by the selection tool

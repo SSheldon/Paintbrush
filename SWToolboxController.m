@@ -47,7 +47,7 @@
 	NSDocumentController *controller = [NSDocumentController sharedDocumentController];
 	id document = [controller documentForWindow:window];
 	if (document && [document class] == [SWDocument class]) {
-		NSLog(@"Key window is %@", document);		
+		DebugLog(@"Key window is %@", document);		
 	}
 }
 
@@ -194,7 +194,7 @@
 		
 		switch([string characterAtIndex:0]) {
 			case 'a':
-				NSLog(@"AAA");
+				DebugLog(@"AAA");
 				break;
 		}
 	}
@@ -237,7 +237,7 @@
 - (void)switchToScissors:(id)sender
 {
 	//[self setCurrentTool:[toolList objectForKey:@"Selection"]];
-	NSLog(@"We can't switch to scissors yet");
+	DebugLog(@"We can't switch to scissors yet");
 	NSRunAlertPanel(@"ÁPeligro!", @"We can't switch to scissors yet", @"Oh...", nil, nil);
 }
 

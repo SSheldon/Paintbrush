@@ -48,7 +48,7 @@
 			height = [heightFieldNew integerValue];
 			break;
 		default:
-			NSLog(@"Error!  The selected units are wrong!");
+			DebugLog(@"Error!  The selected units are wrong!");
 			return;
 	}
 	

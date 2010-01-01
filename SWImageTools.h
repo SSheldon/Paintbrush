@@ -32,6 +32,7 @@
 + (void)flipImageHorizontal:(NSBitmapImageRep *)bitmap;
 + (void)flipImageVertical:(NSBitmapImageRep *)bitmap;
 + (NSString *)convertFileType:(NSString *)fileType;
++ (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2;
 
 // User requested feature!
 + (NSBitmapImageRep *)createMonochromeImage:(NSBitmapImageRep *)baseImage;

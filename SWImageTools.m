@@ -241,6 +241,23 @@
 }
 
 
++ (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2
+{
+	CGFloat r1, r2, g1, g2, b1, b2, a1, a2;
+	[c1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
+	[c2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
+	
+	r1 = roundf(255*r1);
+	r2 = roundf(255*r2);
+	g1 = roundf(255*g1);
+	g2 = roundf(255*g2);
+	b1 = roundf(255*b1);
+	b2 = roundf(255*b2);
+	return (r1==r2) && (g1==g2) && (b1==b2);
+}
+
+
+
 void SWLockFocus(NSBitmapImageRep *image)
 {
 	[NSGraphicsContext saveGraphicsState];

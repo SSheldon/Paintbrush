@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2706B85510ED712200080D4A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2706B83E10ED709200080D4A /* SenTestingKit.framework */; };
+		2706B88010ED719500080D4A /* PaintViewDrawingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B81010ED6FE400080D4A /* PaintViewDrawingTest.m */; };
+		2706B94D10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
+		2706B94E10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
 		2709A7F50EB401C50050A019 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2709A7F40EB401C50050A019 /* Sparkle.framework */; };
 		2709A8300EB401D70050A019 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2709A7F40EB401C50050A019 /* Sparkle.framework */; };
 		270F02730BD0218F005B92A3 /* SWTextToolWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */; };
@@ -151,6 +155,13 @@
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2704064A0BFE3F3600C308C8 /* ToDo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ToDo.rtf; sourceTree = "<group>"; };
+		2706B80F10ED6FE400080D4A /* PaintViewDrawingTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintViewDrawingTest.h; sourceTree = "<group>"; };
+		2706B81010ED6FE400080D4A /* PaintViewDrawingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintViewDrawingTest.m; sourceTree = "<group>"; };
+		2706B83910ED702F00080D4A /* Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2706B83A10ED702F00080D4A /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
+		2706B83E10ED709200080D4A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		2706B94B10ED77A600080D4A /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
+		2706B94C10ED77A600080D4A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
 		2709A7F40EB401C50050A019 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextToolWindowController.h; sourceTree = "<group>"; };
 		270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextToolWindowController.m; sourceTree = "<group>"; };
@@ -301,6 +312,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2706B83610ED702F00080D4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2706B85510ED712200080D4A /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -329,8 +348,18 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* Paintbrush.app */,
+				2706B83910ED702F00080D4A /* Test.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2706B81E10ED700000080D4A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2706B80F10ED6FE400080D4A /* PaintViewDrawingTest.h */,
+				2706B81010ED6FE400080D4A /* PaintViewDrawingTest.m */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 		272A86C40D74F9F500630D0B /* NewTools */ = {
@@ -563,10 +592,12 @@
 			isa = PBXGroup;
 			children = (
 				27A60E100B879A6A0091A1B0 /* Classes */,
+				2706B81E10ED700000080D4A /* Tests */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
+				2706B83A10ED702F00080D4A /* Test-Info.plist */,
 			);
 			name = Paintbrush;
 			sourceTree = "<group>";
@@ -574,6 +605,8 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2706B94B10ED77A600080D4A /* DebugLog.h */,
+				2706B94C10ED77A600080D4A /* DebugLog.m */,
 				32DBCF750370BD2300C91783 /* Paintbrush_Prefix.pch */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 			);
@@ -611,6 +644,7 @@
 			children = (
 				2709A7F40EB401C50050A019 /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
+				2706B83E10ED709200080D4A /* SenTestingKit.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -618,6 +652,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2706B83810ED702F00080D4A /* Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2706B83D10ED703000080D4A /* Build configuration list for PBXNativeTarget "Test" */;
+			buildPhases = (
+				2706B83410ED702F00080D4A /* Resources */,
+				2706B83510ED702F00080D4A /* Sources */,
+				2706B83610ED702F00080D4A /* Frameworks */,
+				2706B83710ED702F00080D4A /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Test;
+			productName = Test;
+			productReference = 2706B83910ED702F00080D4A /* Test.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		8D15AC270486D014006FF6A4 /* Paintbrush */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Paintbrush" */;
@@ -650,11 +702,19 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* Paintbrush */,
+				2706B83810ED702F00080D4A /* Test */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2706B83410ED702F00080D4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC2B0486D014006FF6A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -727,7 +787,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2706B83710ED702F00080D4A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		2706B83510ED702F00080D4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2706B88010ED719500080D4A /* PaintViewDrawingTest.m in Sources */,
+				2706B94D10ED77A600080D4A /* DebugLog.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -770,6 +855,7 @@
 				27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */,
 				273BE3C21011389E00AA0B05 /* SWResizeWindowController.m in Sources */,
 				27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */,
+				2706B94E10ED77A600080D4A /* DebugLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +945,61 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2706B83B10ED703000080D4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Test-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Test;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2706B83C10ED703000080D4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Test-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Test;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -872,6 +1013,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../../../Downloads/Sparkle 1.5b4/With Garbage Collection\"",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -885,6 +1027,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_CFLAGS = "-DDEBUG";
 				PRODUCT_NAME = Paintbrush;
 				SDKROOT = macosx10.5;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -906,6 +1049,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../../../Downloads/Sparkle 1.5b4/With Garbage Collection\"",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -971,6 +1115,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2706B83D10ED703000080D4A /* Build configuration list for PBXNativeTarget "Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2706B83B10ED703000080D4A /* Debug */,
+				2706B83C10ED703000080D4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Paintbrush" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

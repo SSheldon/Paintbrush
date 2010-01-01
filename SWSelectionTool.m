@@ -180,7 +180,7 @@
 				for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
 					for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
 						 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
-						if (!shouldOmitBackground || !colorsAreEqual(backColor, [imageRep colorAtX:x y:y])) {
+						if (!shouldOmitBackground || ![SWImageTools color:backColor isEqualToColor:[imageRep colorAtX:x y:y]]) {
 							[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
 						}
 					}

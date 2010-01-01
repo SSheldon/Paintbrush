@@ -58,11 +58,11 @@
 //					   context:(void *)context
 //{
 //	if ([keyPath isEqualToString:@"foregroundColor"]) {
-//		NSLog(@"Changed foreground color");
+//		DebugLog(@"Changed foreground color");
 //	} else if ([keyPath isEqualToString:@"backgroundColor"]) {
-//		NSLog(@"Changed background color");
+//		DebugLog(@"Changed background color");
 //	} else {
-//		NSLog(@"BOOM");
+//		DebugLog(@"BOOM");
 //	}
 //}
 

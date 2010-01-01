@@ -55,8 +55,8 @@
 		
 		// Check to make sure if we should even bother trying to fill - 
 		// if it's the same color, there's nothing to do
-		if (!colorsAreEqual([mainImage colorAtX:point.x y:(h - point.y)], 
-							[fillColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace])) {			
+		if (![SWImageTools color:[mainImage colorAtX:point.x y:(h - point.y)] 
+				  isEqualToColor:fillColor]) {
 			// Prep an undo - we're about to change things!
 			[NSApp sendAction:@selector(prepUndo:)
 						   to:nil

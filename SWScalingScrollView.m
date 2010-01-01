@@ -115,7 +115,7 @@ static unsigned defaultIndex = 2;
     NSNumber *selectedFactorObject = [[sender selectedCell] representedObject];
     
     if (selectedFactorObject == nil) {
-        NSLog(@"Scale popup action: setting arbitrary zoom factors is not yet supported.");
+        DebugLog(@"Scale popup action: setting arbitrary zoom factors is not yet supported.");
         return;
     } else {
         [self setScaleFactor:[selectedFactorObject floatValue] adjustPopup:NO];
