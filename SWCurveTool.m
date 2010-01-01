@@ -145,8 +145,6 @@
 
 - (void)tieUpLooseEnds
 {
-	[super tieUpLooseEnds];
-	
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_bufferImage && _mainImage && numberOfClicks > 0) {
 		
@@ -164,6 +162,8 @@
 	}
 	
 	numberOfClicks = 0;
+	
+	[super tieUpLooseEnds];
 }
 
 - (NSCursor *)cursor

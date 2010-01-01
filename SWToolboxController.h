@@ -58,7 +58,6 @@ typedef enum {
 - (void)updateInfo;
 - (void)switchToScissors:(id)sender;
 - (IBAction)flipColors:(id)sender;
-- (void)tieUpLooseEnds;
 
 @property (assign) NSInteger lineWidthDisplay;
 @property (assign) NSInteger lineWidth;

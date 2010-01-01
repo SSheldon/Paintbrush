@@ -139,6 +139,8 @@
 	if (isExploding) {
 		[self endExplosion:bombTimer];
 	}
+	
+	[super tieUpLooseEnds];
 }
 
 - (NSString *)description

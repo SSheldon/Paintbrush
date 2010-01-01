@@ -50,7 +50,6 @@
 	
 	// Misc other member variables
 	NSBitmapImageRep *openedImage;
-	SWTool *currentTool;
 	NSNotificationCenter *nc;
 	NSRect openingRect;
 	NSString *currentFileType;

@@ -136,7 +136,6 @@
 }
 
 
-// Override the default to make some additions
 - (void)setCurrentTool:(NSString *)tool
 {
 	// Don't tie up loose ends if there's no tool!
@@ -163,15 +162,6 @@
 	}
 	[[super window] setFrame:aRect display:YES animate:YES];
 }
-
-
-- (void)tieUpLooseEnds
-{
-	if (currentTool) {
-		[[toolbox toolForLabel:currentTool] tieUpLooseEnds];
-	}	
-}
-
 
 
 - (void)keyDown:(NSEvent *)event
@@ -236,7 +226,7 @@
 // If "Paste" or "Select All" is chosen, we should switch to the scissors tool
 - (void)switchToScissors:(id)sender
 {
-	//[self setCurrentTool:[toolList objectForKey:@"Selection"]];
+	[self setCurrentTool:@"Selection"];
 	DebugLog(@"We can't switch to scissors yet");
 	NSRunAlertPanel(@"ÁPeligro!", @"We can't switch to scissors yet", @"Oh...", nil, nil);
 }

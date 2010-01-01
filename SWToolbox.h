@@ -21,6 +21,7 @@
 
 + (NSArray *)toolClassList;
 - (SWTool *)toolForLabel:(NSString *)label;
+- (void)tieUpLooseEndsForCurrentTool;
 
 @property (retain) SWTool *currentTool;
 

@@ -174,13 +174,6 @@
 }
 
 
-- (void)updateCurrentTool {
-	if (currentTool != [toolbox currentTool]) {
-		currentTool = [toolbox currentTool];
-		[self clearOverlay];
-	}
-}
-
 #pragma mark Mouse/keyboard events: the cornerstone of the drawing process
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -200,18 +193,18 @@
 		currentPoint.x = floor(downPoint.x);
 		currentPoint.y = floor(downPoint.y);
 		
-		[self updateCurrentTool];
+//		[self clearOverlay];
 
-		[currentTool setSavedPoint:currentPoint];
+		[[toolbox currentTool] setSavedPoint:currentPoint];
 		
 		// If it's shifted, do something about it
-		[currentTool setFlags:[event modifierFlags]];
-		[currentTool performDrawAtPoint:currentPoint 
+		[[toolbox currentTool] setFlags:[event modifierFlags]];
+		[[toolbox currentTool] performDrawAtPoint:currentPoint 
 						  withMainImage:mainImage 
 							bufferImage:bufferImage 
 							 mouseEvent:MOUSE_DOWN];
 		
-		[self setNeedsDisplayInRect:[currentTool invalidRect]];
+		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
 		//[self setNeedsDisplay:YES];		
 //	}
 }
@@ -226,13 +219,13 @@
 		currentPoint.x = floor(dragPoint.x);
 		currentPoint.y = floor(dragPoint.y);
 		
-		[currentTool setFlags:[event modifierFlags]];
-		[currentTool performDrawAtPoint:currentPoint 
-						  withMainImage:mainImage 
-							bufferImage:bufferImage 
-							 mouseEvent:MOUSE_DRAGGED];
+		[[toolbox currentTool] setFlags:[event modifierFlags]];
+		[[toolbox currentTool] performDrawAtPoint:currentPoint 
+									withMainImage:mainImage 
+									  bufferImage:bufferImage 
+									   mouseEvent:MOUSE_DRAGGED];
 		
-		[self setNeedsDisplayInRect:[currentTool invalidRect]];
+		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
 	}
 }
 
@@ -245,17 +238,17 @@
 		// Necessary for when the view is zoomed above 100%
 		currentPoint.x = floor(upPoint.x);
 		currentPoint.y = floor(upPoint.y);
-		[currentTool setFlags:[event modifierFlags]];
-		NSBezierPath *path = [currentTool performDrawAtPoint:currentPoint 
-											   withMainImage:mainImage 
-												 bufferImage:bufferImage 
-												  mouseEvent:MOUSE_UP];
+		[[toolbox currentTool] setFlags:[event modifierFlags]];
+		NSBezierPath *path = [[toolbox currentTool] performDrawAtPoint:currentPoint 
+														 withMainImage:mainImage 
+														   bufferImage:bufferImage 
+															mouseEvent:MOUSE_UP];
 		
 		if (path) {
 			expPath = path;
 		}
 		
-		[self setNeedsDisplayInRect:[currentTool invalidRect]];
+		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
 		
 		//[self setNeedsDisplay:YES];
 	}
@@ -264,8 +257,9 @@
 // We want right-clicks to result in the use of the background color
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	[self updateCurrentTool];
-	NSUInteger flags = [theEvent modifierFlags] | ([currentTool shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
+//	[self clearOverlay];
+	NSUInteger flags = [theEvent modifierFlags] | 
+		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
 	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseDown
 												location:[theEvent locationInWindow] 
@@ -281,7 +275,8 @@
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-	NSUInteger flags = [theEvent modifierFlags] | ([currentTool shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
+	NSUInteger flags = [theEvent modifierFlags] | 
+		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
 	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseDragged
 												location:[theEvent locationInWindow] 
@@ -297,7 +292,8 @@
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
-	NSUInteger flags = [theEvent modifierFlags] | ([currentTool shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
+	NSUInteger flags = [theEvent modifierFlags] | 
+		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
 	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseUp
 												location:[theEvent locationInWindow] 
@@ -321,8 +317,8 @@
 	// Necessary for when the view is zoomed above 100%
 	motionPoint.x = floor(motionPoint.x) + 0.5;
 	motionPoint.y = floor(motionPoint.y) + 0.5;	
-	[currentTool mouseHasMoved:motionPoint];
-	//motionPath = [currentTool pathFromPoint:motionPoint toPoint:motionPoint];
+	[[toolbox currentTool] mouseHasMoved:motionPoint];
+	//motionPath = [[toolbox currentTool] pathFromPoint:motionPoint toPoint:motionPoint];
 	//[self setNeedsDisplay:YES];
 }
 
@@ -345,7 +341,7 @@
 	// Escape key
 	if ([event keyCode] == 53) {
 		isPayingAttention = NO;
-		[currentTool tieUpLooseEnds];
+		[toolbox tieUpLooseEndsForCurrentTool];
 		[SWImageTools clearImage:bufferImage];
 		[self setNeedsDisplay:YES];
 		
@@ -383,12 +379,6 @@
 	[self setNeedsDisplay:YES];
 }
 
-- (void)setCurrentTool:(SWTool *)newTool
-{
-	[newTool retain];
-	[currentTool release];
-	currentTool = newTool;
-}
 
 - (void)setBackgroundColor:(NSColor *)color
 {
@@ -572,8 +562,8 @@
 - (void)clearOverlay
 {
 	[SWImageTools clearImage:bufferImage];
-	[currentTool deleteKey];
-	[currentTool tieUpLooseEnds];
+	[[toolbox currentTool] deleteKey];
+	[toolbox tieUpLooseEndsForCurrentTool];
 	[self setNeedsDisplay:YES];
 }
 
@@ -583,9 +573,7 @@
 	NSRunAlertPanel(@"ÁPeligro!", @"Pasting doesn't really work...", @"Oh...", nil, nil);
 	DebugLog(@"Pasting doesn't really work...");
 
-	[currentTool tieUpLooseEnds];
 	[toolboxController switchToScissors:nil];
-	currentTool = [toolbox currentTool];
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 	
@@ -615,8 +603,8 @@
 	[temp drawAtPoint:rect.origin];
 	[NSGraphicsContext restoreGraphicsState];
 	
-	[(SWSelectionTool *)currentTool setClippingRect:rect
-										   forImage:bufferImage];
+	[(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
+													 forImage:bufferImage];
 	[temp release];
 	[self setNeedsDisplay:YES];
 }

@@ -122,10 +122,11 @@
 
 - (void)tieUpLooseEnds
 {
-	[super tieUpLooseEnds];
-	
+	[stringToInsert release];
 	stringToInsert = nil;
 	canInsert = NO;
+	
+	[super tieUpLooseEnds];
 }
 
 - (NSCursor *)cursor

@@ -39,6 +39,18 @@
 }
 
 
+// Don't forget to remove my registration to the toolbox controller!
+- (void)dealloc
+{
+	[sharedController removeObserver:self forKeyPath:@"currentTool"];
+	for (id key in toolList) {
+		[[toolList objectForKey:key] release];
+	}
+	[toolList release];
+	[super dealloc];
+}
+
+
 // Something happened!
 - (void)observeValueForKeyPath:(NSString *)keyPath 
 					  ofObject:(id)object 
@@ -72,15 +84,10 @@
 }
 
 
-// Don't forget to remove my registration to the toolbox controller!
-- (void)dealloc
+- (void)tieUpLooseEndsForCurrentTool
 {
-	[sharedController removeObserver:self forKeyPath:@"currentTool"];
-	for (id key in toolList) {
-		[[toolList objectForKey:key] release];
-	}
-	[toolList release];
-	[super dealloc];
+	[currentTool tieUpLooseEnds];
 }
+
 
 @end

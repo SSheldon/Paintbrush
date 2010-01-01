@@ -34,7 +34,6 @@
 	NSBezierPath *expPath;
 	SWToolboxController *toolboxController;
 	SWToolbox *toolbox;
-	SWTool *currentTool;
 
 	BOOL isPayingAttention;
 	
@@ -51,7 +50,6 @@
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setToolbox:(SWToolbox *)tb;
 - (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale;
-- (void)setCurrentTool:(SWTool *)newTool;
 - (void)setBackgroundColor:(NSColor *)color;
 //- (void)undoImage:(NSData *)imageData;
 - (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame;

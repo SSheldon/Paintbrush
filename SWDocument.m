@@ -313,7 +313,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Override to ensure that the user's file type is set
 - (IBAction)saveDocument:(id)sender
 {
-	[toolboxController tieUpLooseEnds];
+	[toolbox tieUpLooseEndsForCurrentTool];
 	[super saveDocument:sender];
 }
 
@@ -498,14 +498,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // TODO: Relieve some of this method's dependencies on the Selection tool
 - (void)writeImageToPasteboard:(NSPasteboard *)pb
 {
-	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
+	NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
 	NSBitmapImageRep *writeToMe;
 	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
 	
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:writeToMe]];
-	//NSBitmapImageRep *backedImage = [(SWSelectionTool *)currentTool backedImage];
-	//NSPoint oldOrigin = [(SWSelectionTool *)currentTool oldOrigin];
+	//NSBitmapImageRep *backedImage = [(SWSelectionTool *)[toolbox currentTool] backedImage];
+	//NSPoint oldOrigin = [(SWSelectionTool *)[toolbox currentTool] oldOrigin];
 	// TODO: Make this work
 	DebugLog(@"Copying is not currently supported in this build");
 	NSRunAlertPanel(@"ÁPeligro!", @"Copying is not currently supported in this build", @"Oh...", nil, nil);
@@ -564,15 +564,13 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)selectAll:(id)sender
 {
 	[toolboxController switchToScissors:nil];
-	currentTool = [toolbox currentTool];
 	
-	[currentTool setSavedPoint:NSZeroPoint];
-	[currentTool performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
-					  withMainImage:[paintView mainImage] 
-						bufferImage:[paintView bufferImage] 
-						 mouseEvent:MOUSE_UP];
+	[[toolbox currentTool] setSavedPoint:NSZeroPoint];
+	[[toolbox currentTool] performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
+								withMainImage:[paintView mainImage] 
+								  bufferImage:[paintView bufferImage] 
+								   mouseEvent:MOUSE_UP];
 	
-	[paintView setCurrentTool:[toolbox currentTool]];
 	[paintView cursorUpdate:nil];
 	[paintView setNeedsDisplay:YES];
 }
@@ -608,12 +606,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem
 {
 	SEL action = [anItem action];
-	currentTool = [toolbox currentTool];
 	if ((action == @selector(copy:)) || 
 		(action == @selector(cut:)) || 
 		(action == @selector(crop:))) {
-		return ([[currentTool class] isEqualTo:[SWSelectionTool class]] && 
-				[(SWSelectionTool *)currentTool isSelected]);
+		return ([[[toolbox currentTool] class] isEqualTo:[SWSelectionTool class]] && 
+				[(SWSelectionTool *)[toolbox currentTool] isSelected]);
 	} else if (action == @selector(paste:)) {
 		NSArray *array = [[NSPasteboard generalPasteboard] types];
 		BOOL paste = NO;
@@ -683,16 +680,16 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	NSRunAlertPanel(@"ÁPeligro!", @"Cropping doesn't work yet", @"Oh...", nil, nil);
 	
 	// First we need to make a temporary copy of what's selected by the selection tool
-	NSRect rect = [(SWSelectionTool *)currentTool clippingRect];
+	NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
 	NSBitmapImageRep *writeToMe;
 	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
 //	[writeToMe lockFocus];
-//	[[(SWSelectionTool *)currentTool backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
+//	[[(SWSelectionTool *)[toolbox currentTool] backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
 //													fromRect:rect
 //												   operation:NSCompositeSourceOver
 //													fraction:1.0];
 //	[writeToMe unlockFocus];
-	[currentTool tieUpLooseEnds];
+	[toolbox tieUpLooseEndsForCurrentTool];
 	
 	// Tell the controller that they just changed the image size
 	[sizeController setWidth:rect.size.width];

@@ -122,9 +122,12 @@
 
 - (void)tieUpLooseEnds
 {
+	[super tieUpLooseEnds];
 	if (isSpraying) {
 		[self endSpray:airbrushTimer];
 	}
+	
+	[super tieUpLooseEnds];
 }
 
 

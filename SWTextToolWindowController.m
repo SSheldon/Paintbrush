@@ -62,8 +62,7 @@
 	[textView selectAll:textView];
 	[self close];
 	[NSApp endSheet:[self window]];
-	SWTool *currentTool = [[SWToolboxController sharedToolboxPanelController] currentTool];
-	[currentTool tieUpLooseEnds];
+	[[SWToolboxController sharedToolboxPanelController] tieUpLooseEnds];
 }
 
 //- (void)dealloc
