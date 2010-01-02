@@ -32,18 +32,18 @@
 {
 	// Only zoom on a down-click
 	if (event == MOUSE_DOWN) {
+		savedPoint = point;
+
 		NSDocumentController *controller = [NSDocumentController sharedDocumentController];
 		id document = [controller documentForWindow: [NSApp mainWindow]];
 		
 		// If it's a Paintbrush document, get its PaintView
-		if (document && [document isKindOfClass:[SWDocument class]]) {
-			SWScalingScrollView *scrollView = (SWScalingScrollView *) [[[document paintView] superview] superview];
-			
+		if (document && [document isKindOfClass:[SWDocument class]]) {			
 			// Were they zooming in or out?
 			if (flags & NSAlternateKeyMask) {
-				[scrollView setScaleFactor:([scrollView scaleFactor] / 2.0) atPoint:point adjustPopup:YES];
+				[document zoomOut:self];
 			} else {
-				[scrollView setScaleFactor:([scrollView scaleFactor] * 2.0) atPoint:point adjustPopup:YES];				
+				[document zoomIn:self];
 			}
 		}
 	}

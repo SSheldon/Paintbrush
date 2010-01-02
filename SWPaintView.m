@@ -25,6 +25,7 @@
 #import "SWToolbox.h"
 #import "SWToolboxController.h"
 #import "SWAppController.h"
+#import "SWDocument.h"
 
 @implementation SWPaintView
 

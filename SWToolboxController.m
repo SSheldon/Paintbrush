@@ -139,9 +139,6 @@
 - (void)setCurrentTool:(NSString *)tool
 {
 	// Don't tie up loose ends if there's no tool!
-	if (currentTool) {
-		[[toolbox toolForLabel:currentTool] tieUpLooseEnds];
-	}
 	currentTool = tool;
 	
 	SWTool *tempTool = [toolbox toolForLabel:currentTool];

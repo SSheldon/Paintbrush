@@ -33,6 +33,10 @@
 
 @implementation SWDocument
 
+// Synthesize our properties here
+@synthesize toolbox;
+
+
 // TODO: Nasty hack
 static BOOL kSWDocumentWillShowSheet = YES;
 
@@ -269,7 +273,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	if ([[super windowForSheet] isKeyWindow]) {
 		if (!textController) {
-			textController = [[SWTextToolWindowController alloc] init];
+			textController = [[SWTextToolWindowController alloc] initWithDocument:self];
 		}
 		
 		// Orders the font manager to the front
@@ -294,12 +298,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	// Orders the font manager to exit
 	[[[NSFontManager sharedFontManager] fontPanel:NO] orderOut:self];
-}
-
-
-- (SWPaintView *)paintView 
-{
-	return paintView;
 }
 
 
@@ -406,6 +404,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 																	   error:outError] mutableCopy];
 	
 	// 'Pbsh' has been registered with Apple as our personal four-letter integer
+	// NOTE: This attribute is actively ignored as of 10.6.  If we ever require that OS, go
+	// ahead and remove this.
     [fileAttributes setObject:[NSNumber numberWithUnsignedInt:'Pbsh']
 					   forKey:NSFileHFSCreatorCode];
     return [fileAttributes autorelease];
@@ -580,13 +580,27 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (IBAction)zoomIn:(id)sender
 {
-	[scrollView setScaleFactor:([scrollView scaleFactor] * 2) adjustPopup:YES];
+	if ([sender isKindOfClass:[SWTool class]]) {
+		// Came from the zoom tool, so get its point
+		NSPoint point = [(SWTool *)sender savedPoint];
+		[scrollView setScaleFactor:([scrollView scaleFactor] * 2) atPoint:point adjustPopup:YES];
+	} else {
+		// Came from somewhere else (probably an NSMenuItem)
+		[scrollView setScaleFactor:([scrollView scaleFactor] * 2) adjustPopup:YES];
+	}
 }
 
 
 - (IBAction)zoomOut:(id)sender
 {
-	[scrollView setScaleFactor:([scrollView scaleFactor] / 2) adjustPopup:YES];
+	if ([sender isKindOfClass:[SWTool class]]) {
+		// Came from the zoom tool, so get its point
+		NSPoint point = [(SWTool *)sender savedPoint];
+		[scrollView setScaleFactor:([scrollView scaleFactor] / 2) atPoint:point adjustPopup:YES];
+	} else {
+		// Came from somewhere else (probably an NSMenuItem)
+		[scrollView setScaleFactor:([scrollView scaleFactor] / 2) adjustPopup:YES];
+	}
 }
 
 

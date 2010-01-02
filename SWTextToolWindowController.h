@@ -20,11 +20,14 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class SWDocument;
 
 @interface SWTextToolWindowController : NSWindowController {
 	IBOutlet NSTextView *textView;
+	SWDocument *document;
 }
 
+- (id)initWithDocument:(SWDocument *)doc;
 - (IBAction)enterText:(id)sender;
 - (IBAction)cancel:(id)sender;
 

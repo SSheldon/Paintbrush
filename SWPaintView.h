@@ -23,8 +23,12 @@
 @class SWToolboxController;
 @class SWToolbox;
 @class SWTool;
+@class SWDocument;
 
 @interface SWPaintView : NSView {
+	// Have a connection to the SWDocument instance that owns this view
+	IBOutlet SWDocument *document;
+	
 	NSBitmapImageRep *mainImage;
 	NSBitmapImageRep *bufferImage;
 	NSPoint currentPoint;

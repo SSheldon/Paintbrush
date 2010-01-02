@@ -47,7 +47,18 @@
 		[[toolList objectForKey:key] release];
 	}
 	[toolList release];
+	[currentTool release];
 	[super dealloc];
+}
+
+
+// Here's the setter for the tool: make sure you wrap up loose ends for the previous tool!
+- (void)setCurrentTool:(SWTool *)tool
+{
+	[currentTool tieUpLooseEnds];
+	[tool retain];
+	[currentTool release];
+	currentTool = tool;
 }
 
 

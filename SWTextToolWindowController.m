@@ -19,14 +19,16 @@
 
 
 #import "SWTextToolWindowController.h"
-#import "SWToolboxController.h"
+#import "SWToolbox.h"
 #import "SWTool.h"
+#import "SWDocument.h"
 
 @implementation SWTextToolWindowController
 
-- (id)init
+- (id)initWithDocument:(SWDocument *)doc
 {
 	self = [super initWithWindowNibName:@"TextEntry"];
+	document = doc;
 	return self;
 }
 
@@ -62,7 +64,8 @@
 	[textView selectAll:textView];
 	[self close];
 	[NSApp endSheet:[self window]];
-	[[SWToolboxController sharedToolboxPanelController] tieUpLooseEnds];
+	if (document)
+		[[document toolbox] tieUpLooseEndsForCurrentTool];
 }
 
 //- (void)dealloc

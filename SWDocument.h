@@ -54,6 +54,10 @@
 	NSString *currentFileType;
 }
 
+// Properties
+@property (readonly) SWToolbox *toolbox;
+
+
 // Methods called by menu items
 - (IBAction)flipHorizontal:(id)sender;
 - (IBAction)flipVertical:(id)sender;
@@ -69,9 +73,6 @@
 - (void)showTextSheet:(NSNotification *)n;
 - (void)undoLevelChanged:(NSNotification *)n;
 
-// Access the document's view (and provide access to the image)
-- (SWPaintView *)paintView;
-
 // Sheets for size!
 - (void)sizeSheetDidEnd:(NSWindow *)sheet
 			 returnCode:(NSInteger)returnCode
@@ -85,5 +86,6 @@
 + (NSData *)readImageFromPasteboard:(NSPasteboard *)pb;
 
 + (void)setWillShowSheet:(BOOL)showSheet;
+
 
 @end

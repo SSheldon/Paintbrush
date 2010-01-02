@@ -131,11 +131,13 @@ static unsigned defaultIndex = 2;
 - (void)setScaleFactor:(CGFloat)factor atPoint:(NSPoint)point adjustPopup:(BOOL)flag
 {
 	[self setScaleFactor:factor adjustPopup:flag];
+	
 	SWCenteringClipView *clipView = (SWCenteringClipView *)[[self documentView] superview];
 	NSSize size = [clipView bounds].size;
 
 	// Sets the top-left corner to the point clicked
-	point.y = [clipView documentRect].size.height - point.y - 1;
+	// NO NEED WHEN THE VIEW IS FLIPPED, as it is starting with v2.1
+//	point.y = [clipView documentRect].size.height - point.y - 1;
 	
 	// Scroll to the correct centered spot thing
 	point.x -= size.width / 2;
