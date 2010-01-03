@@ -289,18 +289,13 @@
 	isSelected = YES;
 	
 	// Create the image to paste
-	[SWImageTools initImageRep:&backedImage withSize:[image size]];
+	[SWImageTools initImageRep:&backedImage withSize:[_bufferImage size]];
 	SWLockFocus(backedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	SWUnlockFocus(backedImage);
 	
 	// Draw the dotted line around the selected region
-	SWLockFocus(image);
-	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-	[[NSColor darkGrayColor] setStroke];
-	[[self pathFromPoint:rect.origin
-				 toPoint:NSMakePoint(rect.size.width+rect.origin.x,rect.size.height+rect.origin.y)] stroke];
-	SWUnlockFocus(image);
+	[self drawNewBorder:nil];
 	
 	// Set the redraw rect!
 	[super addRectToRedrawRect:clippingRect];

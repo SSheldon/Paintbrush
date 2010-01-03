@@ -126,7 +126,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			[self raiseSizeSheet:aController];
 		} else {
 			[SWDocument setWillShowSheet:YES];
-			openedImage = [NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]];
+			openedImage = [[NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]] retain];
+			[SWImageTools flipImageVertical:openedImage];
 			openingRect.origin = NSZeroPoint;
 			openingRect.size = [openedImage size];
 			[self setUpPaintView];
@@ -501,23 +502,26 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
 	NSBitmapImageRep *writeToMe;
 	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
+	[writeToMe autorelease];
 	
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:writeToMe]];
-	//NSBitmapImageRep *backedImage = [(SWSelectionTool *)[toolbox currentTool] backedImage];
-	//NSPoint oldOrigin = [(SWSelectionTool *)[toolbox currentTool] oldOrigin];
-	// TODO: Make this work
-	DebugLog(@"Copying is not currently supported in this build");
-	NSRunAlertPanel(@"ÁPeligro!", @"Copying is not currently supported in this build", @"Oh...", nil, nil);
-//	[backedImage drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
-//							   fromRect:NSMakeRect(oldOrigin.x,oldOrigin.y,rect.size.width, rect.size.height)
-//							  operation:NSCompositeSourceOver
-//							   fraction:1.0];
-	[NSGraphicsContext restoreGraphicsState];
-	[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
+	SWLockFocus(writeToMe);
+	
+	NSBitmapImageRep *backedImage = [(SWSelectionTool *)[toolbox currentTool] backedImage];
+	NSPoint oldOrigin = [(SWSelectionTool *)[toolbox currentTool] oldOrigin];
 
+	NSSize backedImageSize = [backedImage size];
+	
+	// Offset the drawing by the oldOrigin
+	[backedImage drawInRect:NSMakeRect(-oldOrigin.x, -oldOrigin.y, 
+									   backedImageSize.width, 
+									   backedImageSize.height)];
+	SWUnlockFocus(writeToMe);
+	
+	// Make sure we flip the image before we put it in the pasteboard
+	[SWImageTools flipImageVertical:writeToMe];
+	
+	[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
 	[pb setData:[writeToMe TIFFRepresentation] forType:NSTIFFPboardType];
-	[writeToMe release];
 }
 
 

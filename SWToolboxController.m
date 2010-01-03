@@ -224,8 +224,6 @@
 - (void)switchToScissors:(id)sender
 {
 	[self setCurrentTool:@"Selection"];
-	DebugLog(@"We can't switch to scissors yet");
-	NSRunAlertPanel(@"ÁPeligro!", @"We can't switch to scissors yet", @"Oh...", nil, nil);
 }
 
 

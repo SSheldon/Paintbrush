@@ -586,9 +586,6 @@
 	NSPoint origin = [[self superview] bounds].origin;
 	if (origin.x < 0) origin.x = 0;
 	if (origin.y < 0) origin.y = 0;
-
-	origin.y = [self bounds].size.height - origin.y;
-	origin.y -= [temp size].height;
 	
 	NSRect rect = NSZeroRect;
 	rect.origin = origin;
@@ -598,10 +595,12 @@
 	
 	[SWImageTools clearImage:bufferImage];
 	
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bufferImage]];
+	SWLockFocus(bufferImage);
 	[temp drawAtPoint:rect.origin];
-	[NSGraphicsContext restoreGraphicsState];
+	SWUnlockFocus(bufferImage);
+	
+	// As always, flip the image to be viewed in our flipped view
+	[SWImageTools flipImageVertical:bufferImage];
 	
 	[(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
 													 forImage:bufferImage];
