@@ -202,9 +202,8 @@
 - (IBAction)changeCurrentTool:(id)sender
 {
 	NSString *string = [[sender selectedCell] title];
-	if (string && ![string isEqualToString:@""]) {
+	if (string && ![string isEqualToString:@""])
 		[self setCurrentTool:string];
-	}
 }
 
 
@@ -223,7 +222,15 @@
 // If "Paste" or "Select All" is chosen, we should switch to the scissors tool
 - (void)switchToScissors:(id)sender
 {
-	[self setCurrentTool:@"Selection"];
+	for (NSCell *cell in [toolMatrix cells])
+	{
+		if ([[cell title] isEqualToString:@"Selection"])
+		{
+			[toolMatrix selectCell:cell];
+			[self changeCurrentTool:toolMatrix];
+			break;
+		}
+	}
 }
 
 

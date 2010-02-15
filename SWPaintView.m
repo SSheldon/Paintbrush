@@ -114,8 +114,9 @@
 		// If there's an overlay image being used at the moment, draw it
 		if (bufferImage) {
 			//[bufferImage drawAtPoint:NSZeroPoint];
+			NSRect rect = (NSRect){ NSZeroPoint, [bufferImage size] };
 			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
-							   NSRectToCGRect([self bounds]), [bufferImage CGImage]);
+							   NSRectToCGRect(rect), [bufferImage CGImage]);
 		}
 		
 		// If the grid is turned on, draw that too
@@ -327,11 +328,11 @@
 // Overridden to set the correct cursor
 - (void)cursorUpdate:(NSEvent *)event
 {
-	if (toolbox && [toolbox currentTool]) {
+	if (toolbox && [toolbox currentTool]) 
+	{
 		NSCursor *cursor = [[toolbox currentTool] cursor];
-		if (cursor != [(NSClipView *)[self superview] documentCursor]) {
+		if (cursor != [(NSClipView *)[self superview] documentCursor])
 			[(NSClipView *)[self superview] setDocumentCursor:cursor];
-		}		
 	}
 }
 
@@ -340,16 +341,20 @@
 - (void)keyDown:(NSEvent *)event
 {
 	// Escape key
-	if ([event keyCode] == 53) {
+	if ([event keyCode] == 53) 
+	{
 		isPayingAttention = NO;
 		[toolbox tieUpLooseEndsForCurrentTool];
 		[SWImageTools clearImage:bufferImage];
 		[self setNeedsDisplay:YES];
-		
-	} else if ([event keyCode] == 51 || [event keyCode] == 117) {
+	} 
+	else if ([event keyCode] == 51 || [event keyCode] == 117) 
+	{
 		// Delete keys (back and forward)
 		[self clearOverlay];
-	} else {
+	} 
+	else
+	{
 		[[[toolboxController window] contentView] keyDown:event];
 	}
 }
@@ -399,28 +404,31 @@
 {
 	NSUndoManager *undo = [self undoManager];
 	NSRect oldFrame = NSZeroRect;
-	if (sender && [(NSDictionary *)sender objectForKey:@"Image"]) {
-		if ([(NSDictionary *)sender objectForKey:@"Frame"]) {
+	if (sender && [(NSDictionary *)sender objectForKey:@"Image"])
+	{
+		if ([(NSDictionary *)sender objectForKey:@"Frame"]) 
+		{
 			// It was a resize... oh dear!
 			oldFrame = [[(NSDictionary *)sender objectForKey:@"Frame"] rectValue];
 			[[undo prepareWithInvocationTarget:self] undoResize:(NSData *)[sender objectForKey:@"Image"] oldFrame:oldFrame];
-			if (![undo isUndoing]) {
+			if (![undo isUndoing])
 				[undo setActionName:@"Resize"];
-			}			
 			//[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
-		} else {
+		} 
+		else
+		{
 			[[undo prepareWithInvocationTarget:self] undoResize:(NSData *)[sender objectForKey:@"Image"] oldFrame:oldFrame];
-			if (![undo isUndoing]) {
+			if (![undo isUndoing])
 				[undo setActionName:@"Drawing"];
-			}			
 //			[[undo prepareWithInvocationTarget:self] undoImage:(NSData *)[sender objectForKey:@"Image"]];
 		}
-	} else {
+	} 
+	else
+	{
 		//[[undo prepareWithInvocationTarget:self] undoImage:[mainImage TIFFRepresentation]];
 		[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
-		if (![undo isUndoing]) {
+		if (![undo isUndoing])
 			[undo setActionName:@"Drawing"];
-		}
 	}
 }
 
@@ -571,17 +579,8 @@
 // Pastes data as an image
 - (void)pasteData:(NSData *)data
 {
-	NSRunAlertPanel(@"ÁPeligro!", @"Pasting doesn't really work...", @"Oh...", nil, nil);
-	DebugLog(@"Pasting doesn't really work...");
-
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
-	
-	//DebugLog(@"%@ - [[self superview] bounds] == (%lf, %lf), @ %lf by %lf", [self superview],
-	//	  [[self superview] bounds].origin.x, [[self superview] bounds].origin.y, 
-	//	  [[self superview] bounds].size.width, [[self superview] bounds].size.height);
-		  //[self bounds].origin.x, [self bounds].origin.y, 
-		  //[self bounds].size.width, [self bounds].size.height);
 	
 	NSPoint origin = [[self superview] bounds].origin;
 	if (origin.x < 0) origin.x = 0;
@@ -593,7 +592,10 @@
 	// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
 	rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
 	
-	[SWImageTools clearImage:bufferImage];
+	//[SWImageTools clearImage:bufferImage];
+	[bufferImage release];
+	bufferImage = nil;
+	[SWImageTools initImageRep:&bufferImage withSize:rect.size];
 	
 	SWLockFocus(bufferImage);
 	[temp drawAtPoint:rect.origin];
@@ -603,7 +605,8 @@
 	[SWImageTools flipImageVertical:bufferImage];
 	
 	[(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
-													 forImage:bufferImage];
+													 forImage:bufferImage
+												withMainImage:mainImage];
 	[temp release];
 	[self setNeedsDisplay:YES];
 }

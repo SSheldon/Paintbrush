@@ -42,7 +42,7 @@
 - (NSRect)clippingRect;
 - (NSBitmapImageRep *)backedImage;
 - (NSData *)imageData;
-- (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image;
+- (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image withMainImage:(NSBitmapImageRep *)image;
 - (void)drawNewBorder:(NSTimer *)timer;
 
 @property (assign, readonly) NSPoint oldOrigin;

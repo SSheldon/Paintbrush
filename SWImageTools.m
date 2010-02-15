@@ -181,7 +181,7 @@
 	// Get a pointer to the pixel data -- both the new one and the old one
 	unsigned char *colorData = [baseImage bitmapData];
 	unsigned char *bwData = [bwRep bitmapData];
-	unsigned char *thisPixel = bwData[0];
+	unsigned char *thisPixel = bwData;
 	
 	CGFloat maxColorValue = pow(2, [baseImage bitsPerSample]);
 	
@@ -254,6 +254,33 @@
 	b1 = roundf(255*b1);
 	b2 = roundf(255*b2);
 	return (r1==r2) && (g1==g2) && (b1==b2);
+}
+
+
+// Strips an image of all the pixels of a certain color
++ (void)stripImage:(NSBitmapImageRep *)imageRep ofColor:(NSColor *)color
+{
+#if 0
+	// This offset will climb through the entire image
+	int offset;
+	int samplesPerPixel = [imageRep samplesPerPixel];
+	unsigned char *bitmapData = [imageRep bitmapData];
+	CGFloat colorRed, colorGreen, colorBlue, colorAlpha;
+	[color getRed:&colorRed green:&colorGreen blue:&colorBlue alpha:&colorAlpha];
+	int r, g, b;
+	
+	for (offset = 0; offset < [imageRep pixelsHigh] * [imageRep pixelsWide] * samplesPerPixel; pixelLocation += samplesPerPixel) {
+		// Next get the components at that offset
+		int red = bitmapData[offset + 0];
+		int green = bitmapData[offset + 1];
+		int blue = bitmapData[offset + 2];
+		int alpha = bitmapData[offset + 3];
+		
+//		if (![SWImageTools color:color isEqualToColor:[imageRep colorAtX:x y:y]]) {
+//			[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
+//		}	
+	}
+#endif // 0
 }
 
 

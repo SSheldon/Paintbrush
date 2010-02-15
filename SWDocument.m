@@ -499,29 +499,35 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // TODO: Relieve some of this method's dependencies on the Selection tool
 - (void)writeImageToPasteboard:(NSPasteboard *)pb
 {
-	NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
-	NSBitmapImageRep *writeToMe;
-	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
-	[writeToMe autorelease];
-	
-	SWLockFocus(writeToMe);
-	
-	NSBitmapImageRep *backedImage = [(SWSelectionTool *)[toolbox currentTool] backedImage];
-	NSPoint oldOrigin = [(SWSelectionTool *)[toolbox currentTool] oldOrigin];
-
-	NSSize backedImageSize = [backedImage size];
-	
-	// Offset the drawing by the oldOrigin
-	[backedImage drawInRect:NSMakeRect(-oldOrigin.x, -oldOrigin.y, 
-									   backedImageSize.width, 
-									   backedImageSize.height)];
-	SWUnlockFocus(writeToMe);
-	
-	// Make sure we flip the image before we put it in the pasteboard
-	[SWImageTools flipImageVertical:writeToMe];
-	
-	[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
-	[pb setData:[writeToMe TIFFRepresentation] forType:NSTIFFPboardType];
+	assert([[toolbox currentTool] isKindOfClass:[SWSelectionTool class]]);
+	if ([[toolbox currentTool] isKindOfClass:[SWSelectionTool class]])
+	{
+		SWSelectionTool *currentTool = (SWSelectionTool *)[toolbox currentTool];
+		
+		NSRect rect = [currentTool clippingRect];
+		NSBitmapImageRep *writeToMe;
+		[SWImageTools initImageRep:&writeToMe withSize:rect.size];
+		[writeToMe autorelease];
+		
+		SWLockFocus(writeToMe);
+		
+		NSBitmapImageRep *backedImage = [currentTool backedImage];
+		NSPoint oldOrigin = [currentTool oldOrigin];
+		
+		NSSize backedImageSize = [backedImage size];
+		
+		// Offset the drawing by the oldOrigin
+		[backedImage drawInRect:NSMakeRect(-oldOrigin.x, -oldOrigin.y, 
+										   backedImageSize.width, 
+										   backedImageSize.height)];
+		SWUnlockFocus(writeToMe);
+		
+		// Make sure we flip the image before we put it in the pasteboard
+		[SWImageTools flipImageVertical:writeToMe];
+		
+		[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
+		[pb setData:[writeToMe TIFFRepresentation] forType:NSTIFFPboardType];
+	}
 }
 
 
@@ -557,6 +563,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Paste
 - (IBAction)paste:(id)sender
 {
+	// Prepare for a paste by allowing an undo
+	[paintView prepUndo:nil];
 	[toolboxController switchToScissors:nil];
 	
 	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];

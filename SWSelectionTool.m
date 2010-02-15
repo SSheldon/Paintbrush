@@ -172,30 +172,19 @@
 				SWLockFocus(backedImage);
 
 				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-
-				// EXPERIMENTAL: Transparency
-				// TODO: Faster, and possibly somewhere else?
-				NSInteger x, y;
-				NSBitmapImageRep *secondRep = [NSBitmapImageRep imageRepWithData:[bufferImage TIFFRepresentation]];
-				for (x = clippingRect.origin.x; x < (clippingRect.origin.x + clippingRect.size.width); x++) {
-					for (y = ([secondRep pixelsHigh] - clippingRect.origin.y - 1); 
-						 y >= [secondRep pixelsHigh] - (clippingRect.origin.y + clippingRect.size.height); y--) {
-						if (!shouldOmitBackground || ![SWImageTools color:backColor isEqualToColor:[imageRep colorAtX:x y:y]]) {
-							[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
-						}
-					}
-				}
-				[secondRep drawAtPoint:NSZeroPoint];
-					
+				[mainImage drawAtPoint:NSZeroPoint];
+				
 				SWUnlockFocus(backedImage);
+				
+				// Now if we should, remove the background of the image
+				if (shouldOmitBackground) 
+					[SWImageTools stripImage:backedImage ofColor:backColor];
 				
 				[self drawNewBorder:nil];
 
 				// Delete it from the main image
 				SWLockFocus(mainImage);
-				
 				[backColor set];
-				
 				// Note: don't use a bezierpath! It'll fail with clear-ish colors
 				NSRectFill(clippingRect);
 				SWUnlockFocus(mainImage);
@@ -247,19 +236,23 @@
 {
 	[super tieUpLooseEnds];
 	
-	if (animationTimer) {
+	if (animationTimer) 
+	{
 		[animationTimer invalidate];
 		animationTimer = nil;
 	}
 	isSelected = NO;
-	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ ) {
+	
+	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ )
+	{
 		[NSApp sendAction:@selector(prepUndo:)
 					   to:nil
 					 from:[NSDictionary dictionaryWithObject:[imageRep TIFFRepresentation] forKey:@"Image"]];
 	}
 
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
-	if (_bufferImage && _mainImage) {
+	if (_bufferImage && _mainImage)
+	{
 		[SWImageTools clearImage:_bufferImage];
 
 		[SWImageTools drawToImage:_mainImage
@@ -269,9 +262,9 @@
 
 		// Redraw the entire image
 		[super addRectToRedrawRect:NSMakeRect(0,0,[_mainImage size].width,[_mainImage size].height)];
-	} else {
+	} 
+	else
 		[super resetRedrawRect];
-	}	
 }
 
 - (NSRect)clippingRect
@@ -280,18 +273,22 @@
 }
 
 // Called from the PaintView when an image is pasted
-- (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image
-{	
+- (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image withMainImage:(NSBitmapImageRep *)mainImage
+{
+	_mainImage = mainImage;
 	_bufferImage = image;
 	deltax = deltay = 0;
-	clippingRect = NSMakeRect(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-	oldOrigin = NSMakePoint(rect.origin.x, rect.origin.y);
+	clippingRect = rect;
+	oldOrigin = rect.origin;
 	isSelected = YES;
 	
 	// Create the image to paste
 	[SWImageTools initImageRep:&backedImage withSize:[_bufferImage size]];
 	SWLockFocus(backedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+	// Create the point to paste at
+	NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - backedImage.size.height));
+	[image drawAtPoint:point];
 	SWUnlockFocus(backedImage);
 	
 	// Draw the dotted line around the selected region
