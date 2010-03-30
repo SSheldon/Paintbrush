@@ -23,6 +23,10 @@ extern NSString * const kSWCurrentFileType;
 	
 	// The controls in our views -- we start with the global popup button
 	IBOutlet NSPopUpButton *fileTypeButton;
+	
+	// Used in the various subviews
+	BOOL isAlphaEnabled;
+	CGFloat imageQuality;
 }
 
 - (void)updateViewForFileType:(NSString *)fileType;
