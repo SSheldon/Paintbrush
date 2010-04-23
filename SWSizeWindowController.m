@@ -85,7 +85,7 @@ static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 - (IBAction)changeSizeButton:(id)sender
 {
 	if ([sizeButton selectedItem] == clipboard) {
-		NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+		NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
 		if (data) {
 			NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 			[widthField setIntValue:[temp size].width];
@@ -107,7 +107,7 @@ static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	if (menuItem == clipboard) {
-		return ([SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
+		return ([SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
 	}
 	return YES;
 }

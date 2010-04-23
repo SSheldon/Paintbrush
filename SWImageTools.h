@@ -34,6 +34,7 @@
 + (NSString *)convertFileType:(NSString *)fileType;
 + (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2;
 + (void)stripImage:(NSBitmapImageRep *)imageRep ofColor:(NSColor *)color;
++ (NSData *)readImageFromPasteboard:(NSPasteboard *)pb;
 
 // User requested feature!
 + (NSBitmapImageRep *)createMonochromeImage:(NSBitmapImageRep *)baseImage;

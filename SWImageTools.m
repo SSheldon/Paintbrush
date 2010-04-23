@@ -284,6 +284,18 @@
 }
 
 
+// Used by Paste to retrieve an image from the pasteboard
++ (NSData *)readImageFromPasteboard:(NSPasteboard *)pb
+{
+	NSData *data = nil;
+	
+	if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]])
+		data = [pb dataForType:NSTIFFPboardType];
+	else if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]])
+		data = [pb dataForType:NSPICTPboardType];
+
+	return data;
+}
 
 void SWLockFocus(NSBitmapImageRep *image)
 {

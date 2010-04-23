@@ -32,11 +32,15 @@
 @class SWCenteringClipView;
 @class SWTextToolWindowController;
 @class SWSavePanelAccessoryViewController;
+@class SWImageDataSource;
 
 @interface SWDocument : NSDocument
 {
 	IBOutlet SWPaintView *paintView;
 	IBOutlet SWScalingScrollView *scrollView;	/* ScrollView containing document */
+	
+	// The image data
+	SWImageDataSource * dataSource;
 	
 	// A bunch of controllers and one view
 	SWToolboxController *toolboxController;
@@ -48,9 +52,7 @@
 	SWSavePanelAccessoryViewController *savePanelAccessoryViewController;
 	
 	// Misc other member variables
-	NSBitmapImageRep *openedImage;
 	NSNotificationCenter *nc;
-	NSRect openingRect;
 	NSString *currentFileType;
 }
 
@@ -83,7 +85,6 @@
 
 // For copy-and-paste
 - (void)writeImageToPasteboard:(NSPasteboard *)pb;
-+ (NSData *)readImageFromPasteboard:(NSPasteboard *)pb;
 
 + (void)setWillShowSheet:(BOOL)showSheet;
 

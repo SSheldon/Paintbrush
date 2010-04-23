@@ -19,6 +19,8 @@
 		271EEB0E0BBC34A800319865 /* SWSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB0C0BBC34A800319865 /* SWSelectionTool.m */; };
 		271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 271EEB1B0BBC352300319865 /* SWTextTool.h */; };
 		271EEB1E0BBC352300319865 /* SWTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB1C0BBC352300319865 /* SWTextTool.m */; };
+		2723FB5F1162830F005BCB1B /* SWImageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2723FB5E1162830F005BCB1B /* SWImageDataSource.m */; };
+		2723FB601162830F005BCB1B /* SWImageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2723FB5E1162830F005BCB1B /* SWImageDataSource.m */; };
 		272A86E80D74FA0B00630D0B /* curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D40D74FA0B00630D0B /* curve.png */; };
 		272A86EA0D74FA0B00630D0B /* ellipse.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D60D74FA0B00630D0B /* ellipse.png */; };
 		272A86EC0D74FA0B00630D0B /* eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86D80D74FA0B00630D0B /* eraser.png */; };
@@ -170,6 +172,8 @@
 		271EEB0C0BBC34A800319865 /* SWSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSelectionTool.m; sourceTree = "<group>"; };
 		271EEB1B0BBC352300319865 /* SWTextTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextTool.h; sourceTree = "<group>"; };
 		271EEB1C0BBC352300319865 /* SWTextTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextTool.m; sourceTree = "<group>"; };
+		2723FB5D1162830F005BCB1B /* SWImageDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageDataSource.h; sourceTree = "<group>"; };
+		2723FB5E1162830F005BCB1B /* SWImageDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWImageDataSource.m; sourceTree = "<group>"; };
 		272A86D40D74FA0B00630D0B /* curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = curve.png; sourceTree = "<group>"; };
 		272A86D60D74FA0B00630D0B /* ellipse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ellipse.png; sourceTree = "<group>"; };
 		272A86D80D74FA0B00630D0B /* eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eraser.png; sourceTree = "<group>"; };
@@ -362,6 +366,16 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
+		2723FB5C11628261005BCB1B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				27A60E110B879A6A0091A1B0 /* Tools */,
+				2723FB5D1162830F005BCB1B /* SWImageDataSource.h */,
+				2723FB5E1162830F005BCB1B /* SWImageDataSource.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		272A86C40D74F9F500630D0B /* NewTools */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,8 +486,8 @@
 			isa = PBXGroup;
 			children = (
 				273FABAA0BFBA18D00E507C5 /* Controllers */,
-				27A60E110B879A6A0091A1B0 /* Tools */,
 				274194B00C1DA5C100605CDC /* Views */,
+				2723FB5C11628261005BCB1B /* Model */,
 				27F413BD0C4D2D0A00391496 /* Other */,
 			);
 			name = Classes;
@@ -810,6 +824,7 @@
 			files = (
 				2706B88010ED719500080D4A /* PaintViewDrawingTest.m in Sources */,
 				2706B94D10ED77A600080D4A /* DebugLog.m in Sources */,
+				2723FB601162830F005BCB1B /* SWImageDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,6 +871,7 @@
 				273BE3C21011389E00AA0B05 /* SWResizeWindowController.m in Sources */,
 				27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */,
 				2706B94E10ED77A600080D4A /* DebugLog.m in Sources */,
+				2723FB5F1162830F005BCB1B /* SWImageDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

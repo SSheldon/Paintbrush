@@ -24,10 +24,15 @@
 @class SWToolbox;
 @class SWTool;
 @class SWDocument;
+@class SWImageDataSource;
 
-@interface SWPaintView : NSView {
+@interface SWPaintView : NSView 
+{
 	// Have a connection to the SWDocument instance that owns this view
 	IBOutlet SWDocument *document;
+	
+	// The data source: light of our life
+	SWImageDataSource *dataSource;
 	
 	NSBitmapImageRep *mainImage;
 	NSBitmapImageRep *bufferImage;
@@ -50,7 +55,7 @@
 }
 
 //- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
-- (void)preparePaintView;
+- (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setToolbox:(SWToolbox *)tb;
 - (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale;

@@ -30,6 +30,7 @@
 #import "SWToolList.h"
 #import "SWAppController.h"
 #import "SWSavePanelAccessoryViewController.h"
+#import "SWImageDataSource.h"
 
 @implementation SWDocument
 
@@ -73,11 +74,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[sizeController release];
 	[clipView release];
 	[currentFileType release];
-	[openedImage release];
 	[textController release];
 	[savePanelAccessoryViewController removeObserver:self forKeyPath:kSWCurrentFileType];
 	[savePanelAccessoryViewController release];
 	[toolbox release];
+	[dataSource release];
 	[super dealloc];
 }
 
@@ -93,12 +94,12 @@ static BOOL kSWDocumentWillShowSheet = YES;
     [super windowControllerDidLoadNib:aController];
 
 	// We can make the app more responsive by loading these guys at launch
-	if (!sizeController) {
+	if (!sizeController)
 		sizeController = [[SWSizeWindowController alloc] initWithWindowNibName:@"SizeWindow"];
-	}
-	if (!resizeController) {
+	
+	if (!resizeController)
 		resizeController = [[SWResizeWindowController alloc] initWithWindowNibName:@"ResizePanel"];
-	}
+
 	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	
 	clipView = [[SWCenteringClipView alloc] initWithFrame:[[scrollView contentView] frame]];
@@ -115,21 +116,20 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[clipView setBgImagePattern:bgImage];
 		
 	// If the user opened an image
-	if (openedImage) {
-		openingRect.origin = NSZeroPoint;
-		openingRect.size = [openedImage size];
+	if (dataSource) 
 		[self setUpPaintView];
-	} else {
+	else
+	{
 		// When we create a new document
-		if (kSWDocumentWillShowSheet) {
+		if (kSWDocumentWillShowSheet) 
+		{
 			[[aController window] orderFront:self];
 			[self raiseSizeSheet:aController];
-		} else {
+		}
+		else 
+		{
 			[SWDocument setWillShowSheet:YES];
-			openedImage = [[NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]] retain];
-			[SWImageTools flipImageVertical:openedImage];
-			openingRect.origin = NSZeroPoint;
-			openingRect.size = [openedImage size];
+			dataSource = [[SWImageDataSource alloc] initWithPasteboard];
 			[self setUpPaintView];
 		}
 	}
@@ -140,17 +140,15 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (void)setUpPaintView
 {
-	[paintView setFrame:openingRect];
-	[paintView preparePaintView];
+	[paintView preparePaintViewWithDataSource:dataSource];
 	[paintView setToolbox:toolbox];
 	
 	// Use external method to determine the window bounds
-	NSRect tempRect = [paintView calculateWindowBounds:openingRect];
+	NSRect viewRect = [paintView frame];
+	NSRect tempRect = [paintView calculateWindowBounds:viewRect];
 	
 	// Apply the changes to the new document
 	[[paintView window] setFrame:tempRect display:YES animate:YES];
-	
-	[paintView setImage:openedImage scale:NO];	
 }
 
 
@@ -194,18 +192,23 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			 returnCode:(NSInteger)returnCode
 			contextInfo:(void *)contextInfo
 {
-	if (returnCode == NSOKButton) {
-		openingRect.origin = NSZeroPoint;
-		openingRect.size.width = [sizeController width];
-		openingRect.size.height = [sizeController height];
-		// Initial creation
-		[paintView setFrame:openingRect];
-		[self setUpPaintView];
+	if (returnCode == NSOKButton) 
+	{
+		NSSize openingSize;
+		openingSize.width = [sizeController width];
+		openingSize.height = [sizeController height];
 		
-		// Use external method to determine the window bounds
-		NSRect tempRect = [paintView calculateWindowBounds:openingRect];
-		[[paintView window] setFrame:tempRect display:YES animate:YES];
-	} else if (returnCode == NSCancelButton) {
+		// You better be nil at this point!
+		assert(dataSource == nil);
+
+		// Create the data source
+		dataSource = [[SWImageDataSource alloc] initWithSize:openingSize];
+
+		// Initial creation
+		[self setUpPaintView];
+	} 
+	else if (returnCode == NSCancelButton)
+	{
 		// Close the document - they obviously don't want to play
 		[[super windowForSheet] close];
 	}
@@ -216,12 +219,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)raiseResizeSheet:(id)sender
 {
 	// Sender tag: 1 == image, 0 == canvas
-	if ([[sender class] isEqualTo: [NSMenuItem class]]) {
+	if ([[sender class] isEqualTo: [NSMenuItem class]])
 		[resizeController setScales:[sender tag]];
-	}
 	
 	// Get, and then set, the current document size
-	NSSize currSize = openingRect.size;
+	NSSize currSize = [dataSource size];
 	[resizeController setCurrentSize:currSize];
 	
     [NSApp beginSheet:[resizeController window]
@@ -238,15 +240,18 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			   returnCode:(NSInteger)returnCode
 			  contextInfo:(void *)contextInfo
 {
-	if (returnCode == NSOKButton) {
-		openingRect.origin = NSZeroPoint;
-		openingRect.size.width = [resizeController width];
-		openingRect.size.height = [resizeController height];
-		NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
+	if (returnCode == NSOKButton) 
+	{
+		NSSize newSize;
+		newSize.width = [resizeController width];
+		newSize.height = [resizeController height];
+		
+//		NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
 		
 		// Nothing to do if the size isn't changing!
-		if ([[paintView mainImage] size].width != openingRect.size.width || 
-			[[paintView mainImage] size].height != openingRect.size.height) {
+		if ([dataSource size].width != newSize.width || [dataSource size].height != newSize.height) 
+		{
+			/*
 			NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
 							   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
 							   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
@@ -254,6 +259,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			[paintView setFrame:openingRect];
 			[paintView preparePaintView];
 			[paintView setImage:backupImage scale:[resizeController scales]];
+			 */
+			
+			[dataSource resizeToSize:newSize scaleImage:[resizeController scales]];
+			
+			// TODO: refresh the PaintView
 			
 			// We should also redraw the clip view
 			[[paintView superview] setNeedsDisplay:YES];
@@ -470,15 +480,13 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Opening an image
 - (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError **)anError
 {
-	// Temporary image
-	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:URL];
-	[SWImageTools initImageRep:&openedImage withSize:NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh])];
-	// Copy the image to the openedImage
-	[SWImageTools drawToImage:openedImage fromImage:tempImage withComposition:NO];
+#pragma unused(aType, anError)
+	// You better be nil at this point!
+	assert(dataSource == nil);
 	
-	if (openedImage)
-		[SWImageTools flipImageVertical:openedImage];
-	return (openedImage != nil);
+	// Create the data source
+	dataSource = [[SWImageDataSource alloc] initWithURL:URL];
+	return (dataSource != nil);
 }
 
 
@@ -531,20 +539,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 }
 
 
-// Used by Paste to retrieve an image from the pasteboard
-+ (NSData *)readImageFromPasteboard:(NSPasteboard *)pb
-{
-	NSData *data = nil;
-	
-	if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]]) {
-		data = [pb dataForType:NSTIFFPboardType];
-	} else if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]]) {
-		data = [pb dataForType:NSPICTPboardType];
-	}
-	return data;
-}
-
-
 // Cut: same as copy, but clears the overlay
 - (IBAction)cut:(id)sender
 {
@@ -567,10 +561,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[paintView prepUndo:nil];
 	[toolboxController switchToScissors:nil];
 	
-	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
-	if (data) {
-		[paintView pasteData:data];		
-	}
+	NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+	if (data)
+		[paintView pasteData:data];
 }
 
 

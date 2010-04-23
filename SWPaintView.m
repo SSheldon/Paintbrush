@@ -26,12 +26,18 @@
 #import "SWToolboxController.h"
 #import "SWAppController.h"
 #import "SWDocument.h"
+#import "SWImageDataSource.h"
 
 @implementation SWPaintView
 
-- (void)preparePaintView
+- (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds
 {
-	NSRect frameRect = [self frame];
+	assert(!dataSource);
+	dataSource = ds;
+	
+	// First things first: make sure we are the right size!
+	NSRect frameRect = NSMakeRect(0.0, 0.0, [ds size].width, [ds size].height);
+	[self setFrame:frameRect];
 	
 	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	isPayingAttention = YES;
@@ -66,7 +72,8 @@
 }
 
 
-- (NSRect)calculateWindowBounds:(NSRect)frameRect {
+- (NSRect)calculateWindowBounds:(NSRect)frameRect
+{
 	// Set the window's maximum size to the size of the screen
 	// Does not seem to work all the time
 	NSRect screenRect = [[NSScreen mainScreen] frame];
@@ -372,11 +379,14 @@
 	[SWImageTools clearImage:bufferImage];
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
-	if (scale) {
+	if (scale) 
+	{
 		// Stretch the image to the correct size
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 		[newImage drawInRect:[self bounds]];
-	} else {
+	}
+	else 
+	{
 		[[toolboxController backgroundColor] setFill];
 		NSRectFill([self bounds]);
 		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)];

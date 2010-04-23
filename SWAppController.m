@@ -116,7 +116,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 // Creates a new instance of SWDocument based on the image in the clipboard
 - (IBAction)newFromClipboard:(id)sender
 {
-	NSData *data = [SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+	NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
 	if (data) {
 		[SWDocument setWillShowSheet:NO];
 		[NSApp sendAction:@selector(newDocument:)
@@ -129,7 +129,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 {
 	SEL action = [menuItem action];
 	if (action == @selector(newFromClipboard:)) {
-		return ([SWDocument readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
+		return ([SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
 
 	}
 	return YES;
