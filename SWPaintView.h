@@ -34,8 +34,6 @@
 	// The data source: light of our life
 	SWImageDataSource *dataSource;
 	
-	NSBitmapImageRep *mainImage;
-	NSBitmapImageRep *bufferImage;
 	NSPoint currentPoint;
 	NSColor *frontColor;
 	NSColor *backColor;
@@ -55,18 +53,16 @@
 }
 
 //- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
-- (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds;
+- (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds
+							   toolbox:(SWToolbox *)tb;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
-- (void)setToolbox:(SWToolbox *)tb;
-- (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale;
 - (void)setBackgroundColor:(NSColor *)color;
 //- (void)undoImage:(NSData *)imageData;
-- (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame;
+- (void)undoResize:(NSData *)mainImageData 
+		  oldFrame:(NSRect)frame;
 - (void)pasteData:(NSData *)data;
 - (void)prepUndo:(id)sender;
 - (void)clearOverlay;
-- (NSBitmapImageRep *)mainImage;
-- (NSBitmapImageRep *)bufferImage;
 
 
 // Grid related

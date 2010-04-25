@@ -31,9 +31,12 @@
 @implementation SWPaintView
 
 - (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds
+							   toolbox:(SWToolbox *)tb
 {
 	assert(!dataSource);
-	dataSource = ds;
+	assert(!toolbox);
+	dataSource = [ds retain]; // Hold on to it!
+	toolbox = [tb retain]; // This one too!
 	
 	// First things first: make sure we are the right size!
 	NSRect frameRect = NSMakeRect(0.0, 0.0, [ds size].width, [ds size].height);
@@ -41,20 +44,7 @@
 	
 	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	isPayingAttention = YES;
-
-	// Create the two images we'll be using
-	[SWImageTools initImageRep:&mainImage withSize:frameRect.size];
-	[SWImageTools initImageRep:&bufferImage withSize:frameRect.size];
-
-	
-	// New document, not an opened image: gotta paint the background color
-	SWLockFocus(mainImage);
-	[[toolboxController backgroundColor] setFill];
-	NSRectFill(frameRect);
-	SWUnlockFocus(mainImage);
-	
-	[SWImageTools drawToImage:bufferImage fromImage:mainImage withComposition:NO];
-	
+		
 	// Tracking area
 	[self addTrackingArea:[[[NSTrackingArea alloc] initWithRect:[self frame]
 														options: NSTrackingMouseMoved | NSTrackingCursorUpdate
@@ -69,6 +59,23 @@
 	gridColor = [NSColor gridColor];
 	
 	[self setNeedsDisplay:YES];	
+}
+
+
+- (void)dealloc
+{
+	[dataSource release];
+	[toolbox release];
+
+	[undoData release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[frontColor release];
+	[backColor release];
+	[[self undoManager] removeAllActions]; 
+	// Note: do NOT release the current tool, as it is just a pointer to the
+	// object inherited from ToolboxController
+	
+	[super dealloc];
 }
 
 
@@ -110,24 +117,28 @@
 
 		// If you don't do this, the image looks blurry when zoomed in
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
+		CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
+		NSBitmapImageRep *mainImage = [dataSource mainImage];
+		NSBitmapImageRep *bufferImage = [dataSource bufferImage];
 		
 		// Draw the NSBitmapImageRep to the view
-		if (mainImage) {
+		if (mainImage) 
+		{
 			//[mainImage draw];
-			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
-							   NSRectToCGRect([self bounds]), [mainImage CGImage]);
+			CGContextDrawImage(cgContext, NSRectToCGRect([self bounds]), [mainImage CGImage]);
 		}
 		
 		// If there's an overlay image being used at the moment, draw it
-		if (bufferImage) {
+		if (bufferImage) 
+		{
 			//[bufferImage drawAtPoint:NSZeroPoint];
 			NSRect rect = (NSRect){ NSZeroPoint, [bufferImage size] };
-			CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
-							   NSRectToCGRect(rect), [bufferImage CGImage]);
+			CGContextDrawImage(cgContext, NSRectToCGRect(rect), [bufferImage CGImage]);
 		}
 		
 		// If the grid is turned on, draw that too
-		if (showsGrid && [(SWScalingScrollView *)[[self superview] superview] scaleFactor] > 2.0) {
+		if (showsGrid && [(SWScalingScrollView *)[[self superview] superview] scaleFactor] > 2.0) 
+		{
 			[gridColor set];
 			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 			[[self gridInRect:[self frame]] stroke];
@@ -138,7 +149,8 @@
 }
 
 
-+ (NSMenu *)defaultMenu {
++ (NSMenu *)defaultMenu 
+{
 	//NSMenu *theMenu = [super initWithWindowNibName:@"Preferences"];
     NSMenu *theMenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
     [theMenu insertItemWithTitle:NSLocalizedString(@"Cut", @"Cut the selection") 
@@ -171,18 +183,6 @@
 }
 
 
-// Used to assign the toolbox
-- (void)setToolbox:(SWToolbox *)tb
-{
-	[tb retain];
-	[toolbox release];
-	toolbox = tb;
-	
-	// Update the cursor
-	[self cursorUpdate:nil];
-}
-
-
 #pragma mark Mouse/keyboard events: the cornerstone of the drawing process
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -209,8 +209,8 @@
 		// If it's shifted, do something about it
 		[[toolbox currentTool] setFlags:[event modifierFlags]];
 		[[toolbox currentTool] performDrawAtPoint:currentPoint 
-						  withMainImage:mainImage 
-							bufferImage:bufferImage 
+						  withMainImage:[dataSource mainImage]
+							bufferImage:[dataSource bufferImage]
 							 mouseEvent:MOUSE_DOWN];
 		
 		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
@@ -230,8 +230,8 @@
 		
 		[[toolbox currentTool] setFlags:[event modifierFlags]];
 		[[toolbox currentTool] performDrawAtPoint:currentPoint 
-									withMainImage:mainImage 
-									  bufferImage:bufferImage 
+									withMainImage:[dataSource mainImage]
+									  bufferImage:[dataSource bufferImage]
 									   mouseEvent:MOUSE_DRAGGED];
 		
 		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
@@ -249,8 +249,8 @@
 		currentPoint.y = floor(upPoint.y);
 		[[toolbox currentTool] setFlags:[event modifierFlags]];
 		NSBezierPath *path = [[toolbox currentTool] performDrawAtPoint:currentPoint 
-														 withMainImage:mainImage 
-														   bufferImage:bufferImage 
+														 withMainImage:[dataSource mainImage]
+														   bufferImage:[dataSource bufferImage]
 															mouseEvent:MOUSE_UP];
 		
 		if (path) {
@@ -352,7 +352,7 @@
 	{
 		isPayingAttention = NO;
 		[toolbox tieUpLooseEndsForCurrentTool];
-		[SWImageTools clearImage:bufferImage];
+		[SWImageTools clearImage:[dataSource bufferImage]];
 		[self setNeedsDisplay:YES];
 	} 
 	else if ([event keyCode] == 51 || [event keyCode] == 117) 
@@ -373,29 +373,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-- (void)setImage:(NSBitmapImageRep *)newImage scale:(BOOL)scale
-{	
-	[SWImageTools clearImage:mainImage];
-	[SWImageTools clearImage:bufferImage];
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
-	if (scale) 
-	{
-		// Stretch the image to the correct size
-		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-		[newImage drawInRect:[self bounds]];
-	}
-	else 
-	{
-		[[toolboxController backgroundColor] setFill];
-		NSRectFill([self bounds]);
-		[newImage drawAtPoint:NSMakePoint(0, [self bounds].size.height - [newImage size].height)];
-	}
-	[NSGraphicsContext restoreGraphicsState];
-	[self setNeedsDisplay:YES];
-}
-
-
 - (void)setBackgroundColor:(NSColor *)color
 {
 	[color retain];
@@ -412,7 +389,8 @@
 
 - (void)prepUndo:(id)sender
 {
-	NSUndoManager *undo = [self undoManager];
+	// BROKEN!
+/*	NSUndoManager *undo = [self undoManager];
 	NSRect oldFrame = NSZeroRect;
 	if (sender && [(NSDictionary *)sender objectForKey:@"Image"])
 	{
@@ -440,6 +418,7 @@
 		if (![undo isUndoing])
 			[undo setActionName:@"Drawing"];
 	}
+*/
 }
 
 // Undo for drawing that doesn't change the canvas
@@ -462,19 +441,22 @@
 // Undo canvas resizing
 - (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame
 {
+	// BROKEN!
+/*
 	NSUndoManager *undo = [self undoManager];
 	NSRect currentFrame = NSZeroRect;
 	currentFrame.size = [mainImage size];
 	[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:currentFrame];
-	if (![undo isUndoing]) {
-		if (NSEqualRects(frame, NSZeroRect)) {
+	if (![undo isUndoing]) 
+	{
+		if (NSEqualRects(frame, NSZeroRect))
 			[undo setActionName:@"Drawing"];
-		} else {
+		else
 			[undo setActionName:@"Resize"];
-		}
 	}
 	
-	if (!NSEqualRects(frame, NSZeroRect)) {
+	if (!NSEqualRects(frame, NSZeroRect))
+	{
 		[self setFrame:frame];
 		[self preparePaintView];
 		//NSRect tempRect = [self calculateWindowBounds:frame];
@@ -489,6 +471,7 @@
 	[imageRep release];
 	[NSGraphicsContext restoreGraphicsState];
 	[self clearOverlay];
+*/
 }
 
 
@@ -580,7 +563,7 @@
 // Releases the overlay image, then tells the tool about it
 - (void)clearOverlay
 {
-	[SWImageTools clearImage:bufferImage];
+	[SWImageTools clearImage:[dataSource bufferImage]];
 	[[toolbox currentTool] deleteKey];
 	[toolbox tieUpLooseEndsForCurrentTool];
 	[self setNeedsDisplay:YES];
@@ -589,6 +572,8 @@
 // Pastes data as an image
 - (void)pasteData:(NSData *)data
 {
+	assert(NO);
+/*
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 	
@@ -619,18 +604,7 @@
 												withMainImage:mainImage];
 	[temp release];
 	[self setNeedsDisplay:YES];
-}
-
-// Returns the mainImage
-- (NSBitmapImageRep *)mainImage
-{
-	return mainImage;
-}
-
-// Returns the overlay
-- (NSBitmapImageRep *)bufferImage
-{
-	return bufferImage;
+*/
 }
 
 
@@ -661,25 +635,6 @@
 - (BOOL)isFlipped
 {
 	return YES;
-}
-
-   
-- (void)dealloc
-{
-	if (undoData) {
-		[undoData release];
-	}
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[frontColor release];
-	[backColor release];
-	[mainImage release];
-	//[imageRep release];
-	[toolbox release];
-	[[self undoManager] removeAllActions]; 
-	// Note: do NOT release the current tool, as it is just a pointer to the
-	// object inherited from ToolboxController
- 
-	[super dealloc];
 }
 
 @end

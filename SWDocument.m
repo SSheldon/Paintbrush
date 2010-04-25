@@ -140,8 +140,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (void)setUpPaintView
 {
-	[paintView preparePaintViewWithDataSource:dataSource];
-	[paintView setToolbox:toolbox];
+	[paintView preparePaintViewWithDataSource:dataSource
+									  toolbox:toolbox];
 	
 	// Use external method to determine the window bounds
 	NSRect viewRect = [paintView frame];
@@ -262,11 +262,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 			 */
 			
 			[dataSource resizeToSize:newSize scaleImage:[resizeController scales]];
-			
-			// TODO: refresh the PaintView
+			[paintView setFrame:NSMakeRect(0.0, 0.0, newSize.width, newSize.height)]; // Forces a redraw
 			
 			// We should also redraw the clip view
-			[[paintView superview] setNeedsDisplay:YES];
+			[clipView setNeedsDisplay:YES];
 		}
 	}
 }
@@ -359,7 +358,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Saving data: returns the correctly-formatted image data
 - (NSData *)dataOfType:(NSString *)aType error:(NSError **)anError
 {
-	NSBitmapImageRep *bitmap = [paintView mainImage];
+	NSBitmapImageRep *bitmap = [dataSource mainImage];
 //	NSBitmapImageRep *bitmap = [SWImageTools createMonochromeImage:[paintView mainImage]];
 
 	[SWImageTools flipImageVertical:bitmap];
@@ -574,8 +573,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	
 	[[toolbox currentTool] setSavedPoint:NSZeroPoint];
 	[[toolbox currentTool] performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
-								withMainImage:[paintView mainImage] 
-								  bufferImage:[paintView bufferImage] 
+								withMainImage:[dataSource mainImage] 
+								  bufferImage:[dataSource bufferImage] 
 								   mouseEvent:MOUSE_UP];
 	
 	[paintView cursorUpdate:nil];
@@ -672,8 +671,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (IBAction)flipHorizontal:(id)sender
 {
-	if ([[super windowForSheet] isKeyWindow]) {
-		NSBitmapImageRep *image = [paintView mainImage];
+	if ([[super windowForSheet] isKeyWindow])
+	{
+		NSBitmapImageRep *image = [dataSource mainImage];
 		[paintView prepUndo:nil];
 		[SWImageTools flipImageHorizontal:image];
 		[paintView setNeedsDisplay:YES];
@@ -683,8 +683,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (IBAction)flipVertical:(id)sender
 {
-	if ([[super windowForSheet] isKeyWindow]) {
-		NSBitmapImageRep *image = [paintView mainImage];
+	if ([[super windowForSheet] isKeyWindow]) 
+	{
+		NSBitmapImageRep *image = [dataSource mainImage];
 		[paintView prepUndo:nil];
 		[SWImageTools flipImageVertical:image];
 		[paintView setNeedsDisplay:YES];
@@ -715,10 +716,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	// Tell the controller that they just changed the image size
 	[sizeController setWidth:rect.size.width];
 	[sizeController setHeight:rect.size.height];
-	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:[paintView mainImage]];
+	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:[dataSource mainImage]];
 	
 	// Now we cheat and set the image
-	[paintView setImage:writeToMe scale:NO];
+//	[paintView setImage:writeToMe scale:NO];
 	[writeToMe release];
 }
 
@@ -727,7 +728,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)invertColors:(id)sender
 {
 	[paintView prepUndo:nil];
-	[SWImageTools invertImage:[paintView mainImage]];
+	[SWImageTools invertImage:[dataSource mainImage]];
 	[paintView setNeedsDisplay:YES];
 }
 

@@ -25,12 +25,15 @@
 - (id)initWithPasteboard;
 
 // Modifiers to the image
-- (void)resizeToSize:(NSSize)size scaleImage:(BOOL)shouldScale;
+- (void)resizeToSize:(NSSize)size
+		  scaleImage:(BOOL)shouldScale;
 
 // For drawing
 - (NSArray *)imageArray;
 
 // Accessing information about the image source
 @property (readonly) NSSize size;
+@property (readonly) NSBitmapImageRep * mainImage;
+@property (readonly) NSBitmapImageRep * bufferImage;
 
 @end

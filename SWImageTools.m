@@ -52,11 +52,10 @@
 
 + (void)clearImage:(NSBitmapImageRep *)image inRect:(NSRect)rect
 {
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:image]];
+	SWLockFocus(image);
 	[[NSColor clearColor] setFill];
 	NSRectFillUsingOperation(rect, NSCompositeCopy);
-	[NSGraphicsContext restoreGraphicsState];
+	SWUnlockFocus(image);
 }
 
 
@@ -306,6 +305,7 @@ void SWLockFocus(NSBitmapImageRep *image)
 
 void SWUnlockFocus(NSBitmapImageRep *image)
 {
+#pragma unused (image)
 	[NSGraphicsContext restoreGraphicsState];
 }
 

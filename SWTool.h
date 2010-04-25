@@ -22,14 +22,16 @@
 
 @class SWToolboxController;
 
-typedef enum {
+typedef enum 
+{
 	MOUSE_DOWN, 
 	MOUSE_DRAGGED,
 	MOUSE_UP,
 	MOUSE_MOVED
 } SWMouseEvent;
 
-@interface SWTool : NSObject {
+@interface SWTool : NSObject
+{
 	NSColor *frontColor;
 	NSColor *backColor;
 	NSBitmapImageRep *drawToMe;
@@ -63,8 +65,6 @@ typedef enum {
 
 - (NSPoint)savedPoint;
 - (NSColor *)drawingColor;
-//- (void)setFrontColor:(NSColor *)front backColor:(NSColor *)back lineWidth:(CGFloat)width shouldFill:(BOOL)fill shouldStroke:(BOOL)stroke;
-//- (void)setModifierFlags:(NSUInteger)modifierFlags;
 - (void)setSavedPoint:(NSPoint)aPoint;
 - (void)tieUpLooseEnds;
 - (void)mouseHasMoved:(NSPoint)aPoint;
@@ -87,8 +87,9 @@ typedef enum {
 
 @end
 
-@interface SWTool (Abstract)
 
+// Abstract category on SWTool -- the base class doesn't implement these methods at all
+@interface SWTool (Abstract)
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end;
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
 					   withMainImage:(NSBitmapImageRep *)mainImage 
