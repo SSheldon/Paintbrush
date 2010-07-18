@@ -585,7 +585,31 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	
 	NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
 	if (data)
-		[paintView pasteData:data];
+	{
+		[paintView cursorUpdate:nil];
+		NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
+
+		NSPoint origin = [[paintView superview] bounds].origin;
+		if (origin.x < 0) origin.x = 0;
+		if (origin.y < 0) origin.y = 0;
+
+		NSRect rect = NSZeroRect;
+		rect.origin = origin;
+
+		// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
+		rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
+		
+		[dataSource restoreBufferImageFromData:data];
+		
+		// As always, flip the image to be viewed in our flipped view
+		[SWImageTools flipImageVertical:[dataSource bufferImage]];
+
+		[(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
+														 forImage:[dataSource bufferImage]
+													withMainImage:[dataSource mainImage]];
+		[temp release];
+		[paintView setNeedsDisplay:YES];
+	}
 }
 
 

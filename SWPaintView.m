@@ -475,53 +475,13 @@
 	[self setNeedsDisplay:YES];
 }
 
-// Pastes data as an image
-- (void)pasteData:(NSData *)data
-{
-	NSAssert(NO, @"Paste is a little busted right now");
-/*
-	[self cursorUpdate:nil];
-	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
-	
-	NSPoint origin = [[self superview] bounds].origin;
-	if (origin.x < 0) origin.x = 0;
-	if (origin.y < 0) origin.y = 0;
-	
-	NSRect rect = NSZeroRect;
-	rect.origin = origin;
-	
-	// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
-	rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
-	
-	//[SWImageTools clearImage:bufferImage];
-	[bufferImage release];
-	bufferImage = nil;
-	[SWImageTools initImageRep:&bufferImage withSize:rect.size];
-	
-	SWLockFocus(bufferImage);
-	[temp drawAtPoint:rect.origin];
-	SWUnlockFocus(bufferImage);
-	
-	// As always, flip the image to be viewed in our flipped view
-	[SWImageTools flipImageVertical:bufferImage];
-	
-	[(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
-													 forImage:bufferImage
-												withMainImage:mainImage];
-	[temp release];
-	[self setNeedsDisplay:YES];
-*/
-}
-
-
 // Tells the mainImage to refresh itself. Can be called from anywhere in the application.
 - (void)refreshImage:(id)sender
 {
-	if (sender) {
+	if (sender)
 		[self setNeedsDisplayInRect:[sender invalidRect]];
-	} else {
+	else
 		[self setNeedsDisplay:YES];
-	}
 }
 
 // We can't promise we're opaque!

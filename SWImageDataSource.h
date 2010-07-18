@@ -31,6 +31,7 @@
 // Need to change the image?  We got your back -- here be datas
 - (NSData *)copyMainImageData;
 - (void)restoreMainImageFromData:(NSData *)tiffData;
+- (void)restoreBufferImageFromData:(NSData *)tiffData; // For pasting
 
 // For drawing
 - (NSArray *)imageArray;

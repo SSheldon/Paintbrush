@@ -179,4 +179,30 @@
 }
 
 
+- (void)restoreBufferImageFromData:(NSData *)tiffData
+{
+	if (!tiffData)
+		return;
+	
+	NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithData:tiffData];
+	
+	// Unlike the main image, the buffer image can have its size change.  Do that here.
+	NSRect bufferImageRect = NSMakeRect(0, 0, [bufferImage pixelsWide], [bufferImage pixelsHigh]);
+	NSRect pastedImageRect = NSMakeRect(0, 0, [imageRep pixelsWide], [imageRep pixelsHigh]);
+	NSRect finalRect = NSUnionRect(bufferImageRect, pastedImageRect);
+	
+	if (!NSEqualRects(bufferImageRect, finalRect))
+	{
+		// Pasting something bigger than the previous image, so create a new one with the new size
+		[bufferImage release];
+		bufferImage = nil;
+		
+		[SWImageTools initImageRep:&bufferImage withSize:finalRect.size];
+	}
+	
+	[SWImageTools drawToImage:bufferImage fromImage:imageRep withComposition:NO];
+	[imageRep release];
+}
+
+
 @end

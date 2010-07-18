@@ -52,17 +52,14 @@
 	NSColor *gridColor;
 }
 
-//- (id)initWithFrame:(NSRect)frameRect animate:(BOOL)shouldAnimate;
 - (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds
 							   toolbox:(SWToolbox *)tb;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setBackgroundColor:(NSColor *)color;
-- (void)pasteData:(NSData *)data;
 - (void)clearOverlay;
 
 
 // Grid related
-//- (IBAction)showGrid:(id)sender;
 - (void)setShowsGrid:(BOOL)shouldShowGrid;
 - (void)setGridSpacing:(CGFloat)spacing;
 - (void)setGridColor:(NSColor *)color;
