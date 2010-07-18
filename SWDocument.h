@@ -24,7 +24,6 @@
 @class SWPaintView;
 @class SWScalingScrollView;
 @class SWTool;
-@class SWPaintView;
 @class SWToolbox;
 @class SWToolboxController;
 @class SWSizeWindowController;
@@ -58,6 +57,7 @@
 
 // Properties
 @property (readonly) SWToolbox *toolbox;
+@property (readonly) SWPaintView *paintView;
 
 
 // Methods called by menu items

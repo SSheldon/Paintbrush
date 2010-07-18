@@ -36,7 +36,7 @@
 
 // Synthesize our properties here
 @synthesize toolbox;
-
+@synthesize paintView;
 
 // TODO: Nasty hack
 static BOOL kSWDocumentWillShowSheet = YES;

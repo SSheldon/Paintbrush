@@ -9,6 +9,8 @@
 #import "SWToolbox.h"
 #import "SWToolList.h"
 #import "SWToolboxController.h"
+#import "SWPaintView.h"
+#import "SWDocument.h"
 
 @implementation SWToolbox
 
@@ -61,6 +63,13 @@
 	[tool retain];
 	[currentTool release];
 	currentTool = tool;
+    
+    
+    SWToolboxController *controller = [SWToolboxController sharedToolboxPanelController];
+    SWDocument *document = [controller activeDocument];
+    SWPaintView *view = [document paintView];
+    [view cursorUpdate:nil];
+    
 }
 
 
