@@ -60,7 +60,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[[self undoManager] setLevelsOfUndo:[undo integerValue]];
 		
 		// Create my window's particular tools
-		toolbox = [[SWToolbox alloc] init];
+		toolbox = [[SWToolbox alloc] initWithDocument:self];
 		
 	}
     return self;
@@ -199,7 +199,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		openingSize.height = [sizeController height];
 		
 		// You better be nil at this point!
-		assert(dataSource == nil);
+		NSAssert(dataSource == nil, @"We can't already have a DataSource when creating a document!");
 
 		// Create the data source
 		dataSource = [[SWImageDataSource alloc] initWithSize:openingSize];
@@ -246,20 +246,10 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		newSize.width = [resizeController width];
 		newSize.height = [resizeController height];
 		
-//		NSBitmapImageRep *backupImage = contextInfo ? (NSBitmapImageRep *)contextInfo : [paintView mainImage];
-		
 		// Nothing to do if the size isn't changing!
 		if ([dataSource size].width != newSize.width || [dataSource size].height != newSize.height) 
 		{
-			/*
-			NSDictionary *d = [NSDictionary dictionaryWithObjectsAndKeys:
-							   [NSValue valueWithRect:NSMakeRect(0,0,[backupImage size].width, [backupImage size].height)], 
-							   @"Frame", [backupImage TIFFRepresentation], @"Image", nil];
-			[paintView prepUndo:d];
-			[paintView setFrame:openingRect];
-			[paintView preparePaintView];
-			[paintView setImage:backupImage scale:[resizeController scales]];
-			 */
+			[self handleUndoWithImageData:nil frame:NSZeroRect];
 			
 			[dataSource resizeToSize:newSize scaleImage:[resizeController scales]];
 			[paintView setFrame:NSMakeRect(0.0, 0.0, newSize.width, newSize.height)]; // Forces a redraw
@@ -282,9 +272,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (void)showTextSheet:(NSNotification *)n
 {
 	if ([[super windowForSheet] isKeyWindow]) {
-		if (!textController) {
+		if (!textController)
 			textController = [[SWTextToolWindowController alloc] initWithDocument:self];
-		}
 		
 		// Orders the font manager to the front
 		[NSApp beginSheet:[textController window]
@@ -481,7 +470,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 #pragma unused(aType, anError)
 	// You better be nil at this point!
-	assert(dataSource == nil);
+	NSAssert(dataSource == nil, @"We can't already have a DataSource when creating a document!");
 	
 	// Create the data source
 	dataSource = [[SWImageDataSource alloc] initWithURL:URL];
@@ -501,39 +490,73 @@ static BOOL kSWDocumentWillShowSheet = YES;
 					   contextInfo:NULL];
 }
 
+#pragma mark Handling undo
+
+////////////////////////////////////////////////////////////////////////////////
+//////////		Handling undo
+////////////////////////////////////////////////////////////////////////////////
+
+
+// Undo canvas resizing
+- (void)handleUndoWithImageData:(NSData *)mainImageData frame:(NSRect)frame
+{
+	NSUndoManager *undo = [self undoManager];
+	NSRect currentFrame = NSZeroRect;
+	currentFrame.size = [dataSource size];
+	NSData *mainImageDataCurrent = [dataSource copyMainImageData];
+	[[undo prepareWithInvocationTarget:self] handleUndoWithImageData:mainImageDataCurrent frame:currentFrame];
+	
+	// Without resize, set the string to drawing
+	if (NSEqualSizes(frame.size, NSZeroSize) || NSEqualSizes(frame.size, [dataSource size]))
+		[undo setActionName:NSLocalizedString(@"Drawing", @"The standard undo command string for drawings")];
+	else
+	{
+		// It doesn't matter here if we scale or not, since we'll be replacing the image in a moment
+		[dataSource resizeToSize:frame.size scaleImage:NO];
+		[paintView setFrame:frame];
+		[clipView setNeedsDisplay:YES];
+		[undo setActionName:NSLocalizedString(@"Resize", @"The undo command string image resizings")];
+	}
+	
+	if (mainImageData == nil)
+	{
+		// No data was passed, so retrieve it from the data source
+		NSData *mainImageData = [dataSource copyMainImageData];
+		[[undo prepareWithInvocationTarget:self] handleUndoWithImageData:mainImageData frame:frame];
+	}
+	
+	[dataSource restoreMainImageFromData:mainImageData];
+	
+	// Only clear the overlay during an undo -- NEVER during the initial setup
+	if ([undo isUndoing])
+		[paintView clearOverlay];
+	
+	// But force a redraw either way
+	[paintView setNeedsDisplay:YES];
+}
+
 
 // Called whenever Copy or Cut are called (copies the overlay image to the pasteboard)
 // TODO: Relieve some of this method's dependencies on the Selection tool
 - (void)writeImageToPasteboard:(NSPasteboard *)pb
 {
-	assert([[toolbox currentTool] isKindOfClass:[SWSelectionTool class]]);
+	NSAssert([[toolbox currentTool] isKindOfClass:[SWSelectionTool class]], 
+			 @"How are we copying without a SWSelectionTool as the active tool?");
 	if ([[toolbox currentTool] isKindOfClass:[SWSelectionTool class]])
 	{
 		SWSelectionTool *currentTool = (SWSelectionTool *)[toolbox currentTool];
 		
 		NSRect rect = [currentTool clippingRect];
-		NSBitmapImageRep *writeToMe;
-		[SWImageTools initImageRep:&writeToMe withSize:rect.size];
-		[writeToMe autorelease];
-		
-		SWLockFocus(writeToMe);
-		
-		NSBitmapImageRep *backedImage = [currentTool backedImage];
-		NSPoint oldOrigin = [currentTool oldOrigin];
-		
-		NSSize backedImageSize = [backedImage size];
-		
-		// Offset the drawing by the oldOrigin
-		[backedImage drawInRect:NSMakeRect(-oldOrigin.x, -oldOrigin.y, 
-										   backedImageSize.width, 
-										   backedImageSize.height)];
-		SWUnlockFocus(writeToMe);
+		NSBitmapImageRep *selectedImage = [currentTool selectedImage];		
 		
 		// Make sure we flip the image before we put it in the pasteboard
-		[SWImageTools flipImageVertical:writeToMe];
+		[SWImageTools flipImageVertical:selectedImage];
 		
 		[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
-		[pb setData:[writeToMe TIFFRepresentation] forType:NSTIFFPboardType];
+		[pb setData:[selectedImage TIFFRepresentation] forType:NSTIFFPboardType];
+		
+		// Now flip it again
+		[SWImageTools flipImageVertical:selectedImage];
 	}
 }
 
@@ -557,7 +580,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (IBAction)paste:(id)sender
 {
 	// Prepare for a paste by allowing an undo
-	[paintView prepUndo:nil];
+	[self handleUndoWithImageData:nil frame:NSZeroRect];
 	[toolboxController switchToScissors:nil];
 	
 	NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
@@ -628,30 +651,33 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	SEL action = [anItem action];
 	if ((action == @selector(copy:)) || 
 		(action == @selector(cut:)) || 
-		(action == @selector(crop:))) {
+		(action == @selector(crop:))) 
+	{
 		return ([[[toolbox currentTool] class] isEqualTo:[SWSelectionTool class]] && 
 				[(SWSelectionTool *)[toolbox currentTool] isSelected]);
-	} else if (action == @selector(paste:)) {
+	} 
+	else if (action == @selector(paste:)) 
+	{
 		NSArray *array = [[NSPasteboard generalPasteboard] types];
 		BOOL paste = NO;
 		id object;
-		for (object in array) {
-			if ([object isEqualToString:NSTIFFPboardType] || [object isEqualToString:NSPICTPboardType]) {
+		for (object in array) 
+		{
+			if ([object isEqualToString:NSTIFFPboardType] || [object isEqualToString:NSPICTPboardType])
 				paste = YES;
-			}
 		}
 		return paste;
-	} else if (action == @selector(zoomIn:)) {
-		return [scrollView scaleFactor] < 16;
-	} else if (action == @selector(zoomOut:)) {
-		return [scrollView scaleFactor] > 0.25;
-	} else if (action == @selector(showGrid:)) {
-		return [scrollView scaleFactor] > 2.0;
-	} else if (action == @selector(newFromClipboard:)) {
-		return YES;
-	} else {
-		return YES;
 	}
+	else if (action == @selector(zoomIn:))
+		return [scrollView scaleFactor] < 16;
+	else if (action == @selector(zoomOut:))
+		return [scrollView scaleFactor] > 0.25;
+	else if (action == @selector(showGrid:))
+		return [scrollView scaleFactor] > 2.0;
+	else if (action == @selector(newFromClipboard:))
+		return YES;
+	else
+		return YES;
 }
 
 
@@ -673,8 +699,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	if ([[super windowForSheet] isKeyWindow])
 	{
+		[self handleUndoWithImageData:nil frame:NSZeroRect];
 		NSBitmapImageRep *image = [dataSource mainImage];
-		[paintView prepUndo:nil];
 		[SWImageTools flipImageHorizontal:image];
 		[paintView setNeedsDisplay:YES];
 	}
@@ -685,8 +711,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 {
 	if ([[super windowForSheet] isKeyWindow]) 
 	{
+		[self handleUndoWithImageData:nil frame:NSZeroRect];
 		NSBitmapImageRep *image = [dataSource mainImage];
-		[paintView prepUndo:nil];
 		[SWImageTools flipImageVertical:image];
 		[paintView setNeedsDisplay:YES];
 	}
@@ -697,37 +723,37 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // section of the image to save
 - (IBAction)crop:(id)sender
 {
-	// TODO: Make this work again
-	DebugLog(@"Cropping doesn't work yet");
-	NSRunAlertPanel(@"ÁPeligro!", @"Cropping doesn't work yet", @"Oh...", nil, nil);
-	
 	// First we need to make a temporary copy of what's selected by the selection tool
-	NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
-	NSBitmapImageRep *writeToMe;
-	[SWImageTools initImageRep:&writeToMe withSize:rect.size];
-//	[writeToMe lockFocus];
-//	[[(SWSelectionTool *)[toolbox currentTool] backedImage] drawInRect:NSMakeRect(0,0,rect.size.width, rect.size.height)
-//													fromRect:rect
-//												   operation:NSCompositeSourceOver
-//													fraction:1.0];
-//	[writeToMe unlockFocus];
-	[toolbox tieUpLooseEndsForCurrentTool];
-	
-	// Tell the controller that they just changed the image size
-	[sizeController setWidth:rect.size.width];
-	[sizeController setHeight:rect.size.height];
-	[self sizeSheetDidEnd:[sizeController window] returnCode:NSOKButton contextInfo:[dataSource mainImage]];
-	
-	// Now we cheat and set the image
-//	[paintView setImage:writeToMe scale:NO];
-	[writeToMe release];
+	if ([[toolbox currentTool] isKindOfClass:[SWSelectionTool class]])
+	{
+		NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
+		
+		// This is also important!
+		[toolbox tieUpLooseEndsForCurrentTool];
+		
+		[self handleUndoWithImageData:nil frame:NSZeroRect];
+		
+		NSBitmapImageRep *croppedImage = [(SWSelectionTool *)[toolbox currentTool] selectedImage];
+		
+		// Pretend we are a resize
+		[dataSource resizeToSize:rect.size scaleImage:NO];
+		
+		// Set the image
+		[dataSource restoreMainImageFromData:[croppedImage TIFFRepresentation]];
+		
+		// Redraw the Paint view and the clip view
+		[paintView setFrame:NSMakeRect(0.0, 0.0, rect.size.width, rect.size.height)];
+		[clipView setNeedsDisplay:YES];
+		
+		[croppedImage release];
+	}
 }
 
 
 // We offload the heavy lifting to an external class
 - (IBAction)invertColors:(id)sender
 {
-	[paintView prepUndo:nil];
+	[self handleUndoWithImageData:nil frame:NSZeroRect];
 	[SWImageTools invertImage:[dataSource mainImage]];
 	[paintView setNeedsDisplay:YES];
 }

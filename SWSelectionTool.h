@@ -23,11 +23,11 @@
 
 @interface SWSelectionTool : SWTool {
 	NSRect clippingRect;
-	NSBitmapImageRep *backedImage/*, *outlinedImage*/;
+	NSBitmapImageRep *selectedImage/*, *outlinedImage*/;
 	NSTimer *animationTimer;
 	CGFloat dottedLineArray[2];
 	NSInteger dottedLineOffset;
-	NSBitmapImageRep *imageRep;
+	NSBitmapImageRep *originalImageCopy;
 	NSPoint previousPoint;
 	NSPoint oldOrigin;
 	BOOL isSelected;
@@ -40,7 +40,7 @@
 
 - (BOOL)isSelected;
 - (NSRect)clippingRect;
-- (NSBitmapImageRep *)backedImage;
+- (NSBitmapImageRep *)selectedImage;
 - (NSData *)imageData;
 - (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image withMainImage:(NSBitmapImageRep *)image;
 - (void)drawNewBorder:(NSTimer *)timer;

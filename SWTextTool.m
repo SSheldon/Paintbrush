@@ -49,53 +49,57 @@
 	_bufferImage = bufferImage;
 	
 	[SWImageTools clearImage:bufferImage];
-	if (canInsert) {
-		
-		// Assign the redrawRect based on the string's size and the insertion point
-		NSRect rectA = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesDeviceMetrics];
-		NSRect rectB = [stringToInsert boundingRectWithSize:[stringToInsert size] options:NSStringDrawingUsesFontLeading];
-		
-		NSRect rect = NSUnionRect(rectA, rectB);
-		CGFloat xOffset = abs(rect.origin.x);
-		rect.size.width += xOffset;
-		rect.origin = point;
-		rect.origin.y -= (rectB.size.height - rectA.size.height + rect.size.height);
-				
-		[super addRectToRedrawRect:rect];
-
-		// Fix the origin, since we're dealing with flipped stuff
-		rect.origin.y = [bufferImage pixelsHigh] - rect.origin.y - rect.size.height;
-
-		rect.origin.x += xOffset;
-		rect.size.width += xOffset;
-		
-		if (event == MOUSE_MOVED) {
-			SWLockFocus(bufferImage);
-			NSAffineTransform *transform = [NSAffineTransform transform];			
-			// Create the transform
-			[transform scaleXBy:1.0 yBy:-1.0];
-			[transform translateXBy:0 yBy:(0-[bufferImage pixelsHigh])];
-			[transform concat];
-			[stringToInsert drawInRect:rect];
-			[NSGraphicsContext restoreGraphicsState];
-			SWUnlockFocus(bufferImage);
-		} else if (event == MOUSE_DOWN) {
-			SWLockFocus(mainImage);
-			NSAffineTransform *transform = [NSAffineTransform transform];			
-			// Create the transform
-			[transform scaleXBy:1.0 yBy:-1.0];
-			[transform translateXBy:0 yBy:(0-[bufferImage pixelsHigh])];
-			[transform concat];
-			[stringToInsert drawInRect:rect];
-			[NSGraphicsContext restoreGraphicsState];
-			SWUnlockFocus(mainImage);
+	if (canInsert) 
+	{
+		if (event == MOUSE_MOVED)
+			drawToMe = bufferImage;
+		else if (event == MOUSE_DOWN)
+		{
+			drawToMe = mainImage;
 			canInsert = NO;
 		}
+		else
+			return nil; // Return in all other cases
+		
+		// The size of the string, as a guesstimate
+		NSSize textSize = [stringToInsert size];
+		
+		// Assign the redrawRect based on the string's size and the insertion point
+		NSRect rect = [stringToInsert boundingRectWithSize:[stringToInsert size] 
+												   options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesDeviceMetrics];
+		
+		CGFloat xOffset = abs(rect.origin.x);
+		CGFloat yOffset = abs(rect.origin.y);
+		rect.size.width += xOffset + textSize.width;
+		rect.size.height += yOffset + textSize.height;
+		
+		// Shift it
+		rect.origin = NSMakePoint(floorf(point.x), floorf(point.y));
+		rect.origin.y -= rect.size.height;
+		rect.origin.y += yOffset;
+
+		[super addRectToRedrawRect:rect];
+		rect.origin.x += xOffset;
+
+		// Fix the origin, since we're dealing with flipped stuff
+		rect.origin.y = [drawToMe pixelsHigh] - rect.origin.y - rect.size.height;
+		
+		SWLockFocus(drawToMe);
+		NSAffineTransform *transform = [NSAffineTransform transform];			
+		// Create the transform
+		[transform scaleXBy:1.0 yBy:-1.0];
+		[transform translateXBy:0 yBy:(0-[drawToMe pixelsHigh])];
+		[transform concat];
+		[stringToInsert drawAtPoint:rect.origin];
+		[NSGraphicsContext restoreGraphicsState];
+		SWUnlockFocus(drawToMe);
 		
 		[NSApp sendAction:@selector(refreshImage:)
 					   to:nil
 					 from:self];
-	} else if (event == MOUSE_DOWN) {
+	}
+	else if (event == MOUSE_DOWN) 
+	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"SWText" object:frontColor];
 		canInsert = YES;
 	}

@@ -24,10 +24,12 @@
 @implementation SWTool
 
 @synthesize flags;
+@synthesize document;
 
 - (id)initWithController:(SWToolboxController *)controller
 {
-	if(self = [super init]) {
+	if(self = [super init]) 
+	{
 		[self resetRedrawRect];
 		toolboxController = controller;
 		[controller addObserver:self 
@@ -214,6 +216,7 @@
 - (void)dealloc
 {
 	[customCursor release];
+	[document release];
 	[toolboxController removeObserver:self forKeyPath:@"lineWidth"];
 	[toolboxController removeObserver:self forKeyPath:@"foregroundColor"];
 	[toolboxController removeObserver:self forKeyPath:@"backgroundColor"];

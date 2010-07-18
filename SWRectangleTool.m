@@ -19,6 +19,7 @@
 
 
 #import "SWRectangleTool.h"
+#import "SWDocument.h"
 
 @implementation SWRectangleTool
 
@@ -56,14 +57,13 @@
 	
 	[SWImageTools clearImage:bufferImage];
 	
-	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];		
-		drawToMe = mainImage;
-	} else {
-		drawToMe = bufferImage;
+	if (event == MOUSE_UP)
+	{
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
+		drawToMe = mainImage;	
 	}
+	else
+		drawToMe = bufferImage;
 	
 	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
@@ -94,55 +94,6 @@
 	
 	SWUnlockFocus(drawToMe);
 	return nil;
-/*	// Use the points clicked to build a redraw rectangle
-	[super addRedrawRectFromPoint:savedPoint toPoint:point];
-	
-	//[SWImageTools clearImage:bufferImage];
-	
-	if (event == MOUSE_UP) {
-		// No need to redraw
-		[super resetRedrawRect];
-		[path release];
-		path = nil;
-	} else {
-		if (event == MOUSE_DOWN) {
-			[NSApp sendAction:@selector(prepUndo:)
-						   to:nil
-						 from:nil];
-			SWCompositeImage(bufferImage, mainImage);
-			
-			// Which colors should we draw with?
-			if (flags & NSAlternateKeyMask) {
-				primaryColor = backColor;
-				secondaryColor = frontColor;
-			} else {
-				primaryColor = frontColor;
-				secondaryColor = backColor;
-			}
-		}
-		
-		SWCompositeImage(mainImage, bufferImage);
-		
-		SWLockFocus(mainImage); 
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];		
-	
-		
-		if (shouldFill && shouldStroke) {
-			[primaryColor setStroke];
-			[secondaryColor setFill];
-			[[self pathFromPoint:savedPoint toPoint:point] fill];
-			[[self pathFromPoint:savedPoint toPoint:point] stroke];
-		} else if (shouldFill) {
-			[primaryColor setFill];
-			[[self pathFromPoint:savedPoint toPoint:point] fill];
-		} else if (shouldStroke) {
-			[primaryColor setStroke];
-			[[self pathFromPoint:savedPoint toPoint:point] stroke];
-		}
-		
-		SWUnlockFocus(mainImage);
-	}
-	return nil;*/
 }
 
 - (NSCursor *)cursor

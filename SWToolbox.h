@@ -10,8 +10,10 @@
 
 @class SWToolboxController;
 @class SWTool;
+@class SWDocument;
 
-@interface SWToolbox : NSObject {
+@interface SWToolbox : NSObject 
+{
 	NSMutableDictionary *toolList;
 	SWToolboxController *sharedController;
 	
@@ -21,6 +23,7 @@
 
 @property (retain) SWTool *currentTool;
 
+- (id)initWithDocument:(SWDocument *)doc;
 + (NSArray *)toolClassList;
 - (SWTool *)toolForLabel:(NSString *)label;
 - (void)tieUpLooseEndsForCurrentTool;

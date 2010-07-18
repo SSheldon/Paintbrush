@@ -19,6 +19,7 @@
 
 
 #import "SWAirbrushTool.h"
+#import "SWDocument.h"
 
 @implementation SWAirbrushTool
 
@@ -103,9 +104,7 @@
 	
 	isSpraying = NO;
 	
-	[NSApp sendAction:@selector(prepUndo:)
-				   to:nil
-				 from:nil];
+	[document handleUndoWithImageData:nil frame:NSZeroRect];
 	[SWImageTools drawToImage:_mainImage fromImage:_bufferImage withComposition:NO];
 	[SWImageTools clearImage:_bufferImage];
 }

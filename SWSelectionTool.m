@@ -20,6 +20,7 @@
 
 #import "SWSelectionTool.h"
 #import "SWToolboxController.h"
+#import "SWDocument.h"
 
 @implementation SWSelectionTool
 
@@ -62,8 +63,6 @@
 	[path setLineWidth:1.0];
 	[path setLineDash:dottedLineArray count:2 phase:dottedLineOffset];
 	[path setLineCapStyle:NSSquareLineCapStyle];	
-
-	clippingRect = NSMakeRect(fmin(begin.x, end.x), fmin(begin.y, end.y), abs(end.x - begin.x), abs(end.y - begin.y));
 	
 	// The 0.5s help because the width is 1, and that does weird stuff
 	[path appendBezierPathWithRect:
@@ -81,10 +80,14 @@
 	_mainImage = mainImage;
 	
 	// Running the selection animator
-	if (event == MOUSE_DOWN && animationTimer) {
+	if (event == MOUSE_DOWN && animationTimer) 
+	{
 		[animationTimer invalidate];
 		animationTimer = nil;
-	} else if (event == MOUSE_UP && !NSEqualPoints(point, savedPoint)) {
+	}
+	else if (event == MOUSE_UP && !NSEqualPoints(point, savedPoint)) 
+	{
+		// We are drawing the frame for the first time
 		animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.075 // 75 ms, or 13.33 Hz
 														  target:self
 														selector:@selector(drawNewBorder:)
@@ -93,13 +96,14 @@
 	} 
 	
 	// If the rectangle has already been drawn
-	if (isSelected) {
+	if (isSelected)
+	{
 		// We checked for the drag because it's possible that the cursor has been dragged outside the 
 		// clipping rect in one single event
-		if (event == MOUSE_DRAGGED || [[NSBezierPath bezierPathWithRect:clippingRect] containsPoint:point]) {
-			if (event == MOUSE_DOWN) {
+		if (event == MOUSE_DRAGGED || [[NSBezierPath bezierPathWithRect:clippingRect] containsPoint:point]) 
+		{
+			if (event == MOUSE_DOWN)
 				previousPoint = point;
-			}
 
 			deltax += point.x - previousPoint.x;
 			deltay += point.y - previousPoint.y;
@@ -128,11 +132,12 @@
 			
 			// Finally, move the image and stroke it
 			[self drawNewBorder:nil];
-		} else {
+		} 
+		else
 			[self tieUpLooseEnds];
-		}
-		
-	} else {
+	} 
+	else
+	{
 		// Still drawing the dotted line
 		deltax = deltay = 0;
 
@@ -149,39 +154,28 @@
 			point.y = [mainImage size].height;
 				
 		// If this check fails, then they didn't draw a rectangle
-		if (!NSEqualPoints(point, savedPoint)) {
-			
+		if (!NSEqualPoints(point, savedPoint)) 
+		{
 			// Set the redraw rectangle
 			[super addRedrawRectFromPoint:savedPoint toPoint:point];
 			
-			// Draw the dotted line
-			SWLockFocus(bufferImage); 
-			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-			[[NSColor darkGrayColor] setStroke];
-			[[self pathFromPoint:savedPoint toPoint:point] stroke];
-			SWUnlockFocus(bufferImage);
-				
-			if (event == MOUSE_UP) {
+			// Create the clipping rect based on these two new points
+			clippingRect = NSMakeRect(fmin(savedPoint.x, point.x), fmin(savedPoint.y, point.y), 
+									  abs(point.x - savedPoint.x), abs(point.y - savedPoint.y));
+
+			if (event == MOUSE_UP) 
+			{
 				// Copy the rectangle's contents to the second image
-				
-				imageRep = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
+				originalImageCopy = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
 				
 				[SWImageTools clearImage:bufferImage];
 				
-				[SWImageTools initImageRep:&backedImage withSize:[mainImage size]];
-				SWLockFocus(backedImage);
-
-				[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-				[mainImage drawAtPoint:NSZeroPoint];
-				
-				SWUnlockFocus(backedImage);
+				selectedImage = [SWImageTools cropImage:mainImage toRect:clippingRect];
 				
 				// Now if we should, remove the background of the image
 				if (shouldOmitBackground) 
-					[SWImageTools stripImage:backedImage ofColor:backColor];
+					[SWImageTools stripImage:selectedImage ofColor:backColor];
 				
-				[self drawNewBorder:nil];
-
 				// Delete it from the main image
 				SWLockFocus(mainImage);
 				[backColor set];
@@ -189,10 +183,13 @@
 				NSRectFill(clippingRect);
 				SWUnlockFocus(mainImage);
 				
-				oldOrigin = clippingRect.origin;
-				
 				isSelected = YES;
+				
 			}
+			oldOrigin = clippingRect.origin;
+			
+			// Finally, draw the image and the selection
+			[self drawNewBorder:nil];
 		}
 	}
 	return nil;
@@ -204,12 +201,12 @@
 	dottedLineOffset = (dottedLineOffset + 1) % 8;
 	
 	// Draw the backed image to the overlay
-	if (_bufferImage) {
+	if (_bufferImage) 
+	{
 		[SWImageTools clearImage:_bufferImage];
 		SWLockFocus(_bufferImage);
-		if (backedImage) {
-			[backedImage drawAtPoint:NSMakePoint(deltax, deltay)];			
-		}
+		if (selectedImage)
+			[selectedImage drawAtPoint:NSMakePoint(oldOrigin.x + deltax, oldOrigin.y + deltay)];
 		
 		// Next, stroke it
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
@@ -228,8 +225,8 @@
 
 - (void)deleteKey
 {
-	[backedImage release];
-	backedImage = nil;//[self tieUpLooseEnds];
+	[selectedImage release];
+	selectedImage = nil;//[self tieUpLooseEnds];
 }
 
 - (void)tieUpLooseEnds
@@ -241,30 +238,48 @@
 		[animationTimer invalidate];
 		animationTimer = nil;
 	}
-	isSelected = NO;
 	
-	if (imageRep /*&& !NSEqualPoints(oldOrigin, clippingRect.origin)*/ )
+	// Before making an undo happen, copy _mainImage to mainImageCopy -- the undo-ing process will revert mainImage
+	NSBitmapImageRep *mainImageCopy = nil;
+	if (_mainImage)
 	{
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:[NSDictionary dictionaryWithObject:[imageRep TIFFRepresentation] forKey:@"Image"]];
+		[SWImageTools initImageRep:&mainImageCopy withSize:[_mainImage size]];
+		[SWImageTools drawToImage:mainImageCopy fromImage:_mainImage withComposition:NO];
+	}
+
+	// Make an undo happen if there's an active selection
+	if (isSelected)
+	{
+		isSelected = NO;
+		if (originalImageCopy)
+		{
+			// Re-set the _mainImage to originalImageCopy for the undo to work properly
+			[SWImageTools drawToImage:_mainImage fromImage:originalImageCopy withComposition:NO];
+			[document handleUndoWithImageData:nil frame:NSZeroRect];
+		}
 	}
 
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
-	if (_bufferImage && _mainImage)
+	if (_mainImage)
 	{
-		[SWImageTools clearImage:_bufferImage];
+		_bufferImage = nil;
 
-		[SWImageTools drawToImage:_mainImage
-						fromImage:backedImage 
-						  atPoint:NSMakePoint(deltax, deltay)
+		[SWImageTools drawToImage:mainImageCopy
+						fromImage:selectedImage 
+						  atPoint:NSMakePoint(oldOrigin.x + deltax, oldOrigin.y + deltay)
 				  withComposition:YES];
 
 		// Redraw the entire image
-		[super addRectToRedrawRect:NSMakeRect(0,0,[_mainImage size].width,[_mainImage size].height)];
+		[super addRectToRedrawRect:NSMakeRect(0,0,[mainImageCopy size].width,[mainImageCopy size].height)];
+		
+		// Finally, move all of mainImageCopy to _mainImage
+		[SWImageTools drawToImage:_mainImage fromImage:mainImageCopy withComposition:NO];
 	} 
 	else
 		[super resetRedrawRect];
+	
+	// Get rid of references to the selected image
+	[self deleteKey];
 }
 
 - (NSRect)clippingRect
@@ -283,13 +298,13 @@
 	isSelected = YES;
 	
 	// Create the image to paste
-	[SWImageTools initImageRep:&backedImage withSize:[_bufferImage size]];
-	SWLockFocus(backedImage);
+	[SWImageTools initImageRep:&selectedImage withSize:[_bufferImage size]];
+	SWLockFocus(selectedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	// Create the point to paste at
-	NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - backedImage.size.height));
+	NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - selectedImage.size.height));
 	[image drawAtPoint:point];
-	SWUnlockFocus(backedImage);
+	SWUnlockFocus(selectedImage);
 	
 	// Draw the dotted line around the selected region
 	[self drawNewBorder:nil];
@@ -307,12 +322,12 @@
 
 - (NSData *)imageData
 {
-	return [imageRep TIFFRepresentation];
+	return [originalImageCopy TIFFRepresentation];
 }
 
-- (NSBitmapImageRep *)backedImage
+- (NSBitmapImageRep *)selectedImage
 {
-	return backedImage;
+	return selectedImage;
 }
 
 - (BOOL)isSelected
@@ -348,8 +363,8 @@
 - (void)dealloc
 {
 	[toolboxController removeObserver:self forKeyPath:@"selectionTransparency"];
-	[imageRep release];
-	[backedImage release];
+	[originalImageCopy release];
+	[selectedImage release];
 	[super dealloc];
 }
 

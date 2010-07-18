@@ -19,13 +19,15 @@
 
 
 #import "SWBrushTool.h"
+#import "SWDocument.h"
 
 @implementation SWBrushTool
 
 // Generates the path to be drawn to the image
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	if (!path) {
+	if (!path)
+	{
 		path = [NSBezierPath new];
 		[path setLineWidth:lineWidth];		
 	}
@@ -52,28 +54,17 @@
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:point toPoint:savedPoint];
 	
-	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];
-		SWLockFocus(mainImage);
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-		
-		[NSGraphicsContext saveGraphicsState];
-		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
-		if (flags & NSAlternateKeyMask) {
-			[backColor setStroke];	
-		} else {
-			[frontColor setStroke];
-		}
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
-		[NSGraphicsContext restoreGraphicsState];
-		savedPoint = point;
-		
-		SWUnlockFocus(mainImage);
-		
+	if (event == MOUSE_UP) 
+	{
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
+		[SWImageTools drawToImage:mainImage fromImage:bufferImage withComposition:YES];
+		[SWImageTools clearImage:bufferImage];
+
+		[path release];
 		path = nil;
-	} else {		
+	} 
+	else 
+	{		
 		SWLockFocus(bufferImage);
 		
 		// The best way I can come up with to clear the image
@@ -83,11 +74,11 @@
 		
 		[NSGraphicsContext saveGraphicsState];
 		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
-		if (flags & NSAlternateKeyMask) {
+		if (flags & NSAlternateKeyMask)
 			[backColor setStroke];	
-		} else {
+		else
 			[frontColor setStroke];
-		}
+		
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;
@@ -95,40 +86,6 @@
 		SWUnlockFocus(bufferImage);
 	}
 	return nil;
-/*
-	if (event == MOUSE_UP) {
-		// No need to redraw
-		[super resetRedrawRect];
-		[path release];
-		path = nil;
-	} else {
-		if (event == MOUSE_DOWN) {
-			[NSApp sendAction:@selector(prepUndo:)
-						   to:nil
-						 from:nil];
-			SWCompositeImage(bufferImage, mainImage);
-		}
-		
-		SWCompositeImage(mainImage, bufferImage);
-	
-		// Use the points clicked to build a redraw rectangle
-		[super addRedrawRectFromPoint:point toPoint:savedPoint];
-
-		SWLockFocus(mainImage);
-		
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-		if (flags & NSAlternateKeyMask) {
-			[backColor setStroke];	
-		} else {
-			[frontColor setStroke];
-		}
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
-		savedPoint = point;
-		
-		SWUnlockFocus(mainImage);
-	}
-	return nil;
- */
 }
 
 - (NSCursor *)cursor

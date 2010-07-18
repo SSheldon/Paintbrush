@@ -33,8 +33,8 @@
 - (void)preparePaintViewWithDataSource:(SWImageDataSource *)ds
 							   toolbox:(SWToolbox *)tb
 {
-	assert(!dataSource);
-	assert(!toolbox);
+	NSAssert(!dataSource, @"No data source when preparing PaintView!");
+	NSAssert(!toolbox, @"No toolbox when preparing PainView!");
 	dataSource = [ds retain]; // Hold on to it!
 	toolbox = [tb retain]; // This one too!
 	
@@ -111,8 +111,8 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	if (rect.size.width != 0 && rect.size.height != 0) {
-		
+	if (rect.size.width != 0 && rect.size.height != 0)
+	{
 		[NSGraphicsContext saveGraphicsState];
 
 		// If you don't do this, the image looks blurry when zoomed in
@@ -121,22 +121,22 @@
 		NSBitmapImageRep *mainImage = [dataSource mainImage];
 		NSBitmapImageRep *bufferImage = [dataSource bufferImage];
 		
+		//CGContextBeginTransparencyLayer(cgContext, NULL);
+		
 		// Draw the NSBitmapImageRep to the view
 		if (mainImage) 
-		{
-			//[mainImage draw];
 			CGContextDrawImage(cgContext, NSRectToCGRect([self bounds]), [mainImage CGImage]);
-		}
 		
 		// If there's an overlay image being used at the moment, draw it
 		if (bufferImage) 
 		{
-			//[bufferImage drawAtPoint:NSZeroPoint];
 			NSRect rect = (NSRect){ NSZeroPoint, [bufferImage size] };
 			CGContextDrawImage(cgContext, NSRectToCGRect(rect), [bufferImage CGImage]);
 		}
 		
-		// If the grid is turned on, draw that too
+		//CGContextEndTransparencyLayer(cgContext);
+		
+		// If the grid is turned on, draw that too (but only after everything else!
 		if (showsGrid && [(SWScalingScrollView *)[[self superview] superview] scaleFactor] > 2.0) 
 		{
 			[gridColor set];
@@ -380,100 +380,6 @@
 	backgroundColor = color;
 }
 
-#pragma mark Handling undo: a "prep" and then the actual method
-
-////////////////////////////////////////////////////////////////////////////////
-//////////		Handling undo: a "prep" and then the actual method
-////////////////////////////////////////////////////////////////////////////////
-
-
-- (void)prepUndo:(id)sender
-{
-	// BROKEN!
-/*	NSUndoManager *undo = [self undoManager];
-	NSRect oldFrame = NSZeroRect;
-	if (sender && [(NSDictionary *)sender objectForKey:@"Image"])
-	{
-		if ([(NSDictionary *)sender objectForKey:@"Frame"]) 
-		{
-			// It was a resize... oh dear!
-			oldFrame = [[(NSDictionary *)sender objectForKey:@"Frame"] rectValue];
-			[[undo prepareWithInvocationTarget:self] undoResize:(NSData *)[sender objectForKey:@"Image"] oldFrame:oldFrame];
-			if (![undo isUndoing])
-				[undo setActionName:@"Resize"];
-			//[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
-		} 
-		else
-		{
-			[[undo prepareWithInvocationTarget:self] undoResize:(NSData *)[sender objectForKey:@"Image"] oldFrame:oldFrame];
-			if (![undo isUndoing])
-				[undo setActionName:@"Drawing"];
-//			[[undo prepareWithInvocationTarget:self] undoImage:(NSData *)[sender objectForKey:@"Image"]];
-		}
-	} 
-	else
-	{
-		//[[undo prepareWithInvocationTarget:self] undoImage:[mainImage TIFFRepresentation]];
-		[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:oldFrame];
-		if (![undo isUndoing])
-			[undo setActionName:@"Drawing"];
-	}
-*/
-}
-
-// Undo for drawing that doesn't change the canvas
-//- (void)undoImage:(NSData *)mainImageData
-//{
-//	NSUndoManager *undo = [self undoManager];
-//	[[undo prepareWithInvocationTarget:self] undoImage:[[self mainImage] TIFFRepresentation]];
-//	if (![undo isUndoing]) {
-//		[undo setActionName:@"Drawing"];
-//	}
-//	
-//	imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
-//	
-//	[mainImage lockFocus];
-//	[imageRep drawAtPoint:NSZeroPoint];
-//	[mainImage unlockFocus];
-//	[self clearOverlay];
-//}
-
-// Undo canvas resizing
-- (void)undoResize:(NSData *)mainImageData oldFrame:(NSRect)frame
-{
-	// BROKEN!
-/*
-	NSUndoManager *undo = [self undoManager];
-	NSRect currentFrame = NSZeroRect;
-	currentFrame.size = [mainImage size];
-	[[undo prepareWithInvocationTarget:self] undoResize:[mainImage TIFFRepresentation] oldFrame:currentFrame];
-	if (![undo isUndoing]) 
-	{
-		if (NSEqualRects(frame, NSZeroRect))
-			[undo setActionName:@"Drawing"];
-		else
-			[undo setActionName:@"Resize"];
-	}
-	
-	if (!NSEqualRects(frame, NSZeroRect))
-	{
-		[self setFrame:frame];
-		[self preparePaintView];
-		//NSRect tempRect = [self calculateWindowBounds:frame];
-		//[[self window] setFrame:tempRect display:YES];
-	}
-	
-	NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithData:mainImageData];
-	
-	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:mainImage]];
-	[imageRep drawAtPoint:NSMakePoint(0, [self bounds].size.height - [imageRep pixelsHigh])];
-	[imageRep release];
-	[NSGraphicsContext restoreGraphicsState];
-	[self clearOverlay];
-*/
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //////////      Grid-Related Methods
@@ -572,7 +478,7 @@
 // Pastes data as an image
 - (void)pasteData:(NSData *)data
 {
-	assert(NO);
+	NSAssert(NO, @"Paste is a little busted right now");
 /*
 	[self cursorUpdate:nil];
 	NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];

@@ -19,6 +19,7 @@
 
 
 #import "SWRoundedRectangleTool.h"
+#import "SWDocument.h"
 
 @implementation SWRoundedRectangleTool
 
@@ -94,14 +95,13 @@
 
 	[SWImageTools clearImage:bufferImage];
 	
-	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];		
+	if (event == MOUSE_UP) 
+	{
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
 		drawToMe = mainImage;
-	} else {
-		drawToMe = bufferImage;
 	}
+	else
+		drawToMe = bufferImage;
 	
 	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];

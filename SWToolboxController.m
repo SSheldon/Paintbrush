@@ -90,7 +90,7 @@
 - (void)awakeFromNib
 {	
 	// Mah toolbox!  MINE!
-	toolbox = [[SWToolbox alloc] init];
+	toolbox = [[SWToolbox alloc] initWithDocument:nil];
 	
 	// Set the starting toolbox info
 	[self setLineWidthDisplay:3];
@@ -142,9 +142,7 @@
 	currentTool = tool;
 	
 	SWTool *tempTool = [toolbox toolForLabel:currentTool];
-	
-	//assert(tempTool != nil);
-	
+		
 	[fillMatrix setHidden:(![tempTool shouldShowFillOptions])];
 	[transparencyMatrix setHidden:(![tempTool shouldShowTransparencyOptions])];
 	

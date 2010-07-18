@@ -19,6 +19,7 @@
 
 
 #import "SWLineTool.h"
+#import "SWDocument.h"
 
 @implementation SWLineTool
 
@@ -75,19 +76,17 @@
 
 	[SWImageTools clearImage:bufferImage];
 	
-	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];		
+	if (event == MOUSE_UP) 
+	{
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
 		drawToMe = mainImage;
-	} else {
-		drawToMe = bufferImage;
 	}
+	else
+		drawToMe = bufferImage;
 	
 	// Which color do we use?
-	if (event == MOUSE_DOWN) {
+	if (event == MOUSE_DOWN)
 		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
-	}
 	
 	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];

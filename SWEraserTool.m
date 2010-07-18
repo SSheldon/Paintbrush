@@ -19,13 +19,15 @@
 
 
 #import "SWEraserTool.h"
+#import "SWDocument.h"
 
 @implementation SWEraserTool
 
 // Generates the path to be drawn to the image
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	if (!path) {
+	if (!path)
+	{
 		path = [NSBezierPath new];
 		[path setLineWidth:lineWidth];		
 	}
@@ -43,6 +45,7 @@
 	return path;
 }
 
+
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
 					   withMainImage:(NSBitmapImageRep *)mainImage 
 						 bufferImage:(NSBitmapImageRep *)bufferImage 
@@ -51,42 +54,31 @@
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:point toPoint:savedPoint];
 	
-	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];
-		SWLockFocus(mainImage);
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-		
-		[NSGraphicsContext saveGraphicsState];
-		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
-		if (flags & NSAlternateKeyMask) {
-			[frontColor setStroke];	
-		} else {
-			[backColor setStroke];
-		}
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
-		[NSGraphicsContext restoreGraphicsState];
-		savedPoint = point;
-		
-		SWUnlockFocus(mainImage);
-		
+	if (event == MOUSE_UP) 
+	{
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
+		[SWImageTools drawToImage:mainImage fromImage:bufferImage withComposition:YES];
+		[SWImageTools clearImage:bufferImage];
+
+		[path release];
 		path = nil;
-	} else {		
+	} 
+	else 
+	{		
 		SWLockFocus(bufferImage);
 		
 		// The best way I can come up with to clear the image
 		[SWImageTools clearImage:bufferImage];
 		
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-
+		
 		[NSGraphicsContext saveGraphicsState];
 		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
-		if (flags & NSAlternateKeyMask) {
-			[frontColor setStroke];	
-		} else {
-			[backColor setStroke];
-		}
+		if (flags & NSAlternateKeyMask)
+			[frontColor setStroke];
+		else
+			[backColor setStroke];	
+		
 		[[self pathFromPoint:savedPoint toPoint:point] stroke];
 		[NSGraphicsContext restoreGraphicsState];
 		savedPoint = point;

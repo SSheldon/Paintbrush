@@ -57,11 +57,7 @@
 							   toolbox:(SWToolbox *)tb;
 - (NSRect)calculateWindowBounds:(NSRect)frameRect;
 - (void)setBackgroundColor:(NSColor *)color;
-//- (void)undoImage:(NSData *)imageData;
-- (void)undoResize:(NSData *)mainImageData 
-		  oldFrame:(NSRect)frame;
 - (void)pasteData:(NSData *)data;
-- (void)prepUndo:(id)sender;
 - (void)clearOverlay;
 
 

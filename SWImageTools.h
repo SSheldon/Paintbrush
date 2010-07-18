@@ -26,8 +26,13 @@
 + (void)invertImage:(NSBitmapImageRep *)image;
 + (void)clearImage:(NSBitmapImageRep *)image;
 + (void)clearImage:(NSBitmapImageRep *)image inRect:(NSRect)rect;
-+ (void)drawToImage:(NSBitmapImageRep *)dest fromImage:(NSBitmapImageRep *)src withComposition:(BOOL)shouldCompositeOver;
-+ (void)drawToImage:(NSBitmapImageRep *)dest fromImage:(NSBitmapImageRep *)src atPoint:(NSPoint)point withComposition:(BOOL)shouldCompositeOver;
++ (void)drawToImage:(NSBitmapImageRep *)dest 
+		  fromImage:(NSBitmapImageRep *)src
+	withComposition:(BOOL)shouldCompositeOver;
++ (void)drawToImage:(NSBitmapImageRep *)dest 
+		  fromImage:(NSBitmapImageRep *)src 
+			atPoint:(NSPoint)point
+	withComposition:(BOOL)shouldCompositeOver;
 + (void)initImageRep:(NSBitmapImageRep **)imageRep withSize:(NSSize)size;
 + (void)flipImageHorizontal:(NSBitmapImageRep *)bitmap;
 + (void)flipImageVertical:(NSBitmapImageRep *)bitmap;
@@ -35,6 +40,7 @@
 + (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2;
 + (void)stripImage:(NSBitmapImageRep *)imageRep ofColor:(NSColor *)color;
 + (NSData *)readImageFromPasteboard:(NSPasteboard *)pb;
++ (NSBitmapImageRep *)cropImage:(NSBitmapImageRep *)image toRect:(NSRect)rect;
 
 // User requested feature!
 + (NSBitmapImageRep *)createMonochromeImage:(NSBitmapImageRep *)baseImage;

@@ -19,14 +19,15 @@
 
 
 #import "SWCurveTool.h"
+#import "SWDocument.h"
 
 @implementation SWCurveTool
 
 - (id)initWithController:(SWToolboxController *)controller
 {
-	if (self = [super initWithController:controller]) {
+	if (self = [super initWithController:controller])
 		numberOfClicks = 0;
-	}
+
 	return self;
 }
 
@@ -102,10 +103,9 @@
 			break;
 		case 3:
 			cp2 = point;
-			if (event == MOUSE_UP) {
-				[NSApp sendAction:@selector(prepUndo:)
-							   to:nil
-							 from:nil];				
+			if (event == MOUSE_UP) 
+			{
+				[document handleUndoWithImageData:nil frame:NSZeroRect];
 				drawToMe = mainImage;
 				numberOfClicks = 0;
 			}
@@ -146,31 +146,21 @@
 - (void)tieUpLooseEnds
 {
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
-	if (_bufferImage && _mainImage && numberOfClicks > 0) {
-		
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];	
-		
-//		SWLockFocus(_mainImage);
-//		[_bufferImage drawAtPoint:NSZeroPoint
-//						 fromRect:NSZeroRect
-//						operation:NSCompositeSourceOver
-//						 fraction:1.0];
-//		SWUnlockFocus(_mainImage);
+	if (_bufferImage && _mainImage && numberOfClicks > 0) 
+	{
+		numberOfClicks = 0;
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
 		[SWImageTools drawToImage:_mainImage fromImage:_bufferImage withComposition:YES];
 	}
-	
-	numberOfClicks = 0;
 	
 	[super tieUpLooseEnds];
 }
 
 - (NSCursor *)cursor
 {
-	if (!customCursor) {
+	if (!customCursor)
 		customCursor = [[NSCursor crosshairCursor] retain];
-	}
+
 	return customCursor;
 }
 

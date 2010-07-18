@@ -21,6 +21,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class SWToolboxController;
+@class SWDocument;
 
 typedef enum 
 {
@@ -48,9 +49,10 @@ typedef enum
 	NSRect redrawRect, savedRect;
 	SWToolboxController *toolboxController;
 	
-	NSBitmapImageRep *iconImage;
-	
 	NSCursor *customCursor;
+	
+	// We need to talk to the document once in a while
+	SWDocument *document;
 }
 
 - (id)initWithController:(SWToolboxController *)controller;
@@ -84,6 +86,7 @@ typedef enum
 @property (readonly) BOOL shouldShowFillOptions;
 @property (readonly) BOOL shouldShowTransparencyOptions;
 @property (assign) NSUInteger flags;
+@property (retain, readwrite) SWDocument * document;
 
 @end
 

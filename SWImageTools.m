@@ -296,6 +296,29 @@
 	return data;
 }
 
+
+// Simple cropping
++ (NSBitmapImageRep *) cropImage:(NSBitmapImageRep *)image toRect:(NSRect)rect
+{
+	// Sanity check
+	NSAssert(rect.origin.x >= 0 && rect.origin.y >= 0, @"We can't crop to a less-than-zero origin!");
+	NSAssert(rect.size.width > 0 && rect.size.height > 0, @"We can't crop to a non-positive width or height!");
+	
+	// First create the image
+	NSBitmapImageRep *croppedImage;
+	[SWImageTools initImageRep:&croppedImage withSize:rect.size];	
+	[SWImageTools clearImage:croppedImage];
+	
+	// Now, draw the source image to our new image
+	// Don't forget to offset by the NEGATIVE of the rect origin!
+	[SWImageTools drawToImage:croppedImage
+					fromImage:image
+					  atPoint:NSMakePoint(-rect.origin.x, -rect.origin.y) 
+			  withComposition:NO];
+	
+	return croppedImage;
+}
+
 void SWLockFocus(NSBitmapImageRep *image)
 {
 	[NSGraphicsContext saveGraphicsState];

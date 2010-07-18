@@ -28,6 +28,10 @@
 - (void)resizeToSize:(NSSize)size
 		  scaleImage:(BOOL)shouldScale;
 
+// Need to change the image?  We got your back -- here be datas
+- (NSData *)copyMainImageData;
+- (void)restoreMainImageFromData:(NSData *)tiffData;
+
 // For drawing
 - (NSArray *)imageArray;
 

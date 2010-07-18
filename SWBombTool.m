@@ -19,6 +19,7 @@
 
 
 #import "SWBombTool.h"
+#import "SWDocument.h"
 
 @implementation SWBombTool
 
@@ -107,9 +108,7 @@
 {
 	// Stop the timer
 	[timer invalidate];
-	[NSApp sendAction:@selector(prepUndo:)
-				   to:nil
-				 from:nil];
+	[document handleUndoWithImageData:nil frame:NSZeroRect];
 	
 	SWLockFocus(_mainImage);	
 	[bombColor set];

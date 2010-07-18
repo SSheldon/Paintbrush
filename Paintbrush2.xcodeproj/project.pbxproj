@@ -41,7 +41,6 @@
 		273E0B3B0E32F99D00D11815 /* SWImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageTools.m */; };
 		273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273E0B6D0E32FC2200D11815 /* QuartzCore.framework */; };
 		273E77980EBD71850094C630 /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 273E77970EBD71850094C630 /* selection.png */; };
-		2740C9150ED5F62B00DA6A98 /* SWFreeformSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2740C9140ED5F62B00DA6A98 /* SWFreeformSelectionTool.m */; };
 		274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 274194B10C1DA5E400605CDC /* SWCenteringClipView.h */; };
 		274194B40C1DA5E400605CDC /* SWCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 274194B20C1DA5E400605CDC /* SWCenteringClipView.m */; };
 		2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2742CCA40DA58518004BF119 /* airbrush-cursor.png */; };
@@ -92,7 +91,6 @@
 		27A60E2E0B879A6A0091A1B0 /* SWPaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E220B879A6A0091A1B0 /* SWPaintView.m */; };
 		27A60E2F0B879A6A0091A1B0 /* SWToolboxController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E240B879A6A0091A1B0 /* SWToolboxController.m */; };
 		27A60E300B879A6A0091A1B0 /* SWDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A60E260B879A6A0091A1B0 /* SWDocument.m */; };
-		27A725BC0FCCBEC800731565 /* paint.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27A725BB0FCCBEC800731565 /* paint.icns */; };
 		27A99AA30E9D792300C9781C /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AA20E9D792300C9781C /* brush.png */; };
 		27A99AD70E9D842200C9781C /* brush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A99AD60E9D842200C9781C /* brush-cursor.png */; };
 		27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFDF10D68C06800368E2B /* SWAppController.m */; };
@@ -112,7 +110,6 @@
 		27EA85460D3FDF6200A376A2 /* bucket-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EA85430D3FDF6200A376A2 /* bucket-cursor.png */; };
 		27EA85470D3FDF6200A376A2 /* eraser-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EA85440D3FDF6200A376A2 /* eraser-cursor.png */; };
 		27EA85480D3FDF6200A376A2 /* pencil-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EA85450D3FDF6200A376A2 /* pencil-cursor.png */; };
-		27EAAA560E68A75100DDD9EA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EAAA550E68A75100DDD9EA /* background.png */; };
 		27EF10F00D6A1CE800851E2E /* SWRoundedRectangleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF10EF0D6A1CE800851E2E /* SWRoundedRectangleTool.m */; };
 		27F3C6030D85C550006AB05A /* SWZoomTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3C6020D85C550006AB05A /* SWZoomTool.m */; };
 		27F3C6650D85F66D006AB05A /* zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F3C6630D85F66D006AB05A /* zoom.png */; };
@@ -164,7 +161,7 @@
 		2706B83E10ED709200080D4A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2706B94B10ED77A600080D4A /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
 		2706B94C10ED77A600080D4A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
-		2709A7F40EB401C50050A019 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		2709A7F40EB401C50050A019 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextToolWindowController.h; sourceTree = "<group>"; };
 		270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextToolWindowController.m; sourceTree = "<group>"; };
 		271B97BB0D85C47200D1B36D /* SWZoomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWZoomTool.h; sourceTree = "<group>"; };
@@ -192,8 +189,6 @@
 		273E0B3A0E32F99D00D11815 /* SWImageTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWImageTools.h; sourceTree = "<group>"; };
 		273E0B6D0E32FC2200D11815 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		273E77970EBD71850094C630 /* selection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selection.png; sourceTree = "<group>"; };
-		2740C9130ED5F62B00DA6A98 /* SWFreeformSelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWFreeformSelectionTool.h; sourceTree = "<group>"; };
-		2740C9140ED5F62B00DA6A98 /* SWFreeformSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWFreeformSelectionTool.m; sourceTree = "<group>"; };
 		274194B10C1DA5E400605CDC /* SWCenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCenteringClipView.h; sourceTree = "<group>"; };
 		274194B20C1DA5E400605CDC /* SWCenteringClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCenteringClipView.m; sourceTree = "<group>"; };
 		2742CCA40DA58518004BF119 /* airbrush-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airbrush-cursor.png"; sourceTree = "<group>"; };
@@ -286,7 +281,6 @@
 		27EA85430D3FDF6200A376A2 /* bucket-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bucket-cursor.png"; sourceTree = "<group>"; };
 		27EA85440D3FDF6200A376A2 /* eraser-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eraser-cursor.png"; sourceTree = "<group>"; };
 		27EA85450D3FDF6200A376A2 /* pencil-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil-cursor.png"; sourceTree = "<group>"; };
-		27EAAA550E68A75100DDD9EA /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		27EF10EE0D6A1CE800851E2E /* SWRoundedRectangleTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRoundedRectangleTool.h; sourceTree = "<group>"; };
 		27EF10EF0D6A1CE800851E2E /* SWRoundedRectangleTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRoundedRectangleTool.m; sourceTree = "<group>"; };
 		27F3C6020D85C550006AB05A /* SWZoomTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWZoomTool.m; sourceTree = "<group>"; };
@@ -383,7 +377,6 @@
 				27A45BEA0E9A82B400AC15F0 /* hoveredwide.png */,
 				27A45BE90E9A82B400AC15F0 /* hoveredwidetall.png */,
 				27FFFEA20ECCE40E0036CFE6 /* hoveredwell.png */,
-				27EAAA550E68A75100DDD9EA /* background.png */,
 				278FC0E50E47845E006065E6 /* pressedsmall.png */,
 				278FC0FE0E47871B006065E6 /* pressedwide.png */,
 				278FC0FC0E478713006065E6 /* pressedwidetall.png */,
@@ -530,8 +523,6 @@
 				278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */,
 				27B686C30BA1395B0028A526 /* SWFillTool.h */,
 				27B686C40BA1395B0028A526 /* SWFillTool.m */,
-				2740C9130ED5F62B00DA6A98 /* SWFreeformSelectionTool.h */,
-				2740C9140ED5F62B00DA6A98 /* SWFreeformSelectionTool.m */,
 				271EEB0B0BBC34A800319865 /* SWSelectionTool.h */,
 				271EEB0C0BBC34A800319865 /* SWSelectionTool.m */,
 				271EEB1B0BBC352300319865 /* SWTextTool.h */,
@@ -755,6 +746,8 @@
 				27F7B8920DE3671D0038ED41 /* MainMenu.xib in Resources */,
 				27389A170F2A9AB50062831A /* MyDocument.xib in Resources */,
 				27389A190F2A9ABC0062831A /* Preferences.xib in Resources */,
+				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
+				27A1CD6810A650D4005D2D84 /* SavePanelAccessoryView.xib in Resources */,
 				27389A1C0F2A9AD90062831A /* SizeWindow.xib in Resources */,
 				27389A1E0F2A9AE00062831A /* TextEntry.xib in Resources */,
 				27389A200F2A9AE60062831A /* Toolbox.xib in Resources */,
@@ -765,7 +758,6 @@
 				278FC0FF0E47871B006065E6 /* pressedwide.png in Resources */,
 				278FC1020E47879B006065E6 /* selection-regular.png in Resources */,
 				278FC1030E47879B006065E6 /* selection-transparent.png in Resources */,
-				27EAAA560E68A75100DDD9EA /* background.png in Resources */,
 				27F537D00E917CA4001FA420 /* hoveredsmall.png in Resources */,
 				27A45BC30E99E5D000AC15F0 /* rounded rectangle.png in Resources */,
 				27A45BC40E99E5D000AC15F0 /* selection_old.png in Resources */,
@@ -791,11 +783,8 @@
 				27A4E17C0F1E9FF900A1F367 /* PNG.icns in Resources */,
 				27A4E17D0F1E9FF900A1F367 /* BMP.icns in Resources */,
 				27A4E2960F1FFF2E00A1F367 /* dsa_pub.pem in Resources */,
-				27A725BC0FCCBEC800731565 /* paint.icns in Resources */,
-				273BE3BD101135C800AA0B05 /* ResizePanel.xib in Resources */,
 				2748ED811078167800F7A836 /* bgImage.png in Resources */,
 				27FB972C1093718300147DDF /* Localizable.strings in Resources */,
-				27A1CD6810A650D4005D2D84 /* SavePanelAccessoryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,7 +855,6 @@
 				27F5364E0E8C2A67001FA420 /* SWMatrix.m in Sources */,
 				27A45C100E9A84B500AC15F0 /* SWSliderCell.m in Sources */,
 				27BE1F350ECB738000B0A0F1 /* SWColorSelector.m in Sources */,
-				2740C9150ED5F62B00DA6A98 /* SWFreeformSelectionTool.m in Sources */,
 				27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */,
 				273BE3C21011389E00AA0B05 /* SWResizeWindowController.m in Sources */,
 				27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */,
@@ -1035,7 +1023,6 @@
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1094,7 +1081,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2.0.0;
 				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 1;

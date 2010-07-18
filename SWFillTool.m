@@ -20,6 +20,7 @@
 
 #import "SWFillTool.h"
 #import "SWSelectionBuilder.h"
+#import "SWDocument.h"
 
 
 @interface SWFillTool (Private)
@@ -56,11 +57,10 @@
 		// Check to make sure if we should even bother trying to fill - 
 		// if it's the same color, there's nothing to do
 		if (![SWImageTools color:[mainImage colorAtX:point.x y:(h - point.y)] 
-				  isEqualToColor:fillColor]) {
+				  isEqualToColor:fillColor]) 
+		{
 			// Prep an undo - we're about to change things!
-			[NSApp sendAction:@selector(prepUndo:)
-						   to:nil
-						 from:nil];
+			[document handleUndoWithImageData:nil frame:NSZeroRect];
 			
 			// Create the image mask we will be using to fill the selecteds region
 			CGImageRef mask = [self floodFillSelect:NSMakePoint(point.x, point.y+1) tolerance:0.0];

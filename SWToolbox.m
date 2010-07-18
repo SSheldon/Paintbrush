@@ -14,7 +14,7 @@
 
 @synthesize currentTool;
 
-- (id)init
+- (id)initWithDocument:(SWDocument *)doc
 {
 	self = [super init];
 	
@@ -22,8 +22,10 @@
 	
 	// Create the dictionary
 	toolList = [[NSMutableDictionary alloc] initWithCapacity:14];
-	for (Class c in [SWToolbox toolClassList]) {
+	for (Class c in [SWToolbox toolClassList]) 
+	{
 		SWTool *tool = [[c alloc] initWithController:sharedController];
+		[tool setDocument:doc];
 		[toolList setObject:tool forKey:[tool description]];
 	}
 	

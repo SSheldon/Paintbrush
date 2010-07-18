@@ -19,6 +19,7 @@
 
 
 #import "SWEllipseTool.h"
+#import "SWDocument.h"
 
 @implementation SWEllipseTool
 
@@ -55,14 +56,13 @@
 	
 	[SWImageTools clearImage:bufferImage];
 	
-	if (event == MOUSE_UP) {
-		[NSApp sendAction:@selector(prepUndo:)
-					   to:nil
-					 from:nil];		
+	if (event == MOUSE_UP) 
+	{
+		[document handleUndoWithImageData:nil frame:NSZeroRect];
 		drawToMe = mainImage;
-	} else {
+	} 
+	else
 		drawToMe = bufferImage;
-	}
 	
 	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];

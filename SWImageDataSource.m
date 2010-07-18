@@ -49,7 +49,6 @@
 	// Temporary image to get dimensions
 	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:url];
 	
-	assert(tempImage);
 	if (!tempImage)	// failure case
 		return nil;
 	
@@ -71,7 +70,7 @@
 {
 	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]];
 	
-	assert(tempImage);
+	NSAssert(tempImage, @"We can't initialize with a pasteboard without an image on it!");
 	if (!tempImage)	// failure case
 		return nil;
 	
@@ -153,5 +152,31 @@
 	
 	return imageArray;
 }
+
+
+// -----------------------------------------------------------------------------
+//  Data
+// -----------------------------------------------------------------------------
+
+- (NSData *)copyMainImageData
+{
+	if (mainImage)
+		return [mainImage TIFFRepresentation];
+	
+	// No image, no data
+	return nil;
+}
+
+
+- (void)restoreMainImageFromData:(NSData *)tiffData
+{
+	if (!tiffData)
+		return;
+	
+	NSBitmapImageRep *imageRep = [[NSBitmapImageRep alloc] initWithData:tiffData];
+	[SWImageTools drawToImage:mainImage fromImage:imageRep withComposition:NO];
+	[imageRep release];
+}
+
 
 @end

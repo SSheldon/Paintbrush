@@ -31,20 +31,21 @@
 						  mouseEvent:(SWMouseEvent)event
 {
 	// Only zoom on a down-click
-	if (event == MOUSE_DOWN) {
+	if (event == MOUSE_DOWN) 
+	{
 		savedPoint = point;
 
-		NSDocumentController *controller = [NSDocumentController sharedDocumentController];
-		id document = [controller documentForWindow: [NSApp mainWindow]];
+		//NSDocumentController *controller = [NSDocumentController sharedDocumentController];
+		//id document = [controller documentForWindow: [NSApp mainWindow]];
 		
 		// If it's a Paintbrush document, get its PaintView
-		if (document && [document isKindOfClass:[SWDocument class]]) {			
+		if (document /*&& [document isKindOfClass:[SWDocument class]]*/) 
+		{
 			// Were they zooming in or out?
-			if (flags & NSAlternateKeyMask) {
+			if (flags & NSAlternateKeyMask)
 				[document zoomOut:self];
-			} else {
+			else
 				[document zoomIn:self];
-			}
 		}
 	}
 	return nil;

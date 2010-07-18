@@ -83,6 +83,10 @@
 - (IBAction)raiseResizeSheet:(id)sender;
 - (void)setUpPaintView;
 
+// Undo
+- (void)handleUndoWithImageData:(NSData *)mainImageData 
+						  frame:(NSRect)frame;
+
 // For copy-and-paste
 - (void)writeImageToPasteboard:(NSPasteboard *)pb;
 
