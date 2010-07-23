@@ -29,6 +29,7 @@ typedef enum {
 @class SWColorSelector;
 @class SWMatrix;
 @class SWToolbox;
+@class SWDocument;
 
 @interface SWToolboxController : NSWindowController {	
 	NSColor *foregroundColor;
@@ -44,6 +45,9 @@ typedef enum {
 	
 	// My toolbox -- used when there's no active document
 	SWToolbox *toolbox;
+    
+    // Active Document
+    SWDocument *activeDocument;
 }
 
 // Accessors
@@ -66,6 +70,8 @@ typedef enum {
 @property (assign) SWFillStyle fillStyle;
 @property (retain) NSColor *foregroundColor;
 @property (retain) NSColor *backgroundColor;
+//
+@property (readonly) SWDocument *activeDocument;
 //@property (readonly) NSMutableArray *toolListArray;
 
 @end

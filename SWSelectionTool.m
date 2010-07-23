@@ -52,8 +52,10 @@
 	
 	id thing = [change objectForKey:NSKeyValueChangeNewKey];
 	
-	if ([keyPath isEqualToString:@"selectionTransparency"]) {
+	if ([keyPath isEqualToString:@"selectionTransparency"]) 
+	{
 		shouldOmitBackground = [thing boolValue];
+		[self updateBackgroundOmission];
 	}
 }
 
@@ -170,11 +172,16 @@
 				
 				[SWImageTools clearImage:bufferImage];
 				
-				selectedImage = [SWImageTools cropImage:mainImage toRect:clippingRect];
+				// Prepare the two image: one with transparency, and one without
+				selImageSansTransparency = [SWImageTools cropImage:mainImage toRect:clippingRect];
+				selImageWithTransparency = [SWImageTools cropImage:mainImage toRect:clippingRect];
+				[SWImageTools stripImage:selImageWithTransparency ofColor:backColor];
 				
 				// Now if we should, remove the background of the image
 				if (shouldOmitBackground) 
-					[SWImageTools stripImage:selectedImage ofColor:backColor];
+					selectedImage = [selImageWithTransparency retain];
+				else
+					selectedImage = [selImageSansTransparency retain];
 				
 				// Delete it from the main image
 				SWLockFocus(mainImage);
@@ -214,7 +221,7 @@
 		[[self pathFromPoint:clippingRect.origin 
 					 toPoint:NSMakePoint(clippingRect.origin.x + clippingRect.size.width, 
 										 clippingRect.origin.y + clippingRect.size.height)] stroke];			
-		SWUnlockFocus(_bufferImage);		
+		SWUnlockFocus(_bufferImage);
 	}
 	
 	// Get the view to perform a redraw to see the new border
@@ -226,8 +233,34 @@
 - (void)deleteKey
 {
 	[selectedImage release];
-	selectedImage = nil;//[self tieUpLooseEnds];
+	[selImageWithTransparency release];
+	[selImageSansTransparency release];
+	selectedImage = nil;
+	selImageWithTransparency = nil;
+	selImageSansTransparency = nil;
 }
+
+
+- (void)updateBackgroundOmission
+{
+	// Switch the image that selectedImage points to, if it exists
+	if (shouldOmitBackground)
+	{
+		[selImageWithTransparency retain];
+		[selectedImage release];
+		selectedImage = selImageWithTransparency;
+	}
+	else
+	{
+		[selImageSansTransparency retain];
+		[selectedImage release];
+		selectedImage = selImageSansTransparency;
+	}
+	
+	// Update the UI with the new image
+	[self drawNewBorder:nil];
+}
+
 
 - (void)tieUpLooseEnds
 {
@@ -262,8 +295,6 @@
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_mainImage)
 	{
-		_bufferImage = nil;
-
 		[SWImageTools drawToImage:mainImageCopy
 						fromImage:selectedImage 
 						  atPoint:NSMakePoint(oldOrigin.x + deltax, oldOrigin.y + deltay)
@@ -277,6 +308,13 @@
 	} 
 	else
 		[super resetRedrawRect];
+	
+	// Now nuke the buffer image
+	if (_bufferImage)
+	{
+		[SWImageTools clearImage:_bufferImage];
+		_bufferImage = nil;
+	}
 	
 	// Get rid of references to the selected image
 	[self deleteKey];
@@ -305,6 +343,17 @@
 	NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - selectedImage.size.height));
 	[image drawAtPoint:point];
 	SWUnlockFocus(selectedImage);
+	
+	// Make the copies of the image for with/without transparency
+	selImageSansTransparency = [selectedImage retain];
+	[SWImageTools initImageRep:&selImageWithTransparency withSize:[_bufferImage size]];
+	[SWImageTools drawToImage:selImageWithTransparency
+					fromImage:selImageSansTransparency 
+			  withComposition:NO];
+	[SWImageTools stripImage:selImageWithTransparency ofColor:backColor];
+
+	// Which one should we be using?  Let this method decide
+	[self updateBackgroundOmission];
 	
 	// Draw the dotted line around the selected region
 	[self drawNewBorder:nil];
@@ -365,6 +414,8 @@
 	[toolboxController removeObserver:self forKeyPath:@"selectionTransparency"];
 	[originalImageCopy release];
 	[selectedImage release];
+	[selImageWithTransparency release];
+	[selImageSansTransparency release];
 	[super dealloc];
 }
 

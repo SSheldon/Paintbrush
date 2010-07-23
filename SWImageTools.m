@@ -259,27 +259,47 @@
 // Strips an image of all the pixels of a certain color
 + (void)stripImage:(NSBitmapImageRep *)imageRep ofColor:(NSColor *)color
 {
-#if 0
 	// This offset will climb through the entire image
-	int offset;
-	int samplesPerPixel = [imageRep samplesPerPixel];
+	//int offset;
+	NSInteger samplesPerPixel = [imageRep samplesPerPixel];
 	unsigned char *bitmapData = [imageRep bitmapData];
+	
+	// Get the components of the given NSColor
 	CGFloat colorRed, colorGreen, colorBlue, colorAlpha;
 	[color getRed:&colorRed green:&colorGreen blue:&colorBlue alpha:&colorAlpha];
-	int r, g, b;
 	
-	for (offset = 0; offset < [imageRep pixelsHigh] * [imageRep pixelsWide] * samplesPerPixel; pixelLocation += samplesPerPixel) {
-		// Next get the components at that offset
-		int red = bitmapData[offset + 0];
-		int green = bitmapData[offset + 1];
-		int blue = bitmapData[offset + 2];
-		int alpha = bitmapData[offset + 3];
-		
-//		if (![SWImageTools color:color isEqualToColor:[imageRep colorAtX:x y:y]]) {
-//			[secondRep setColor:[imageRep colorAtX:x y:y] atX:x y:y];
-//		}	
-	}
-#endif // 0
+	// Scale them up
+	NSInteger r = colorRed * 255;
+	NSInteger g = colorGreen * 255;
+	NSInteger b = colorBlue * 255;
+	NSInteger a = colorAlpha * 255;
+	
+	// We can't go linearly, as 10.4+ don't always pack bytes -- it may not be contiguous!
+	// Instead, we must go row by row
+	int row, col;
+    for (row = 0; row < [imageRep pixelsHigh]; row++, bitmapData += [imageRep bytesPerRow]) 
+	{
+        unsigned char* p = bitmapData;
+        for (col = 0; col < [imageRep pixelsWide]; col++)
+		{
+			// Next get the components at that offset
+			NSInteger red = *p;
+			NSInteger green = *(p + 1);
+			NSInteger blue = *(p + 2);
+			NSInteger alpha = *(p + 3);			
+			if ((alpha == 0 && colorAlpha == 0) ||
+				(red == r && green == g && blue == b && alpha == a))
+			{
+				*p = 0;
+				*(p + 1) = 0;
+				*(p + 2) = 0;
+				*(p + 3) = 0;
+			}
+			
+			// Increment p
+			p += samplesPerPixel;
+        }
+    }
 }
 
 
@@ -298,7 +318,7 @@
 
 
 // Simple cropping
-+ (NSBitmapImageRep *) cropImage:(NSBitmapImageRep *)image toRect:(NSRect)rect
++ (NSBitmapImageRep *)cropImage:(NSBitmapImageRep *)image toRect:(NSRect)rect
 {
 	// Sanity check
 	NSAssert(rect.origin.x >= 0 && rect.origin.y >= 0, @"We can't crop to a less-than-zero origin!");

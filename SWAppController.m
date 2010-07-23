@@ -23,6 +23,7 @@
 #import "SWPreferenceController.h"
 #import "SWToolboxController.h"
 #import "SWDocument.h"
+#import <Sparkle/Sparkle.h>
 
 NSString * const kSWUndoKey = @"UndoLevels";
 
@@ -57,11 +58,6 @@ NSString * const kSWUndoKey = @"UndoLevels";
 		
 		// Register the dictionary of defaults
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];		
-		
-//		[[NSNotificationCenter defaultCenter] addObserver:self 
-//												 selector:@selector(killTheSheet:) 
-//													 name:SUUpdaterWillRestartNotification 
-//												   object:nil];
 
 		[[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
 		[NSColorPanel setPickerMode:NSCrayonModeColorPanel];

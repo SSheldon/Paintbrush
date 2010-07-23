@@ -20,27 +20,18 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class SWPreferenceController;
-@class SWToolboxController;
 
-extern NSString * const kSWUndoKey;
+@interface SWPrintPanelAccessoryViewController : NSViewController <NSPrintPanelAccessorizing>
 
-@interface SWAppController : NSObject
-{
-	SWPreferenceController *preferenceController;
-}
-- (IBAction)showPreferencePanel:(id)sender;
-- (IBAction)showToolboxPanel:(id)sender;
-//- (IBAction)showGridPanel:(id)sender;
+// Connected to the scaling checkbox (defaults to YES)
+- (IBAction)changeScaling:(id)sender;
 
-// A few methods to open a web page in the user's browser of choice
-- (IBAction)donate:(id)sender;
-- (IBAction)forums:(id)sender;
-- (IBAction)contact:(id)sender;
+// Called in a few places: updates the print info with our desired scaling
+- (BOOL)scaling;
+- (void)setScaling:(BOOL)flag;
 
-// Overrides "Quit" to remove a sheet, if present
-- (IBAction)quit:(id)sender;
-- (IBAction)newFromClipboard:(id)sender;
-
+// Methods used for NSPrintPanelAccessorizing protocol
+- (NSArray *)localizedSummaryItems;
+- (NSSet *)keyPathsForValuesAffectingPreview;
 
 @end

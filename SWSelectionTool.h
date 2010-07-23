@@ -23,7 +23,12 @@
 
 @interface SWSelectionTool : SWTool {
 	NSRect clippingRect;
-	NSBitmapImageRep *selectedImage/*, *outlinedImage*/;
+	
+	// The two images, and the one pointer to the active image
+	NSBitmapImageRep *selectedImage;
+	NSBitmapImageRep *selImageWithTransparency;
+	NSBitmapImageRep *selImageSansTransparency;
+	
 	NSTimer *animationTimer;
 	CGFloat dottedLineArray[2];
 	NSInteger dottedLineOffset;
@@ -44,6 +49,7 @@
 - (NSData *)imageData;
 - (void)setClippingRect:(NSRect)rect forImage:(NSBitmapImageRep *)image withMainImage:(NSBitmapImageRep *)image;
 - (void)drawNewBorder:(NSTimer *)timer;
+- (void)updateBackgroundOmission;
 
 @property (assign, readonly) NSPoint oldOrigin;
 

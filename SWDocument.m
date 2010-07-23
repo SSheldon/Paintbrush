@@ -30,6 +30,7 @@
 #import "SWToolList.h"
 #import "SWAppController.h"
 #import "SWSavePanelAccessoryViewController.h"
+#import "SWPrintPanelAccessoryViewController.h"
 #import "SWImageDataSource.h"
 
 @implementation SWDocument
@@ -484,6 +485,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
     NSPrintOperation *op = [NSPrintOperation printOperationWithView:paintView
 														  printInfo:[self printInfo]];
 	
+	SWPrintPanelAccessoryViewController *ppavc = [[[SWPrintPanelAccessoryViewController alloc]
+												   initWithNibName:@"PrintPanelAccessoryView" bundle:nil] autorelease];
+	[[op printPanel] addAccessoryController:ppavc];
     [op runOperationModalForWindow:[super windowForSheet]
 						  delegate:self
 					didRunSelector:NULL

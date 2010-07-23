@@ -36,6 +36,7 @@
 @synthesize fillStyle;
 @synthesize foregroundColor;
 @synthesize backgroundColor;
+@synthesize activeDocument;
 //@synthesize toolListArray;
 
 
@@ -47,6 +48,7 @@
 	NSDocumentController *controller = [NSDocumentController sharedDocumentController];
 	id document = [controller documentForWindow:window];
 	if (document && [document class] == [SWDocument class]) {
+        activeDocument = document;
 		DebugLog(@"Key window is %@", document);		
 	}
 }

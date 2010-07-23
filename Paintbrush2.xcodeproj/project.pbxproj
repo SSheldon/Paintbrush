@@ -11,13 +11,10 @@
 		2706B88010ED719500080D4A /* PaintViewDrawingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B81010ED6FE400080D4A /* PaintViewDrawingTest.m */; };
 		2706B94D10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
 		2706B94E10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
-		2709A7F50EB401C50050A019 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2709A7F40EB401C50050A019 /* Sparkle.framework */; };
-		2709A8300EB401D70050A019 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2709A7F40EB401C50050A019 /* Sparkle.framework */; };
-		270F02730BD0218F005B92A3 /* SWTextToolWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */; };
 		270F02740BD0218F005B92A3 /* SWTextToolWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */; };
-		271EEB0D0BBC34A800319865 /* SWSelectionTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 271EEB0B0BBC34A800319865 /* SWSelectionTool.h */; };
+		2717E14C11F8A03C00853546 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2717E14B11F8A03C00853546 /* Sparkle.framework */; };
+		2717E15711F8A06E00853546 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2717E14B11F8A03C00853546 /* Sparkle.framework */; };
 		271EEB0E0BBC34A800319865 /* SWSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB0C0BBC34A800319865 /* SWSelectionTool.m */; };
-		271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 271EEB1B0BBC352300319865 /* SWTextTool.h */; };
 		271EEB1E0BBC352300319865 /* SWTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB1C0BBC352300319865 /* SWTextTool.m */; };
 		2723FB5F1162830F005BCB1B /* SWImageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2723FB5E1162830F005BCB1B /* SWImageDataSource.m */; };
 		2723FB601162830F005BCB1B /* SWImageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2723FB5E1162830F005BCB1B /* SWImageDataSource.m */; };
@@ -29,7 +26,6 @@
 		272A86F20D74FA0B00630D0B /* rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86DE0D74FA0B00630D0B /* rectangle.png */; };
 		272A86F80D74FA0B00630D0B /* text.png in Resources */ = {isa = PBXBuildFile; fileRef = 272A86E40D74FA0B00630D0B /* text.png */; };
 		2734B4D20C9AFCC8003A32BF /* SWSelectionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2734B4D00C9AFCC8003A32BF /* SWSelectionBuilder.m */; };
-		2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2734B4D10C9AFCC8003A32BF /* SWSelectionBuilder.h */; };
 		2735134B0D8F83BB00F24379 /* SWAirbrushTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2735134A0D8F83BB00F24379 /* SWAirbrushTool.m */; };
 		27389A170F2A9AB50062831A /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A160F2A9AB50062831A /* MyDocument.xib */; };
 		27389A190F2A9ABC0062831A /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27389A180F2A9ABC0062831A /* Preferences.xib */; };
@@ -41,16 +37,12 @@
 		273E0B3B0E32F99D00D11815 /* SWImageTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 273E0B390E32F99D00D11815 /* SWImageTools.m */; };
 		273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273E0B6D0E32FC2200D11815 /* QuartzCore.framework */; };
 		273E77980EBD71850094C630 /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 273E77970EBD71850094C630 /* selection.png */; };
-		274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 274194B10C1DA5E400605CDC /* SWCenteringClipView.h */; };
 		274194B40C1DA5E400605CDC /* SWCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 274194B20C1DA5E400605CDC /* SWCenteringClipView.m */; };
 		2742CCA50DA58518004BF119 /* airbrush-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 2742CCA40DA58518004BF119 /* airbrush-cursor.png */; };
-		2744468F0C0E515C00D84CE1 /* SWBombTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2744468D0C0E515C00D84CE1 /* SWBombTool.h */; };
 		274446900C0E515C00D84CE1 /* SWBombTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744468E0C0E515C00D84CE1 /* SWBombTool.m */; };
 		2748ED811078167800F7A836 /* bgImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 2748ED801078167800F7A836 /* bgImage.png */; };
 		275110320F169A0800A67F22 /* COPYING.txt in Resources */ = {isa = PBXBuildFile; fileRef = 275110310F169A0800A67F22 /* COPYING.txt */; };
-		275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */; };
 		275C82DE0BAF98DC00F836FA /* SWPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */; };
-		2774CC760C0A1D5100FE7F0F /* SWCurveTool.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2774CC740C0A1D5100FE7F0F /* SWCurveTool.h */; };
 		2774CC770C0A1D5100FE7F0F /* SWCurveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */; };
 		278BF71A0D4E47D40046BCA2 /* SWEyeDropperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */; };
 		278D5BBE0E216E7F00C01A52 /* SWSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 278D5BBD0E216E7F00C01A52 /* SWSlider.m */; };
@@ -74,7 +66,6 @@
 		27A45BEC0E9A82B400AC15F0 /* hoveredwide.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BEA0E9A82B400AC15F0 /* hoveredwide.png */; };
 		27A45C100E9A84B500AC15F0 /* SWSliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A45C0F0E9A84B500AC15F0 /* SWSliderCell.m */; };
 		27A45C4B0E9AB05000AC15F0 /* knob.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45C4A0E9AB05000AC15F0 /* knob.png */; };
-		27A4872A0C57AEE00047DF3C /* SWSizeWindowController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A487280C57AEE00047DF3C /* SWSizeWindowController.h */; };
 		27A4872B0C57AEE10047DF3C /* SWSizeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A487290C57AEE00047DF3C /* SWSizeWindowController.m */; };
 		27A4E1790F1E9FF900A1F367 /* JPEG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27A4E1740F1E9FF900A1F367 /* JPEG.icns */; };
 		27A4E17A0F1E9FF900A1F367 /* GIF.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27A4E1750F1E9FF900A1F367 /* GIF.icns */; };
@@ -101,7 +92,8 @@
 		27BE1DA70EC8FB1B00B0A0F1 /* zoom-cursor-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BE1DA60EC8FB1B00B0A0F1 /* zoom-cursor-2.png */; };
 		27BE1F350ECB738000B0A0F1 /* SWColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BE1F340ECB738000B0A0F1 /* SWColorSelector.m */; };
 		27CBED9A0EB13E9B00541F98 /* bomb3.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CBED990EB13E9B00541F98 /* bomb3.png */; };
-		27D62F7E0BF6CF6E008DA207 /* SWScalingScrollView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */; };
+		27CD321E11F635B900AB5996 /* PrintPanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CD321D11F635B900AB5996 /* PrintPanelAccessoryView.xib */; };
+		27CD323011F6361700AB5996 /* SWPrintPanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD322F11F6361700AB5996 /* SWPrintPanelAccessoryViewController.m */; };
 		27D62F7F0BF6CF6E008DA207 /* SWScalingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D62F7D0BF6CF6E008DA207 /* SWScalingScrollView.m */; };
 		27E08C320E33F807002F49E6 /* stroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E08C300E33F807002F49E6 /* stroke.png */; };
 		27E08C3A0E33F817002F49E6 /* fillstroke.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E08C380E33F817002F49E6 /* fillstroke.png */; };
@@ -134,17 +126,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2709A8300EB401D70050A019 /* Sparkle.framework in CopyFiles */,
-				275C82DD0BAF98DC00F836FA /* SWPreferenceController.h in CopyFiles */,
-				271EEB0D0BBC34A800319865 /* SWSelectionTool.h in CopyFiles */,
-				271EEB1D0BBC352300319865 /* SWTextTool.h in CopyFiles */,
-				270F02730BD0218F005B92A3 /* SWTextToolWindowController.h in CopyFiles */,
-				27D62F7E0BF6CF6E008DA207 /* SWScalingScrollView.h in CopyFiles */,
-				2774CC760C0A1D5100FE7F0F /* SWCurveTool.h in CopyFiles */,
-				2744468F0C0E515C00D84CE1 /* SWBombTool.h in CopyFiles */,
-				274194B30C1DA5E400605CDC /* SWCenteringClipView.h in CopyFiles */,
-				27A4872A0C57AEE00047DF3C /* SWSizeWindowController.h in CopyFiles */,
-				2734B4D30C9AFCC8003A32BF /* SWSelectionBuilder.h in CopyFiles */,
+				2717E15711F8A06E00853546 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,9 +143,9 @@
 		2706B83E10ED709200080D4A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2706B94B10ED77A600080D4A /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
 		2706B94C10ED77A600080D4A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
-		2709A7F40EB401C50050A019 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextToolWindowController.h; sourceTree = "<group>"; };
 		270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextToolWindowController.m; sourceTree = "<group>"; };
+		2717E14B11F8A03C00853546 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		271B97BB0D85C47200D1B36D /* SWZoomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWZoomTool.h; sourceTree = "<group>"; };
 		271EEB0B0BBC34A800319865 /* SWSelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSelectionTool.h; sourceTree = "<group>"; };
 		271EEB0C0BBC34A800319865 /* SWSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSelectionTool.m; sourceTree = "<group>"; };
@@ -272,6 +254,9 @@
 		27BE1F330ECB738000B0A0F1 /* SWColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWColorSelector.h; sourceTree = "<group>"; };
 		27BE1F340ECB738000B0A0F1 /* SWColorSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWColorSelector.m; sourceTree = "<group>"; };
 		27CBED990EB13E9B00541F98 /* bomb3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bomb3.png; sourceTree = "<group>"; };
+		27CD321A11F635B400AB5996 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PrintPanelAccessoryView.xib; sourceTree = "<group>"; };
+		27CD322E11F6361700AB5996 /* SWPrintPanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWPrintPanelAccessoryViewController.h; sourceTree = "<group>"; };
+		27CD322F11F6361700AB5996 /* SWPrintPanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWPrintPanelAccessoryViewController.m; sourceTree = "<group>"; };
 		27D62F7C0BF6CF6E008DA207 /* SWScalingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SWScalingScrollView.h; sourceTree = "<group>"; };
 		27D62F7D0BF6CF6E008DA207 /* SWScalingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SWScalingScrollView.m; sourceTree = "<group>"; };
 		27E08C300E33F807002F49E6 /* stroke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stroke.png; sourceTree = "<group>"; };
@@ -324,7 +309,7 @@
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
 				273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */,
-				2709A7F50EB401C50050A019 /* Sparkle.framework in Frameworks */,
+				2717E14C11F8A03C00853546 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +419,8 @@
 				27A60E260B879A6A0091A1B0 /* SWDocument.m */,
 				275C82DB0BAF98DC00F836FA /* SWPreferenceController.h */,
 				275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */,
+				27CD322E11F6361700AB5996 /* SWPrintPanelAccessoryViewController.h */,
+				27CD322F11F6361700AB5996 /* SWPrintPanelAccessoryViewController.m */,
 				273BE3C01011389E00AA0B05 /* SWResizeWindowController.h */,
 				273BE3C11011389E00AA0B05 /* SWResizeWindowController.m */,
 				27A1CD2C10A64F02005D2D84 /* SWSavePanelAccessoryViewController.h */,
@@ -505,6 +492,7 @@
 				27F7B8900DE3671D0038ED41 /* MainMenu.xib */,
 				27389A160F2A9AB50062831A /* MyDocument.xib */,
 				27389A180F2A9ABC0062831A /* Preferences.xib */,
+				27CD321D11F635B900AB5996 /* PrintPanelAccessoryView.xib */,
 				273BE3BC101135C800AA0B05 /* ResizePanel.xib */,
 				27A1CD6710A650D4005D2D84 /* SavePanelAccessoryView.xib */,
 				27389A1B0F2A9AD90062831A /* SizeWindow.xib */,
@@ -647,7 +635,7 @@
 		594D30730DFF93770095E075 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2709A7F40EB401C50050A019 /* Sparkle.framework */,
+				2717E14B11F8A03C00853546 /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
 				2706B83E10ED709200080D4A /* SenTestingKit.framework */,
 			);
@@ -785,6 +773,7 @@
 				27A4E2960F1FFF2E00A1F367 /* dsa_pub.pem in Resources */,
 				2748ED811078167800F7A836 /* bgImage.png in Resources */,
 				27FB972C1093718300147DDF /* Localizable.strings in Resources */,
+				27CD321E11F635B900AB5996 /* PrintPanelAccessoryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -860,6 +849,7 @@
 				27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */,
 				2706B94E10ED77A600080D4A /* DebugLog.m in Sources */,
 				2723FB5F1162830F005BCB1B /* SWImageDataSource.m in Sources */,
+				27CD323011F6361700AB5996 /* SWPrintPanelAccessoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -928,6 +918,14 @@
 				27A1CD6510A650BB005D2D84 /* English */,
 			);
 			name = SavePanelAccessoryView.xib;
+			sourceTree = "<group>";
+		};
+		27CD321D11F635B900AB5996 /* PrintPanelAccessoryView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				27CD321A11F635B400AB5996 /* English */,
+			);
+			name = PrintPanelAccessoryView.xib;
 			sourceTree = "<group>";
 		};
 		27F7B8900DE3671D0038ED41 /* MainMenu.xib */ = {
@@ -1016,7 +1014,6 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../Downloads/Sparkle 1.5b4/With Garbage Collection\"",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
