@@ -73,9 +73,9 @@ typedef enum {
 - (IBAction)flipColors:(id)sender;
 
 @property (assign) NSInteger lineWidthDisplay;
-@property (assign) NSInteger lineWidth;
+@property (assign,nonatomic) NSInteger lineWidth;
 @property (assign) BOOL selectionTransparency;
-@property (assign) NSString *currentTool;
+@property (assign,nonatomic) NSString *currentTool;
 @property (assign) SWFillStyle fillStyle;
 @property (retain) NSColor *foregroundColor;
 @property (retain) NSColor *backgroundColor;

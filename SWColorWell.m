@@ -63,24 +63,38 @@
 // Instead of doing the regular drawing, we're kicking it up a notch!  Bam!
 - (void)drawRect:(NSRect)rect
 {
-	rect = NSInsetRect(rect, 4.0, 4.0);
-	[[self color] setFill];
+	if (isHovered) 
+		rect = NSInsetRect(rect, 3.0, 3.0);
+	else
+		rect = NSInsetRect(rect, 4.0, 4.0);
 	
 	// An SWColorWell can be hovered, selected, or neither
-	if ([self isActive]) {
+	if ([self isActive]) 
+	{
 		[pressedImage drawAtPoint:NSZeroPoint 
 						 fromRect:NSZeroRect 
 						operation:NSCompositeSourceOver 
 						 fraction:1.0];	
-	} else if (isHovered) {
+	} 
+	else if (isHovered) 
+	{
 		[hovImage drawAtPoint:NSZeroPoint 
 					 fromRect:NSZeroRect 
 					operation:NSCompositeSourceOver 
 					 fraction:1.0];
 	}
 	
-	[[NSBezierPath bezierPathWithRoundedRect:rect xRadius:4 yRadius:4] fill];
+	rect.origin.x += 0.5;
+	rect.origin.y += 0.5;
+	NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:4 yRadius:4];
+	[path setLineWidth:1.0];
 	
+	// Draw the fill now
+	[[self color] setFill];		
+	[path fill];
+	
+	[[NSColor grayColor] setStroke];
+	[path stroke];
 }
 
 

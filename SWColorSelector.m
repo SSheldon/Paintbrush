@@ -86,13 +86,18 @@
 {
 	NSPoint p = [event locationInWindow];
 	NSPoint downPoint = [self convertPoint:p fromView:nil];
-	if ([frontWell hitTest:downPoint]) {
+	if ([frontWell hitTest:downPoint])
+	{
 		[backWell setIsHovered:NO];
 		[frontWell setIsHovered:YES];
-	} else if ([backWell hitTest:downPoint]) {
+	}
+	else if ([backWell hitTest:downPoint]) 
+	{
 		[backWell setIsHovered:YES];
 		[frontWell setIsHovered:NO];
-	} else {
+	}
+	else 
+	{
 		[backWell setIsHovered:NO];
 		[frontWell setIsHovered:NO];
 	}

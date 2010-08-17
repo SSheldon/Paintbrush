@@ -101,6 +101,8 @@
 	// Flip it, since our views are all flipped
 	if (mainImage)
 		[SWImageTools flipImageVertical:mainImage];
+	
+	return self;
 }
 
 

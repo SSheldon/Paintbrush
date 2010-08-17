@@ -122,7 +122,8 @@ NSString * const kSWUndoKey = @"UndoLevels";
 - (IBAction)newFromClipboard:(id)sender
 {
 	NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
-	if (data) {
+	if (data) 
+	{
 		[SWDocument setWillShowSheet:NO];
 		[NSApp sendAction:@selector(newDocument:)
 					   to:nil 

@@ -335,19 +335,16 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	
     if (status==YES && (saveOp==NSSaveOperation || saveOp==NSSaveAsOperation))
     {
-		//TODO: Make this work
-		/*
-        NSURL* url = [self fileURL];
+		NSURL* url = [self fileURL];
 		
-        // reload the image (this could faile)
-        status = [self readFromURL:url ofType:type error:outError];
+		// reload the image (this could fail)
+		status = [self readFromURL:url ofType:type error:outError];
 		
-        // re-initialize the UI
-        [self setupAll];
+		// re-initialize the UI
+		[paintView setNeedsDisplay:YES];
 		
-        // Tell the info panel that the url changed
-        [ImageInfoPanel setURL:url];
-		*/
+//		// Tell the info panel that the url changed
+//		[ImageInfoPanel setURL:url];
     }
 	
 	return status;
@@ -363,7 +360,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[SWImageTools flipImageVertical:bitmap];
 		
 	NSData *data = nil;
-	NSBitmapImageFileType fileType = nil;
+	NSBitmapImageFileType fileType = NSPNGFileType;
 	
 	if ([aType isEqualToString:@"bmp"])
 		fileType = NSBMPFileType;
@@ -381,7 +378,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	// We need to retrieve the data stored in the save panel, and pack them into a dictionary
 	NSTIFFCompression tiffCompression = (fileType == NSJPEGFileType ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
 	CGFloat compressionFactor = [savePanelAccessoryViewController imageQuality];
-	BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
+	//BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
 	NSDictionary *propDict = [NSDictionary dictionaryWithObjectsAndKeys:
 							  [NSNumber numberWithInteger:tiffCompression], NSImageCompressionMethod,
 							  [NSNumber numberWithFloat:compressionFactor], NSImageCompressionFactor, 
@@ -466,7 +463,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 					   context:(void *)context
 {
 	NSString *newFileType = [change valueForKey:NSKeyValueChangeNewKey];
-	if (newFileType) {
+	if (newFileType) 
+	{
 		[currentFileType release];
 		currentFileType = [newFileType retain];
 		NSSavePanel *savePanel = (NSSavePanel *)[[savePanelAccessoryViewController view] window];
@@ -479,11 +477,17 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (BOOL)readFromURL:(NSURL *)URL ofType:(NSString *)aType error:(NSError **)anError
 {
 #pragma unused(aType, anError)
-	// You better be nil at this point!
-	NSAssert(dataSource == nil, @"We can't already have a DataSource when creating a document!");
-	
-	// Create the data source
-	dataSource = [[SWImageDataSource alloc] initWithURL:URL];
+	if (dataSource == nil)
+	{
+		// Create the data source
+		dataSource = [[SWImageDataSource alloc] initWithURL:URL];
+	} 
+	else
+	{
+		// We are reloading an image, so we need to just update the data source
+		[dataSource initWithURL:URL];
+	}
+
 	return (dataSource != nil);
 }
 
@@ -559,7 +563,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	{
 		SWSelectionTool *currentTool = (SWSelectionTool *)[toolbox currentTool];
 		
-		NSRect rect = [currentTool clippingRect];
 		NSBitmapImageRep *selectedImage = [currentTool selectedImage];		
 		
 		// Make sure we flip the image before we put it in the pasteboard

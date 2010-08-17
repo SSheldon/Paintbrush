@@ -42,7 +42,7 @@
 	SWTool *currentTool;
 }
 
-@property (retain) SWTool *currentTool;
+@property (retain,nonatomic) SWTool *currentTool;
 
 - (id)initWithDocument:(SWDocument *)doc;
 + (NSArray *)toolClassList;
