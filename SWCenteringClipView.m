@@ -63,7 +63,7 @@
 	if (bgImage) {
 		[bgImage drawInRect:[[self documentView] bounds]];
 	} else {
-		[[NSColor orangeColor] setFill];		
+		[[NSColor whiteColor] setFill];		
 		NSRectFill(docRect);
 	}
 	
@@ -85,16 +85,28 @@
 	}
 	
 	// Potentially regenerate the background image
-	if (bgImagePattern) {
-		if (bgImage && !NSEqualSizes([bgImage size], docRect.size)) {
+	if (bgImagePattern)
+	{
+		BOOL needsRedraw = NO;
+		
+		// Did we change image sizes?
+		if (bgImage && !NSEqualSizes([bgImage size], docRect.size))
+		{
 			[bgImage release];
 			bgImage = nil;
+			needsRedraw = YES;
 		}
-		if (!bgImage) {
+		
+		// Do we not have an image?
+		if (!bgImage && !NSEqualSizes(docRect.size, NSZeroSize))
+		{
 			[SWImageTools initImageRep:&bgImage withSize:docRect.size];
-			[SWImageTools clearImage:bgImage];
+			needsRedraw = YES;
 		}
-		if (bgImage) {
+		
+		// Did either (or both) of the above flip the needsRedraw flag?
+		if (bgImage && needsRedraw) 
+		{
 			SWLockFocus(bgImage);
 			CGContextDrawTiledImage([[NSGraphicsContext currentContext] graphicsPort], 
 									CGRectMake(0, 0, [bgImagePattern size].width, [bgImagePattern size].height), 
