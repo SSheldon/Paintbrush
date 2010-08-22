@@ -161,8 +161,9 @@
 
 - (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
 {
-	NSMutableArray *selectable = [NSMutableArray new];
-	for (NSToolbarItem *nsti in [toolbar items]) {
+	NSMutableArray *selectable = [[NSMutableArray alloc] initWithCapacity:[[toolbar items] count]];
+	for (NSToolbarItem *nsti in [toolbar items]) 
+	{
 		[selectable addObject:[nsti itemIdentifier]];
 	}
 	return selectable;

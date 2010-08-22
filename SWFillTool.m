@@ -77,6 +77,9 @@
 			// And then fill it!
 			[self fillMask:mask withColor:fillColor];
 			
+			// And then release it!
+			CGImageRelease(mask);
+			
 			[super addRedrawRectFromPoint:NSZeroPoint toPoint:NSMakePoint([_mainImage pixelsWide], [_mainImage pixelsHigh])];
 		}
 		

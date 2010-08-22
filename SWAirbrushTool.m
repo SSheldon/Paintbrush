@@ -39,7 +39,7 @@
 	// Custom setting the redraw rect
 	redrawRect = NSMakeRect(end.x - 2*lineWidth, end.y - 2*lineWidth, 4*lineWidth, 4*lineWidth);
 	
-	path = [NSBezierPath new];
+	path = [NSBezierPath bezierPath];
 //	[path setLineWidth:0];
 	NSBezierPath *circle = [NSBezierPath bezierPathWithOvalInRect:redrawRect];
 	

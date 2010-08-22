@@ -53,18 +53,20 @@
 
 - (void)generateAltImage
 {
-	if (!altImage) {
+	if (!altImage) 
+	{
 		NSImage *normal = [self image];
 		NSImage *highlight;
 		NSSize size = [normal size];
 		
-		if (NSEqualSizes(size, NSMakeSize(32, 32))) {
+		if (NSEqualSizes(size, NSMakeSize(32, 32)))
 			highlight = [NSImage imageNamed:@"pressedsmall.png"];			
-		} else if (NSEqualSizes(size, NSMakeSize(64, 32))) {
+		else if (NSEqualSizes(size, NSMakeSize(64, 32)))
 			highlight = [NSImage imageNamed:@"pressedwide.png"];
-		} else if (NSEqualSizes(size, NSMakeSize(64, 48))) {
+		else if (NSEqualSizes(size, NSMakeSize(64, 48)))
 			highlight = [NSImage imageNamed:@"pressedwidetall.png"];
-		} else return;
+		else
+			return;
 		
 		altImage = [[NSImage alloc] initWithSize:size];
 		[altImage lockFocus];
@@ -72,7 +74,7 @@
 					  fromRect:NSZeroRect
 					 operation:NSCompositeSourceOver
 					  fraction:1.0];
-		NSShadow *shadow = [NSShadow new];
+		NSShadow *shadow = [[NSShadow alloc] init];
 		[shadow setShadowBlurRadius:4.0];
 		[shadow setShadowColor:[NSColor whiteColor]];
 		[shadow set];
@@ -80,24 +82,27 @@
 				   fromRect:NSZeroRect
 				  operation:NSCompositeSourceOver
 				   fraction:1.0];
+		[shadow release];
 		[altImage unlockFocus];
 	}
 }
 
 - (void)generateHovImage
 {
-	if (!hovImage) {
+	if (!hovImage)
+	{
 		NSImage *normal = [self image];
 		NSImage *highlight;
 		NSSize size = [normal size];
 		
-		if (NSEqualSizes(size, NSMakeSize(32, 32))) {
+		if (NSEqualSizes(size, NSMakeSize(32, 32)))
 			highlight = [NSImage imageNamed:@"hoveredsmall.png"];			
-		} else if (NSEqualSizes(size, NSMakeSize(64, 32))) {
+		else if (NSEqualSizes(size, NSMakeSize(64, 32)))
 			highlight = [NSImage imageNamed:@"hoveredwide.png"];
-		} else if (NSEqualSizes(size, NSMakeSize(64, 48))) {
+		else if (NSEqualSizes(size, NSMakeSize(64, 48)))
 			highlight = [NSImage imageNamed:@"hoveredwidetall.png"];
-		} else return;
+		else
+			return;
 		
 		hovImage = [[NSImage alloc] initWithSize:size];
 		[hovImage lockFocus];
@@ -116,11 +121,10 @@
 
 - (void)setIsHovered:(BOOL)flag;
 {
-	if (flag) {
+	if (flag)
 		[self setImage:hovImage];
-	} else {
+	else
 		[self setImage:backupImage];
-	}
 }
 
 - (NSImage *)alternateImage

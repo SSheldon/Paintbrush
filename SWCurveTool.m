@@ -42,7 +42,7 @@
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	path = [NSBezierPath new];
+	path = [NSBezierPath bezierPath];
 	[path setLineWidth:lineWidth];
 	[path moveToPoint:beginPoint];
 	if (lineWidth == 1) {

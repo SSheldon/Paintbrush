@@ -28,6 +28,8 @@
 
 
 #import "SWTextTool.h"
+#import "SWDocument.h"
+#import "SWPaintView.h"
 
 @implementation SWTextTool
 
@@ -120,6 +122,12 @@
 {
 	[stringToInsert release];
 	stringToInsert = [[NSAttributedString alloc] initWithAttributedString:[[note userInfo] objectForKey:@"newText"]];
+	
+	// Get the current point and then draw it
+	// Doesn't work quite right yet
+//	NSPoint point = [[document paintView] currentMouseLocation];
+//	[self mouseHasMoved:point];
+	
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil
 				 from:nil];
@@ -128,7 +136,8 @@
 // Overridden for drawing to the buffer image
 - (void)mouseHasMoved:(NSPoint)point
 {
-	if (stringToInsert) {
+	if (stringToInsert) 
+	{
 		[self performDrawAtPoint:point withMainImage:_mainImage bufferImage:_bufferImage mouseEvent:MOUSE_MOVED];		
 	}
 }

@@ -37,7 +37,7 @@
 {
 	if (!path)
 	{
-		path = [NSBezierPath new];
+		path = [[NSBezierPath bezierPath] retain];
 		[path setLineWidth:lineWidth];		
 	}
 	//if (lineWidth == 1) {

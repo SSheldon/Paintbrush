@@ -34,7 +34,7 @@
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	path = [NSBezierPath new];
+	path = [NSBezierPath bezierPath];
 	[path setLineWidth:lineWidth];
 	[path moveToPoint:begin];
 	if (lineWidth == 1) {
@@ -87,19 +87,25 @@
 		}
 	}
 	
-	if (shouldFill && shouldStroke) {
+	[self pathFromPoint:savedPoint toPoint:point];
+	if (shouldFill && shouldStroke)
+	{
 		[primaryColor setStroke];
 		[secondaryColor setFill];
-		[[self pathFromPoint:savedPoint toPoint:point] fill];
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
-	} else if (shouldFill) {
-		[primaryColor setFill];
-		[[self pathFromPoint:savedPoint toPoint:point] fill];
-	} else if (shouldStroke) {
-		[primaryColor setStroke];
-		[[self pathFromPoint:savedPoint toPoint:point] stroke];
+		[path fill];
+		[path stroke];
 	}
-
+	else if (shouldFill) 
+	{
+		[primaryColor setFill];
+		[path fill];
+	}
+	else if (shouldStroke) 
+	{
+		[primaryColor setStroke];
+		[path stroke];
+	}
+	
 	SWUnlockFocus(drawToMe);
 	return nil;
 }

@@ -493,6 +493,22 @@
 		[self setNeedsDisplay:YES];
 }
 
+
+// Doesn't work...?
+//- (NSPoint)currentMouseLocation
+//{
+//	// Get the point in screen coordinates
+//	NSPoint screenCoord = [NSEvent mouseLocation];
+//	
+//	// Convert it to base coordinates
+//	NSPoint baseCoord = [[self window] convertScreenToBase:screenCoord];
+//	
+//	// Convert it to view coordinates and return
+//	NSPoint viewCoord = [self convertPointFromBase:baseCoord];
+//	return viewCoord;
+//}
+
+
 // We can't promise we're opaque!
 - (BOOL)isOpaque
 {

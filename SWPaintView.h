@@ -67,6 +67,8 @@
 - (void)setBackgroundColor:(NSColor *)color;
 - (void)clearOverlay;
 
+// Getting info
+//- (NSPoint)currentMouseLocation;
 
 // Grid related
 - (void)setShowsGrid:(BOOL)shouldShowGrid;

@@ -70,7 +70,7 @@
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
 {
-	path = [NSBezierPath new];
+	path = [NSBezierPath bezierPath];
 	[path setLineWidth:1.0];
 	[path setLineDash:dottedLineArray count:2 phase:dottedLineOffset];
 	[path setLineCapStyle:NSSquareLineCapStyle];	
@@ -298,6 +298,10 @@
 			// Re-set the _mainImage to originalImageCopy for the undo to work properly
 			[SWImageTools drawToImage:_mainImage fromImage:originalImageCopy withComposition:NO];
 			[document handleUndoWithImageData:nil frame:NSZeroRect];
+			
+			// Clean up!
+			[originalImageCopy release];
+			originalImageCopy = nil;
 		}
 	}
 
@@ -327,6 +331,9 @@
 	
 	// Get rid of references to the selected image
 	[self deleteKey];
+	
+	// Clean up after ourselves
+	[mainImageCopy release];
 }
 
 - (NSRect)clippingRect

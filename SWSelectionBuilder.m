@@ -123,6 +123,9 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	[mImageRep release];
 	free(mSegments);
 	free(mVisited);
+
+	// Note that we don't free mMaskData -- this is intentional, as it'll be freed
+	// when the mask image is freed
 	[mStack release];
 	
 	[super dealloc];
