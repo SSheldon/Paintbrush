@@ -47,12 +47,14 @@
 	return nil;
 }
 
+
 - (NSBezierPath *)performDrawAtPoint:(NSPoint)point 
 					   withMainImage:(NSBitmapImageRep *)mainImage 
 						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event
 {	
-	if (event == MOUSE_DOWN) {
+	if (event == MOUSE_DOWN) 
+	{
 
 		// Get the width and height of the image
 		w = [mainImage size].width;
@@ -127,6 +129,9 @@
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:imageContext];
 	
+	// For filling with transparent colors
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];		
+
 	// Clip out everything that we don't want to fill with the new color
 	CGContextClipToMask(cgContext, CGRectMake(0, 0, w, h), mask);
 	

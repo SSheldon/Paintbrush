@@ -261,7 +261,9 @@
 	g2 = roundf(255*g2);
 	b1 = roundf(255*b1);
 	b2 = roundf(255*b2);
-	return (r1==r2) && (g1==g2) && (b1==b2);
+	a1 = roundf(255*a1);
+	a2 = roundf(255*a2);
+	return (r1==r2) && (g1==g2) && (b1==b2) && (a1==a2);
 }
 
 
