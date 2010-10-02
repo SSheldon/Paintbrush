@@ -45,7 +45,8 @@
 	path = [NSBezierPath bezierPath];
 	[path setLineWidth:lineWidth];
 	[path moveToPoint:beginPoint];
-	if (lineWidth == 1) {
+	if (lineWidth <= 1) 
+	{
 		begin.x += 0.5;
 		begin.y += 0.5;
 		end.x += 0.5;

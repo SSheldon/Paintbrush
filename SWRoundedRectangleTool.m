@@ -38,7 +38,8 @@
 	[path setLineWidth:lineWidth];
 	[path setLineCapStyle:NSSquareLineCapStyle];
 	[path moveToPoint:begin];
-	if (lineWidth == 1) {
+	if (lineWidth <= 1) 
+	{
 		begin.x += 0.5;
 		begin.y += 0.5;
 		end.x += 0.5;
@@ -58,37 +59,40 @@
 	// Some weird stuff, since roundedRects are picky and require positive widths and heights
 	NSPoint temp = begin;
 	BOOL negX = NO, negY = NO;
-	if ((end.x - begin.x) < 0) {
+	if ((end.x - begin.x) < 0) 
+	{
 		negX = YES;
 		temp.x = begin.x;
 		begin.x = end.x;
 		end.x = temp.x;
 	}
 	
-	if ((end.y - begin.y) < 0) {
+	if ((end.y - begin.y) < 0) 
+	{
 		negY = YES;
 		temp.y = begin.y;
 		begin.y = end.y;
 		end.y = temp.y;
 	}
 	
-	if (flags & NSShiftKeyMask) {
+	if (flags & NSShiftKeyMask)
+	{
 		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		
-		if (negX) {
+		if (negX) 
 			begin.x -= size - abs(end.x - begin.x);
-		}
-		if (negY) {
+		if (negY) 
 			begin.y -= size - abs(end.y - begin.y);
-		}
 		
 		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, size, size) 
-									  xRadius:30
-									  yRadius:30];
-	} else {
+									  xRadius:(NSInteger)MIN(size/5, 15)
+									  yRadius:(NSInteger)MIN(size/5, 15)];
+	} 
+	else
+	{
 		[path appendBezierPathWithRoundedRect:NSMakeRect(begin.x, begin.y, (end.x - begin.x), (end.y - begin.y)) 
-									  xRadius:30 
-									  yRadius:30];
+									  xRadius:(NSInteger)MIN(((end.x - begin.x)/5), 15)  
+									  yRadius:(NSInteger)MIN(((end.y - begin.y)/5), 15)];
 	}
 	
 	return path;	

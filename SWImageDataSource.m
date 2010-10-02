@@ -97,7 +97,10 @@
 	
 	// Run baseline initializer
 	[self initWithSize:NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh])];
-		
+
+	// Copy the image to the mainImage
+	[SWImageTools drawToImage:mainImage fromImage:tempImage withComposition:NO];
+	
 	// Flip it, since our views are all flipped
 	if (mainImage)
 		[SWImageTools flipImageVertical:mainImage];

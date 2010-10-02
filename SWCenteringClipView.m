@@ -47,14 +47,13 @@
 	[NSGraphicsContext saveGraphicsState];
 	
 	// Create the shadow below and to the right of the shape.
-	if (shadow == nil) {
+	if (shadow == nil) 
+	{
 		shadow = [[NSShadow alloc] init];
 		[shadow setShadowOffset:NSMakeSize(3.0, -3.0)];
 		[shadow setShadowBlurRadius:15.0];
 		
-		// Use a partially transparent color for shapes that overlap.
-		[shadow setShadowColor:[[NSColor whiteColor]
-								colorWithAlphaComponent:0.1]];		
+		[shadow setShadowColor:[NSColor blackColor]];		
 	}
 	
 	[shadow set];

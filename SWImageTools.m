@@ -234,9 +234,12 @@
 {
 	NSString *finalString = nil;
 	NSString *lowerCaseFileType = [fileType lowercaseString];
-	if ([lowerCaseFileType length] == 3) {
+	if ([lowerCaseFileType length] == 3) 
+	{
 		finalString = lowerCaseFileType;		
-	} else {
+	}
+	else
+	{
 		// Two special cases at the moment
 		if ([lowerCaseFileType isEqualToString:@"tiff"])
 			finalString = @"tif";
@@ -252,6 +255,8 @@
 + (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2
 {
 	CGFloat r1, r2, g1, g2, b1, b2, a1, a2;
+	NSLog(@"%@", [c1 colorSpaceName]);
+	NSLog(@"%@", [c2 colorSpaceName]);
 	[c1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
 	[c2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
 	
@@ -277,13 +282,14 @@
 	
 	// Get the components of the given NSColor
 	CGFloat colorRed, colorGreen, colorBlue, colorAlpha;
-	[color getRed:&colorRed green:&colorGreen blue:&colorBlue alpha:&colorAlpha];
+	NSColor * convertedColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	[convertedColor getRed:&colorRed green:&colorGreen blue:&colorBlue alpha:&colorAlpha];
 	
 	// Scale them up
-	NSInteger r = colorRed * 255;
-	NSInteger g = colorGreen * 255;
-	NSInteger b = colorBlue * 255;
-	NSInteger a = colorAlpha * 255;
+	NSInteger r = roundf(colorRed * 255.0);
+	NSInteger g = roundf(colorGreen * 255.0);
+	NSInteger b = roundf(colorBlue * 255.0);
+	NSInteger a = roundf(colorAlpha * 255.0);
 	
 	// We can't go linearly, as 10.4+ don't always pack bytes -- it may not be contiguous!
 	// Instead, we must go row by row

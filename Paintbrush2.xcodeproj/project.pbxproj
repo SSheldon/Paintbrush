@@ -12,8 +12,6 @@
 		2706B94D10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
 		2706B94E10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
 		270F02740BD0218F005B92A3 /* SWTextToolWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */; };
-		2717E14C11F8A03C00853546 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2717E14B11F8A03C00853546 /* Sparkle.framework */; };
-		2717E15711F8A06E00853546 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2717E14B11F8A03C00853546 /* Sparkle.framework */; };
 		271EEB0E0BBC34A800319865 /* SWSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB0C0BBC34A800319865 /* SWSelectionTool.m */; };
 		271EEB1E0BBC352300319865 /* SWTextTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 271EEB1C0BBC352300319865 /* SWTextTool.m */; };
 		2723FB5F1162830F005BCB1B /* SWImageDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2723FB5E1162830F005BCB1B /* SWImageDataSource.m */; };
@@ -44,6 +42,9 @@
 		275110320F169A0800A67F22 /* COPYING.txt in Resources */ = {isa = PBXBuildFile; fileRef = 275110310F169A0800A67F22 /* COPYING.txt */; };
 		275C82DE0BAF98DC00F836FA /* SWPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */; };
 		2774CC770C0A1D5100FE7F0F /* SWCurveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */; };
+		277FCC0F123C6E8300249A3F /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A1CFC61226E8E000822B7D /* Sparkle.framework */; };
+		277FCC84123DB70800249A3F /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 277FCC83123DB70800249A3F /* PFMoveApplication.m */; };
+		277FCC95123DB74A00249A3F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277FCC94123DB74A00249A3F /* Security.framework */; };
 		278BF71A0D4E47D40046BCA2 /* SWEyeDropperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */; };
 		278D5BBE0E216E7F00C01A52 /* SWSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 278D5BBD0E216E7F00C01A52 /* SWSlider.m */; };
 		278FC09F0E478024006065E6 /* SWButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FC09E0E478024006065E6 /* SWButtonCell.m */; };
@@ -57,6 +58,7 @@
 		27955D070CFDE7B900D5AF99 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
 		27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */; };
 		27A1CD6810A650D4005D2D84 /* SavePanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27A1CD6710A650D4005D2D84 /* SavePanelAccessoryView.xib */; };
+		27A1CFC71226E8E000822B7D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1CFC61226E8E000822B7D /* Sparkle.framework */; };
 		27A2E3AD0F31051500BD41AC /* SWToolbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A2E3AC0F31051500BD41AC /* SWToolbox.m */; };
 		27A45BC30E99E5D000AC15F0 /* rounded rectangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BBF0E99E5D000AC15F0 /* rounded rectangle.png */; };
 		27A45BC40E99E5D000AC15F0 /* selection_old.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A45BC00E99E5D000AC15F0 /* selection_old.png */; };
@@ -126,7 +128,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2717E15711F8A06E00853546 /* Sparkle.framework in CopyFiles */,
+				277FCC0F123C6E8300249A3F /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,7 +147,6 @@
 		2706B94C10ED77A600080D4A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
 		270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextToolWindowController.h; sourceTree = "<group>"; };
 		270F02720BD0218F005B92A3 /* SWTextToolWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTextToolWindowController.m; sourceTree = "<group>"; };
-		2717E14B11F8A03C00853546 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		271B97BB0D85C47200D1B36D /* SWZoomTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWZoomTool.h; sourceTree = "<group>"; };
 		271EEB0B0BBC34A800319865 /* SWSelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSelectionTool.h; sourceTree = "<group>"; };
 		271EEB0C0BBC34A800319865 /* SWSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSelectionTool.m; sourceTree = "<group>"; };
@@ -183,6 +184,9 @@
 		275E293D0C7E46F300A99231 /* Changes.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Changes.rtf; sourceTree = "<group>"; };
 		2774CC740C0A1D5100FE7F0F /* SWCurveTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCurveTool.h; sourceTree = "<group>"; };
 		2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCurveTool.m; sourceTree = "<group>"; };
+		277FCC82123DB70800249A3F /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
+		277FCC83123DB70800249A3F /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
+		277FCC94123DB74A00249A3F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		278BF7180D4E47D40046BCA2 /* SWEyeDropperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWEyeDropperTool.h; sourceTree = "<group>"; };
 		278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWEyeDropperTool.m; sourceTree = "<group>"; };
 		278D5BBC0E216E7F00C01A52 /* SWSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSlider.h; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 		27A1CD2C10A64F02005D2D84 /* SWSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
 		27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
 		27A1CD6510A650BB005D2D84 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SavePanelAccessoryView.xib; sourceTree = "<group>"; };
+		27A1CFC61226E8E000822B7D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		27A2E3AB0F31051500BD41AC /* SWToolbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWToolbox.h; sourceTree = "<group>"; };
 		27A2E3AC0F31051500BD41AC /* SWToolbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWToolbox.m; sourceTree = "<group>"; };
 		27A45BBF0E99E5D000AC15F0 /* rounded rectangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded rectangle.png"; sourceTree = "<group>"; };
@@ -309,7 +314,8 @@
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
 				273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */,
-				2717E14C11F8A03C00853546 /* Sparkle.framework in Frameworks */,
+				27A1CFC71226E8E000822B7D /* Sparkle.framework in Frameworks */,
+				277FCC95123DB74A00249A3F /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,9 +468,19 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		277FCC81123DB6B100249A3F /* External classes */ = {
+			isa = PBXGroup;
+			children = (
+				277FCC82123DB70800249A3F /* PFMoveApplication.h */,
+				277FCC83123DB70800249A3F /* PFMoveApplication.m */,
+			);
+			name = "External classes";
+			sourceTree = "<group>";
+		};
 		27A60E100B879A6A0091A1B0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				277FCC81123DB6B100249A3F /* External classes */,
 				273FABAA0BFBA18D00E507C5 /* Controllers */,
 				274194B00C1DA5C100605CDC /* Views */,
 				2723FB5C11628261005BCB1B /* Model */,
@@ -635,9 +651,10 @@
 		594D30730DFF93770095E075 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2717E14B11F8A03C00853546 /* Sparkle.framework */,
+				27A1CFC61226E8E000822B7D /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
 				2706B83E10ED709200080D4A /* SenTestingKit.framework */,
+				277FCC94123DB74A00249A3F /* Security.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -850,6 +867,7 @@
 				2706B94E10ED77A600080D4A /* DebugLog.m in Sources */,
 				2723FB5F1162830F005BCB1B /* SWImageDataSource.m in Sources */,
 				27CD323011F6361700AB5996 /* SWPrintPanelAccessoryViewController.m in Sources */,
+				277FCC84123DB70800249A3F /* PFMoveApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1015,6 +1033,7 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
@@ -1048,8 +1067,8 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../../../../Downloads/Sparkle 1.5b4/With Garbage Collection\"",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;

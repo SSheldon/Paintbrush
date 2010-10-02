@@ -40,7 +40,8 @@
 		path = [[NSBezierPath bezierPath] retain];
 		[path setLineWidth:lineWidth];		
 	}
-	//if (lineWidth == 1) {
+	//if (lineWidth <= 1) 
+	//{
 	// Off-by-half: Cocoa drawing is done based on gridlines AROUND pixels.  
 	// We want to actually fill the pixels themselves!
 	begin.x += 0.5;

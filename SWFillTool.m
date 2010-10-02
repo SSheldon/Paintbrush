@@ -63,7 +63,7 @@
 		_mainImage = mainImage;
 		
 		// Which color are we using?
-		fillColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
+		fillColor = [(flags & NSAlternateKeyMask) ? backColor : frontColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 		
 		// Check to make sure if we should even bother trying to fill - 
 		// if it's the same color, there's nothing to do

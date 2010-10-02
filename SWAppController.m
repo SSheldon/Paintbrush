@@ -32,6 +32,7 @@
 #import "SWPreferenceController.h"
 #import "SWToolboxController.h"
 #import "SWDocument.h"
+#import "PFMoveApplication.h"
 #import <Sparkle/Sparkle.h>
 
 NSString * const kSWUndoKey = @"UndoLevels";
@@ -76,6 +77,22 @@ NSString * const kSWUndoKey = @"UndoLevels";
 	return self;
 }
 
+
+// Override to ensure that the app is in the /Applications/ directory
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification
+{
+	// Offer to the move the Application if necessary.
+	// Note that if the user chooses to move the application,
+	// this call will never return. Therefore you can suppress
+	// any first run UI by putting it after this call.
+	
+	// Oh, and don't do it for debug builds
+#ifndef DEBUG
+	PFMoveToApplicationsFolderIfNecessary();
+#endif // !DEBUG
+}
+
+
 // Makes the toolbox panel appear and disappear
 - (IBAction)showToolboxPanel:(id)sender
 {
@@ -97,8 +114,10 @@ NSString * const kSWUndoKey = @"UndoLevels";
 
 - (void)killTheSheet:(id)sender
 {
-	for (NSWindow *window in [NSApp windows]) {
-		if ([window isSheet] && [[[window windowController] class] isEqualTo:[SWSizeWindowController class]]) {
+	for (NSWindow *window in [NSApp windows]) 
+	{
+		if ([window isSheet] && [[[window windowController] class] isEqualTo:[SWSizeWindowController class]]) 
+		{
 			// Close all the size sheets, but no other ones
 			[window close];
 			//[NSApp endSheet:window returnCode:NSCancelButton];
@@ -125,9 +144,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 	if (data) 
 	{
 		[SWDocument setWillShowSheet:NO];
-		[NSApp sendAction:@selector(newDocument:)
-					   to:nil 
-					 from:self];
+		[[NSDocumentController sharedDocumentController] newDocument:self];
 	}
 }
 
