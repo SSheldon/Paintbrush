@@ -115,6 +115,8 @@
 	[imageArray release];
 	[mainImage release];
 	[bufferImage release];
+	
+	[super dealloc];
 }
 
 
