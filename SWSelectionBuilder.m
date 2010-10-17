@@ -273,19 +273,21 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 	// simple flood fill, which is what Paintbrush needs. Use pixelDifference
 	// if you have the possibility of a non-zero tolerance.
 	
-	// First calculate the offset for the point passed in
-	int offset = (int)point.x + (mWidth * (int)point.y);
-	offset *= [mImageRep samplesPerPixel];
+	// We can't go linearly, as 10.4+ don't always pack bytes -- it may not be contiguous!
+	// Instead, we must go row by row
+	unsigned char * p = mBitmapData + ((int)point.y * [mImageRep bytesPerRow]);
+	p += (int)point.x * [mImageRep samplesPerPixel];
 	
 	// Next get the components at that offset
-	int red = mBitmapData[offset + 0];
-	int green = mBitmapData[offset + 1];
-	int blue = mBitmapData[offset + 2];
-	int alpha = mBitmapData[offset + 3];
+	NSInteger red = *p;
+	NSInteger green = *(p + 1);
+	NSInteger blue = *(p + 2);
+	NSInteger alpha = *(p + 3);			
 	
 	// Look for any difference between the pixels - if there is any variance,
 	// the pixels are not identical
-	return (red == mPickedPixel[0] && green == mPickedPixel[1] && blue == mPickedPixel[2] && alpha == mPickedPixel[3]);
+	return (alpha == 0 && mPickedPixel[3] == 0) ||
+		(red == mPickedPixel[0] && green == mPickedPixel[1] && blue == mPickedPixel[2] && alpha == mPickedPixel[3]);
 }
 
 - (unsigned int) pixelDifference:(NSPoint)point
