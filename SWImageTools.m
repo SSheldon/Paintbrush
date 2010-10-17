@@ -255,8 +255,8 @@
 + (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2
 {
 	CGFloat r1, r2, g1, g2, b1, b2, a1, a2;
-	NSLog(@"%@", [c1 colorSpaceName]);
-	NSLog(@"%@", [c2 colorSpaceName]);
+	DebugLog(@"%@", [c1 colorSpaceName]);
+	DebugLog(@"%@", [c2 colorSpaceName]);
 	[c1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
 	[c2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
 	
