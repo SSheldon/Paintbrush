@@ -334,6 +334,7 @@
 	
 	// Clean up after ourselves
 	[mainImageCopy release];
+	_mainImage = nil;
 }
 
 - (NSRect)clippingRect
