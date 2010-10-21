@@ -53,7 +53,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (id)init
 {
-    if (self = [super init]) {				
+    if (self = [super init]) 
+	{				
 		// Observers for the toolbox
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
@@ -768,13 +769,13 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	{
 		NSRect rect = [(SWSelectionTool *)[toolbox currentTool] clippingRect];
 		
+		NSBitmapImageRep *croppedImage = [[(SWSelectionTool *)[toolbox currentTool] selectedImage] retain];
+		
 		// This is also important!
 		[toolbox tieUpLooseEndsForCurrentTool];
 		
 		[self handleUndoWithImageData:nil frame:NSZeroRect];
-		
-		NSBitmapImageRep *croppedImage = [(SWSelectionTool *)[toolbox currentTool] selectedImage];
-		
+				
 		// Pretend we are a resize
 		[dataSource resizeToSize:rect.size scaleImage:NO];
 		
