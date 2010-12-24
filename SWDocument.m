@@ -260,6 +260,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		// Nothing to do if the size isn't changing!
 		if ([dataSource size].width != newSize.width || [dataSource size].height != newSize.height) 
 		{
+			// This is also important!
+			[toolbox tieUpLooseEndsForCurrentTool];
+
 			[self handleUndoWithImageData:nil frame:NSZeroRect];
 			
 			[dataSource resizeToSize:newSize scaleImage:[resizeController scales]];

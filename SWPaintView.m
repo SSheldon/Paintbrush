@@ -67,6 +67,13 @@
 	gridSpacing = 1;
 	gridColor = [NSColor gridColor];
 	
+	// Ensure the correct cursor is displayed when opening a new document
+	[self cursorUpdate:nil];
+	
+	// Set up drag stuff
+	[[self window] registerForDraggedTypes:[NSArray arrayWithObjects:
+											NSTIFFPboardType, nil]];
+	
 	[self setNeedsDisplay:YES];	
 }
 
@@ -201,35 +208,30 @@
 
 - (void)mouseDown:(NSEvent *)event
 {
-//	DebugLog(@"Down, control = %d", ([event modifierFlags] & NSControlKeyMask));
-//	if (!([event modifierFlags] & NSControlKeyMask)) {
-		isPayingAttention = YES;
-		NSPoint p = [event locationInWindow];
-		NSPoint downPoint = [self convertPoint:p fromView:nil];
-		
-		// Necessary for when the view is zoomed above 100%
-		currentPoint.x = floor(downPoint.x);
-		currentPoint.y = floor(downPoint.y);
-		
-//		[self clearOverlay];
+	isPayingAttention = YES;
+	NSPoint p = [event locationInWindow];
+	NSPoint downPoint = [self convertPoint:p fromView:nil];
+	
+	// Necessary for when the view is zoomed above 100%
+	currentPoint.x = floor(downPoint.x);
+	currentPoint.y = floor(downPoint.y);
 
-		[[toolbox currentTool] setSavedPoint:currentPoint];
-		
-		// If it's shifted, do something about it
-		[[toolbox currentTool] setFlags:[event modifierFlags]];
-		[[toolbox currentTool] performDrawAtPoint:currentPoint 
-						  withMainImage:[dataSource mainImage]
-							bufferImage:[dataSource bufferImage]
-							 mouseEvent:MOUSE_DOWN];
-		
-		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
-		//[self setNeedsDisplay:YES];		
-//	}
+	[[toolbox currentTool] setSavedPoint:currentPoint];
+	
+	// If it's shifted, do something about it
+	[[toolbox currentTool] setFlags:[event modifierFlags]];
+	[[toolbox currentTool] performDrawAtPoint:currentPoint 
+					  withMainImage:[dataSource mainImage]
+						bufferImage:[dataSource bufferImage]
+						 mouseEvent:MOUSE_DOWN];
+	
+	[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
 }
 
 - (void)mouseDragged:(NSEvent *)event
 {
-	if (isPayingAttention) {
+	if (isPayingAttention) 
+	{
 		NSPoint p = [event locationInWindow];
 		NSPoint dragPoint = [self convertPoint:p fromView:nil];
 		
@@ -249,7 +251,8 @@
 
 - (void)mouseUp:(NSEvent *)event
 {
-	if (isPayingAttention) {
+	if (isPayingAttention) 
+	{
 		NSPoint p = [event locationInWindow];
 		NSPoint upPoint = [self convertPoint:p fromView:nil];
 		
@@ -267,15 +270,12 @@
 		}
 		
 		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
-		
-		//[self setNeedsDisplay:YES];
 	}
 }
 
 // We want right-clicks to result in the use of the background color
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-//	[self clearOverlay];
 	NSUInteger flags = [theEvent modifierFlags] | 
 		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
@@ -336,8 +336,6 @@
 	motionPoint.x = floor(motionPoint.x) + 0.5;
 	motionPoint.y = floor(motionPoint.y) + 0.5;	
 	[[toolbox currentTool] mouseHasMoved:motionPoint];
-	//motionPath = [[toolbox currentTool] pathFromPoint:motionPoint toPoint:motionPoint];
-	//[self setNeedsDisplay:YES];
 }
 
 
@@ -374,6 +372,7 @@
 		[[[toolboxController window] contentView] keyDown:event];
 	}
 }
+
 
 #pragma mark MyDocument tells PaintView this information from the Toolbox
 
