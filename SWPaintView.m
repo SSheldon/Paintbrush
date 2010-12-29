@@ -345,9 +345,11 @@
 	if (toolbox && [toolbox currentTool]) 
 	{
 		NSCursor *cursor = [[toolbox currentTool] cursor];
-		if (cursor != [(NSClipView *)[self superview] documentCursor])
-			[(NSClipView *)[self superview] setDocumentCursor:cursor];
+		[(NSClipView *)[self superview] setDocumentCursor:cursor];
+		[cursor push];
 	}
+	else
+		[super cursorUpdate:event];
 }
 
 
