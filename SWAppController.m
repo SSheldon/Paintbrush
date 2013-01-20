@@ -32,8 +32,10 @@
 #import "SWPreferenceController.h"
 #import "SWToolboxController.h"
 #import "SWDocument.h"
+#ifndef APPSTORE
 #import "PFMoveApplication.h"
 #import <Sparkle/Sparkle.h>
+#endif // APPSTORE
 
 NSString * const kSWUndoKey = @"UndoLevels";
 
@@ -125,11 +127,13 @@ NSString * const kSWUndoKey = @"UndoLevels";
 	}
 }
 
+#ifndef APPSTORE
 // Called immediately before relaunching by Sparkle
 - (void)updaterWillRelaunchApplication:(SUUpdater *)updater
 {
 	[self killTheSheet:nil];
 }
+#endif // APPSTORE
 
 - (IBAction)quit:(id)sender
 {
@@ -153,8 +157,14 @@ NSString * const kSWUndoKey = @"UndoLevels";
 	SEL action = [menuItem action];
 	if (action == @selector(newFromClipboard:)) {
 		return ([SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
-
 	}
+#ifdef APPSTORE
+	if (action == @selector(donate:))
+	{
+		[menuItem setHidden:YES];
+		return NO;
+	}
+#endif
 	return YES;
 }
 
